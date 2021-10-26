@@ -1,8 +1,10 @@
+import 'package:moralpain/models/option.dart';
+
 class Question {
   final String sectionId;
   final String title;
   final String subtitle;
-  final Map<String, String> options;
+  final List<Option> options;
 
   Question(
     this.sectionId,
@@ -15,5 +17,6 @@ class Question {
       : sectionId = json['sectionId'],
         title = json['title'],
         subtitle = json['subtitle'],
-        options = new Map<String, String>.from(json['options']);
+        options =
+            List<Option>.from(json['options'].map((o) => Option.fromJson(o)));
 }

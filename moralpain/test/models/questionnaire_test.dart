@@ -11,19 +11,31 @@ void main() {
         "sectionId": "123", 
         "title": "Star Wars: Episode IV",
         "subtitle": "A New Hope",
-        "options": {
-          "123_01": "foo",
-          "123_02": "bar"
-        }
+        "options": [
+          {
+            "id": "foo",
+            "description": "foo"
+          },
+          {
+            "id": "bar",
+            "description": "bar"
+          }
+        ]
       },
       { 
         "sectionId": "124", 
         "title": "Star Wars: Episode V",
         "subtitle": "The Empire Strikes Back",
-        "options": {
-          "124_01": "foo",
-          "124_02": "bar"
-        }
+        "options": [
+          {
+            "id": "fred",
+            "description": "fred"
+          },
+          {
+            "id": "baz",
+            "description": "baz"
+          }
+        ]
       }
     ]''';
 

@@ -10,10 +10,16 @@ void main() {
       "sectionId": "123", 
       "title": "Star Wars: Episode IV",
       "subtitle": "A New Hope",
-      "options": {
-        "123_01": "foo",
-        "123_02": "bar"
-      }
+      "options": [
+        {
+          "id": "foo",
+          "description": "foo"
+        },
+        {
+          "id": "bar",
+          "description": "bar"
+        }
+      ]
     }''';
     var decoded = jsonDecode(json);
     var question = Question.fromJson(decoded);
@@ -22,7 +28,7 @@ void main() {
     expect(question.title, "Star Wars: Episode IV");
     expect(question.subtitle, "A New Hope");
     expect(question.options.length, 2);
-    expect(question.options["123_01"], "foo");
-    expect(question.options["123_02"], "bar");
+    expect(question.options[0].id, "foo");
+    expect(question.options[1].id, "bar");
   });
 }

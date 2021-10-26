@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:moralpain/assets/constants.dart' as Constants;
+import 'package:moralpain/models/option.dart';
 import 'package:moralpain/models/question.dart';
 import 'package:moralpain/models/questionnaire.dart';
 import 'package:expandable_text/expandable_text.dart';
@@ -154,7 +155,7 @@ class QuestionnaireViewState extends State<QuestionnaireView> {
 }
 
 class QuestionOptionsWidget extends StatefulWidget {
-  final Map<String, String> options;
+  final List<Option> options;
 
   QuestionOptionsWidget(this.options);
 
@@ -164,35 +165,30 @@ class QuestionOptionsWidget extends StatefulWidget {
 }
 
 class QuestionOptionsWidgetState extends State<QuestionOptionsWidget> {
-  final Map<String, String> options;
+  final List<Option> options;
   final Map<String, bool> chosen;
 
   QuestionOptionsWidgetState(this.options)
-      : this.chosen = options.map((k, v) => MapEntry(k, false));
+      : this.chosen =
+            Map.fromIterable(options, key: (o) => o.id, value: (_) => false);
 
   @override
   Widget build(BuildContext context) {
     return new Column(
-      children: this
-          .options
-          .map((String key, String val) {
-            return new MapEntry(
-                key,
-                CheckboxListTile(
+        children: this
+            .options
+            .map((option) => CheckboxListTile(
                   controlAffinity: ListTileControlAffinity.leading,
                   activeColor: Color(Constants.COLORS_UVA_BLUE),
-                  title: Text(val),
-                  value: this.chosen[key],
+                  title: Text(option.description),
+                  value: this.chosen[option.id],
                   onChanged: (bool? value) {
                     setState(() {
                       // TODO (nphair): Update the bloc too
-                      this.chosen[key] = value!;
+                      this.chosen[option.id] = value!;
                     });
                   },
-                ));
-          })
-          .values
-          .toList(),
-    );
+                ))
+            .toList());
   }
 }
