@@ -1,0 +1,91 @@
+openapi: "3.0.1"
+info:
+  title: MoralDistress API
+  version: 1.0.0
+paths:
+  /survey:
+    get:
+      operationId: getSurvey
+      summary: Fetch moral distress survey
+      responses:
+        '200':
+          description: |-
+            200 response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/survey'
+      x-amazon-apigateway-integration:
+        httpMethod: get
+        type: aws
+        uri: arn:aws:apigateway:${AWS::Region}:s3:path/moralpain-surveys/questionnaire.json
+        credentials: arn:aws:iam::${AWS::AccountId}:role/apigateway_s3_survey_role
+        passthroughBehavior : "when_no_match"
+        responses:
+          "2\\d{2}":
+            statusCode: 200
+    post:
+      operationId: submitSurvey
+      summary: Submit completed moral distress survey
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/submission'
+      responses:
+        '200':
+          description: |-
+            200 response
+          content:
+            text/plain:
+              schema:
+                type: string
+      x-amazon-apigateway-integration:
+        httpMethod: post
+        type: aws_proxy
+        uri : arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:SubmitSurvey/invocations
+        credentials: arn:aws:iam::${AWS::AccountId}:role/apigateway_s3_completed_survey_post_role
+        passthroughBehavior : "when_no_match"
+        responses:
+          "2\\d{2}":
+            statusCode: 200
+
+components:
+  schemas:
+    survey:
+      type: array
+      items:
+        $ref: '#/components/schemas/surveySection'
+    surveySection:
+      type: object
+      properties:
+        sectionId:
+          type: string
+        title:
+          type: string
+        subtitle:
+          type: string
+        options:
+          type: array
+          items:
+            $ref: '#/components/schemas/surveyOption'
+    surveyOption:
+      type: object
+      properties:
+        id:
+          type: string
+        description:
+          type: string
+    submission:
+      type: object
+      properties:
+        score:
+          type: integer
+        selections:
+          type: array
+          items:
+            type: string
+        timestamp:
+          type: integer
+        id:
+          type: string

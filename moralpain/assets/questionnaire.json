@@ -1,74 +1,128 @@
 [
-  {
-	"sectionId": "001",
-	"title": "Clinical Situations",
-	"subtitle": "",
-	"options": {
-	  "001_01": "Futile treatment",
-	  "001_03": "Prolong dying",
-	  "001_04": "Inadequate informed consent",
-	  "001_05": "Work with incompetent caregivers",
-	  "001_06": "Lack of consensus re: treatment plan",
-	  "001_07": "Being “in the middle” between key stakeholders",
-	  "001_10": "Care not in best interest of patient",
-	  "001_11": "Inappropriate use of resources",
-	  "001_12": "Inadequate pain relief",
-	  "001_13": "Provide false hope",
-	  "001_14": "Hastening dying",
-	  "001_15": "Lack of truth-telling",
-	  "001_16": "Unclear goals of care (lack of plan)"
+	{
+		"sectionId": "001",
+		"title": "Patient",
+		"subtitle": "",
+		"options": [
+			{
+				"id": "01",
+				"description": "Feeling pressured to give unnecessary/inappropriate tests and/or treatments"
+			},
+			{
+				"id": "02",
+				"description": "Having to continue aggressive treatment not in the patient's best interest"
+			},
+			{
+				"id": "03",
+				"description": "Causing unnecessary suffering or do not relieve pain/symptoms"
+			},
+			{
+				"id": "04",
+				"description": "Ignoring situations of inadequate informed consent"
+			},
+			{
+				"id": "05",
+				"description": "Witnessing providers giving \"false hope\" to patients/families"
+			},
+			{
+				"id": "06",
+				"description": "Having to follow MD/family's request to not discuss prognosis"
+			}
+		]
+	},
+	{
+		"sectionId": "002",
+		"title": "Team",
+		"subtitle": "",
+		"options": [
+			{
+				"id": "01",
+				"description": "Seeing unclear/inconsistent treatment plans or goals of care"
+			},
+			{
+				"id": "02",
+				"description": "Witnessing lack of provider continuity"
+			},
+			{
+				"id": "03",
+				"description": "Fearing retribution if I speak up"
+			},
+			{
+				"id": "04",
+				"description": "Witnessing other team members not competent in providing quality care"
+			},
+			{
+				"id": "05",
+				"description": "Fearing litigation"
+			},
+			{
+				"id": "06",
+				"description": "Feeling pressured to ignore medical error(s)"
+			},
+			{
+				"id": "07",
+				"description": "Feeling not supported enough to report a violation of procedure/ethics"
+			},
+			{
+				"id": "10",
+				"description": "Working with teams who don't treat patients with dignity/respect"
+			},
+			{
+				"id": "11",
+				"description": "Feeling unsafe/bullied amongst own colleagues"
+			},
+			{
+				"id": "12",
+				"description": "Working within power structures that compromise patient care"
+			},
+			{
+				"id": "13",
+				"description": "Witnessing poor team communication"
+			},
+			{
+				"id": "14",
+				"description": "Witnessing inconsistent messages to patient/family"
+			}
+		]
+	},
+	{
+		"sectionId": "004",
+		"title": "System",
+		"subtitle": "",
+		"options": [
+			{
+				"id": "01",
+				"description": "Caring for patients not qualified to care for"
+			},
+			{
+				"id": "02",
+				"description": "Caring for more patients than is safe"
+			},
+			{
+				"id": "03",
+				"description": "Experiencing lack of administrative/managerial support"
+			},
+			{
+				"id": "04",
+				"description": "Feeling required to work with abusive patients/family members"
+			},
+			{
+				"id": "05",
+				"description": "Feeling pressured from admin/insurers to reduce costs over patient care"
+			},
+			{
+				"id": "06",
+				"description": "Experiencing lack of resources/beds/equipment"
+			},
+			{
+				"id": "07",
+				"description": "Experiencing excessive documentation requirements"
+			},
+			{
+				"id": "08",
+				"description": "Feeling pressured to emphasize productivity/quality measures over patients"
+			}
+		]
 	}
-  },
-  {
-	"sectionId": "002",
-	"title": "Internal Factors",
-	"subtitle": "",
-	"options": {
-	  "002_01": "Perceived powerlessness",
-	  "002_02": "Lack treatment alternatives",
-	  "002_03": "Inability to identify the ethical issues",
-	  "002_04": "Increased moral sensitivity",
-	  "002_05": "Incomplete information about the situation",
-	  "002_06": "Lack of assertiveness",
-	  "002_07": "Self-doubt",
-	  "002_10": "Socialization to follow others"
-	}
-  },
-  {
-	"sectionId": "003",
-	"title": "External Factors",
-	"subtitle": "Institutional Constraints/Culture",
-	"options": {
-	  "003_01": "Lack of continuity of providers",
-	  "003_02": "No involvement in decision-making",
-	  "003_03": "Inadequate communication among team members",
-	  "003_04": "Inadequate staffing/increased turnover",
-	  "003_05": "Poor administrative support",
-	  "003_06": "Policies and priorities that conflict with care needs",
-	  "003_07": "Tolerance of disruptive/abusive behavior",
-	  "003_10": "Compromising care to reduce costs",
-	  "003_11": "Hierarchies within healthcare system"
-	}
-  },
-  {
-	"sectionId": "004",
-	"title": "External Factors",
-	"subtitle": "Legal and Regulatory Constraints",
-	"options": {
-	  "004_01": "Follow treatment plan due to fear of litigation",
-	  "004_02": "Compromise care due to insurance pressure or fear of litigation",
-	  "004_03": "Tension between ethical and legal"
-	}
-  },
-  {
-	"sectionId": "005",
-	"title": "External Factors",
-	"subtitle": "Coworker Issues",
-	"options": {
-	  "005_02": "Intra-professional conflict (ex. RN to RN)",
-	  "005_03": "Inter-professional conflict (ex. RN to MD)",
-	  "005_04": "Poor collegial relationships"
-	}
-  }
 ]
 
