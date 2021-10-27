@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:moralpain/questionnaire/questionnaire.dart';
 
 import 'package:moralpain/assets/constants.dart' as Constants;
+import 'package:moralpain/survey/view/survey_route.dart';
 import 'package:moralpain/survey_repository.dart';
 import '../thermometer.dart';
 import 'themometer_slider.dart';
@@ -37,8 +37,8 @@ class ThermometerView extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => QuestionnaireRoute(
-                      questionnaireRepository: SurveyRepository())),
+                  builder: (context) =>
+                      SurveyRoute(repository: SurveyRepository())),
             );
           },
           child: const Icon(Icons.navigate_next),

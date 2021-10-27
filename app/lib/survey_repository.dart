@@ -6,7 +6,7 @@ import 'package:moralpainapi/src/model/survey.dart';
 
 class SurveyRepository {
   Future<Survey> fetchDefaultSurvey() async =>
-      fetchSurvey(Constants.QUESTIONNAIRE_QUESTIONNAIRE_PATH);
+      fetchSurvey(Constants.SURVEY_QUESTIONNAIRE_PATH);
 
   Future<Survey> fetchSurvey(String path) async {
     var json = await rootBundle.loadString(path);

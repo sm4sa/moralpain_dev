@@ -6,14 +6,14 @@ import 'package:expandable_text/expandable_text.dart';
 import 'package:moralpainapi/src/model/survey_section.dart';
 import 'package:moralpainapi/src/model/survey_option.dart';
 
-import '../questionnaire.dart';
+import '../survey.dart';
 
-class QuestionnaireView extends StatefulWidget {
+class SurveyView extends StatefulWidget {
   @override
-  QuestionnaireViewState createState() => QuestionnaireViewState();
+  SurveyViewState createState() => SurveyViewState();
 }
 
-class QuestionnaireViewState extends State<QuestionnaireView> {
+class SurveyViewState extends State<SurveyView> {
   final controller = ScrollController();
   bool _show = false;
 
@@ -55,16 +55,16 @@ class QuestionnaireViewState extends State<QuestionnaireView> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  Constants.QUESTIONNAIRE_TITLE,
+                  Constants.SURVEY_TITLE,
                   style: TextStyle(fontSize: 16),
                 ),
                 SizedBox(
                   height: 10,
                 ),
                 ExpandableText(
-                  Constants.QUESTIONNAIRE_INSTRUCTIONS,
-                  expandText: Constants.QUESTIONNAIRE_EXPAND_TEXT,
-                  collapseText: Constants.QUESTIONNAIRE_COLLAPSE_TEXT,
+                  Constants.SURVEY_INSTRUCTIONS,
+                  expandText: Constants.SURVEY_EXPAND_TEXT,
+                  collapseText: Constants.SURVEY_COLLAPSE_TEXT,
                   maxLines: 1,
                   linkEllipsis: false,
                   linkColor: Colors.blue,
@@ -73,17 +73,16 @@ class QuestionnaireViewState extends State<QuestionnaireView> {
                 SizedBox(
                   height: 10,
                 ),
-                BlocBuilder<QuestionnaireBloc, QuestionnaireState>(
-                    builder: (context, state) {
-                  if (state is QuestionnaireLoading) {
+                BlocBuilder<SurveyBloc, SurveyState>(builder: (context, state) {
+                  if (state is SurveyLoading) {
                     return CircularProgressIndicator();
-                  } else if (state is QuestionnaireLoaded) {
+                  } else if (state is SurveyLoaded) {
                     return Expanded(
                         child: ListView(
                             controller: controller,
                             scrollDirection: Axis.vertical,
                             shrinkWrap: true,
-                            children: state.questionnaire.sections!
+                            children: state.survey.sections!
                                 .map((q) => cardForSection(q))
                                 .toList()));
                   } else {
@@ -99,18 +98,17 @@ class QuestionnaireViewState extends State<QuestionnaireView> {
               // TODO (nphair): Really should be going through the bloc.
               ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                 content: Text(
-                  Constants.QUESTIONNAIRE_TOASTER_MESSAGE,
+                  Constants.SURVEY_TOASTER_MESSAGE,
                   textAlign: TextAlign.center,
-                  style: TextStyle(
-                      fontSize: Constants.QUESTIONNAIRE_TOASTER_FONT_SIZE),
+                  style:
+                      TextStyle(fontSize: Constants.SURVEY_TOASTER_FONT_SIZE),
                 ),
-                duration:
-                    Duration(seconds: Constants.QUESTIONNAIRE_TOASTER_DURATION),
+                duration: Duration(seconds: Constants.SURVEY_TOASTER_DURATION),
               ));
 
               Future.delayed(
-                  const Duration(
-                      seconds: Constants.QUESTIONNAIRE_TOASTER_DURATION), () {
+                  const Duration(seconds: Constants.SURVEY_TOASTER_DURATION),
+                  () {
                 Navigator.pop(context);
                 Navigator.pop(context);
               });
@@ -146,28 +144,28 @@ class QuestionnaireViewState extends State<QuestionnaireView> {
                   Text(section.subtitle!),
                 ],
               )),
-          QuestionOptionsWidget(section.options!.asList())
+          SurveyOptionsWidget(section.options!.asList())
         ],
       ),
     );
   }
 }
 
-class QuestionOptionsWidget extends StatefulWidget {
+class SurveyOptionsWidget extends StatefulWidget {
   final List<SurveyOption> options;
 
-  QuestionOptionsWidget(this.options);
+  SurveyOptionsWidget(this.options);
 
   @override
-  QuestionOptionsWidgetState createState() =>
-      new QuestionOptionsWidgetState(options);
+  SurveyOptionsWidgetState createState() =>
+      new SurveyOptionsWidgetState(options);
 }
 
-class QuestionOptionsWidgetState extends State<QuestionOptionsWidget> {
+class SurveyOptionsWidgetState extends State<SurveyOptionsWidget> {
   final List<SurveyOption> options;
   final Map<String, bool> chosen;
 
-  QuestionOptionsWidgetState(this.options)
+  SurveyOptionsWidgetState(this.options)
       : this.chosen =
             Map.fromIterable(options, key: (o) => o.id, value: (_) => false);
 
