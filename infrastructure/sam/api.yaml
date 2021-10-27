@@ -53,9 +53,14 @@ paths:
 components:
   schemas:
     survey:
-      type: array
-      items:
-        $ref: '#/components/schemas/surveySection'
+      type: object
+      properties:
+        version:
+          type: string
+        sections:
+          type: array
+          items:
+            $ref: '#/components/schemas/surveySection'
     surveySection:
       type: object
       properties:
