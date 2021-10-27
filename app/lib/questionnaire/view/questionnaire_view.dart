@@ -3,7 +3,8 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:moralpain/assets/constants.dart' as Constants;
 import 'package:expandable_text/expandable_text.dart';
-import 'package:moralpainapi/api.dart';
+import 'package:moralpainapi/src/model/survey_section.dart';
+import 'package:moralpainapi/src/model/survey_option.dart';
 
 import '../questionnaire.dart';
 
@@ -82,7 +83,7 @@ class QuestionnaireViewState extends State<QuestionnaireView> {
                             controller: controller,
                             scrollDirection: Axis.vertical,
                             shrinkWrap: true,
-                            children: state.questionnaire.sections
+                            children: state.questionnaire.sections!
                                 .map((q) => cardForSection(q))
                                 .toList()));
                   } else {
@@ -140,12 +141,12 @@ class QuestionnaireViewState extends State<QuestionnaireView> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    section.title,
+                    section.title!,
                   ),
-                  Text(section.subtitle),
+                  Text(section.subtitle!),
                 ],
               )),
-          QuestionOptionsWidget(section.options)
+          QuestionOptionsWidget(section.options!.asList())
         ],
       ),
     );
@@ -178,12 +179,12 @@ class QuestionOptionsWidgetState extends State<QuestionOptionsWidget> {
             .map((option) => CheckboxListTile(
                   controlAffinity: ListTileControlAffinity.leading,
                   activeColor: Color(Constants.COLORS_UVA_BLUE),
-                  title: Text(option.description),
+                  title: Text(option.description!),
                   value: this.chosen[option.id],
                   onChanged: (bool? value) {
                     setState(() {
                       // TODO (nphair): Update the bloc too
-                      this.chosen[option.id] = value!;
+                      this.chosen[option.id!] = value!;
                     });
                   },
                 ))

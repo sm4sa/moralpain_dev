@@ -1,58 +1,31 @@
-//
-// AUTO-GENERATED FILE, DO NOT MODIFY!
-//
-// @dart=2.0
-
-// ignore_for_file: unused_element, unused_import
-// ignore_for_file: always_put_required_named_parameters_first
-// ignore_for_file: constant_identifier_names
-// ignore_for_file: lines_longer_than_80_chars
-
-import 'dart:convert';
-import 'dart:math';
-
-import 'package:moralpainapi/api.dart';
 import 'package:test/test.dart';
+import 'package:moralpainapi/moralpainapi.dart';
 
 // tests for SurveySection
 void main() {
-  final json = '''{ 
-    "sectionId": "123", 
-    "title": "Star Wars: Episode IV",
-    "subtitle": "A New Hope",
-    "options": [
-      {
-        "id": "foo",
-        "description": "foo"
-      },
-      {
-        "id": "bar",
-        "description": "bar"
-      }
-    ]
-  }''';
-  final instance = SurveySection.fromJson(jsonDecode(json));
+  final instance = SurveySectionBuilder();
+  // TODO add properties to the builder and call build()
 
-  group('test SurveySection', () {
+  group(SurveySection, () {
     // String sectionId
     test('to test the property `sectionId`', () async {
-      expect("123", instance.sectionId);
+      // TODO
     });
 
     // String title
     test('to test the property `title`', () async {
-      expect("Star Wars: Episode IV", instance.title);
+      // TODO
     });
 
     // String subtitle
     test('to test the property `subtitle`', () async {
-      expect("A New Hope", instance.subtitle);
+      // TODO
     });
 
-    // List<SurveyOption> options (default value: const [])
+    // BuiltList<SurveyOption> options
     test('to test the property `options`', () async {
-      expect(2, instance.options.length);
-      expect("foo", instance.options.first.id);
+      // TODO
     });
+
   });
 }

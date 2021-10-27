@@ -22,12 +22,12 @@ Fetch moral distress survey
 ```dart
 import 'package:moralpainapi/api.dart';
 
-final api_instance = DefaultApi();
+final api = Moralpainapi().getDefaultApi();
 
 try {
-    final result = api_instance.getSurvey();
-    print(result);
-} catch (e) {
+    final response = api.getSurvey();
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling DefaultApi->getSurvey: $e\n');
 }
 ```
@@ -59,13 +59,13 @@ Submit completed moral distress survey
 ```dart
 import 'package:moralpainapi/api.dart';
 
-final api_instance = DefaultApi();
-final submission = Submission(); // Submission | 
+final api = Moralpainapi().getDefaultApi();
+final Submission submission = ; // Submission | 
 
 try {
-    final result = api_instance.submitSurvey(submission);
-    print(result);
-} catch (e) {
+    final response = api.submitSurvey(submission);
+    print(response);
+} catch on DioError (e) {
     print('Exception when calling DefaultApi->submitSurvey: $e\n');
 }
 ```

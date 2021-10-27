@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:moralpain/survey_repository.dart';
-import 'package:moralpainapi/api.dart';
+import 'package:moralpainapi/src/model/survey.dart';
 
 part 'questionnaire_state.dart';
 part 'questionnaire_event.dart';

@@ -1,27 +1,18 @@
-//
-// AUTO-GENERATED FILE, DO NOT MODIFY!
-//
-// @dart=2.0
-
-// ignore_for_file: unused_element, unused_import
-// ignore_for_file: always_put_required_named_parameters_first
-// ignore_for_file: constant_identifier_names
-// ignore_for_file: lines_longer_than_80_chars
-
-import 'package:moralpainapi/api.dart';
 import 'package:test/test.dart';
+import 'package:moralpainapi/moralpainapi.dart';
 
 // tests for Submission
 void main() {
-  final instance = Submission();
+  final instance = SubmissionBuilder();
+  // TODO add properties to the builder and call build()
 
-  group('test Submission', () {
+  group(Submission, () {
     // int score
     test('to test the property `score`', () async {
       // TODO
     });
 
-    // List<String> selections (default value: const [])
+    // BuiltList<String> selections
     test('to test the property `selections`', () async {
       // TODO
     });
@@ -36,7 +27,5 @@ void main() {
       // TODO
     });
 
-
   });
-
 }
