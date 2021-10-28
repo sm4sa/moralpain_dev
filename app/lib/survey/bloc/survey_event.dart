@@ -9,8 +9,9 @@ class SurveyLoadEvent extends SurveyEvent {
 }
 
 class SurveyUpdateEvent extends SurveyEvent {
-  final String surveyId;
-  const SurveyUpdateEvent(this.surveyId);
+  final String optionId;
+  final bool value;
+  const SurveyUpdateEvent(this.optionId, this.value);
 }
 
 class SurveySubmitEvent extends SurveyEvent {

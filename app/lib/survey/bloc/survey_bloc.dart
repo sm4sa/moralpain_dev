@@ -8,10 +8,12 @@ part 'survey_event.dart';
 
 class SurveyBloc extends Bloc<SurveyEvent, SurveyState> {
   final SurveyRepository repository;
+  final options = Map<String, bool>();
 
   SurveyBloc({required this.repository}) : super(SurveyLoading()) {
     on<SurveyLoadEvent>(_onLoad);
     on<SurveySubmitEvent>(_onSubmit);
+    on<SurveyUpdateEvent>(_onUpdate);
   }
 
   void _onLoad(SurveyLoadEvent event, Emitter<SurveyState> emit) async {
@@ -26,6 +28,14 @@ class SurveyBloc extends Bloc<SurveyEvent, SurveyState> {
   }
 
   void _onSubmit(SurveySubmitEvent event, Emitter<SurveyState> emit) {
-    emit(SurveyComplete());
+    final selected =
+        options.entries.where((x) => x.value).map((x) => x.key).toList();
+    emit(SurveyComplete(0, selected));
+  }
+
+  void _onUpdate(SurveyUpdateEvent event, Emitter<SurveyState> emit) {
+    options[event.optionId] = event.value;
+
+    emit(SurveyUpdated(options));
   }
 }

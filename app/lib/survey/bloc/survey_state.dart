@@ -14,4 +14,15 @@ class SurveyLoaded extends SurveyState {
   SurveyLoaded(this.survey);
 }
 
-class SurveyComplete extends SurveyState {}
+class SurveyComplete extends SurveyState {
+  List<String> selections;
+  int score;
+
+  SurveyComplete(this.score, this.selections);
+}
+
+class SurveyUpdated extends SurveyState {
+  Map<String, bool> selections;
+
+  SurveyUpdated(this.selections);
+}
