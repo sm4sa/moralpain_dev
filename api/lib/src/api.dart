@@ -9,6 +9,7 @@ import 'package:moralpainapi/src/auth/api_key_auth.dart';
 import 'package:moralpainapi/src/auth/basic_auth.dart';
 import 'package:moralpainapi/src/auth/bearer_auth.dart';
 import 'package:moralpainapi/src/auth/oauth.dart';
+import 'package:moralpainapi/src/api/cors_api.dart';
 import 'package:moralpainapi/src/api/default_api.dart';
 
 class Moralpainapi {
@@ -63,6 +64,12 @@ class Moralpainapi {
     if (this.dio.interceptors.any((i) => i is ApiKeyAuthInterceptor)) {
       (this.dio.interceptors.firstWhere((element) => element is ApiKeyAuthInterceptor) as ApiKeyAuthInterceptor).apiKeys[name] = apiKey;
     }
+  }
+
+  /// Get CORSApi instance, base route and serializer can be overridden by a given but be careful,
+  /// by doing that all interceptors will not be executed
+  CORSApi getCORSApi() {
+    return CORSApi(dio, serializers);
   }
 
   /// Get DefaultApi instance, base route and serializer can be overridden by a given but be careful,

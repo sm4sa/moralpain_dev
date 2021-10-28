@@ -1,7 +1,6 @@
 .gitignore
-.openapi-generator-ignore
-README.md
 analysis_options.yaml
+doc/CORSApi.md
 doc/DefaultApi.md
 doc/Submission.md
 doc/Survey.md
@@ -9,6 +8,7 @@ doc/SurveyOption.md
 doc/SurveySection.md
 lib/moralpainapi.dart
 lib/src/api.dart
+lib/src/api/cors_api.dart
 lib/src/api/default_api.dart
 lib/src/api_util.dart
 lib/src/auth/api_key_auth.dart
@@ -24,8 +24,3 @@ lib/src/model/survey_option.dart
 lib/src/model/survey_section.dart
 lib/src/serializers.dart
 pubspec.yaml
-test/default_api_test.dart
-test/submission_test.dart
-test/survey_option_test.dart
-test/survey_section_test.dart
-test/survey_test.dart

@@ -9,6 +9,7 @@ export 'package:moralpainapi/src/auth/oauth.dart';
 export 'package:moralpainapi/src/serializers.dart';
 export 'package:moralpainapi/src/model/date.dart';
 
+export 'package:moralpainapi/src/api/cors_api.dart';
 export 'package:moralpainapi/src/api/default_api.dart';
 
 export 'package:moralpainapi/src/model/submission.dart';

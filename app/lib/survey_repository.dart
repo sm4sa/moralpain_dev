@@ -11,7 +11,6 @@ class SurveyRepository {
 
   Future<Survey> fetchSurvey() async {
     final dapi = mapi.getDefaultApi();
-    mapi.dio.options.headers["Access-Control_Allow_Origin"] = "*";
 
     try {
       return (await dapi.getSurvey()).data!;
