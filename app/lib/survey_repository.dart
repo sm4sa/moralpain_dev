@@ -13,4 +13,10 @@ class SurveyRepository {
 
     return standardSerializers.fromJson(Survey.serializer, json)!;
   }
+
+  Future<Survey> test(String path) async {
+    var json = await rootBundle.loadString(path);
+
+    return standardSerializers.fromJson(Survey.serializer, json)!;
+  }
 }

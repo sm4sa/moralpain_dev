@@ -10,17 +10,17 @@ void main() {
       "description": "Human" 
     } 
   ''';
-  final instance = standardSerializers.fromJson(SurveyOption.serializer, json);
+  final instance = standardSerializers.fromJson(SurveyOption.serializer, json)!;
 
   group(SurveyOption, () {
     // String id
     test('to test the property `id`', () async {
-      expect("Philip J. Fry", instance?.id);
+      expect("Philip J. Fry", instance.id);
     });
 
     // String description
     test('to test the property `description`', () async {
-      expect("Human", instance?.description);
+      expect("Human", instance.description);
     });
   });
 }
