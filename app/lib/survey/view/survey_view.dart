@@ -46,7 +46,7 @@ class SurveyViewState extends State<SurveyView> {
   Widget build(BuildContext context) {
     return BlocConsumer<SurveyBloc, SurveyState>(
         listenWhen: (previous, current) => current is SurveyComplete,
-        listener: (context, state) => handleSumbission(context),
+        listener: (context, state) => handleSubmitted(context),
         buildWhen: (previous, current) =>
             current is SurveyLoading || current is SurveyLoaded,
         builder: (context, state) {
@@ -99,7 +99,7 @@ class SurveyViewState extends State<SurveyView> {
    * Invoked by the BlocListener when a survey is submitted. 
    * Returns to the home screen.
    */
-  void handleSumbission(BuildContext context) {
+  void handleSubmitted(BuildContext context) {
     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
       content: Text(
         Constants.SURVEY_TOASTER_MESSAGE,

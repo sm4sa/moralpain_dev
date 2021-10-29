@@ -1,30 +1,60 @@
 import 'dart:async' show Future;
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:logging/logging.dart';
 import 'package:moralpain/assets/constants.dart' as Constants;
 import 'package:moralpainapi/moralpainapi.dart';
 import 'package:moralpainapi/src/model/survey.dart';
 
 class SurveyRepository {
+  final log = Logger('SurveyRepository');
+
   final mapi = Moralpainapi(
       basePathOverride:
           'https://umd7orqgt1.execute-api.us-east-1.amazonaws.com/v1');
 
+  /**
+   * Fetch the latest version of the moral distress survey from the API.
+   * Fall back to a local copy on error.
+   */
   Future<Survey> fetchSurvey() async {
     final dapi = mapi.getDefaultApi();
 
     try {
       return (await dapi.getSurvey()).data!;
     } catch (err) {
-      print('Error fetching survey: $err');
-      print('Falling back to local survey.');
+      log.warning('Error fetching survey. Falling back to local file.', err);
     }
 
     return fetchSurveyAt(Constants.SURVEY_QUESTIONNAIRE_PATH);
   }
 
+  /**
+   * Fetch a locally stored version of the survey.
+   */
   Future<Survey> fetchSurveyAt(String path) async {
-    var json = await rootBundle.loadString(path);
+    try {
+      final json = await rootBundle.loadString(path);
+      return standardSerializers.fromJson(Survey.serializer, json)!;
+    } catch (err) {
+      log.shout('Error fetching local survey. Loading empty survey.', err);
+    }
 
-    return standardSerializers.fromJson(Survey.serializer, json)!;
+    return Survey();
+  }
+
+  /**
+   * Post a user completed survey to the api.
+   */
+  Future<bool> submit(Submission submission) async {
+    final dapi = mapi.getDefaultApi();
+
+    try {
+      final res = await dapi.submitSurvey(submission: submission);
+      return res.statusCode == 200;
+    } catch (err) {
+      log.shout('Error submitting survey', err);
+    }
+
+    return false;
   }
 }

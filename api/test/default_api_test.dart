@@ -52,17 +52,6 @@ void main() {
       expect(1, survey.sections!.length);
     });
 
-    test('test getSurvey', () async {
-      final a = Moralpainapi(
-          basePathOverride:
-              'https://umd7orqgt1.execute-api.us-east-1.amazonaws.com/v1');
-      final d = a.getDefaultApi();
-      final survey = (await d.getSurvey()).data!;
-      print(survey);
-      expect("0.0.1", survey.version);
-      //expect(1, survey.sections!.length);
-    });
-
     // Submit completed moral distress survey
     //
     //Future<String> submitSurvey({ Submission submission }) async

@@ -15,10 +15,8 @@ class SurveyLoaded extends SurveyState {
 }
 
 class SurveyComplete extends SurveyState {
-  List<String> selections;
-  int score;
-
-  SurveyComplete(this.score, this.selections);
+  bool success;
+  SurveyComplete(this.success);
 }
 
 class SurveyUpdated extends SurveyState {
