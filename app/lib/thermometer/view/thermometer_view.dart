@@ -7,17 +7,13 @@ import 'package:moralpain/survey_repository.dart';
 import '../thermometer.dart';
 import 'themometer_slider.dart';
 
-// TODO (nphair): Handle Rotation Overflow.
-
 /// {@template counter_view}
 /// A [StatelessWidget] which reacts to the provided
 /// [CounterCubit] state and notifies it in response to user input.
 /// {@endtemplate}
 class ThermometerView extends StatelessWidget {
-  var x = 0.0;
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color(Constants.COLORS_UVA_BLUE),
@@ -37,8 +33,11 @@ class ThermometerView extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) =>
-                      SurveyRoute(repository: SurveyRepository())),
+                  builder: (ctx) => SurveyRoute(
+                      repository: SurveyRepository(),
+                      // NB (nphair): Not sure if it is best practive to reach into
+                      // the bloc for the state like this.
+                      score: context.read<ThermometerCubit>().state.toInt())),
             );
           },
           child: const Icon(Icons.navigate_next),

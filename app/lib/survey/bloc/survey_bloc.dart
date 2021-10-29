@@ -11,12 +11,15 @@ part 'survey_event.dart';
 
 class SurveyBloc extends Bloc<SurveyEvent, SurveyState> {
   final log = Logger('SurveyBloc');
-
-  final SurveyRepository repository;
-  final options = Map<String, bool>();
   final uuid = Uuid();
 
-  SurveyBloc({required this.repository}) : super(SurveyLoading()) {
+  final SurveyRepository repository;
+
+  final options = Map<String, bool>();
+  final score;
+
+  SurveyBloc({required this.repository, required this.score})
+      : super(SurveyLoading()) {
     on<SurveyLoadEvent>(_onLoad);
     on<SurveySubmitEvent>(_onSubmit);
     on<SurveyUpdateEvent>(_onUpdate);
@@ -35,11 +38,12 @@ class SurveyBloc extends Bloc<SurveyEvent, SurveyState> {
 
     final builder = SubmissionBuilder();
     builder.id = uuid.v4().replaceAll("-", "");
-    builder.score = 0;
+    builder.score = score;
     builder.selections.addAll(selected);
     builder.timestamp = _secondsSinceEpoch();
 
     emit(SurveySubmitting());
+    // WARN THIS CAN TIME OUT!!
     final success = await repository.submit(builder.build());
     emit(SurveyComplete(success));
   }

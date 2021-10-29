@@ -11,8 +11,9 @@ import 'survey_view.dart';
 /// {@endtemplate}
 class SurveyRoute extends StatelessWidget {
   final SurveyRepository repository;
+  final int score;
 
-  const SurveyRoute({Key? key, required this.repository});
+  const SurveyRoute({Key? key, required this.repository, required this.score});
 
   // Make the cubit available to the children.
   @override
@@ -20,8 +21,8 @@ class SurveyRoute extends StatelessWidget {
     return RepositoryProvider.value(
         value: repository,
         child: BlocProvider(
-          create: (_) =>
-              SurveyBloc(repository: repository)..add(SurveyLoadEvent()),
+          create: (_) => SurveyBloc(repository: repository, score: score)
+            ..add(SurveyLoadEvent()),
           child: SurveyView(),
         ));
   }

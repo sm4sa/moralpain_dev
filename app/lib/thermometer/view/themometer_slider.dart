@@ -198,8 +198,6 @@ class ThermometerWidget extends StatefulWidget {
 }
 
 class _ThermometerWidgetState extends State<ThermometerWidget> {
-  double _value = 0;
-
   @override
   Widget build(BuildContext context) {
     // Cubit here?
@@ -209,23 +207,22 @@ class _ThermometerWidgetState extends State<ThermometerWidget> {
           data: SliderTheme.of(context).copyWith(
             trackHeight: MediaQuery.of(context).size.height,
             activeTrackColor: Colors.black,
-            trackShape: ThermometerSliderTrackShape(_value.toInt()),
+            trackShape: ThermometerSliderTrackShape(state.toInt()),
             showValueIndicator: ShowValueIndicator.never,
             valueIndicatorColor: Color(Constants.COLORS_UVA_BLUE),
             thumbShape: ThermometerThumbShape(),
             overlayShape: RoundSliderOverlayShape(overlayRadius: 10),
           ),
           child: Slider(
-              label: "${_value.toInt()}",
+              label: "${state.toInt()}",
               thumbColor: Colors.transparent,
-              value: _value,
+              value: state,
               min: 0,
               max: 10,
               divisions: 10,
               onChanged: (value) {
                 setState(() {
-                  _value = value;
-                  context.read<ThermometerCubit>().set(_value);
+                  context.read<ThermometerCubit>().set(value);
                 });
               }));
     });
