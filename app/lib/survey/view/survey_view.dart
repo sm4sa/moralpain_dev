@@ -45,75 +45,88 @@ class SurveyViewState extends State<SurveyView> {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<SurveyBloc, SurveyState>(
-        listenWhen: (previous, current) => current is SurveyComplete,
-        listener: (context, state) => handleSubmitted(context),
+        listenWhen: (previous, current) =>
+            current is SurveyComplete || current is SurveySubmitting,
+        listener: (context, state) => handleSubmitEvents(context, state),
         buildWhen: (previous, current) =>
             current is SurveyLoading || current is SurveyLoaded,
-        builder: (context, state) {
-          return Scaffold(
-            appBar: AppBar(
-              backgroundColor: const Color(Constants.COLORS_UVA_BLUE),
-              title: const Text(Constants.APPBAR_TEXT),
-            ),
-            body: Padding(
-                padding: EdgeInsets.all(Constants.PADDING),
-                child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        Constants.SURVEY_TITLE,
-                        style: TextStyle(fontSize: 16),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      ExpandableText(
-                        Constants.SURVEY_INSTRUCTIONS,
-                        expandText: Constants.SURVEY_EXPAND_TEXT,
-                        collapseText: Constants.SURVEY_COLLAPSE_TEXT,
-                        maxLines: 1,
-                        linkEllipsis: false,
-                        linkColor: Colors.blue,
-                        textAlign: TextAlign.center,
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      surveyFromState(state)
-                    ])),
-            floatingActionButton: Visibility(
-              visible: _show,
-              child: FloatingActionButton(
-                  onPressed: () {
-                    context.read<SurveyBloc>().add(SurveySubmitEvent());
-                  },
-                  child: Icon(Icons.send),
-                  backgroundColor: const Color(Constants.COLORS_UVA_BLUE)),
-            ),
-          );
-        });
+        builder: (context, state) => handleLoadEvents(context, state));
   }
 
   /**
    * Invoked by the BlocListener when a survey is submitted. 
    * Returns to the home screen.
    */
-  void handleSubmitted(BuildContext context) {
-    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-      content: Text(
-        Constants.SURVEY_TOASTER_MESSAGE,
-        textAlign: TextAlign.center,
-        style: TextStyle(fontSize: Constants.SURVEY_TOASTER_FONT_SIZE),
-      ),
-      duration: Duration(seconds: Constants.SURVEY_TOASTER_DURATION),
-    ));
+  void handleSubmitEvents(BuildContext context, SurveyState state) {
+    if (state is SurveySubmitting) {
+      showDialog(
+          barrierDismissible: false,
+          context: context,
+          builder: submittingScreenBuilder);
+    } else if (state is SurveyComplete) {
+      Navigator.popUntil(context, (route) => route.isFirst);
+    } else {
+      assert(false);
+    }
+  }
 
-    Future.delayed(const Duration(seconds: Constants.SURVEY_TOASTER_DURATION),
-        () {
-      Navigator.pop(context);
-      Navigator.pop(context);
-    });
+  /**
+   * A builder function that returns an overlay with a loading bar.
+   */
+  Widget submittingScreenBuilder(BuildContext context) => AlertDialog(
+      elevation: 0,
+      backgroundColor: Colors.transparent,
+      content: ClipRRect(
+          borderRadius: BorderRadius.circular(8),
+          child: UVALinearProgressIndicator()));
+
+  Widget handleLoadEvents(BuildContext context, SurveyState state) {
+    final title = Text(
+      Constants.SURVEY_TITLE,
+      style: TextStyle(fontSize: 16),
+    );
+
+    final spacer = SizedBox(
+      height: 10,
+    );
+
+    final instructions = ExpandableText(
+      Constants.SURVEY_INSTRUCTIONS,
+      expandText: Constants.SURVEY_EXPAND_TEXT,
+      collapseText: Constants.SURVEY_COLLAPSE_TEXT,
+      maxLines: 1,
+      linkEllipsis: false,
+      linkColor: Colors.blue,
+      textAlign: TextAlign.center,
+    );
+
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: const Color(Constants.COLORS_UVA_BLUE),
+        title: const Text(Constants.APPBAR_TEXT),
+      ),
+      body: Padding(
+          padding: EdgeInsets.all(Constants.PADDING),
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                title,
+                spacer,
+                instructions,
+                spacer,
+                surveyFromState(state)
+              ])),
+      floatingActionButton: Visibility(
+        visible: _show,
+        child: FloatingActionButton(
+            onPressed: () {
+              context.read<SurveyBloc>().add(SurveySubmitEvent());
+            },
+            child: Icon(Icons.send),
+            backgroundColor: const Color(Constants.COLORS_UVA_BLUE)),
+      ),
+    );
   }
 
   /**
@@ -123,7 +136,7 @@ class SurveyViewState extends State<SurveyView> {
    */
   Widget surveyFromState(SurveyState state) {
     if (state is SurveyLoading) {
-      return CircularProgressIndicator();
+      return Expanded(child: Center(child: UVACircularProgressIndicator()));
     } else if (state is SurveyLoaded) {
       return Expanded(
           child: ListView(
@@ -213,4 +226,25 @@ class SurveyOptionsWidgetState extends State<SurveyOptionsWidget> {
           }).toList());
         });
   }
+}
+
+class UVACircularProgressIndicator extends CircularProgressIndicator {
+  @override
+  Color? get backgroundColor => Color(Constants.COLORS_UVA_BLUE);
+
+  @override
+  Animation<Color?>? get valueColor =>
+      AlwaysStoppedAnimation(Color(Constants.COLORS_UVA_ORANGE));
+}
+
+class UVALinearProgressIndicator extends LinearProgressIndicator {
+  @override
+  double? get minHeight => 10;
+
+  @override
+  Color? get backgroundColor => Color(Constants.COLORS_UVA_BLUE);
+
+  @override
+  Animation<Color?>? get valueColor =>
+      AlwaysStoppedAnimation(Color(Constants.COLORS_UVA_ORANGE));
 }

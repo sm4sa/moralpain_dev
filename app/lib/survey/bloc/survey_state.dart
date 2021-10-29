@@ -19,6 +19,10 @@ class SurveyComplete extends SurveyState {
   SurveyComplete(this.success);
 }
 
+class SurveySubmitting extends SurveyState {
+  SurveySubmitting();
+}
+
 class SurveyUpdated extends SurveyState {
   Map<String, bool> selections;
 

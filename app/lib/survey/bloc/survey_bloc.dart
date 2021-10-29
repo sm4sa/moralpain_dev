@@ -39,6 +39,7 @@ class SurveyBloc extends Bloc<SurveyEvent, SurveyState> {
     builder.selections.addAll(selected);
     builder.timestamp = _secondsSinceEpoch();
 
+    emit(SurveySubmitting());
     final success = await repository.submit(builder.build());
     emit(SurveyComplete(success));
   }
