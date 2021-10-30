@@ -12,6 +12,12 @@ class SurveyRepository {
       basePathOverride:
           'https://umd7orqgt1.execute-api.us-east-1.amazonaws.com/v1');
 
+  SurveyRepository() {
+    mapi.dio.options.connectTimeout = 30 * 1000;
+    mapi.dio.options.receiveTimeout = 30 * 1000;
+    mapi.dio.options.sendTimeout = 30 * 1000;
+  }
+
   /**
    * Fetch the latest version of the moral distress survey from the API.
    * Fall back to a local copy on error.

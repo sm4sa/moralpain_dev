@@ -43,7 +43,6 @@ class SurveyBloc extends Bloc<SurveyEvent, SurveyState> {
     builder.timestamp = _secondsSinceEpoch();
 
     emit(SurveySubmitting());
-    // WARN THIS CAN TIME OUT!!
     final success = await repository.submit(builder.build());
     emit(SurveyComplete(success));
   }

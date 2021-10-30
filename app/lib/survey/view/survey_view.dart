@@ -64,7 +64,11 @@ class SurveyViewState extends State<SurveyView> {
           context: context,
           builder: submittingScreenBuilder);
     } else if (state is SurveyComplete) {
-      Navigator.popUntil(context, (route) => route.isFirst);
+      if (!state.success) {
+        showDialog(context: context, builder: failedSubmitScreenBuilder);
+      } else {
+        Navigator.popUntil(context, (route) => route.isFirst);
+      }
     } else {
       assert(false);
     }
@@ -79,6 +83,47 @@ class SurveyViewState extends State<SurveyView> {
       content: ClipRRect(
           borderRadius: BorderRadius.circular(8),
           child: UVALinearProgressIndicator()));
+
+  /**
+   * A builder function that alerts on submission failure.
+   */
+
+  Widget failedSubmitScreenBuilder(BuildContext context) => AlertDialog(
+      title: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Icon(Icons.network_check_rounded, color: Colors.red, size: 40),
+            SizedBox(width: 10),
+            Text("Uh-Oh!", style: TextStyle(fontWeight: FontWeight.bold)),
+          ]),
+      actions: [
+        ElevatedButton(
+          child: const Text(
+            'OK',
+            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+          ),
+          style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all(Colors.grey),
+              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(18.0),
+              ))),
+
+          //ElevatedButton.styleFrom(primary: Colors.grey),
+          onPressed: () {
+            Navigator.of(context).pop();
+            Navigator.of(context).pop();
+          },
+        )
+      ],
+      content: SingleChildScrollView(
+          child: ListBody(
+        children: const <Widget>[
+          Text('We are having a hard time submitting your report.'),
+          Text('Please check your internet connection and try again.'),
+        ],
+      )));
 
   Widget handleLoadEvents(BuildContext context, SurveyState state) {
     final title = Text(
