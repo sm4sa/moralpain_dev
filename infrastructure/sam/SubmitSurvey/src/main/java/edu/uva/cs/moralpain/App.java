@@ -66,6 +66,10 @@ public class App implements RequestHandler<APIGatewayV2HTTPEvent, APIGatewayV2HT
         Map<String, String> headers = new HashMap<>();
         headers.put("Content-Type", "application/json");
         headers.put("X-Custom-Header", "application/json");
+        // Cors. 
+        headers.put("Access-Control-Allow-Headers", "Content-Type,X-Amz-Date,Authorization,X-Api-Key");
+        headers.put("Access-Control-Allow-Origin", "*");
+        headers.put("Access-Control-Allow-Methods", "*");
         response.setHeaders(headers);
 
         return response;
