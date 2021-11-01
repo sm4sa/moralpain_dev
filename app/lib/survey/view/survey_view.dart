@@ -93,7 +93,8 @@ class SurveyViewState extends State<SurveyView> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Icon(Icons.network_check_rounded, color: Colors.red, size: 40),
+            Icon(Icons.signal_wifi_statusbar_connected_no_internet_4_rounded,
+                color: Colors.red, size: 40),
             SizedBox(width: 10),
             Text("Uh-Oh!", style: TextStyle(fontWeight: FontWeight.bold)),
           ]),
