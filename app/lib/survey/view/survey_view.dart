@@ -6,6 +6,7 @@ import 'package:moralpain/assets/constants.dart' as Constants;
 import 'package:expandable_text/expandable_text.dart';
 import 'package:moralpainapi/src/model/survey_section.dart';
 import 'package:moralpainapi/src/model/survey_option.dart';
+import 'package:moralpain/submitted/submitted_route.dart';
 
 import '../survey.dart';
 
@@ -67,7 +68,8 @@ class SurveyViewState extends State<SurveyView> {
       if (!state.success) {
         showDialog(context: context, builder: failedSubmitScreenBuilder);
       } else {
-        Navigator.popUntil(context, (route) => route.isFirst);
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => const SubmittedRoute()));
       }
     } else {
       assert(false);

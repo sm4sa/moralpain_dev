@@ -11,6 +11,7 @@ class HomeRoute extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color(0xFF232D4B),
+
         title: const Text(Constants.APPBAR_TEXT),
       ),
       body: Center(

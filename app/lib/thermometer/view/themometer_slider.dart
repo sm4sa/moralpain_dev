@@ -214,7 +214,7 @@ class _ThermometerWidgetState extends State<ThermometerWidget> {
             overlayShape: RoundSliderOverlayShape(overlayRadius: 10),
           ),
           child: Slider(
-              label: "${state.toInt()}",
+              label: state.toInt().toString(),
               thumbColor: Colors.transparent,
               value: state,
               min: 0,

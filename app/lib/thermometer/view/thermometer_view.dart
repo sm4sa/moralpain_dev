@@ -51,7 +51,9 @@ class ThermometerView extends StatelessWidget {
           children: [
             Expanded(
                 child: Column(children: [
-              Text(Constants.THERMOMETER_TITLE, style: TextStyle(fontSize: 16)),
+              Text(Constants.THERMOMETER_TITLE,
+                  style: TextStyle(
+                      fontSize: Constants.THERMOMETER_TITLE_FONT_SIZE)),
               SizedBox(height: 10),
               Text(
                 Constants.THERMOMETER_INSTRUCTIONS,
@@ -67,7 +69,9 @@ class ThermometerView extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text(Constants.THERMOMETER_TITLE, style: TextStyle(fontSize: 16)),
+            Text(Constants.THERMOMETER_TITLE,
+                style:
+                    TextStyle(fontSize: Constants.THERMOMETER_TITLE_FONT_SIZE)),
             SizedBox(height: 10),
             Text(
               Constants.THERMOMETER_INSTRUCTIONS,
