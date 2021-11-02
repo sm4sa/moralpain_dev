@@ -7,10 +7,7 @@ class SubmittedRoute extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: const Color(0xFF232D4B),
-          title: const Text('Moral Distress Survey'),
-        ),
+        appBar: AppBar(title: const Text('Moral Distress Survey')),
         body: Center(
             child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -21,24 +18,22 @@ class SubmittedRoute extends StatelessWidget {
                 style: TextStyle(fontSize: 16),
               ),
               ElevatedButton(
-                  child: const Text(
-                      'If you feel you need relief in the moment please click here'),
-                  onPressed: () {
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(
-                    //       builder: (context) => const ThermometerRoute()),
-                    //);
-                  },
-                  style: ElevatedButton.styleFrom(
-                      primary: const Color(COLORS_UVA_BLUE))),
+                child: const Text(
+                    'If you feel you need relief in the moment please click here'),
+                onPressed: () {
+                  // Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(
+                  //       builder: (context) => const ThermometerRoute()),
+                  //);
+                },
+              ),
               ElevatedButton(
                   child: const Text('Return to Main Page'),
                   onPressed: () {
                     Navigator.popUntil(context, (route) => route.isFirst);
                   },
-                  style: ElevatedButton.styleFrom(
-                      primary: const Color(COLORS_UVA_BLUE))),
+                  style: ElevatedButton.styleFrom()),
               SizedBox(
                 height: 10,
               ),

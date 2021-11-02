@@ -1,6 +1,8 @@
 // The pattern for variable naming is: <FEATURE>_<STRING_ DESCRIPTOR>.
 
 // General Constants.
+import 'package:flutter/material.dart';
+
 const String APPBAR_TEXT = 'Moral Distress';
 const int COLORS_UVA_BLUE = 0xFF232D4B;
 const int COLORS_UVA_ORANGE = 0xFFE57200;
