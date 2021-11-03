@@ -70,7 +70,11 @@ At this point you should be able to run Flutter from the command line.
 ```bash
 flutter doctor
 ```
-If the above command fails make sure the install location is on your path.  
+If the above command fails make sure the install location is on your path.
+You might have to exit from your terminal/shell and restart it. Also, at
+least on OSX, you might be asked to approve the installation of additional
+XCode software on your machine. Proceed to approve installation of this
+software on your machine. 
 
 Next, we want to install a phone emulator. Here we will install an android
 device. iOS device emulation can only be done on macs. 
