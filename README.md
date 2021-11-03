@@ -53,10 +53,10 @@ is [chocolatey][3]. With the package manager installed, we will use it to
 install the `moralpain` IDE dependencies. All of the following code snippets
 will use the Homebrew package manager but use whatever you have installed.  
 
-First, let us install git. Git will be used for cloning the code base locally
+First, let us install git and git-lfs. Git will be used for cloning the code base locally
 and for managing the project.
 ```bash
-brew install git 
+brew install git git-lfs
 ```
 
 Next, let us install the [Flutter SDK][4]. Flutter packages the
@@ -87,12 +87,15 @@ it packages up all of the tools needed to run an emulator. For that reason,
 it is easier just to install the whole android-studio package than to
 wrangle each individual dependency.  
 
-Once Android Studio is installed we will want to create an emulator. We
-direct you to the instructions published in the [android studio documentation][7] 
-for this task as they are thorough. When asked for an API level, select level
-24 as that is what this project is targeting.  
+Once Android Studio is installed we will use it to create an emulator. However, 
+before that, you will need to create a project. We will not actually be using 
+this project but, we do need it to get to the options for creating an emulator. 
+Now, the minimum API to target is 29. Besides that, all of the wizards
+default options should be appropriate. Finally, with a project setup we direct
+you to the instructions published in the [android studio documentation][7] for
+creating the emulator.  When asked for an API level, again target level 29.
 
-After this we should be permanently done with android studio.  
+After this we should be permanently done with Android Studio.  
 
 Finally, we should install the IDE that we will be using in this project.
 That is [visual-studio code][8] (vscode). 
@@ -109,7 +112,7 @@ git clone https://github.com/kevinsullivan/moralpain_dev.git
 
 Now, navigate inside the project and install the dependencies.
 ```bash
-cd moralpain_dev/moralpain
+cd moralpain_dev/app
 flutter pub get
 ```
 Note that these are dependencies that are needed to run the app. The
