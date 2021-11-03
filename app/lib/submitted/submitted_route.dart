@@ -11,34 +11,28 @@ class SubmittedRoute extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(title: const Text(Constant.APPBAR_TEXT)),
         body: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Flexible(flex: 2, child: thankYouHeader(context)),
               Flexible(
-                flex: 1,
-                child: Padding(
-                    padding: EdgeInsets.fromLTRB(10, 20, 10, 10),
-                    child: Container(
-                        constraints: BoxConstraints.expand(),
-                        child: Text(
-                          "If you need immediate relief please page PIC1712 to notify the MDC",
-                          textAlign: TextAlign.left,
-                          style: Theme.of(context).textTheme.bodyText1,
-                        ))),
-              ),
+                  flex: 1,
+                  child: Padding(
+                      padding: EdgeInsets.all(10),
+                      child: Text(
+                        "If you need immediate relief please page PIC1712 to notify the MDC",
+                        textAlign: TextAlign.left,
+                        style: Theme.of(context).textTheme.bodyText1,
+                      ))),
               Flexible(
-                flex: 1,
-                child: Padding(
-                    padding: EdgeInsets.fromLTRB(10, 30, 10, 0),
-                    child: Container(
-                        constraints: BoxConstraints.expand(),
-                        child: Text(
-                          "Resiliency Resources",
-                          textAlign: TextAlign.left,
-                          style: Theme.of(context).textTheme.bodyText1,
-                        ))),
-              ),
+                  flex: 1,
+                  child: Padding(
+                      padding: EdgeInsets.all(10),
+                      child: Text(
+                        "Resiliency Resources",
+                        textAlign: TextAlign.left,
+                        style: Theme.of(context).textTheme.bodyText1,
+                      ))),
               Flexible(
                 flex: 4,
                 child: helpfulLinkView(context),
@@ -50,31 +44,27 @@ class SubmittedRoute extends StatelessWidget {
         width: MediaQuery.of(context).size.width,
         child: new Container(
             decoration: new BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
 
-                  colors: <Color>[
-                    uvacolors.UVABlueTints,
-                    uvacolors.UVABlueTints.shade50
-                  ],
-                  tileMode:
-                      TileMode.clamp, // repeats the gradient over the canvas
-                ),
-                boxShadow: [
-                  BoxShadow(color: uvacolors.UVABlue.shade100, spreadRadius: 5),
-                  BoxShadow(
-                      color: uvacolors.UVAOrange.shade200, spreadRadius: 2),
+                colors: <Color>[
+                  uvacolors.UVABlueTints,
+                  uvacolors.UVABlueTints.shade50
                 ],
-                color: uvacolors.UVABlue,
-                borderRadius: new BorderRadius.only(
-                  bottomLeft: Radius.elliptical(
-                      MediaQuery.of(context).size.width / 2,
-                      MediaQuery.of(context).size.height / 10),
-                  bottomRight: Radius.elliptical(
-                      MediaQuery.of(context).size.width / 2,
-                      MediaQuery.of(context).size.height / 10),
-                )),
+                tileMode:
+                    TileMode.clamp, // repeats the gradient over the canvas
+              ),
+              boxShadow: [
+                BoxShadow(
+                    color: uvacolors.UVABlueTints.shade100, spreadRadius: 2),
+                BoxShadow(
+                    color: uvacolors.UVABlueTints.shade200,
+                    spreadRadius: 4,
+                    blurRadius: 3),
+              ],
+              color: uvacolors.UVABlue,
+            ),
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -100,7 +90,7 @@ class SubmittedRoute extends StatelessWidget {
 
   // TODO (nphair): Figure out scroll clipping text.
   Widget helpfulLinkView(BuildContextcontext) => GridView.count(
-        padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+        padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
         crossAxisSpacing: 10,
         mainAxisSpacing: 10,
         crossAxisCount: 2,
@@ -113,21 +103,20 @@ class SubmittedRoute extends StatelessWidget {
       );
 
   Widget buildContainer(HelpfulLink link) {
-    return Ink(
-        decoration: BoxDecoration(
-            color: uvacolors.UVAOrange,
-            borderRadius: BorderRadius.all(Radius.circular(10.0))),
+    return Card(
+        elevation: 3,
         child: InkWell(
-          child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+            splashColor: uvacolors.UVAOrange,
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Text(link.title),
                 Icon(link.icon, size: 40),
                 Text(link.description),
-              ]),
-          onTap: () {},
-        ));
+              ],
+            ),
+            onTap: () => {}));
   }
 }
 
