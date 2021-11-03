@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:moralpain/assets/constants.dart' as Constant;
 import 'package:moralpain/assets/colors.dart' as uvacolors;
+import 'package:url_launcher/url_launcher.dart';
 
 class SubmittedRoute extends StatelessWidget {
   const SubmittedRoute({Key? key}) : super(key: key);
@@ -90,15 +91,19 @@ class SubmittedRoute extends StatelessWidget {
 
   // TODO (nphair): Figure out scroll clipping text.
   Widget helpfulLinkView(BuildContextcontext) => GridView.count(
-        padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+        padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
         crossAxisSpacing: 10,
         mainAxisSpacing: 10,
         crossAxisCount: 2,
         children: [
-          HelpfulLink("Breathing Exercises", "description", Icons.air_rounded),
-          HelpfulLink("Body Scan", "description", Icons.person_rounded),
-          HelpfulLink("Chair Yoga", "description", Icons.chair_alt_rounded),
-          HelpfulLink("Furry Friends", "description", Icons.pets_rounded)
+          HelpfulLink("Breathing Exercises", "description", Icons.air_rounded,
+              "https://www.youtube.com/watch?v=5_N98E5-7jo"),
+          HelpfulLink("Body Scan", "description", Icons.person_rounded,
+              "https://www.uclahealth.org/marc/mpeg/Body-Scan-Meditation.mp3"),
+          HelpfulLink("Chair Yoga", "description", Icons.chair_alt_rounded,
+              "https://www.youtube.com/watch?v=tAUf7aajBWE"),
+          HelpfulLink("Furry Friends", "description", Icons.pets_rounded,
+              "https://www.instagram.com/weratedogs/")
         ].map(buildContainer).toList(),
       );
 
@@ -116,8 +121,12 @@ class SubmittedRoute extends StatelessWidget {
                 Text(link.description),
               ],
             ),
-            onTap: () => {}));
+            onTap: () => {print('tapped'), _launchURL(link.url)}));
   }
+
+  void _launchURL(String url) async => await canLaunch(url)
+      ? await launch(url, forceWebView: true, enableJavaScript: true)
+      : throw 'Could not launch $url';
 }
 
 // TODO (nphair): Replace with a model.
@@ -125,6 +134,7 @@ class HelpfulLink {
   final String title;
   final String description;
   final IconData icon;
+  final String url;
 
-  const HelpfulLink(this.title, this.description, this.icon);
+  const HelpfulLink(this.title, this.description, this.icon, this.url);
 }
