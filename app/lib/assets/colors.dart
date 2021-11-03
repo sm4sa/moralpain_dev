@@ -13,6 +13,19 @@ const UVABlue = const MaterialColor(0xFF232D4B, const <int, Color>{
   900: const Color(0xFF000000),
 });
 
+const UVABlueTints = const MaterialColor(0xFF232D4B, const <int, Color>{
+  50: const Color(0xFF39425D),
+  100: const Color(0xFF4F576F),
+  200: const Color(0xFF656C81),
+  300: const Color(0xFF7B8193),
+  400: const Color(0xFF9196A5),
+  500: const Color(0xFFA7ABB7),
+  600: const Color(0xFFBDC0C9),
+  700: const Color(0xFFD3D5DB),
+  800: const Color(0xFFE9EAED),
+  900: const Color(0xFFFFFFFF),
+});
+
 const UVAOrange = const MaterialColor(0xFFE57200, const <int, Color>{
   50: const Color(0xFFCE6700),
   100: const Color(0xFFB75B00),
