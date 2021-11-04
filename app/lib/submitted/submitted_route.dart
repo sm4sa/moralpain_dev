@@ -10,35 +10,31 @@ class SubmittedRoute extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: const Text(Constant.APPBAR_TEXT)),
-        body: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Flexible(flex: 2, child: thankYouHeader(context)),
-              Flexible(
-                  flex: 1,
-                  child: Padding(
-                      padding: EdgeInsets.all(10),
-                      child: Text(
-                        "If you need immediate relief please page PIC1712 to notify the MDC",
-                        textAlign: TextAlign.left,
-                        style: Theme.of(context).textTheme.bodyText1,
-                      ))),
-              Flexible(
-                  flex: 1,
-                  child: Padding(
-                      padding: EdgeInsets.all(10),
-                      child: Text(
-                        "Resiliency Resources",
-                        textAlign: TextAlign.left,
-                        style: Theme.of(context).textTheme.bodyText1,
-                      ))),
-              Flexible(
-                flex: 4,
-                child: helpfulLinkView(context),
-              ),
-            ]));
+      appBar: AppBar(title: const Text(Constant.APPBAR_TEXT)),
+      body: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Flexible(flex: 2, child: thankYouHeader(context)),
+            Flexible(
+                flex: 1,
+                child: Padding(
+                    padding: EdgeInsets.all(10),
+                    child: Text(
+                      "If you need immediate relief please page PIC1712 to notify the MDC",
+                      textAlign: TextAlign.left,
+                      style: Theme.of(context).textTheme.bodyText1,
+                    ))),
+            Flexible(
+              flex: 4,
+              child: helpfulLinkView(context),
+            ),
+          ]),
+      floatingActionButton: FloatingActionButton(
+          onPressed: () =>
+              {Navigator.of(context).popUntil((route) => route.isFirst)},
+          child: Icon(Icons.home_rounded)),
+    );
   }
 
   Widget thankYouHeader(BuildContext context) => Container(
@@ -89,23 +85,40 @@ class SubmittedRoute extends StatelessWidget {
                 ])),
       );
 
-  // TODO (nphair): Figure out scroll clipping text.
-  Widget helpfulLinkView(BuildContextcontext) => GridView.count(
-        padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
-        crossAxisSpacing: 10,
-        mainAxisSpacing: 10,
-        crossAxisCount: 2,
-        children: [
-          HelpfulLink("Breathing Exercises", "description", Icons.air_rounded,
-              "https://www.youtube.com/watch?v=5_N98E5-7jo"),
-          HelpfulLink("Body Scan", "description", Icons.person_rounded,
-              "https://www.uclahealth.org/marc/mpeg/Body-Scan-Meditation.mp3"),
-          HelpfulLink("Chair Yoga", "description", Icons.chair_alt_rounded,
-              "https://www.youtube.com/watch?v=tAUf7aajBWE"),
-          HelpfulLink("Furry Friends", "description", Icons.pets_rounded,
-              "https://www.instagram.com/weratedogs/")
-        ].map(buildContainer).toList(),
-      );
+  Widget helpfulLinkView(BuildContext context) => Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Padding(
+                padding: EdgeInsets.all(10),
+                child: Text(
+                  "Resiliencey Resources",
+                  textAlign: TextAlign.left,
+                  style: Theme.of(context).textTheme.bodyText1,
+                )),
+            Expanded(
+                child: GridView.count(
+              padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
+              childAspectRatio: 1.5,
+              crossAxisCount: 2,
+              children: [
+                HelpfulLink(
+                    "Breathing Exercises",
+                    "description",
+                    Icons.air_rounded,
+                    "https://www.youtube.com/watch?v=5_N98E5-7jo"),
+                HelpfulLink("Body Scan", "description", Icons.person_rounded,
+                    "https://www.uclahealth.org/marc/mpeg/Body-Scan-Meditation.mp3"),
+                HelpfulLink(
+                    "Chair Yoga",
+                    "description",
+                    Icons.chair_alt_rounded,
+                    "https://www.youtube.com/watch?v=tAUf7aajBWE"),
+                HelpfulLink("Furry Friends", "description", Icons.pets_rounded,
+                    "https://www.instagram.com/weratedogs/")
+              ].map(buildContainer).toList(),
+            ))
+          ]);
 
   Widget buildContainer(HelpfulLink link) {
     return Card(
@@ -121,7 +134,7 @@ class SubmittedRoute extends StatelessWidget {
                 Text(link.description),
               ],
             ),
-            onTap: () => {print('tapped'), _launchURL(link.url)}));
+            onTap: () => {_launchURL(link.url)}));
   }
 
   void _launchURL(String url) async => await canLaunch(url)
