@@ -1,4 +1,4 @@
-package com.example.moralpain
+package edu.uva.cs.moralpain;
 
 import io.flutter.embedding.android.FlutterActivity
 
