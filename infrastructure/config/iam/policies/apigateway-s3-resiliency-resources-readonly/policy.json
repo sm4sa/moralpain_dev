@@ -11,7 +11,7 @@
       "Action": [
         "s3:Get*"
       ],
-      "Resource": "arn:aws:s3:::moralpain-resources/questionnaire.json"
+      "Resource": "arn:aws:s3:::moralpain-resources/resiliency_resources.json"
     }
   ]
 }
