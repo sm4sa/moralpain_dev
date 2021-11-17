@@ -32,6 +32,8 @@ const String SURVEY_TOASTER_MESSAGE =
     'Thank You - Your response has been recorded and will be escalated if aggregate scores are high enough.';
 const int SURVEY_TOASTER_DURATION = 3;
 const double SURVEY_TOASTER_FONT_SIZE = 15;
-const String SURVEY_QUESTIONNAIRE_PATH = 'assets/questionnaire.json';
+
+// TODO: Does this path work?
+const String SURVEY_QUESTIONNAIRE_PATH = '../resources/questionnaire.json';
 
 // Submitted Route Constants.

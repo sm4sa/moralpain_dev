@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
 import 'package:moralpain/assets/constants.dart' as Constant;
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:moralpain/assets/colors.dart' as uvacolors;
+import 'package:moralpain/submitted/submitted.dart';
+import 'package:moralpainapi/moralpainapi.dart' as api;
 import 'package:url_launcher/url_launcher.dart';
 
-class SubmittedRoute extends StatelessWidget {
-  const SubmittedRoute({Key? key}) : super(key: key);
+class SubmittedView extends StatelessWidget {
+  const SubmittedView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -31,8 +35,10 @@ class SubmittedRoute extends StatelessWidget {
             ),
           ]),
       floatingActionButton: FloatingActionButton(
-          onPressed: () =>
-              {Navigator.of(context).popUntil((route) => route.isFirst)},
+          onPressed: () {
+            context.read<ResourcesBloc>().add(VisitedResourcesSubmitEvent());
+            Navigator.of(context).popUntil((route) => route.isFirst);
+          },
           child: Icon(Icons.home_rounded)),
     );
   }
@@ -96,31 +102,25 @@ class SubmittedRoute extends StatelessWidget {
                   textAlign: TextAlign.left,
                   style: Theme.of(context).textTheme.bodyText1,
                 )),
-            Expanded(
-                child: GridView.count(
-              padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
-              childAspectRatio: 1.5,
-              crossAxisCount: 2,
-              children: [
-                HelpfulLink(
-                    "Breathing Exercises",
-                    "description",
-                    Icons.air_rounded,
-                    "https://www.youtube.com/watch?v=5_N98E5-7jo"),
-                HelpfulLink("Body Scan", "description", Icons.person_rounded,
-                    "https://www.uclahealth.org/marc/mpeg/Body-Scan-Meditation.mp3"),
-                HelpfulLink(
-                    "Chair Yoga",
-                    "description",
-                    Icons.chair_alt_rounded,
-                    "https://www.youtube.com/watch?v=tAUf7aajBWE"),
-                HelpfulLink("Furry Friends", "description", Icons.pets_rounded,
-                    "https://www.instagram.com/weratedogs/")
-              ].map(buildContainer).toList(),
-            ))
+            BlocBuilder<ResourcesBloc, ResourcesState>(
+                builder: (context, state) {
+              if (state is ResourcesLoaded) {
+                return Expanded(
+                    child: GridView.count(
+                        padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
+                        childAspectRatio: 1.5,
+                        crossAxisCount: 2,
+                        children: state.resources.resources!
+                            .map((p0) => buildContainer(context, p0))
+                            .toList()));
+              } else {
+                return Text("FOO");
+              }
+            })
           ]);
 
-  Widget buildContainer(HelpfulLink link) {
+  Widget buildContainer(
+      BuildContext context, api.ResiliencyResource resiliencyResource) {
     return Card(
         elevation: 3,
         child: InkWell(
@@ -129,12 +129,25 @@ class SubmittedRoute extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                Text(link.title),
-                Icon(link.icon, size: 40),
-                Text(link.description),
+                Text(resiliencyResource.title!),
+                buildIcon(resiliencyResource),
+                Text(resiliencyResource.description!),
               ],
             ),
-            onTap: () => {_launchURL(link.url)}));
+            onTap: () {
+              context
+                  .read<ResourcesBloc>()
+                  .add(ResourceVisitedEvent(resiliencyResource.resourceId!));
+              _launchURL(resiliencyResource.url!);
+            }));
+  }
+
+  Widget buildIcon(api.ResiliencyResource resiliencyResource) {
+    final input = resiliencyResource.icon!;
+    final iconData = IconData(
+        int.parse(input.codePoint!.replaceFirst('0x', ''), radix: 16),
+        fontFamily: input.fontFamily);
+    return Icon(iconData, size: 40.0);
   }
 
   void _launchURL(String url) async => await canLaunch(url)
