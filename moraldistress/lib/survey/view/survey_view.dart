@@ -173,7 +173,14 @@ class SurveyViewState extends State<SurveyView> {
         visible: _show,
         child: FloatingActionButton(
           onPressed: () {
-            context.read<SurveyBloc>().add(SurveySubmitEvent());
+            var bloc = context.read<SurveyBloc>();
+            print(bloc.score);
+            if (bloc.score > Constants.SURVEY_NO_SELCTIONS_REQUIRED_SCORE &&
+                !bloc.options.containsValue(true)) {
+              badSubmissionToast(context);
+            } else {
+              bloc.add(SurveySubmitEvent());
+            }
           },
           child: Icon(Icons.send),
         ),
@@ -202,6 +209,20 @@ class SurveyViewState extends State<SurveyView> {
       assert(false);
       return ErrorWidget("Error State");
     }
+  }
+
+  void badSubmissionToast(BuildContext context) {
+    final scaffold = ScaffoldMessenger.of(context);
+    scaffold.showSnackBar(
+      SnackBar(
+        content: const Text(
+          'For scores greater than ${Constants.SURVEY_NO_SELCTIONS_REQUIRED_SCORE} please select the contibuting factors',
+          textAlign: TextAlign.center,
+        ),
+
+        //action: SnackBarAction(label: 'UNDO', onPressed: scaffold.hideCurrentSnackBar),
+      ),
+    );
   }
 
   void scrollHandler() {
