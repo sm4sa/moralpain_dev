@@ -37,3 +37,4 @@ const double SURVEY_TOASTER_FONT_SIZE = 15;
 const String SURVEY_QUESTIONNAIRE_PATH = '../resources/questionnaire.json';
 
 // Submitted Route Constants.
+const String SUBMITTED_RESOURCE_SECTION_TEXT = 'Resiliency Resources';

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
-import 'package:moraldistress/assets/constants.dart' as Constant;
+import 'package:moraldistress/assets/constants.dart' as Constants;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:moraldistress/assets/colors.dart' as uvacolors;
 import 'package:moraldistress/submitted/submitted.dart';
@@ -14,7 +14,7 @@ class SubmittedView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text(Constant.APPBAR_TEXT)),
+      appBar: AppBar(title: const Text(Constants.APPBAR_TEXT)),
       body: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -66,8 +66,7 @@ class SubmittedView extends StatelessWidget {
                     spreadRadius: 4,
                     blurRadius: 3),
               ],
-              //color: uvacolors.UVABlue,
-              color: Colors.blue,
+              color: uvacolors.UVABlue,
             ),
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -99,7 +98,7 @@ class SubmittedView extends StatelessWidget {
             Padding(
                 padding: EdgeInsets.all(10),
                 child: Text(
-                  "Resiliencey Resources",
+                  Constants.SUBMITTED_RESOURCE_SECTION_TEXT,
                   textAlign: TextAlign.left,
                   style: Theme.of(context).textTheme.bodyText1,
                 )),
