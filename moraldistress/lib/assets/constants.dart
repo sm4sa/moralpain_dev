@@ -38,3 +38,4 @@ const double SURVEY_NO_SELCTIONS_REQUIRED_SCORE = 3;
 const String SURVEY_QUESTIONNAIRE_PATH = '../resources/questionnaire.json';
 
 // Submitted Route Constants.
+const String SUBMITTED_RESOURCE_SECTION_TEXT = 'Resiliency Resources';
