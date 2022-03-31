@@ -98,21 +98,35 @@ class SubmittedView extends StatelessWidget {
             Padding(
                 padding: EdgeInsets.all(10),
                 child: Text(
-                  Constants.SUBMITTED_RESOURCE_SECTION_TEXT,
+                  "Scroll down for suggested resiliency resources",
                   textAlign: TextAlign.left,
                   style: Theme.of(context).textTheme.bodyText1,
                 )),
             BlocBuilder<ResourcesBloc, ResourcesState>(
                 builder: (context, state) {
               if (state is ResourcesLoaded) {
+                var sep = [
+                  buildPadding(context),
+                  buildPadding(context),
+                  buildPadding(context),
+                  buildPadding(context),
+                  buildPadding(context),
+                  buildPadding(context)
+                ];
+                var cards = state.resources.resources!
+                    .map((p0) => buildContainer(context, p0))
+                    .toList();
+                sep.addAll(cards);
+
                 return Expanded(
                     child: GridView.count(
-                        padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
+                        padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
                         childAspectRatio: 1.5,
                         crossAxisCount: 2,
-                        children: state.resources.resources!
-                            .map((p0) => buildContainer(context, p0))
-                            .toList()));
+                        children: sep));
+                // children: state.resources.resources!
+                //     .map((p0) => buildContainer(context, p0))
+                //     .toList()));
               } else {
                 return Text("FOO");
               }
@@ -140,6 +154,22 @@ class SubmittedView extends StatelessWidget {
                   .add(ResourceVisitedEvent(resiliencyResource.resourceId!));
               _launchURL(resiliencyResource.url!);
             }));
+  }
+
+  Widget buildPadding(BuildContext context) {
+    return FractionallySizedBox(
+        widthFactor: 1,
+        heightFactor: 1,
+        alignment: FractionalOffset.center,
+        child: Container()
+        // DecoratedBox(
+        //   decoration: BoxDecoration(
+        //     border: Border.all(
+        //       color: Colors.blue,
+        //       width: 4,
+        //     ),
+        //   ),
+        );
   }
 
   Widget buildIcon(api.ResiliencyResource resiliencyResource) {
