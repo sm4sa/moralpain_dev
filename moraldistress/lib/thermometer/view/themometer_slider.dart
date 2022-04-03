@@ -251,6 +251,16 @@ class ThermometerThumbShape extends RoundSliderThumbShape {
       parentBox: parentBox,
       textDirection: textDirection,
     );
+
+    var scaled = (value * 10).toInt();
+    labelPainter.text = new TextSpan(
+        text: scaled == 10 ? '1\n0' : scaled.toString(),
+        style: TextStyle(
+          fontFamily: 'SliderFont',
+          height: .8,
+        ));
+    labelPainter.layout();
+
     _indicatorShape.paint(
       context,
       center,

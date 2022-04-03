@@ -67,5 +67,6 @@ flutter:
         weight: 700
       - asset: fonts/LibreFranklin-Italic.ttf
         style: italic
-    #assets:
-    #  - ../resources/questionnaire.json
+    - family: SliderFont
+      fonts:
+      - asset: fonts/LibreFranklin-Regular-Rotated.ttf
