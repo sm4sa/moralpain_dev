@@ -14,7 +14,6 @@ class SubmittedView extends StatefulWidget {
 }
 
 class SubmittedViewState extends State<SubmittedView> {
-  final resourcesController = DraggableScrollableController();
   final resourcesSheetMinChildSize = 0.1;
   final resourcesSheetInitialChildSize = 0.1;
   final resourcesSheetMaxChildSize = .75;
@@ -57,7 +56,6 @@ class SubmittedViewState extends State<SubmittedView> {
               ]),
           NotificationListener<DraggableScrollableNotification>(
               onNotification: (notification) {
-                print(notification.extent);
                 // NB (nphair): Be sure to round to handle precision of doubles.
                 var rounded =
                     double.parse((notification.extent).toStringAsFixed(3));
@@ -73,43 +71,28 @@ class SubmittedViewState extends State<SubmittedView> {
                   maxChildSize: resourcesSheetMaxChildSize,
                   initialChildSize: resourcesSheetInitialChildSize,
                   snap: true,
-                  controller: resourcesController,
                   builder: (context, scrollableController) {
-                    return Padding(
-                        padding: EdgeInsets.all(10),
-                        child: BlocBuilder<ResourcesBloc, ResourcesState>(
-                            builder: (context, state) {
-                          if (state is ResourcesLoaded) {
-                            var cards = state.resources.resources!;
-                            return Container(
-                                child: ListView.builder(
-                                    itemCount: cards.length + 1,
-                                    controller: scrollableController,
-                                    itemBuilder:
-                                        (BuildContext context, int index) {
-                                      if (index == 0) {
-                                        return Material(
-                                            child: resiliencyHeader());
-                                      }
+                    return BlocBuilder<ResourcesBloc, ResourcesState>(
+                        builder: (context, state) {
+                      if (state is ResourcesLoaded) {
+                        var cards = state.resources.resources!;
+                        return Container(
+                            child: ListView.builder(
+                                itemCount: cards.length + 1,
+                                controller: scrollableController,
+                                itemBuilder: (BuildContext context, int index) {
+                                  if (index == 0) {
+                                    return resiliencyHeader();
+                                  }
 
-                                      // NB: Have to minus 1 to account for header.
-                                      var r = cards[index - 1];
-                                      return Material(
-                                          child: ListTile(
-                                              leading: buildIcon(r),
-                                              title: Text(r.title!),
-                                              onTap: () {
-                                                context
-                                                    .read<ResourcesBloc>()
-                                                    .add(ResourceVisitedEvent(
-                                                        r.resourceId!));
-                                                _launchURL(r.url!);
-                                              }));
-                                    }));
-                          } else {
-                            return Container();
-                          }
-                        }));
+                                  // NB: Have to minus 1 to account for header.
+                                  var resource = cards[index - 1];
+                                  return resiliencyTile(resource);
+                                }));
+                      } else {
+                        return Container();
+                      }
+                    });
                   }))
         ],
       ),
@@ -130,11 +113,25 @@ class SubmittedViewState extends State<SubmittedView> {
         _resourcesShowing = false;
       });
 
-  ListTile resiliencyHeader() {
+  Widget resiliencyHeader() {
     if (_resourcesShowing) {
-      return ListTile(title: Icon(Icons.arrow_drop_down_outlined));
+      return Material(
+          child: ListTile(title: Icon(Icons.arrow_drop_down_outlined)));
     }
-    return ListTile(title: Icon(Icons.arrow_drop_up_outlined));
+    return Material(child: ListTile(title: Icon(Icons.arrow_drop_up_outlined)));
+  }
+
+  Widget resiliencyTile(api.ResiliencyResource resource) {
+    return Material(
+        child: ListTile(
+            leading: buildIcon(resource),
+            title: Text(resource.title!),
+            onTap: () {
+              context
+                  .read<ResourcesBloc>()
+                  .add(ResourceVisitedEvent(resource.resourceId!));
+              _launchURL(resource.url!);
+            }));
   }
 
   Widget thankYouHeader(BuildContext context) => Container(
