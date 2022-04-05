@@ -10,6 +10,7 @@ import 'package:moraldistress/submitted/view/submitted_route.dart';
 import 'package:moralpainapi/src/model/survey_section.dart';
 import 'package:moralpainapi/src/model/survey_option.dart';
 import 'package:moraldistress/submitted/view/submitted_view.dart';
+import 'package:expansion_tile_card/expansion_tile_card.dart';
 
 import '../survey.dart';
 
@@ -20,7 +21,7 @@ class SurveyView extends StatefulWidget {
 
 class SurveyViewState extends State<SurveyView> {
   final controller = ScrollController();
-  bool _show = false;
+  bool _show = true;
 
   @override
   void initState() {
@@ -229,6 +230,9 @@ class SurveyViewState extends State<SurveyView> {
   }
 
   void scrollHandler() {
+    print(controller.position.pixels);
+    print(controller.position.maxScrollExtent);
+
     if (controller.position.pixels == controller.position.maxScrollExtent) {
       showFloationButton();
     } else {
@@ -236,26 +240,22 @@ class SurveyViewState extends State<SurveyView> {
     }
   }
 
-  Card cardForSection(SurveySection section) {
-    return Card(
+  Widget cardForSection(SurveySection section) {
+    return ExpansionTileCard(
+      title: Text(section.title!),
+      subtitle: Text(section.subtitle!),
+      initialElevation: 3,
       elevation: 3,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-              padding: EdgeInsets.fromLTRB(10, 10, 0, 0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    section.title!,
-                  ),
-                  Text(section.subtitle!),
-                ],
-              )),
-          SurveyOptionsWidget(section.sectionId!, section.options!.asList())
-        ],
-      ),
+      initialPadding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+      finalPadding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+      children: [
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SurveyOptionsWidget(section.sectionId!, section.options!.asList())
+          ],
+        )
+      ],
     );
   }
 }
