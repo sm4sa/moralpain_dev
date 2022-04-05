@@ -173,8 +173,10 @@ class SurveyViewState extends State<SurveyView> {
                 spacer,
                 surveyFromState(state)
               ])),
+      // TODO (nphair): Since this button is always visible now we can get
+      // rid of the visibility widget and make this whole page stateless.
       floatingActionButton: Visibility(
-        visible: _show,
+        visible: true,
         child: FloatingActionButton(
           onPressed: () {
             var bloc = context.read<SurveyBloc>();
