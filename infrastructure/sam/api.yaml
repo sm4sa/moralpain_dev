@@ -290,6 +290,7 @@ paths:
         - in: query
           name: operation
           description: The analytic operation to perform on the data.
+          required: true
           schema:
             type: string
             enum:
