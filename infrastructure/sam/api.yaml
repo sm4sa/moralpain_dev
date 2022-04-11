@@ -1,6 +1,7 @@
 openapi: "3.0.1"
 info:
   title: MoralDistress API
+  description: MoralDistress API.
   version: 1.0.0
 paths:
   /survey:
@@ -78,6 +79,7 @@ paths:
               method.response.header.Access-Control-Allow-Methods: '''*'''
               method.response.header.Access-Control-Allow-Origin: '''*'''
     options:
+      operationId: optionsSurvey
       summary: CORS support
       description: |
         Enable CORS by returning correct headers
@@ -114,7 +116,6 @@ paths:
             responseTemplates:
               application/json: |
                 {}
-
   /resiliency:
     get:
       operationId: getResiliencyResources
@@ -190,6 +191,7 @@ paths:
               method.response.header.Access-Control-Allow-Methods: '''*'''
               method.response.header.Access-Control-Allow-Origin: '''*'''
     options:
+      operationId: optionsVisitedResiliencyResources
       summary: CORS support
       description: |
         Enable CORS by returning correct headers
@@ -226,6 +228,86 @@ paths:
             responseTemplates:
               application/json: |
                 {}
+  /admin/submissions:
+    get:
+      operationId: getSubmissions
+      summary: Fetch the submitted survey results.
+      parameters:
+        - in: query
+          name: starttime
+          description: Minimum possible timestamp of a record in UTC seconds since Unix epoch.
+          schema:
+            type: integer
+          example: 1640995200
+        - in: query
+          name: endtime
+          description: Maximum possible timestamp of a record in UTC seconds since Unix epoch.
+          schema:
+            type: integer
+          example: 1647907200
+        - in: query
+          name: minscore
+          description: Minimum possible score of a record.
+          schema:
+            type: integer
+            minimum: 0
+            maximum: 10
+          example: 1
+        - in: query
+          name: maxscore
+          description: Maximum possible score of a record.
+          schema:
+            type: integer
+            minimum: 0
+            maximum: 10
+          example: 5
+      responses:
+        '200':
+          description: 200 response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/submissions'
+        '400':
+          description: 400 Bad Request
+  /admin/analytics:
+    get:
+      operationId: getAnalytics
+      summary: Calculate basic analytics on the data
+      parameters:
+        - in: query
+          name: starttime
+          description: Minimum possible timestamp of a record in UTC seconds since Unix epoch.
+          schema:
+            type: integer
+          example: 1640995200
+        - in: query
+          name: endtime
+          description: Maximum possible timestamp of a record in UTC seconds since Unix epoch.
+          schema:
+            type: integer
+          example: 1647907200
+        - in: query
+          name: operation
+          description: The analytic operation to perform on the data.
+          schema:
+            type: string
+            enum:
+              - average
+              - count
+              - maximum
+              - minimum
+          example: count
+      responses:
+        '200':
+          description: 200 response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/submissions'
+        '400':
+          description: 400 Bad Request
+
 
 components:
   schemas:
@@ -258,6 +340,10 @@ components:
           type: string
         description:
           type: string
+    submissions:
+      type: array
+      items:
+        $ref: '#/components/schemas/submission'
     submission:
       type: object
       properties:
@@ -311,3 +397,15 @@ components:
             type: string
         timestamp:
           type: integer
+    analyticsResult:
+      type: object
+      properties:
+        operation:
+          type: string
+          enum:
+            - average
+            - count
+            - maximum
+            - minimum
+        value:
+          type: number
