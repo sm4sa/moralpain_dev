@@ -3,11 +3,18 @@ info:
   title: MoralDistress API
   description: MoralDistress API.
   version: 1.0.0
+  x-logo: 
+    url: 'https://moralpain-site.s3.amazonaws.com/docs/assets/icon.svg'
+    altText: 'MoralDistress Logo'
 paths:
   /survey:
     get:
       operationId: getSurvey
-      summary: Fetch moral distress survey
+      summary: Get the MDQ
+      description: >
+        Fetch the latest moral distress questionnaire (MDQ) from the database.
+      tags:
+        - User
       responses:
         '200':
           description: |-
@@ -41,7 +48,12 @@ paths:
               method.response.header.Access-Control-Allow-Origin: '''*'''
     post:
       operationId: submitSurvey
-      summary: Submit completed moral distress survey
+      summary: Submit a completed MDQ
+      description: >
+        Submit a completed Moral Distress Questionnaire and Moral Distress
+        Score to the database.
+      tags:
+        - User
       requestBody:
         content:
           application/json:
@@ -80,7 +92,7 @@ paths:
               method.response.header.Access-Control-Allow-Origin: '''*'''
     options:
       operationId: optionsSurvey
-      summary: CORS support
+      summary: CORS survey support
       description: |
         Enable CORS by returning correct headers
       tags:
@@ -119,7 +131,11 @@ paths:
   /resiliency:
     get:
       operationId: getResiliencyResources
-      summary: Fetch resiliency resource list
+      summary: Get resiliency resources
+      description: |
+        Fetch the recommended resiliency resources from the database.
+      tags:
+        - User
       responses:
         '200':
           description: |-
@@ -154,6 +170,10 @@ paths:
     post:
       operationId: submitVisitedResiliencyResources
       summary: Submit visited resiliency resources
+      description: |
+        Submit the list of resources visited by this user to the database.
+      tags:
+        - User
       requestBody:
         content:
           application/json:
@@ -192,7 +212,7 @@ paths:
               method.response.header.Access-Control-Allow-Origin: '''*'''
     options:
       operationId: optionsVisitedResiliencyResources
-      summary: CORS support
+      summary: CORS resiliency resources support
       description: |
         Enable CORS by returning correct headers
       tags:
@@ -231,7 +251,12 @@ paths:
   /admin/submissions:
     get:
       operationId: getSubmissions
-      summary: Fetch the submitted survey results.
+      summary: Get survey results
+      description: >
+        Fetch from the database all of the records that match the
+        query parameters.
+      tags:
+        - Admin
       parameters:
         - in: query
           name: starttime
@@ -273,7 +298,12 @@ paths:
   /admin/analytics:
     get:
       operationId: getAnalytics
-      summary: Calculate basic analytics on the data
+      summary: Get data analysis
+      description: >
+        Perform an analysis on the records in the database that match the query
+        paramters.
+      tags:
+        - Admin
       parameters:
         - in: query
           name: starttime
