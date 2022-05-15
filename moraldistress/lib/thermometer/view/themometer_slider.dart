@@ -12,11 +12,19 @@ class ThermometerSliderTrackShape extends SliderTrackShape {
   final Color borderColor = Color(0xFF232D4B);
   final Color inactiveFillColor = Colors.white;
   final Color activeFillColor = Colors.red;
+  // NB (nphair): Tried to stay close to the steps on the color wheel.
+  // https://uxplanet.org/colour-psychology-to-empower-and-inspire-you-3424dae70f2
   final activeFillColorSteps = [
-    Colors.blue,
-    Colors.green,
-    Colors.yellow,
-    Colors.red,
+    Color(0xff015ebb),
+    Color(0xff4bb2e7),
+    Color(0xff78e7e7),
+    Color(0xff009900),
+    Color(0xff66cb01),
+    Color(0xffffff01),
+    Color(0xfffecb00),
+    Color(0xfffe9900),
+    Color(0xffff6600),
+    Color(0xfffe0000),
   ];
   final Color measurementLineColor = Color(0xFF232D4B);
   final int thermometerSections = 10;
@@ -151,25 +159,13 @@ class ThermometerSliderTrackShape extends SliderTrackShape {
 
   /**
    * Return the paint color for the section. 
-   * 
-   * When the number of fill colors does not divide evenly into the sections
-   * pad the top sections.
    */
   Paint fillPaintForSection(int section) {
     if (section >= maxFillSection) {
       return Paint()..color = inactiveFillColor;
     }
 
-    var colorStepCount = activeFillColorSteps.length;
-    var remainder = thermometerSections % colorStepCount;
-    var evenlyDivisibleSectionCount = thermometerSections - remainder;
-    if (section >= evenlyDivisibleSectionCount) {
-      return Paint()..color = activeFillColorSteps.last;
-    }
-
-    var sectionColorStepSize = evenlyDivisibleSectionCount ~/ colorStepCount;
-    var step = section ~/ sectionColorStepSize;
-    return Paint()..color = activeFillColorSteps[step];
+    return Paint()..color = activeFillColorSteps[section];
   }
 }
 
