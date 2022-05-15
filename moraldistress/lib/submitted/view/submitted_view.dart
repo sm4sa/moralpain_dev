@@ -28,32 +28,29 @@ class SubmittedViewState extends State<SubmittedView> {
       ),
       body: Stack(
         children: [
-          Column(
-              //mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Flexible(flex: 2, child: thankYouHeader(context)),
-                Flexible(
-                    flex: 1,
-                    child: Padding(
-                        padding: EdgeInsets.all(10),
-                        child: Text(
-                          "If you need immediate relief please page PIC1712 to notify the MDC",
-                          textAlign: TextAlign.left,
-                          style: Theme.of(context).textTheme.bodyText1,
-                        ))),
-                Flexible(
-                  child: Padding(
-                      padding: EdgeInsets.all(10),
-                      child: Text(
-                        "Swipe up for suggested resiliency resources",
-                        textAlign: TextAlign.left,
-                        style: Theme.of(context).textTheme.bodyText1,
-                      )),
-                  flex: 1,
-                ),
-                Flexible(flex: 4, child: SizedBox()),
-              ]),
+          Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Flexible(flex: 2, child: thankYouHeader(context)),
+            Flexible(
+                flex: 1,
+                child: Padding(
+                    padding: EdgeInsets.all(10),
+                    child: Text(
+                      Constants.SUBMITTED_BODY,
+                      textAlign: TextAlign.left,
+                      style: Theme.of(context).textTheme.bodyText1,
+                    ))),
+            Flexible(
+              child: Padding(
+                  padding: EdgeInsets.all(10),
+                  child: Text(
+                    Constants.SUBMITTED_BODY2,
+                    textAlign: TextAlign.left,
+                    style: Theme.of(context).textTheme.bodyText1,
+                  )),
+              flex: 1,
+            ),
+            Flexible(flex: 4, child: SizedBox()),
+          ]),
           NotificationListener<DraggableScrollableNotification>(
               onNotification: (notification) {
                 // NB (nphair): Be sure to round to handle precision of doubles.
@@ -137,6 +134,7 @@ class SubmittedViewState extends State<SubmittedView> {
   Widget thankYouHeader(BuildContext context) => Container(
         width: MediaQuery.of(context).size.width,
         child: new Container(
+            padding: EdgeInsets.all(10),
             decoration: new BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topCenter,
@@ -160,24 +158,23 @@ class SubmittedViewState extends State<SubmittedView> {
               color: uvacolors.UVABlue,
             ),
             child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    "Thank You!",
+                    Constants.SUBMITTED_TITLE,
                     style: Theme.of(context)
                         .textTheme
                         .headline5!
                         .apply(color: Colors.white),
-                    textAlign: TextAlign.center,
                   ),
+                  SizedBox(height: 10),
                   Text(
-                    "Your MoD score is important to us and has been recorded",
+                    Constants.SUBMITTED_SUBTITLE,
                     style: Theme.of(context)
                         .textTheme
                         .bodyText1!
                         .apply(color: Colors.white),
-                    textAlign: TextAlign.center,
                   )
                 ])),
       );
