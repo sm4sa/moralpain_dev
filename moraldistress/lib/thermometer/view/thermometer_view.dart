@@ -55,7 +55,7 @@ class ThermometerView extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                   thermometerLandscapeText(),
-                  thermometerLabel()
+                  _thermometerLabel()
                 ])),
             Expanded(
                 child:
@@ -72,16 +72,34 @@ class ThermometerView extends StatelessWidget {
         ),
       ]);
 
-  Widget thermometerLabel() =>
+  Widget _potraitMode() => Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(Constants.THERMOMETER_TITLE,
+                style:
+                    TextStyle(fontSize: Constants.THERMOMETER_TITLE_FONT_SIZE)),
+            SizedBox(height: 10),
+            Text(
+              Constants.THERMOMETER_INSTRUCTIONS,
+            ),
+            SizedBox(height: 10),
+            Expanded(
+                child:
+                    RotatedBox(quarterTurns: -1, child: ThermometerWidget())),
+            _thermometerLabel()
+          ]);
+
+  Widget _thermometerLabel() =>
       BlocBuilder<ThermometerCubit, double>(builder: (context, state) {
         return Center(
             child: Text(
-          scoreToText(state),
+          _scoreToText(state),
           style: TextStyle(fontSize: Constants.THERMOMETER_TITLE_FONT_SIZE),
         ));
       });
 
-  String scoreToText(score) {
+  String _scoreToText(score) {
     if (score == 0) {
       return "None";
     } else if (score <= 3) {
@@ -99,22 +117,4 @@ class ThermometerView extends StatelessWidget {
       return "";
     }
   }
-
-  Widget _potraitMode() => Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(Constants.THERMOMETER_TITLE,
-                style:
-                    TextStyle(fontSize: Constants.THERMOMETER_TITLE_FONT_SIZE)),
-            SizedBox(height: 10),
-            Text(
-              Constants.THERMOMETER_INSTRUCTIONS,
-            ),
-            SizedBox(height: 10),
-            Expanded(
-                child:
-                    RotatedBox(quarterTurns: -1, child: ThermometerWidget())),
-            thermometerLabel()
-          ]);
 }
