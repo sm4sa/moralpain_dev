@@ -252,6 +252,7 @@ class ThermometerThumbShape extends RoundSliderThumbShape {
     labelPainter.text = new TextSpan(
         text: scaled == 10 ? '1\n0' : scaled.toString(),
         style: TextStyle(
+          letterSpacing: scaled == 10 ? 3 : 0,
           fontFamily: 'SliderFont',
           height: .8,
         ));
