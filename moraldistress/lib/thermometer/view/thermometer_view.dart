@@ -52,19 +52,25 @@ class ThermometerView extends StatelessWidget {
             Expanded(
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                  Text(Constants.THERMOMETER_TITLE,
-                      style: TextStyle(
-                          fontSize: Constants.THERMOMETER_TITLE_FONT_SIZE)),
-                  SizedBox(height: 10),
-                  Text(
-                    Constants.THERMOMETER_INSTRUCTIONS,
-                  )
+                  thermometerLandscapeText(),
+                  _thermometerLabel()
                 ])),
             Expanded(
                 child:
                     RotatedBox(quarterTurns: -1, child: ThermometerWidget())),
           ]);
+
+  Widget thermometerLandscapeText() =>
+      Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Text(Constants.THERMOMETER_TITLE,
+            style: TextStyle(fontSize: Constants.THERMOMETER_TITLE_FONT_SIZE)),
+        SizedBox(height: 10),
+        Text(
+          Constants.THERMOMETER_INSTRUCTIONS,
+        ),
+      ]);
 
   Widget _potraitMode() => Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -81,5 +87,34 @@ class ThermometerView extends StatelessWidget {
             Expanded(
                 child:
                     RotatedBox(quarterTurns: -1, child: ThermometerWidget())),
+            _thermometerLabel()
           ]);
+
+  Widget _thermometerLabel() =>
+      BlocBuilder<ThermometerCubit, double>(builder: (context, state) {
+        return Center(
+            child: Text(
+          _scoreToText(state),
+          style: TextStyle(fontSize: Constants.THERMOMETER_TITLE_FONT_SIZE),
+        ));
+      });
+
+  String _scoreToText(score) {
+    if (score == 0) {
+      return "None";
+    } else if (score <= 3) {
+      return "Mild";
+    } else if (score <= 5) {
+      return "Distressing";
+    } else if (score <= 7) {
+      return "Uncomfortable";
+    } else if (score <= 9) {
+      return "Intense";
+    } else if (score <= 10) {
+      return "Worst Possible";
+    } else {
+      assert(false);
+      return "";
+    }
+  }
 }
