@@ -31,7 +31,7 @@ class SubmittedViewState extends State<SubmittedView> {
           Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Flexible(flex: 2, child: thankYouHeader(context)),
             Flexible(
-                flex: 1,
+                flex: 0,
                 child: Padding(
                     padding: EdgeInsets.all(10),
                     child: Text(
@@ -47,7 +47,7 @@ class SubmittedViewState extends State<SubmittedView> {
                     textAlign: TextAlign.left,
                     style: Theme.of(context).textTheme.bodyText1,
                   )),
-              flex: 1,
+              flex: 0,
             ),
             Flexible(flex: 4, child: SizedBox()),
           ]),
@@ -132,51 +132,48 @@ class SubmittedViewState extends State<SubmittedView> {
   }
 
   Widget thankYouHeader(BuildContext context) => Container(
-        width: MediaQuery.of(context).size.width,
-        child: new Container(
-            padding: EdgeInsets.all(10),
-            decoration: new BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-
-                colors: <Color>[
-                  uvacolors.UVABlueTints,
-                  uvacolors.UVABlueTints.shade50
-                ],
-                tileMode:
-                    TileMode.clamp, // repeats the gradient over the canvas
-              ),
-              boxShadow: [
-                BoxShadow(
-                    color: uvacolors.UVABlueTints.shade100, spreadRadius: 2),
-                BoxShadow(
-                    color: uvacolors.UVABlueTints.shade200,
-                    spreadRadius: 4,
-                    blurRadius: 3),
-              ],
-              color: uvacolors.UVABlue,
+      width: MediaQuery.of(context).size.width,
+      padding: EdgeInsets.all(10),
+      decoration: thankYouDecoration(),
+      child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              Constants.SUBMITTED_TITLE,
+              style: Theme.of(context)
+                  .textTheme
+                  .headline5!
+                  .apply(color: Colors.white),
             ),
-            child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    Constants.SUBMITTED_TITLE,
-                    style: Theme.of(context)
-                        .textTheme
-                        .headline5!
-                        .apply(color: Colors.white),
-                  ),
-                  SizedBox(height: 10),
-                  Text(
-                    Constants.SUBMITTED_SUBTITLE,
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyText1!
-                        .apply(color: Colors.white),
-                  )
-                ])),
+            SizedBox(height: 10),
+            Text(
+              Constants.SUBMITTED_SUBTITLE,
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyText1!
+                  .apply(color: Colors.white),
+            )
+          ]));
+
+  BoxDecoration thankYouDecoration() => BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: <Color>[
+            uvacolors.UVABlueTints,
+            uvacolors.UVABlueTints.shade50
+          ],
+          tileMode: TileMode.clamp,
+        ),
+        boxShadow: [
+          BoxShadow(color: uvacolors.UVABlueTints.shade100, spreadRadius: 2),
+          BoxShadow(
+              color: uvacolors.UVABlueTints.shade200,
+              spreadRadius: 4,
+              blurRadius: 3),
+        ],
+        color: uvacolors.UVABlue,
       );
 
   Widget buildIcon(api.ResiliencyResource resiliencyResource) {
