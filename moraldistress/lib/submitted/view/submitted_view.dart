@@ -7,6 +7,7 @@ import 'package:moraldistress/assets/colors.dart' as uvacolors;
 import 'package:moraldistress/submitted/submitted.dart';
 import 'package:moralpainapi/moralpainapi.dart' as api;
 import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class SubmittedView extends StatefulWidget {
   @override
@@ -184,8 +185,8 @@ class SubmittedViewState extends State<SubmittedView> {
     return Icon(iconData, size: 40.0);
   }
 
-  void _launchURL(String url) async => await canLaunch(url)
-      ? await launch(url, forceWebView: true, enableJavaScript: true)
+  void _launchURL(String url) async => await canLaunchUrlString(url)
+      ? await launchUrlString(url)
       : throw 'Could not launch $url';
 }
 
