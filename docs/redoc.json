@@ -1,0 +1,15 @@
+{
+    "theme": {
+        "logo": {
+            "maxHeight": "200px"
+        },
+        "colors": {
+            "primary": {
+                "main": "#E57200"
+            }
+        },
+        "rightPanel": {
+            "backgroundColor": "#232D4B"
+        }
+    }
+}
