@@ -1,10 +1,10 @@
 package edu.uva.cs.moralpain.utils;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.regex.Pattern;
 
-import static junit.framework.TestCase.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class TestS3Helper {
 
