@@ -54,12 +54,19 @@ public class S3Helper {
      * @return the key
      */
     public static String createKey() {
-        Instant now = Instant.now();
+        String uuid = UUID.randomUUID().toString().replace("-", "");
+        return S3Helper.createPrefix(Instant.now()) + "/" + uuid + ".json";
+    }
+
+    /**
+     * Create a prefix from an instant with the date format.
+     * @param instant
+     * @return
+     */
+    public static String createPrefix(Instant instant) {
         DateTimeFormatter formatter = DateTimeFormatter
                 .ofPattern("y/MM/dd/HH/mm/ss")
                 .withZone(ZoneId.from(ZoneOffset.UTC));
-        String uuid = UUID.randomUUID().toString().replace("-", "");
-        return formatter.format(now) + "/" + uuid + ".json";
+        return formatter.format(instant);
     }
-
 }
