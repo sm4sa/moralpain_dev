@@ -1,5 +1,7 @@
 package edu.uva.cs.moralpain.s3;
 
+import org.openapitools.client.model.Submission;
+
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
@@ -21,7 +23,7 @@ public class SubmissionFetcherPredicateBuilder {
     public Predicate<String> beforeOrAtEndTime() {
         String end = this.queryStringParams.getOrDefault("endtime", "");
         if(end.isEmpty()) {
-            return key -> true;
+            return __ -> true;
         }
 
         return key ->  {
@@ -35,27 +37,26 @@ public class SubmissionFetcherPredicateBuilder {
         };
     }
 
-    public Predicate<Integer> lessThanOrEqualToMaxScore() {
+    public Predicate<Submission> lessThanOrEqualToMaxScore() {
         String maxScore = this.queryStringParams.getOrDefault("maxscore", "");
         if (maxScore.isEmpty()) {
-            return score -> true;
+            return __ -> true;
         }
 
-        return score -> score.compareTo(Integer.parseInt(maxScore)) < 1;
+        return submission -> submission.getScore().compareTo(Integer.parseInt(maxScore)) < 1;
     }
 
-    public Predicate<Integer> greaterThanOrEqualToMinScore() {
+    public Predicate<Submission> greaterThanOrEqualToMinScore() {
         String minScore = this.queryStringParams.getOrDefault("minscore", "");
         if (minScore.isEmpty()) {
-            return score -> true;
+            return __ -> true;
         }
 
-        return score -> score.compareTo(Integer.parseInt(minScore)) > -1;
+        return submission -> submission.getScore().compareTo(Integer.parseInt(minScore)) > -1;
     }
 
-    public Predicate<Integer> inScoreRange() {
+    public Predicate<Submission> inScoreRange() {
         return lessThanOrEqualToMaxScore().and(greaterThanOrEqualToMinScore());
     }
-
 
 }

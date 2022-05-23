@@ -1,6 +1,7 @@
 package edu.uva.cs.moralpain.s3;
 
 import org.junit.jupiter.api.Test;
+import org.openapitools.client.model.Submission;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -33,15 +34,16 @@ public class SubmissionFetcherPredicateBuilderTest {
     Map<String, String> params = new HashMap<>();
     params.put("maxscore", Integer.toString(5));
 
-    List<Integer> scores = new ArrayList<>();
-    scores.add(3);
-    scores.add(4);
-    scores.add(5);
-    scores.add(6);
+    List<Submission> scores = new ArrayList<>();
+    scores.add(new Submission().score(3));
+    scores.add(new Submission().score(4));
+    scores.add(new Submission().score(5));
+    scores.add(new Submission().score(6));
 
     SubmissionFetcherPredicateBuilder predicateBuilder = new SubmissionFetcherPredicateBuilder(params);
     List<Integer> actual = scores.stream()
             .filter(predicateBuilder.lessThanOrEqualToMaxScore())
+            .map(Submission::getScore)
             .collect(Collectors.toList());
 
     assertTrue(actual.contains(3));
@@ -55,15 +57,16 @@ public class SubmissionFetcherPredicateBuilderTest {
     Map<String, String> params = new HashMap<>();
     params.put("minscore", Integer.toString(5));
 
-    List<Integer> scores = new ArrayList<>();
-    scores.add(3);
-    scores.add(4);
-    scores.add(5);
-    scores.add(6);
+    List<Submission> scores = new ArrayList<>();
+    scores.add(new Submission().score(3));
+    scores.add(new Submission().score(4));
+    scores.add(new Submission().score(5));
+    scores.add(new Submission().score(6));
 
     SubmissionFetcherPredicateBuilder predicateBuilder = new SubmissionFetcherPredicateBuilder(params);
     List<Integer> actual = scores.stream()
             .filter(predicateBuilder.greaterThanOrEqualToMinScore())
+            .map(Submission::getScore)
             .collect(Collectors.toList());
 
     assertFalse(actual.contains(3));
@@ -78,15 +81,16 @@ public class SubmissionFetcherPredicateBuilderTest {
     params.put("minscore", Integer.toString(4));
     params.put("maxscore", Integer.toString(5));
 
-    List<Integer> scores = new ArrayList<>();
-    scores.add(3);
-    scores.add(4);
-    scores.add(5);
-    scores.add(6);
+    List<Submission> scores = new ArrayList<>();
+    scores.add(new Submission().score(3));
+    scores.add(new Submission().score(4));
+    scores.add(new Submission().score(5));
+    scores.add(new Submission().score(6));
 
     SubmissionFetcherPredicateBuilder predicateBuilder = new SubmissionFetcherPredicateBuilder(params);
     List<Integer> actual = scores.stream()
             .filter(predicateBuilder.inScoreRange())
+            .map(Submission::getScore)
             .collect(Collectors.toList());
 
     assertFalse(actual.contains(3));
