@@ -4,16 +4,22 @@ import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.amazonaws.services.lambda.runtime.events.APIGatewayV2HTTPEvent;
 import com.amazonaws.services.lambda.runtime.events.APIGatewayV2HTTPResponse;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import edu.uva.cs.moralpain.utils.S3Helper;
 import edu.uva.cs.moralpain.utils.VariableManager;
-import software.amazon.awssdk.core.exception.SdkServiceException;
-import software.amazon.awssdk.core.sync.RequestBody;
+import org.openapitools.client.model.Submission;
 import software.amazon.awssdk.services.s3.S3Client;
-import software.amazon.awssdk.services.s3.model.PutObjectRequest;
+import software.amazon.awssdk.services.s3.model.ListObjectsV2Request;
+import software.amazon.awssdk.services.s3.model.S3Object;
 
+import java.time.Instant;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
-import static edu.uva.cs.moralpain.utils.S3Helper.createKey;
 import static edu.uva.cs.moralpain.utils.S3Helper.createS3Client;
 
 /**
@@ -37,25 +43,35 @@ public class SubmissionFetcher implements RequestHandler<APIGatewayV2HTTPEvent, 
             response.setStatusCode(500);
             return response;
         }
+
         String bucket = variableManager.get("bucket");
         String prefix = variableManager.getOrDefault("prefix", "");
 
-
-
-        String key = prefix.isEmpty() ? createKey() : String.join("/", prefix, createKey());
+        Map<String, String> qs = apiGatewayV2HTTPEvent.getQueryStringParameters();
+        SubmissionFetcherPredicateBuilder sfpb = new SubmissionFetcherPredicateBuilder(qs);
+        String start = qs.getOrDefault("starttime", "");
 
         S3Client client = createS3Client(variableManager);
-        try {
-            client.putObject(PutObjectRequest.builder()
-                    .bucket(bucket)
-                    .key(key)
-                    .build(), RequestBody.fromString(apiGatewayV2HTTPEvent.getBody()));
-            response.setStatusCode(200);
-        } catch(SdkServiceException exception) {
-            context.getLogger().log(exception.getMessage());
-            response.setStatusCode(500);
-            return response;
+        ListObjectsV2Request.Builder builder = ListObjectsV2Request.builder()
+                .bucket(bucket)
+                .prefix(prefix);
+        if(!start.isEmpty()) {
+            Instant instant = Instant.ofEpochSecond(Long.parseLong(start));
+            String startKey = S3Helper.createPrefix(instant);
+            builder.startAfter(startKey);
         }
+        ListObjectsV2Request listObjectsV2Request = builder.build();
+
+        Collection submissions = client.listObjectsV2(listObjectsV2Request).contents().stream()
+                .map(S3Object::key)
+                .filter(sfpb.beforeOrAtEndTime())
+                .map(key -> S3Helper.getObjectAsSubmission(client, bucket, key))
+                .filter(sfpb.inScoreRange())
+                .map(this::toJson)
+                .filter(((Predicate<String>) String::isEmpty).negate())
+                .collect(Collectors.toList());
+        String data = toJson(submissions);
+        response.setBody(data);
 
         Map<String, String> headers = new HashMap<>();
         headers.put("Content-Type", "application/json");
@@ -69,9 +85,18 @@ public class SubmissionFetcher implements RequestHandler<APIGatewayV2HTTPEvent, 
         return response;
     }
 
+    private String toJson(Object value) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            return objectMapper.writeValueAsString(value);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
 
     private boolean isValidEvent(APIGatewayV2HTTPEvent event) {
-        return !(event == null || event.getBody() == null || event.getBody().isEmpty());
+        return event != null;
     }
 
     private boolean isValidEnvironment(VariableManager variableManager) {

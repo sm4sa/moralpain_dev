@@ -17,6 +17,7 @@
         <junit.version>5.8.2</junit.version>
         <maven-surefire-plugin.version>3.0.0-M6</maven-surefire-plugin.version>
         <s3.mock.version>2.4.10</s3.mock.version>
+        <moraldistressapi.version>1.0.0</moraldistressapi.version>
     </properties>
 
     <dependencyManagement>
@@ -39,6 +40,11 @@
     </dependencyManagement>
 
     <dependencies>
+        <dependency>
+            <groupId>edu.uva.cs</groupId>
+            <artifactId>moraldistressapi</artifactId>
+            <version>${moraldistressapi.version}</version>
+        </dependency>
         <dependency>
             <groupId>com.amazonaws</groupId>
             <artifactId>aws-lambda-java-core</artifactId>
