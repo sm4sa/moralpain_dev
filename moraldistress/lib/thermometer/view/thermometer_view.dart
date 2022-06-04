@@ -95,7 +95,7 @@ class ThermometerView extends StatelessWidget {
         return Center(
             child: Text(
           _scoreToText(state),
-          style: TextStyle(fontSize: Constants.THERMOMETER_TITLE_FONT_SIZE),
+          style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.w600),
         ));
       });
 
