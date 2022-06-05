@@ -254,6 +254,7 @@ class ThermometerThumbShape extends RoundSliderThumbShape {
           letterSpacing: scaled == 10 ? 3 : 0,
           fontFamily: 'SliderFont',
           height: .8,
+          color: Colors.white,
         ));
     labelPainter.layout();
 
