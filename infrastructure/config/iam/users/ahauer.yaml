@@ -4,7 +4,7 @@
 
 template_path: iam_user.template
 parameters:
-  UserName: tbrooks
+  UserName: ahauer
   DefaultPassword: !environment_variable DEFAULT_IAM_PASSWORD
   ManagedPolicyArns:
     - arn:aws:iam::aws:policy/AdministratorAccess
