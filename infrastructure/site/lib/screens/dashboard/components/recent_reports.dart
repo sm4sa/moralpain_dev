@@ -1,4 +1,5 @@
 import 'package:admin/models/RecentReport.dart';
+import 'package:admin/screens/view_report/view/view_report_page.dart';
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -40,7 +41,8 @@ class RecentReports extends StatelessWidget {
               ],
               rows: List.generate(
                 demoRecentReports.length,
-                (index) => recentReportDataRow(demoRecentReports[index]),
+                (index) =>
+                    recentReportDataRow(context, demoRecentReports[index]),
               ),
             ),
           ),
@@ -50,7 +52,7 @@ class RecentReports extends StatelessWidget {
   }
 }
 
-DataRow recentReportDataRow(RecentReport fileInfo) {
+DataRow recentReportDataRow(BuildContext context, RecentReport fileInfo) {
   return DataRow(
     cells: [
       DataCell(
@@ -68,16 +70,18 @@ DataRow recentReportDataRow(RecentReport fileInfo) {
             ),
           ],
         ),
-        onTap: () => _onRecentReportDataRowTapped(fileInfo),
+        onTap: () => _onRecentReportDataRowTapped(context, fileInfo),
       ),
       DataCell(
         Text(fileInfo.date!),
-        onTap: () => _onRecentReportDataRowTapped(fileInfo),
+        onTap: () => _onRecentReportDataRowTapped(context, fileInfo),
       ),
     ],
   );
 }
 
-void _onRecentReportDataRowTapped(RecentReport fileInfo) {
-  print(fileInfo.title! + ' tapped.');
+void _onRecentReportDataRowTapped(BuildContext context, RecentReport fileInfo) {
+  Navigator.of(context).push(
+    ViewReportPage.route(fileInfo: fileInfo),
+  );
 }
