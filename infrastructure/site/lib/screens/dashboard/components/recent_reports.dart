@@ -68,8 +68,16 @@ DataRow recentReportDataRow(RecentReport fileInfo) {
             ),
           ],
         ),
+        onTap: () => _onRecentReportDataRowTapped(fileInfo),
       ),
-      DataCell(Text(fileInfo.date!)),
+      DataCell(
+        Text(fileInfo.date!),
+        onTap: () => _onRecentReportDataRowTapped(fileInfo),
+      ),
     ],
   );
+}
+
+void _onRecentReportDataRowTapped(RecentReport fileInfo) {
+  print(fileInfo.title! + ' tapped.');
 }
