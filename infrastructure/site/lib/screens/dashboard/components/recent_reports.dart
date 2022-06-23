@@ -1,5 +1,5 @@
 import 'package:admin/models/RecentReport.dart';
-import 'package:admin/screens/view_report/view/view_report_page.dart';
+import 'package:admin/screens/view_report/view_report.dart';
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
