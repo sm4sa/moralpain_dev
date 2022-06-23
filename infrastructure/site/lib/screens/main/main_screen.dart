@@ -7,6 +7,17 @@ import 'package:provider/provider.dart';
 import 'components/side_menu.dart';
 
 class MainScreen extends StatelessWidget {
+  static Route route() => MaterialPageRoute<void>(
+        builder: (context) => MultiProvider(
+          providers: [
+            ChangeNotifierProvider(
+              create: (context) => MenuController(),
+            ),
+          ],
+          child: MainScreen(),
+        ),
+      );
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

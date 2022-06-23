@@ -1,3 +1,4 @@
+import 'package:admin/screens/main/main_screen.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatelessWidget {
@@ -18,7 +19,12 @@ class LoginPage extends StatelessWidget {
               obscureText: true,
             ),
             const SizedBox(height: 8),
-            ElevatedButton(onPressed: () {}, child: const Text('Login')),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).push(MainScreen.route());
+              },
+              child: const Text('Login'),
+            ),
           ],
         ),
       ),
