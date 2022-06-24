@@ -64,9 +64,11 @@ DataRow recentReportDataRow(BuildContext context, RecentReport fileInfo) {
               width: 30,
               color: Colors.white,
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
-              child: Text(fileInfo.title!),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
+                child: Text(fileInfo.title!),
+              ),
             ),
           ],
         ),
