@@ -6,6 +6,5 @@ class ViewReportState extends Equatable {
   final RecentReport? fileInfo;
 
   @override
-  // TODO: implement props
   List<Object?> get props => [fileInfo];
 }

@@ -11,7 +11,7 @@ class ViewReportPage extends StatelessWidget {
       fullscreenDialog: true,
       builder: (context) => BlocProvider(
         create: (context) => ViewReportCubit(fileInfo: fileInfo),
-        child: ViewReportView(),
+        child: ViewReportPage(),
       ),
     );
   }

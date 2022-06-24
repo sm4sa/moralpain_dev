@@ -10,16 +10,19 @@ class LoginPage extends StatelessWidget {
         child: Column(
           children: [
             TextField(
+              key: Key('__loginPage_email_textField__'),
               decoration: InputDecoration(labelText: 'Email'),
               keyboardType: TextInputType.emailAddress,
             ),
             const SizedBox(height: 8),
             TextField(
+              key: Key('__loginPage_password_textField__'),
               decoration: InputDecoration(labelText: 'Password'),
               obscureText: true,
             ),
             const SizedBox(height: 8),
             ElevatedButton(
+              key: Key('__loginPage_login_elevatedButton__'),
               onPressed: () {
                 Navigator.of(context).push(MainScreen.route());
               },
