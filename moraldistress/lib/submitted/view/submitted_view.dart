@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
@@ -7,17 +8,10 @@ import 'package:moraldistress/assets/colors.dart' as uvacolors;
 import 'package:moraldistress/submitted/submitted.dart';
 import 'package:moralpainapi/moralpainapi.dart' as api;
 import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
-class SubmittedView extends StatefulWidget {
-  @override
-  SubmittedViewState createState() => SubmittedViewState();
-}
-
-class SubmittedViewState extends State<SubmittedView> {
-  final resourcesSheetMinChildSize = 0.1;
-  final resourcesSheetInitialChildSize = 0.1;
-  final resourcesSheetMaxChildSize = .75;
-  var _resourcesShowing = false;
+class SubmittedView extends StatelessWidget {
+  const SubmittedView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -26,73 +20,7 @@ class SubmittedViewState extends State<SubmittedView> {
         title: const Text(Constants.APPBAR_TEXT),
         automaticallyImplyLeading: false,
       ),
-      body: Stack(
-        children: [
-          Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Flexible(flex: 2, child: thankYouHeader(context)),
-            Flexible(
-                flex: 1,
-                child: Padding(
-                    padding: EdgeInsets.all(10),
-                    child: Text(
-                      Constants.SUBMITTED_BODY,
-                      textAlign: TextAlign.left,
-                      style: Theme.of(context).textTheme.bodyText1,
-                    ))),
-            Flexible(
-              child: Padding(
-                  padding: EdgeInsets.all(10),
-                  child: Text(
-                    Constants.SUBMITTED_BODY2,
-                    textAlign: TextAlign.left,
-                    style: Theme.of(context).textTheme.bodyText1,
-                  )),
-              flex: 1,
-            ),
-            Flexible(flex: 4, child: SizedBox()),
-          ]),
-          NotificationListener<DraggableScrollableNotification>(
-              onNotification: (notification) {
-                // NB (nphair): Be sure to round to handle precision of doubles.
-                var rounded =
-                    double.parse((notification.extent).toStringAsFixed(3));
-                if (rounded == notification.maxExtent) {
-                  showResources();
-                } else if (rounded == notification.minExtent) {
-                  hideResources();
-                }
-                return true;
-              },
-              child: DraggableScrollableSheet(
-                  minChildSize: resourcesSheetMinChildSize,
-                  maxChildSize: resourcesSheetMaxChildSize,
-                  initialChildSize: resourcesSheetInitialChildSize,
-                  snap: true,
-                  builder: (context, scrollableController) {
-                    return BlocBuilder<ResourcesBloc, ResourcesState>(
-                        builder: (context, state) {
-                      if (state is ResourcesLoaded) {
-                        var cards = state.resources.resources!;
-                        return Container(
-                            child: ListView.builder(
-                                itemCount: cards.length + 1,
-                                controller: scrollableController,
-                                itemBuilder: (BuildContext context, int index) {
-                                  if (index == 0) {
-                                    return resiliencyHeader();
-                                  }
-
-                                  // NB: Have to minus 1 to account for header.
-                                  var resource = cards[index - 1];
-                                  return resiliencyTile(resource);
-                                }));
-                      } else {
-                        return Container();
-                      }
-                    });
-                  }))
-        ],
-      ),
+      body: Submitted(),
       floatingActionButton: FloatingActionButton(
           onPressed: () {
             context.read<ResourcesBloc>().add(VisitedResourcesSubmitEvent());
@@ -101,24 +29,206 @@ class SubmittedViewState extends State<SubmittedView> {
           child: Icon(Icons.home_rounded)),
     );
   }
+}
 
-  void showResources() => setState(() {
-        _resourcesShowing = true;
-      });
+class Submitted extends StatefulWidget {
+  @override
+  _SubmittedState createState() => _SubmittedState();
+}
 
-  void hideResources() => setState(() {
-        _resourcesShowing = false;
-      });
+// NB (nphair): Hack courtesy of https://github.com/flutter/flutter/issues/50946
+class _SubmittedState extends State<Submitted> {
+  late PageController _pageController;
+  late ScrollController _listScrollController;
+  late ScrollController _activeScrollController;
+  late Drag _drag;
 
-  Widget resiliencyHeader() {
-    if (_resourcesShowing) {
-      return Material(
-          child: ListTile(title: Icon(Icons.arrow_drop_down_outlined)));
-    }
-    return Material(child: ListTile(title: Icon(Icons.arrow_drop_up_outlined)));
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController();
+    _listScrollController = ScrollController();
   }
 
-  Widget resiliencyTile(api.ResiliencyResource resource) {
+  @override
+  void dispose() {
+    _pageController.dispose();
+    _listScrollController.dispose();
+    super.dispose();
+  }
+
+  void _handleDragStart(DragStartDetails details) {
+    if (_listScrollController.hasClients) {
+      final RenderBox renderBox = _listScrollController
+          .position.context.storageContext
+          .findRenderObject() as RenderBox;
+      if (renderBox.paintBounds
+          .shift(renderBox.localToGlobal(Offset.zero))
+          .contains(details.globalPosition)) {
+        _activeScrollController = _listScrollController;
+        _drag = _activeScrollController.position.drag(details, _disposeDrag);
+        return;
+      }
+    }
+    _activeScrollController = _pageController;
+    _drag = _pageController.position.drag(details, _disposeDrag);
+  }
+
+  bool _listScrollerAtBounds() {
+    if (_activeScrollController != _listScrollController) {
+      return false;
+    }
+
+    double currentPos = _activeScrollController.position.pixels.roundToDouble();
+    double maxPos =
+        _activeScrollController.position.maxScrollExtent.roundToDouble();
+    return currentPos >= maxPos || currentPos <= 0;
+  }
+
+  void _handleDragUpdate(DragUpdateDetails details) {
+    if (_listScrollerAtBounds()) {
+      _activeScrollController = _pageController;
+      _drag.cancel();
+      _drag = _pageController.position.drag(
+          DragStartDetails(
+              globalPosition: details.globalPosition,
+              localPosition: details.localPosition),
+          _disposeDrag);
+    }
+    _drag.update(details);
+  }
+
+  void _handleDragEnd(DragEndDetails details) {
+    _drag.end(details);
+  }
+
+  void _handleDragCancel() {
+    _drag.cancel();
+  }
+
+  void _disposeDrag() {/* noop. */}
+
+  @override
+  Widget build(BuildContext context) {
+    return RawGestureDetector(
+        gestures: <Type, GestureRecognizerFactory>{
+          VerticalDragGestureRecognizer: GestureRecognizerFactoryWithHandlers<
+                  VerticalDragGestureRecognizer>(
+              () => VerticalDragGestureRecognizer(),
+              (VerticalDragGestureRecognizer instance) {
+            instance
+              ..onStart = _handleDragStart
+              ..onUpdate = _handleDragUpdate
+              ..onEnd = _handleDragEnd
+              ..onCancel = _handleDragCancel;
+          })
+        },
+        behavior: HitTestBehavior.opaque,
+        child: PageView(
+          controller: _pageController,
+          scrollDirection: Axis.vertical,
+          physics: const NeverScrollableScrollPhysics(),
+          children: [
+            thankYouPage(context),
+            resourcesPage(context),
+          ],
+        ));
+  }
+
+  Widget thankYouPage(BuildContext context) {
+    return Stack(children: [
+      Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Flexible(flex: 2, child: thankYouHeader(context)),
+        Flexible(
+            flex: 0,
+            child: Padding(
+                padding: EdgeInsets.all(10),
+                child: Text(
+                  Constants.SUBMITTED_BODY,
+                  textAlign: TextAlign.left,
+                  style: Theme.of(context).textTheme.bodyText1,
+                ))),
+        Flexible(
+          child: Padding(
+              padding: EdgeInsets.all(10),
+              child: Text(
+                Constants.SUBMITTED_BODY2,
+                textAlign: TextAlign.left,
+                style: Theme.of(context).textTheme.bodyText1,
+              )),
+          flex: 0,
+        ),
+        Flexible(flex: 4, child: SizedBox()),
+      ])
+    ]);
+  }
+
+  Widget thankYouHeader(BuildContext context) => Container(
+      width: MediaQuery.of(context).size.width,
+      padding: EdgeInsets.all(10),
+      decoration: thankYouDecoration(),
+      child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              Constants.SUBMITTED_TITLE,
+              style: Theme.of(context)
+                  .textTheme
+                  .headline5!
+                  .apply(color: Colors.white),
+            ),
+            SizedBox(height: 10),
+            Text(
+              Constants.SUBMITTED_SUBTITLE,
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyText1!
+                  .apply(color: Colors.white),
+            )
+          ]));
+
+  BoxDecoration thankYouDecoration() => BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: <Color>[
+            uvacolors.UVABlueTints,
+            uvacolors.UVABlueTints.shade50
+          ],
+          tileMode: TileMode.clamp,
+        ),
+        boxShadow: [
+          BoxShadow(color: uvacolors.UVABlueTints.shade100, spreadRadius: 2),
+          BoxShadow(
+              color: uvacolors.UVABlueTints.shade200,
+              spreadRadius: 4,
+              blurRadius: 3),
+        ],
+        color: uvacolors.UVABlue,
+      );
+
+  Widget resourcesPage(BuildContext context) {
+    return BlocBuilder<ResourcesBloc, ResourcesState>(
+        builder: (context, state) {
+      if (state is ResourcesLoaded) {
+        var cards = state.resources.resources!;
+        return Container(
+            child: ListView.builder(
+                itemCount: cards.length,
+                controller: _listScrollController,
+                physics: const NeverScrollableScrollPhysics(),
+                itemBuilder: (BuildContext context, int index) {
+                  var resource = cards[index];
+                  return resiliencyTile(resource, context);
+                }));
+      } else {
+        return Container();
+      }
+    });
+  }
+
+  Widget resiliencyTile(api.ResiliencyResource resource, BuildContext context) {
     return Material(
         child: ListTile(
             leading: buildIcon(resource),
@@ -131,54 +241,6 @@ class SubmittedViewState extends State<SubmittedView> {
             }));
   }
 
-  Widget thankYouHeader(BuildContext context) => Container(
-        width: MediaQuery.of(context).size.width,
-        child: new Container(
-            padding: EdgeInsets.all(10),
-            decoration: new BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-
-                colors: <Color>[
-                  uvacolors.UVABlueTints,
-                  uvacolors.UVABlueTints.shade50
-                ],
-                tileMode:
-                    TileMode.clamp, // repeats the gradient over the canvas
-              ),
-              boxShadow: [
-                BoxShadow(
-                    color: uvacolors.UVABlueTints.shade100, spreadRadius: 2),
-                BoxShadow(
-                    color: uvacolors.UVABlueTints.shade200,
-                    spreadRadius: 4,
-                    blurRadius: 3),
-              ],
-              color: uvacolors.UVABlue,
-            ),
-            child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    Constants.SUBMITTED_TITLE,
-                    style: Theme.of(context)
-                        .textTheme
-                        .headline5!
-                        .apply(color: Colors.white),
-                  ),
-                  SizedBox(height: 10),
-                  Text(
-                    Constants.SUBMITTED_SUBTITLE,
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyText1!
-                        .apply(color: Colors.white),
-                  )
-                ])),
-      );
-
   Widget buildIcon(api.ResiliencyResource resiliencyResource) {
     final input = resiliencyResource.icon!;
     final iconData = IconData(
@@ -187,8 +249,8 @@ class SubmittedViewState extends State<SubmittedView> {
     return Icon(iconData, size: 40.0);
   }
 
-  void _launchURL(String url) async => await canLaunch(url)
-      ? await launch(url, forceWebView: true, enableJavaScript: true)
+  void _launchURL(String url) async => await canLaunchUrlString(url)
+      ? await launchUrlString(url)
       : throw 'Could not launch $url';
 }
 
