@@ -29,6 +29,10 @@
         {
           "id": "06",
           "description": "Having to follow MD/family's request to not discuss prognosis"
+        },
+        {
+          "id": "00",
+          "description": "Other"
         }
       ]
     },
@@ -84,6 +88,10 @@
         {
           "id": "14",
           "description": "Witnessing inconsistent messages to patient/family"
+        },
+        {
+          "id": "00",
+          "description": "Other"
         }
       ]
     },
@@ -123,6 +131,10 @@
         {
           "id": "08",
           "description": "Feeling pressured to emphasize productivity/quality measures over patients"
+        },
+        {
+          "id": "00",
+          "description": "Other"
         }
       ]
     }
