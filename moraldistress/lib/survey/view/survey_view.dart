@@ -154,7 +154,6 @@ class SurveyViewState extends State<SurveyView> {
       maxLines: 1,
       linkEllipsis: false,
       linkColor: Colors.blue,
-      textAlign: TextAlign.center,
     );
 
     return Scaffold(
@@ -165,7 +164,7 @@ class SurveyViewState extends State<SurveyView> {
           padding: EdgeInsets.all(Constants.PADDING),
           child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              crossAxisAlignment: CrossAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 title,
                 spacer,

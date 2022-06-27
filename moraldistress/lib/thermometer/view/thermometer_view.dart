@@ -47,19 +47,20 @@ class ThermometerView extends StatelessWidget {
 
   Widget _landscapeMode() => Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          crossAxisAlignment: CrossAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Expanded(
-                child: Column(children: [
-              Text(Constants.THERMOMETER_TITLE,
-                  style: TextStyle(
-                      fontSize: Constants.THERMOMETER_TITLE_FONT_SIZE)),
-              SizedBox(height: 10),
-              Text(
-                Constants.THERMOMETER_INSTRUCTIONS,
-                textAlign: TextAlign.center,
-              )
-            ])),
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                  Text(Constants.THERMOMETER_TITLE,
+                      style: TextStyle(
+                          fontSize: Constants.THERMOMETER_TITLE_FONT_SIZE)),
+                  SizedBox(height: 10),
+                  Text(
+                    Constants.THERMOMETER_INSTRUCTIONS,
+                  )
+                ])),
             Expanded(
                 child:
                     RotatedBox(quarterTurns: -1, child: ThermometerWidget())),
@@ -67,7 +68,7 @@ class ThermometerView extends StatelessWidget {
 
   Widget _potraitMode() => Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          crossAxisAlignment: CrossAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(Constants.THERMOMETER_TITLE,
                 style:
@@ -75,7 +76,6 @@ class ThermometerView extends StatelessWidget {
             SizedBox(height: 10),
             Text(
               Constants.THERMOMETER_INSTRUCTIONS,
-              textAlign: TextAlign.center,
             ),
             SizedBox(height: 10),
             Expanded(
