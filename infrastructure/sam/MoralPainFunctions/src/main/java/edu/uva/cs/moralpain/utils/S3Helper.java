@@ -1,14 +1,23 @@
 package edu.uva.cs.moralpain.utils;
 
+import com.fasterxml.jackson.core.exc.StreamReadException;
+import com.fasterxml.jackson.databind.DatabindException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.openapitools.client.model.Submission;
 import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
 import software.amazon.awssdk.auth.credentials.AwsCredentials;
 import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
+import software.amazon.awssdk.core.ResponseBytes;
 import software.amazon.awssdk.http.urlconnection.UrlConnectionHttpClient;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.S3ClientBuilder;
+import software.amazon.awssdk.services.s3.model.GetObjectRequest;
+import software.amazon.awssdk.services.s3.model.GetObjectResponse;
+import software.amazon.awssdk.services.s3.model.S3Exception;
 import software.amazon.awssdk.utils.AttributeMap;
 
+import java.io.*;
 import java.net.URI;
 import java.time.Instant;
 import java.time.ZoneId;
@@ -54,12 +63,46 @@ public class S3Helper {
      * @return the key
      */
     public static String createKey() {
-        Instant now = Instant.now();
+        String uuid = UUID.randomUUID().toString().replace("-", "");
+        return S3Helper.createPrefix(Instant.now()) + "/" + uuid + ".json";
+    }
+
+    /**
+     * Create a prefix from an instant with the date format.
+     * @param instant
+     * @return
+     */
+    public static String createPrefix(Instant instant) {
         DateTimeFormatter formatter = DateTimeFormatter
                 .ofPattern("y/MM/dd/HH/mm/ss")
                 .withZone(ZoneId.from(ZoneOffset.UTC));
-        String uuid = UUID.randomUUID().toString().replace("-", "");
-        return formatter.format(now) + "/" + uuid + ".json";
+        return formatter.format(instant);
     }
 
+    /**
+     * Fetches and parses a submission in S3.
+     * @param s3
+     * @param bucketName
+     * @param keyName
+     * @return
+     */
+    public static Submission getObjectAsSubmission(S3Client s3, String bucketName, String keyName) {
+        try {
+            GetObjectRequest objectRequest = GetObjectRequest
+                    .builder()
+                    .key(keyName)
+                    .bucket(bucketName)
+                    .build();
+
+            ResponseBytes<GetObjectResponse> objectBytes = s3.getObjectAsBytes(objectRequest);
+
+            ObjectMapper objectMapper = new ObjectMapper();
+            return objectMapper.readValue(objectBytes.asInputStream(), Submission.class);
+        } catch (S3Exception e) {
+            System.err.println(e.awsErrorDetails().errorMessage());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }
