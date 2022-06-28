@@ -18,7 +18,7 @@ dependencies:
   url_launcher: ^6.0.12
   uuid: 3.0.5
   moralpainapi:
-    path: ../api/
+    path: ../api/dart/
 
 
 dev_dependencies:

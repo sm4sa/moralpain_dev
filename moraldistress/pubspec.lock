@@ -300,7 +300,7 @@ packages:
   moralpainapi:
     dependency: "direct main"
     description:
-      path: "../api"
+      path: "../api/dart"
       relative: true
     source: path
     version: "1.0.0"
