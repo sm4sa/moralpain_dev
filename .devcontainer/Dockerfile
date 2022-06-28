@@ -30,3 +30,24 @@ RUN curl -sLO https://github.com/github/git-lfs/releases/download/v2.0.1/git-lfs
     && mv git-lfs-2.0.1/git-lfs /usr/bin/ \
     && rm -rf git-lfs-2.0.1 \
     && rm -rf git-lfs-linux-amd64-2.0.1.tar.gz
+
+# Now stuff for Android, IOS, and Flutter
+
+RUN mkdir -p /root/workspaces/moralpain_dev/moralpain/Android/sdk
+ENV ANDROID_SDK_ROOT /root/workspaces/moralpain_dev/moralpain/Android/sdk
+RUN mkdir -p /root/workspaces/moralpain_dev/.android && touch /root/workspaces/moralpain_dev/.android/repositories.cfg
+
+RUN wget -O sdk-tools.zip https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip
+RUN unzip sdk-tools.zip && rm sdk-tools.zip
+RUN mv tools /root/workspaces/moralpain_dev/moralpain/Android/sdk/tools
+
+RUN cd /root/workspaces/moralpain_dev/moralpain/Android/sdk/tools/bin && yes | ./sdkmanager --licenses
+RUN cd /root/workspaces/moralpain_dev/moralpain/Android/sdk/tools/bin && ./sdkmanager "build-tools;29.0.2" "patcher;v4" "platform-tools" "platforms;android-29" "sources;android-29"
+ENV PATH "$PATH:/root/workspaces/moralpain_dev/moralpain/Android/sdk/platform-tools"
+
+# Download Flutter SDK
+# RUN git clone https://github.com/flutter/flutter.git
+# ENV PATH "$PATH:/root/workspaces/moralpain_dev/moralpain/flutter/bin"
+
+# Run basic check to download Dark SDK
+RUN flutter doctor
