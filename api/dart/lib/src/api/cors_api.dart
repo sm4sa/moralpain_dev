@@ -16,7 +16,7 @@ class CORSApi {
 
   const CORSApi(this._dio, this._serializers);
 
-  /// CORS support
+  /// CORS survey support
   /// Enable CORS by returning correct headers 
   ///
   /// Parameters:
@@ -29,7 +29,7 @@ class CORSApi {
   ///
   /// Returns a [Future]
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<void>> resiliencyOptions({ 
+  Future<Response<void>> optionsSurvey({ 
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,
@@ -37,7 +37,7 @@ class CORSApi {
     ProgressCallback? onSendProgress,
     ProgressCallback? onReceiveProgress,
   }) async {
-    final _path = r'/resiliency';
+    final _path = r'/survey';
     final _options = Options(
       method: r'OPTIONS',
       headers: <String, dynamic>{
@@ -61,7 +61,7 @@ class CORSApi {
     return _response;
   }
 
-  /// CORS support
+  /// CORS resiliency resources support
   /// Enable CORS by returning correct headers 
   ///
   /// Parameters:
@@ -74,7 +74,7 @@ class CORSApi {
   ///
   /// Returns a [Future]
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<void>> surveyOptions({ 
+  Future<Response<void>> optionsVisitedResiliencyResources({ 
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,
@@ -82,7 +82,7 @@ class CORSApi {
     ProgressCallback? onSendProgress,
     ProgressCallback? onReceiveProgress,
   }) async {
-    final _path = r'/survey';
+    final _path = r'/resiliency';
     final _options = Options(
       method: r'OPTIONS',
       headers: <String, dynamic>{

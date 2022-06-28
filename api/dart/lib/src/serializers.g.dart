@@ -7,10 +7,13 @@ part of 'serializers.dart';
 // **************************************************************************
 
 Serializers _$serializers = (new Serializers().toBuilder()
+      ..add(AnalyticsResult.serializer)
+      ..add(AnalyticsResultOperationEnum.serializer)
       ..add(Icon.serializer)
       ..add(ResiliencyResource.serializer)
       ..add(ResiliencyResources.serializer)
       ..add(Submission.serializer)
+      ..add(Submissions.serializer)
       ..add(Survey.serializer)
       ..add(SurveyOption.serializer)
       ..add(SurveySection.serializer)

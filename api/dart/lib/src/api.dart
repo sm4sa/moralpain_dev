@@ -9,8 +9,9 @@ import 'package:moralpainapi/src/auth/api_key_auth.dart';
 import 'package:moralpainapi/src/auth/basic_auth.dart';
 import 'package:moralpainapi/src/auth/bearer_auth.dart';
 import 'package:moralpainapi/src/auth/oauth.dart';
+import 'package:moralpainapi/src/api/admin_api.dart';
 import 'package:moralpainapi/src/api/cors_api.dart';
-import 'package:moralpainapi/src/api/default_api.dart';
+import 'package:moralpainapi/src/api/user_api.dart';
 
 class Moralpainapi {
   static const String basePath = r'http://localhost';
@@ -66,15 +67,21 @@ class Moralpainapi {
     }
   }
 
+  /// Get AdminApi instance, base route and serializer can be overridden by a given but be careful,
+  /// by doing that all interceptors will not be executed
+  AdminApi getAdminApi() {
+    return AdminApi(dio, serializers);
+  }
+
   /// Get CORSApi instance, base route and serializer can be overridden by a given but be careful,
   /// by doing that all interceptors will not be executed
   CORSApi getCORSApi() {
     return CORSApi(dio, serializers);
   }
 
-  /// Get DefaultApi instance, base route and serializer can be overridden by a given but be careful,
+  /// Get UserApi instance, base route and serializer can be overridden by a given but be careful,
   /// by doing that all interceptors will not be executed
-  DefaultApi getDefaultApi() {
-    return DefaultApi(dio, serializers);
+  UserApi getUserApi() {
+    return UserApi(dio, serializers);
   }
 }

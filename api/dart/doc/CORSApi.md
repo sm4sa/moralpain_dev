@@ -9,14 +9,14 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**resiliencyOptions**](CORSApi.md#resiliencyoptions) | **OPTIONS** /resiliency | CORS support
-[**surveyOptions**](CORSApi.md#surveyoptions) | **OPTIONS** /survey | CORS support
+[**optionsSurvey**](CORSApi.md#optionssurvey) | **OPTIONS** /survey | CORS survey support
+[**optionsVisitedResiliencyResources**](CORSApi.md#optionsvisitedresiliencyresources) | **OPTIONS** /resiliency | CORS resiliency resources support
 
 
-# **resiliencyOptions**
-> resiliencyOptions()
+# **optionsSurvey**
+> optionsSurvey()
 
-CORS support
+CORS survey support
 
 Enable CORS by returning correct headers 
 
@@ -27,9 +27,9 @@ import 'package:moralpainapi/api.dart';
 final api = Moralpainapi().getCORSApi();
 
 try {
-    api.resiliencyOptions();
+    api.optionsSurvey();
 } catch on DioError (e) {
-    print('Exception when calling CORSApi->resiliencyOptions: $e\n');
+    print('Exception when calling CORSApi->optionsSurvey: $e\n');
 }
 ```
 
@@ -51,10 +51,10 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **surveyOptions**
-> surveyOptions()
+# **optionsVisitedResiliencyResources**
+> optionsVisitedResiliencyResources()
 
-CORS support
+CORS resiliency resources support
 
 Enable CORS by returning correct headers 
 
@@ -65,9 +65,9 @@ import 'package:moralpainapi/api.dart';
 final api = Moralpainapi().getCORSApi();
 
 try {
-    api.surveyOptions();
+    api.optionsVisitedResiliencyResources();
 } catch on DioError (e) {
-    print('Exception when calling CORSApi->surveyOptions: $e\n');
+    print('Exception when calling CORSApi->optionsVisitedResiliencyResources: $e\n');
 }
 ```
 
