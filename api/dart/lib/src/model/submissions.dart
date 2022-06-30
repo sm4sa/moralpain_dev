@@ -10,7 +10,13 @@ import 'package:built_value/serializer.dart';
 part 'submissions.g.dart';
 
 /// Submissions
+///
+/// Properties:
+/// * [list] 
 abstract class Submissions implements Built<Submissions, SubmissionsBuilder> {
+    @BuiltValueField(wireName: r'list')
+    BuiltList<Submission>? get list;
+
     Submissions._();
 
     @BuiltValueHook(initializeBuilder: true)
@@ -33,6 +39,12 @@ class _$SubmissionsSerializer implements StructuredSerializer<Submissions> {
     Iterable<Object?> serialize(Serializers serializers, Submissions object,
         {FullType specifiedType = FullType.unspecified}) {
         final result = <Object?>[];
+        if (object.list != null) {
+            result
+                ..add(r'list')
+                ..add(serializers.serialize(object.list,
+                    specifiedType: const FullType(BuiltList, [FullType(Submission)])));
+        }
         return result;
     }
 
@@ -48,6 +60,11 @@ class _$SubmissionsSerializer implements StructuredSerializer<Submissions> {
             final Object? value = iterator.current;
             
             switch (key) {
+                case r'list':
+                    final valueDes = serializers.deserialize(value,
+                        specifiedType: const FullType(BuiltList, [FullType(Submission)])) as BuiltList<Submission>;
+                    result.list.replace(valueDes);
+                    break;
             }
         }
         return result.build();

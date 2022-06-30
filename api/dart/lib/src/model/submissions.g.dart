@@ -7,10 +7,13 @@ part of 'submissions.dart';
 // **************************************************************************
 
 class _$Submissions extends Submissions {
+  @override
+  final BuiltList<Submission>? list;
+
   factory _$Submissions([void Function(SubmissionsBuilder)? updates]) =>
       (new SubmissionsBuilder()..update(updates)).build();
 
-  _$Submissions._() : super._();
+  _$Submissions._({this.list}) : super._();
 
   @override
   Submissions rebuild(void Function(SubmissionsBuilder) updates) =>
@@ -22,25 +25,40 @@ class _$Submissions extends Submissions {
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is Submissions;
+    return other is Submissions && list == other.list;
   }
 
   @override
   int get hashCode {
-    return 726111124;
+    return $jf($jc(0, list.hashCode));
   }
 
   @override
   String toString() {
-    return newBuiltValueToStringHelper('Submissions').toString();
+    return (newBuiltValueToStringHelper('Submissions')..add('list', list))
+        .toString();
   }
 }
 
 class SubmissionsBuilder implements Builder<Submissions, SubmissionsBuilder> {
   _$Submissions? _$v;
 
+  ListBuilder<Submission>? _list;
+  ListBuilder<Submission> get list =>
+      _$this._list ??= new ListBuilder<Submission>();
+  set list(ListBuilder<Submission>? list) => _$this._list = list;
+
   SubmissionsBuilder() {
     Submissions._defaults(this);
+  }
+
+  SubmissionsBuilder get _$this {
+    final $v = _$v;
+    if ($v != null) {
+      _list = $v.list?.toBuilder();
+      _$v = null;
+    }
+    return this;
   }
 
   @override
@@ -56,7 +74,20 @@ class SubmissionsBuilder implements Builder<Submissions, SubmissionsBuilder> {
 
   @override
   _$Submissions build() {
-    final _$result = _$v ?? new _$Submissions._();
+    _$Submissions _$result;
+    try {
+      _$result = _$v ?? new _$Submissions._(list: _list?.build());
+    } catch (_) {
+      late String _$failedField;
+      try {
+        _$failedField = 'list';
+        _list?.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            'Submissions', _$failedField, e.toString());
+      }
+      rethrow;
+    }
     replace(_$result);
     return _$result;
   }

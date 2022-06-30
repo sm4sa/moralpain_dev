@@ -372,9 +372,12 @@ components:
         description:
           type: string
     submissions:
-      type: array
-      items:
-        $ref: '#/components/schemas/submission'
+      type: object
+      properties:
+        list:
+          type: array
+          items:
+            $ref: '#/components/schemas/submission'
     submission:
       type: object
       properties:

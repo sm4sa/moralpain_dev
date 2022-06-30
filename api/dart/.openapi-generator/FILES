@@ -1,5 +1,4 @@
 .gitignore
-.openapi-generator-ignore
 README.md
 analysis_options.yaml
 doc/AdminApi.md
@@ -40,7 +39,3 @@ lib/src/model/survey_section.dart
 lib/src/model/visited_resiliency_resources.dart
 lib/src/serializers.dart
 pubspec.yaml
-test/admin_api_test.dart
-test/analytics_result_test.dart
-test/submissions_test.dart
-test/user_api_test.dart
