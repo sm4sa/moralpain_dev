@@ -10,7 +10,9 @@ class SubmissionsView extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<SubmissionsBloc, SubmissionsState>(
       buildWhen: (previous, current) =>
-          current is SubmissionsLoading || current is SubmissionsLoaded,
+          current is SubmissionsLoading ||
+          current is SubmissionsLoaded ||
+          current is SubmissionsLoadFailed,
       builder: (context, state) => handleLoadEvents(context, state),
     );
   }
@@ -38,17 +40,20 @@ class SubmissionsView extends StatelessWidget {
       return Expanded(
         child: Center(
           child: Text(
-            messageFromList(state.submissions.list),
+            messageFromSubmissions(state.submissions),
           ),
         ),
       );
+    } else if (state is SubmissionsLoadFailed) {
+      return Expanded(child: Center(child: Text('Error fetching submissions')));
     } else {
       assert(false);
       return ErrorWidget('Error State');
     }
   }
 
-  String messageFromList(BuiltList<Submission>? list) {
+  String messageFromSubmissions(Submissions submissions) {
+    BuiltList<Submission>? list = submissions.list;
     if (list == null) {
       return 'No list of submissions.';
     }

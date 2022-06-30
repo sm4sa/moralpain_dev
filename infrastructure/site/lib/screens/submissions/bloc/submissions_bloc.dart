@@ -14,7 +14,7 @@ class SubmissionsBloc extends Bloc<SubmissionsEvent, SubmissionsState> {
 
   final ApiRepository repository;
 
-  SubmissionsBloc({required this.repository}) : super(SubmissionsLoading()) {
+  SubmissionsBloc({required this.repository}) : super(SubmissionsInitial()) {
     on<SubmissionsLoadEvent>(_onLoad);
   }
 
@@ -24,12 +24,17 @@ class SubmissionsBloc extends Bloc<SubmissionsEvent, SubmissionsState> {
   ) async {
     emit(SubmissionsLoading());
 
-    final data = await repository.fetchSubmissions(
-      starttime: event.starttime,
-      endtime: event.endtime,
-      minscore: event.minscore,
-      maxscore: event.maxscore,
-    );
-    emit(SubmissionsLoaded(data));
+    Submissions data;
+    try {
+      data = await repository.fetchSubmissions(
+        starttime: event.starttime,
+        endtime: event.endtime,
+        minscore: event.minscore,
+        maxscore: event.maxscore,
+      );
+      emit(SubmissionsLoaded(data));
+    } catch (_) {
+      emit(SubmissionsLoadFailed());
+    }
   }
 }

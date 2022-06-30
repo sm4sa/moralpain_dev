@@ -3,6 +3,22 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:moralpainapi/moralpainapi.dart';
 
 void main() {
+  group('SubmissionsInitial', () {
+    test('supports equality', () {
+      expect(
+        SubmissionsInitial(),
+        equals(SubmissionsInitial()),
+      );
+    });
+
+    test('props are correct', () {
+      expect(
+        SubmissionsInitial().props,
+        equals(<Object?>[]),
+      );
+    });
+  });
+
   group('SubmissionsLoading', () {
     test('supports equality', () {
       expect(
@@ -14,7 +30,7 @@ void main() {
     test('props are correct', () {
       expect(
         SubmissionsLoading().props,
-        equals(<Object>[]),
+        equals(<Object?>[]),
       );
     });
   });
@@ -36,7 +52,23 @@ void main() {
     test('props are correct', () {
       expect(
         SubmissionsLoaded(submissions).props,
-        equals(<Object>[submissions]),
+        equals([submissions]),
+      );
+    });
+  });
+
+  group('SubmissionsLoadFailed', () {
+    test('supports equality', () {
+      expect(
+        SubmissionsLoadFailed(),
+        equals(SubmissionsLoadFailed()),
+      );
+    });
+
+    test('props are correct', () {
+      expect(
+        SubmissionsLoadFailed().props,
+        equals(<Object?>[]),
       );
     });
   });
