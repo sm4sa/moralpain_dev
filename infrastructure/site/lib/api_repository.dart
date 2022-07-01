@@ -8,12 +8,17 @@ class SubmissionsFetchFailure implements Exception {
   ]);
 
   final String message;
+
+  @override
+  String toString() {
+    return 'SubmissionsFetchFailure($message)';
+  }
 }
 
 class ApiRepository {
   final log = Logger('AdminRepository');
 
-  final mapi = Moralpainapi(
+  Moralpainapi mapi = Moralpainapi(
     basePathOverride:
         'https://umd7orqgt1.execute-api.us-east-1.amazonaws.com/v1',
   );

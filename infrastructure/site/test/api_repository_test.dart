@@ -1,34 +1,51 @@
 import 'package:admin/api_repository.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:logging/logging.dart';
 import 'package:mocktail/mocktail.dart';
-/*import 'package:mockito/mockito.dart';
-import 'package:mockito/annotations.dart';*/
 import 'package:moralpainapi/moralpainapi.dart';
-
-class MockApiRepository extends Mock implements ApiRepository {}
 
 class MockMoralpainapi extends Mock implements Moralpainapi {}
 
 class MockAdminApi extends Mock implements AdminApi {}
 
-class MockLogger extends Mock implements Logger {}
+extension AddApi on ApiRepository {
+  void setApi(Moralpainapi mapi) {
+    this.mapi = mapi;
+  }
+}
 
-//@GenerateMocks([MockApiRepository])
 void main() {
   group('ApiRepository', () {
     late ApiRepository apiRepository;
     late Moralpainapi mapi;
     late AdminApi aapi;
 
+    Submissions returnSubmissions = Submissions();
+    Future<Response<Submissions>> returnResponse = Future.value(
+      Response<Submissions>(
+        data: returnSubmissions,
+        requestOptions: RequestOptions(path: ''),
+      ),
+    );
+
+    setUpAll(() {
+      int? fallback = 0;
+      registerFallbackValue(fallback);
+    });
+
     setUp(() {
-      apiRepository = MockApiRepository();
+      apiRepository = ApiRepository();
       mapi = MockMoralpainapi();
       aapi = MockAdminApi();
 
-      when(() => apiRepository.mapi).thenReturn(mapi);
+      apiRepository.setApi(mapi);
       when(() => mapi.getAdminApi()).thenReturn(aapi);
+      when(() => aapi.getSubmissions(
+            starttime: any(named: 'starttime'),
+            endtime: any(named: 'endtime'),
+            minscore: any(named: 'minscore'),
+            maxscore: any(named: 'maxscore'),
+          )).thenAnswer((_) => returnResponse);
     });
 
     group('fetchSubmissions', () {
@@ -55,27 +72,34 @@ void main() {
       });
 
       test('throws when getSubmissions fails', () async {
-        when(() => aapi.getSubmissions()).thenThrow(Exception('oops'));
+        when(() => aapi.getSubmissions(
+              starttime: any(named: 'starttime'),
+              endtime: any(named: 'endtime'),
+              minscore: any(named: 'minscore'),
+              maxscore: any(named: 'maxscore'),
+            )).thenThrow(Exception('oops'));
         expect(
-          await apiRepository.fetchSubmissions(),
-          throwsA(SubmissionsFetchFailure),
+          () async => await apiRepository.fetchSubmissions(
+            starttime: starttime,
+            endtime: endtime,
+            minscore: minscore,
+            maxscore: maxscore,
+          ),
+          throwsA(isA<SubmissionsFetchFailure>()),
         );
       });
-    });
 
-    test('returns correct Submissions list on success', () async {
-      when(() async => await aapi.getSubmissions())
-          .thenAnswer((_) => Future.value(
-                Response<Submissions>(
-                  data: Submissions(),
-                  requestOptions: RequestOptions(path: ''),
-                ),
-              ));
-
-      expect(
-        await apiRepository.fetchSubmissions(),
-        equals(Submissions()),
-      );
+      test('returns correct Submissions list on success', () async {
+        expect(
+          await apiRepository.fetchSubmissions(
+            starttime: starttime,
+            endtime: endtime,
+            minscore: minscore,
+            maxscore: maxscore,
+          ),
+          equals(returnSubmissions),
+        );
+      });
     });
   });
 }

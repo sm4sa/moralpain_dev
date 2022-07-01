@@ -9,10 +9,6 @@ class SubmissionsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<SubmissionsBloc, SubmissionsState>(
-      buildWhen: (previous, current) =>
-          current is SubmissionsLoading ||
-          current is SubmissionsLoaded ||
-          current is SubmissionsLoadFailed,
       builder: (context, state) => handleLoadEvents(context, state),
     );
   }
@@ -33,8 +29,8 @@ class SubmissionsView extends StatelessWidget {
     );
   }
 
-  Widget submissionsFromState(SubmissionsState state) {
-    if (state is SubmissionsLoading) {
+  static Widget submissionsFromState(SubmissionsState state) {
+    if (state is SubmissionsInitial || state is SubmissionsLoading) {
       return Expanded(child: Center(child: CircularProgressIndicator()));
     } else if (state is SubmissionsLoaded) {
       return Expanded(
@@ -45,14 +41,18 @@ class SubmissionsView extends StatelessWidget {
         ),
       );
     } else if (state is SubmissionsLoadFailed) {
-      return Expanded(child: Center(child: Text('Error fetching submissions')));
+      return Expanded(
+        child: Center(
+          child: Text('Error fetching submissions'),
+        ),
+      );
     } else {
       assert(false);
       return ErrorWidget('Error State');
     }
   }
 
-  String messageFromSubmissions(Submissions submissions) {
+  static String messageFromSubmissions(Submissions submissions) {
     BuiltList<Submission>? list = submissions.list;
     if (list == null) {
       return 'No list of submissions.';

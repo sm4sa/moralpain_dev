@@ -2,7 +2,7 @@ part of 'submissions_bloc.dart';
 
 abstract class SubmissionsState extends Equatable {
   @override
-  List<Object?> get props => [];
+  List<Object> get props => [];
 }
 
 class SubmissionsInitial extends SubmissionsState {}
@@ -15,7 +15,7 @@ class SubmissionsLoaded extends SubmissionsState {
   SubmissionsLoaded(this.submissions);
 
   @override
-  List<Object?> get props => [submissions];
+  List<Object> get props => [submissions];
 }
 
 class SubmissionsLoadFailed extends SubmissionsState {}
