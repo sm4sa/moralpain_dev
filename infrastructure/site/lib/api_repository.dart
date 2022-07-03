@@ -18,12 +18,12 @@ class SubmissionsFetchFailure implements Exception {
 class ApiRepository {
   final log = Logger('AdminRepository');
 
-  Moralpainapi mapi = Moralpainapi(
-    basePathOverride:
-        'https://umd7orqgt1.execute-api.us-east-1.amazonaws.com/v1',
-  );
+  late Moralpainapi mapi;
 
-  ApiRepository() {
+  ApiRepository(
+      {String basePathOverride =
+          'https://umd7orqgt1.execute-api.us-east-1.amazonaws.com/v1'}) {
+    mapi = Moralpainapi(basePathOverride: basePathOverride);
     mapi.dio.options.connectTimeout = 30 * 1000;
     mapi.dio.options.receiveTimeout = 30 * 1000;
     mapi.dio.options.sendTimeout = 30 * 1000;

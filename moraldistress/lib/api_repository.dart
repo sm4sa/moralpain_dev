@@ -5,9 +5,9 @@ import 'package:logging/logging.dart';
 import 'package:moralpainapi/moralpainapi.dart';
 
 class ApiRepository {
-  final log = Logger('SurveyRepository');
+  Logger log = Logger('SurveyRepository');
 
-  final mapi = Moralpainapi(
+  Moralpainapi mapi = Moralpainapi(
       basePathOverride:
           'https://umd7orqgt1.execute-api.us-east-1.amazonaws.com/v1');
 

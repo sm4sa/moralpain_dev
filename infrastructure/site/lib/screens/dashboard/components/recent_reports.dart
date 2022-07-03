@@ -87,7 +87,11 @@ void _onRecentReportDataRowTapped(BuildContext context, RecentReport fileInfo) {
   Navigator.of(context).push(
     MaterialPageRoute(
       fullscreenDialog: true,
-      builder: (context) => SubmissionsRoute(repository: ApiRepository()),
+      builder: (context) => SubmissionsRoute(
+        repository: ApiRepository(
+          basePathOverride: 'http://127.0.0.1:4010',
+        ),
+      ),
     ),
   );
 }
