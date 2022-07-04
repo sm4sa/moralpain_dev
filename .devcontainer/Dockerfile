@@ -14,6 +14,7 @@ WORKDIR /opt
 ADD https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_${FLUTTER_VERSION}-stable.tar.xz /opt
 RUN tar xJvf /opt/flutter_linux_${FLUTTER_VERSION}-stable.tar.xz
 ENV PATH="/opt/flutter/bin:${PATH}"
+RUN flutter upgrade
 RUN flutter doctor
 
 ENTRYPOINT ["flutter"]
