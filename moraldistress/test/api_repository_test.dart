@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:logging/logging.dart';
 import 'package:mocktail/mocktail.dart';
@@ -44,13 +43,13 @@ void main() {
     });
 
     group('fetchSurvey', () {
-      Future<Survey> placeholderSurvey() async {
+      Survey placeholderSurvey() {
         return Survey();
       }
 
       Future<Response<Survey>> placeholderResponse() async {
         return Response<Survey>(
-          data: await placeholderSurvey(),
+          data: placeholderSurvey(),
           requestOptions: RequestOptions(path: ''),
         );
       }
@@ -73,7 +72,7 @@ void main() {
         when(() => uapi.getSurvey()).thenAnswer((_) => placeholderResponse());
         expect(
           await apiRepository.fetchSurvey(),
-          equals(await placeholderSurvey()),
+          equals(placeholderSurvey()),
         );
       });
     });
@@ -105,7 +104,166 @@ void main() {
             )).called(1);
       });
 
-      test('logs error when submitSurvey fails', () {});
+      test('logs error and returns false when submitSurvey fails', () async {
+        when(
+          () => uapi.submitSurvey(submission: any(named: 'submission')),
+        ).thenThrow(Exception('oops'));
+        bool success = await apiRepository.submitSurvey(placeholderSubmission);
+        verify(() => log.shout(any(), any())).called(1);
+        expect(success, isFalse);
+      });
+
+      test(
+        'returns false '
+        'when response from submitSurvey has success code other than 200',
+        () async {
+          when(
+            () => uapi.submitSurvey(submission: any(named: 'submission')),
+          ).thenAnswer((_) => Future.value(
+                Response<String>(
+                  requestOptions: RequestOptions(path: ''),
+                  statusCode: 404,
+                ),
+              ));
+          bool success =
+              await apiRepository.submitSurvey(placeholderSubmission);
+          expect(success, isFalse);
+        },
+      );
+
+      test(
+        'returns true when response from submitSurvey has success code 200',
+        () async {
+          when(
+            () => uapi.submitSurvey(submission: any(named: 'submission')),
+          ).thenAnswer((_) => Future.value(
+                Response<String>(
+                  requestOptions: RequestOptions(path: ''),
+                  statusCode: 200,
+                ),
+              ));
+          bool success =
+              await apiRepository.submitSurvey(placeholderSubmission);
+          expect(success, isTrue);
+        },
+      );
+    });
+
+    group('fetchResiliencyResources', () {
+      ResiliencyResources placeholderResources() {
+        return ResiliencyResources();
+      }
+
+      Future<Response<ResiliencyResources>> placeholderResponse() async {
+        return Response<ResiliencyResources>(
+          data: placeholderResources(),
+          requestOptions: RequestOptions(path: ''),
+        );
+      }
+
+      test('calls getResiliencyResources', () async {
+        try {
+          await apiRepository.fetchResiliencyResources();
+        } catch (_) {}
+        verify(() => uapi.getResiliencyResources()).called(1);
+      });
+
+      test(
+        'logs error and returns empty ResiliencyResources'
+        'when getResiliencyResources fails',
+        () async {
+          when(() => uapi.getResiliencyResources())
+              .thenThrow(Exception('oops'));
+          ResiliencyResources resources =
+              await apiRepository.fetchResiliencyResources();
+          verify(() => log.warning(any(), any())).called(1);
+          expect(resources, equals(ResiliencyResources()));
+        },
+      );
+
+      test('returns correct ResiliencyResources on success', () async {
+        when(() => uapi.getResiliencyResources())
+            .thenAnswer((_) => placeholderResponse());
+        ResiliencyResources resources =
+            await apiRepository.fetchResiliencyResources();
+        expect(resources, equals(placeholderResources()));
+      });
+    });
+
+    group('submitVisitedResources', () {
+      VisitedResiliencyResources placeholderResources =
+          VisitedResiliencyResources();
+
+      test('calls submitVisitedResiliencyResources', () async {
+        try {
+          await apiRepository.submitVisitedResources(placeholderResources);
+        } catch (_) {}
+        verify(() => uapi.submitVisitedResiliencyResources(
+              visitedResiliencyResources: placeholderResources,
+            )).called(1);
+      });
+
+      test(
+        'logs error and returns false '
+        'when submitVisitedResiliencyResources fails',
+        () async {
+          when(
+            () => uapi.submitVisitedResiliencyResources(
+              visitedResiliencyResources:
+                  any(named: 'visitedResiliencyResources'),
+            ),
+          ).thenThrow(Exception('oops'));
+          bool success = await apiRepository.submitVisitedResources(
+            placeholderResources,
+          );
+          verify(() => log.warning(any(), any())).called(1);
+          expect(success, isFalse);
+        },
+      );
+
+      test(
+        'returns false when response from submitVisitedResiliencyResources '
+        'has status code other than 200',
+        () async {
+          when(
+            () => uapi.submitVisitedResiliencyResources(
+              visitedResiliencyResources:
+                  any(named: 'visitedResiliencyResources'),
+            ),
+          ).thenAnswer((_) => Future.value(
+                Response<String>(
+                  requestOptions: RequestOptions(path: ''),
+                  statusCode: 404,
+                ),
+              ));
+          expect(
+            await apiRepository.submitVisitedResources(placeholderResources),
+            isFalse,
+          );
+        },
+      );
+
+      test(
+        'returns true when response from submitVisitedResiliencyResources '
+        'has status code 200',
+        () async {
+          when(
+            () => uapi.submitVisitedResiliencyResources(
+              visitedResiliencyResources:
+                  any(named: 'visitedResiliencyResources'),
+            ),
+          ).thenAnswer((_) => Future.value(
+                Response<String>(
+                  requestOptions: RequestOptions(path: ''),
+                  statusCode: 200,
+                ),
+              ));
+          expect(
+            await apiRepository.submitVisitedResources(placeholderResources),
+            isTrue,
+          );
+        },
+      );
     });
   });
 }
