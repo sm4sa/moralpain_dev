@@ -1,4 +1,6 @@
+import 'package:admin/api_repository.dart';
 import 'package:admin/models/RecentReport.dart';
+import 'package:admin/screens/submissions/submissions.dart';
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -40,7 +42,8 @@ class RecentReports extends StatelessWidget {
               ],
               rows: List.generate(
                 demoRecentReports.length,
-                (index) => recentReportDataRow(demoRecentReports[index]),
+                (index) =>
+                    recentReportDataRow(context, demoRecentReports[index]),
               ),
             ),
           ),
@@ -50,7 +53,7 @@ class RecentReports extends StatelessWidget {
   }
 }
 
-DataRow recentReportDataRow(RecentReport fileInfo) {
+DataRow recentReportDataRow(BuildContext context, RecentReport fileInfo) {
   return DataRow(
     cells: [
       DataCell(
@@ -62,14 +65,33 @@ DataRow recentReportDataRow(RecentReport fileInfo) {
               width: 30,
               color: Colors.white,
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
-              child: Text(fileInfo.title!),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
+                child: Text(fileInfo.title!),
+              ),
             ),
           ],
         ),
+        onTap: () => _onRecentReportDataRowTapped(context, fileInfo),
       ),
-      DataCell(Text(fileInfo.date!)),
+      DataCell(
+        Text(fileInfo.date!),
+        onTap: () => _onRecentReportDataRowTapped(context, fileInfo),
+      ),
     ],
+  );
+}
+
+void _onRecentReportDataRowTapped(BuildContext context, RecentReport fileInfo) {
+  Navigator.of(context).push(
+    MaterialPageRoute(
+      fullscreenDialog: true,
+      builder: (context) => SubmissionsRoute(
+        repository: ApiRepository(
+          basePathOverride: 'http://127.0.0.1:4010',
+        ),
+      ),
+    ),
   );
 }
