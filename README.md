@@ -53,7 +53,7 @@ brew install docker
 
 __Windows__
 ```bash
-choco install git-lfs.install
+choco install docker-desktop
 ```
 
 Finally, we install our IDE, [Visual Studio Code][8].
@@ -103,7 +103,7 @@ cd moralpain_dev\bin
 The install script will update the `PATH` environment variable. For the changes
 to take effect, you will need reload your shell configurations. One easy way to
 do this is simply to restart the shell. We can claim success if we can locate
-locate the Android tooling.
+the Android tooling.
 
 __macOS__
 ```bash
