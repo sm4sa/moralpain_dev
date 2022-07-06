@@ -293,6 +293,54 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/submissions'
+              examples:
+                multiple_submissions:
+                  summary: An example containing multiple submissions.
+                  value:
+                    list:
+                      - 
+                        score: 1
+                        selections:
+                          - "002_02"
+                          - "004_01"
+                        timestamp: 1655237295
+                        id: 28308ccfe579417ebe5d32b106ed48d9
+                      -
+                        score: 7
+                        selections:
+                          - "001_03"
+                          - "002_01"
+                          - "002_11"
+                        timestamp: 1651327875
+                        id: 40ecf57b4e044097b6827729c34f395f
+                      -
+                        score: 0
+                        selections: []
+                        timestamp: 1656516153
+                        id: 52be82478bd246cf8c0f8722aa17906f
+                      -
+                        score: 1
+                        selections:
+                          - "002_02"
+                        timestamp: 1655025897
+                        id: 4fa6c54a65fb45c89b8758653b967a84
+                      -
+                        score: 6
+                        selections:
+                          - "001_02"
+                        timestamp: 1655025247
+                        id: f50a3ddb82854e6ebfcaf6d5ef1247be
+                one_submission:
+                  summary: An example containing only one submission.
+                  value:
+                    list:
+                      - 
+                        score: 1
+                        selections:
+                          - "002_02"
+                          - "004_01"
+                        timestamp: 1655237295
+                        id: 28308ccfe579417ebe5d32b106ed48d9
         '400':
           description: 400 Bad Request
     options:

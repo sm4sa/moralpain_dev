@@ -1,4 +1,6 @@
 import 'package:built_collection/built_collection.dart';
+import 'package:data_table_2/data_table_2.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:moralpainapi/moralpainapi.dart';
@@ -35,9 +37,7 @@ class SubmissionsView extends StatelessWidget {
     } else if (state is SubmissionsLoaded) {
       return Expanded(
         child: Center(
-          child: Text(
-            messageFromSubmissions(state.submissions),
-          ),
+          child: messageFromSubmissions(state.submissions),
         ),
       );
     } else if (state is SubmissionsLoadFailed) {
@@ -52,14 +52,53 @@ class SubmissionsView extends StatelessWidget {
     }
   }
 
-  static String messageFromSubmissions(Submissions submissions) {
+  static Widget messageFromSubmissions(Submissions submissions) {
     BuiltList<Submission>? list = submissions.list;
     if (list == null) {
-      return 'No list of submissions.';
+      return Text('No list of submissions.');
     }
     if (list.isEmpty) {
-      return 'List of submissions is empty.';
+      return Text('List of submissions is empty.');
     }
-    return list.toString();
+    return DataTable2(
+      columns: [
+        DataColumn(
+          label: Text('Submission Time'),
+        ),
+        DataColumn(
+          label: Text('Score'),
+        ),
+        DataColumn(label: Text('User Id')),
+      ],
+      rows: List.generate(
+        submissions.list!.length,
+        (index) => submissionDataRow(submissions.list![index]),
+      ),
+    );
+  }
+
+  static DataRow submissionDataRow(Submission submission) {
+    return DataRow(
+      cells: [
+        DataCell(
+          submission.timestamp != null
+              ? Text(
+                  '${DateTime.fromMillisecondsSinceEpoch(
+                    submission.timestamp! * 1000,
+                  )}'
+                  ' (GMT)',
+                )
+              : Text('No date'),
+        ),
+        DataCell(
+          submission.score != null
+              ? Text('${submission.score}')
+              : Text('No score'),
+        ),
+        DataCell(
+          submission.id != null ? Text('${submission.id}') : Text('No user ID'),
+        ),
+      ],
+    );
   }
 }
