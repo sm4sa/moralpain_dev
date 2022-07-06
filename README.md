@@ -1,50 +1,29 @@
 # Moral Distress App IDE Builder
 
-Fork this repository to contribute to development of UVa's Moral Distress Monitoring and Mitigation app, a joint project between Computer Science and the School or Nursing. Follow the steps below and in a few minutes you should have a GitHub-repo-backed, VSCode-provided IDE opened to edit a fork of this repository cloned into your own local Docker container, along with a clone of <https://github.com/kevinsullivan/moralpain.git>. Both projects will reside in /workspaces in the container VM.  
+SORRY, UNDER CONSTRUCTION. THERE ARE INCONSISTENCIES WITHIN. --SULLIVAN
 
-## Install
-> :warning: Some installation scripts have not been ported to Windows yet.
-> Also, this installation guide does not describe Linux. However, the
-> macOS instructions should be quite similar, and Linux support is expected.
-### Prerequisites
-Prior to setting up the MoralDistress development environment there are two
-prerequisite tools that need to be in place. You need access to a shell and a
-package manager.
+Fork this repository to contribute to development of UVa's Moral Distress Reporting, Analysis, and Response system, a joint project between the Department of Computer Science and the School or Nursing. Follow the steps below and in a few minutes you should have a GitHub-repo-backed, VSCode-provided IDE opened to edit a fork of this repository cloned into a Docker container.  
 
-#### Shell
+## Dependencies
+
+### Shell
+
 A shell is a program with which we can, among many other things, issue
 commands to invoke tools and software. On macOS and Linux we will use
 the [Bash shell][10]. On Windows, we recommend [PowerShell][11]. Both
 of these should be available on your system already.
 
-#### Package Manager
-A package manager is a tool that facilitates installing software packages from
-the command line. If you are on a Linux machine, you will use the one
-appropriate for your distro (e.g. [apt for Ubuntu][1]). On macOS, [Homebrew][2]
-is a popular choice. On Windows, there is [chocolatey][3]. Follow the
-your package manager's documentation to install.
+### Package Manager
+A package manager tool allows you to install and manage software packages
+using command line commands. If you are on a Linux machine, we recommend
+that use the one provided by your distro (e.g. [apt for Ubuntu][1]). On 
+macOS, [Homebrew][2] is a popular choice. On Windows, we recommend that 
+you use [chocolatey][3].
 
----
-
-With the prerequisites in place we can move forward with the installation
-process. 
-
-First, let us install git and git-lfs. Git will be used for cloning the code base locally
-and for managing the project.
-
-__macOS__
-```bash
-brew install git git-lfs
-```
-
-__Windows__
-```PowerShell
-choco install git git-lfs.install
-```
-
-Next, we install docker. Docker will host our development environment. We
-provide an [image][12] that comes with all of the required dependencies baked
-in.
+### Docker 
+Next, we install Docker. Docker will host our development environment. We
+provide a Docker [image][12] that comes with all of the required dependencies
+baked in.
 
 __macOS__
 ```bash
@@ -56,7 +35,9 @@ __Windows__
 choco install docker-desktop
 ```
 
-Finally, we install our IDE, [Visual Studio Code][8].
+### Visual Studio Code 
+
+Next, install our IDE, [Visual Studio Code][8].
 
 __macOS__
 ```bash
@@ -68,9 +49,128 @@ __Windows__
 choco install vscode
 ```
 
-Inside VS code, we leverage the remote container extension to develop inside of
-a docker container. You can read more about this pattern of development in the
-[Visual Studio docs][13].
+Inside VS code, install the "remote containers" extension. We use it 
+to provide you with a complete operating system and development environment
+for this project from within VSCode. You can read more about this pattern 
+of development in the [Visual Studio docs][13].
+
+###
+
+If you don't already have Java installed on your machine, [install it][15].
+
+### Android sdkmanager
+
+This task installs sdkmanager. You will then use it to install Android
+images onto emulators. 
+
+- Create or initialize the directory, C:\Android. 
+- CD to this directory. 
+- Download "Command Line Tools" [zip file][14]. 
+- Unzip it in place. 
+- CD into just unzipped cmdline_tools directory.
+- Create a subdirectory called tools ("mkdir tools")
+- Move all the contents of this cmdline_tools directory to tools ("mv * tools")
+- Create/update Windows environment variable, ANDROID_SDK_ROOT="C:\Android"
+- Add the following paths to the Windows User or System search path
+-- "C:\Android\cmdline_tools\tools\bin" 
+- Exit and restart your terminal/shell to update its search path. 
+- You should be able to run the Android "sdkmanager" command from your shell
+
+
+### Android packages
+
+- sdkmanager "platform-tools" "platforms;android-31" "emulator".
+
+### Create an emulator
+
+avdmanager create avd --name avd_31 --package "system-images;android-31;google_apis;x86_64"
+
+### Disable warning
+
+```PowerShell
+echo # > c:\qemu.conf
+```
+### Launch emulator
+
+__macOS__
+```bash
+./launch_emulator
+```
+__Windows__
+Set your default browser to Chrome (sorry, but yeah, you have to do this) 
+```PowerShell
+adb start-server
+emulator -avd avd_31
+adb wait-for-device shell 'while [[ -z $(getprop sys.boot_completed) ]]; do sleep 1; done;'
+```
+
+## Opening your clone of your fork of the Project in VS Code
+
+Next, open up the `moralpain_dev` repository in VS Code. There will be several
+prompts to click through. You should, "Trust the Authors", "Reopen in
+Container", and "Install Recommended Extensions".  
+
+VS Code will initialize your project. When done, in the bottom of the window
+you should see an Android device listed.  
+
+At this point, your environment is all set up. From here you can navigate to
+the `main.dart` file and select the run button the appears above the `main`
+method. This will build the application and launch it in the emulator.
+
+## OLDER STUFF
+
+### How It Works
+
+We deliver a development environment via VSCode and its *Remote-Containers* capabilities. In a nutshell, when you ask VSCode to clone our repository, it will actually fork it and then clone your fork into the container that it launches to provide the programming platform you will then use to develop your solutions. It is very important to commit changes you make to your container-local repository, but then also to push them to your GitHub repo to back them up and because that should be the main repository for your project. You can log into it by simply opening a Terminal in VSCode. The clone of your repo is in the /workspaces folder within the container file system (or storage *volume*, as it's called).
+
+### Risk Alert and Avoidance
+
+It is important to understand that commits made to git are stored in the Docker container serving up the develop environment.  if you delete the container or its storage volume (which you could do through Docker Desktop), this will erase the work stored in the container. To make your container-local changes persistent, stage/add and then commit your local changes to the local repo, then push your container-repo-local changes to your repository on GitHub.
+
+### Help Make It Even Better
+
+Let us know what you think. Better yet, make it better and send us a PR. You'll be completely set up to do that by the results of this procedure.
+
+## Legal and contact
+
+Copyright: © 2021, 2022 By Rectors and Visitors of the University of Virginia.
+Authors: Nicholas Phair, Vanessa Amos, Beth Epstein, Kevin Sullivan. 
+Contact Author: Kevin Sullivan. UVa CS Dept. sullivan@virginia.edu.
+Acknowledgments: Thank you to multiple students for reading, testing, fixing.
+
+
+[1]: https://wiki.debian.org/Apt
+[2]: https://brew.sh/
+[3]: https://chocolatey.org/
+[4]: https://flutter.dev/docs/get-started/install
+[5]: https://dart.dev/
+[6]: https://developer.android.com/studio
+[7]: https://developer.android.com/studio/run/emulator#install
+[8]: https://code.visualstudio.com/
+[10]: https://www.gnu.org/software/bash/
+[11]: https://docs.microsoft.com/en-us/powershell/
+[12]: https://github.com/kevinsullivan/moralpain_config
+[13]: https://code.visualstudio.com/docs/remote/containers
+[14] https://developer.android.com/studio/#downloads
+[15] https://www.java.com/en/download/manual.jsp
+
+## JUNK
+
+git and git-lfs
+
+First, install git and git-lfs. Git will be used for cloning the code base locally and for managing the project.
+
+__macOS__
+```bash
+brew install git git-lfs
+```
+
+__Windows__
+```PowerShell
+choco install git git-lfs.install
+```
+
+---
 
 Next, let us use git to clone the repository.
 
@@ -115,58 +215,6 @@ __Windows__
 Get-Command sdkmanager 
 ```
 
-Now that we have all of our software in place, we can begin development.
-First, launch the emulator from the command line.
-
-__macOS__
-```bash
-./launch_emulator
-```
-__Windows__
-```PowerShell
-.\launch_emulator.ps1
-```
-
-Next, open up the `moralpain_dev` repository in VS Code. There will be several
-prompts to click through. You should, "Trust the Authors", "Reopen in
-Container", and "Install Recommended Extensions".  
-
-VS Code will initialize your project. When done, in the bottom of the window
-you should see an Android device listed.  
-
-At this point, your environment is all set up. From here you can navigate to
-the `main.dart` file and select the run button the appears above the `main`
-method. This will build the application and launch it in the emulator.
-
-## How It Works
-
-We deliver a development environment via VSCode and its *Remote-Containers* capabilities. In a nutshell, when you ask VSCode to clone our repository, it will actually fork it and then clone your fork into the container that it launches to provide the programming platform you will then use to develop your solutions. It is very important to commit changes you make to your container-local repository, but then also to push them to your GitHub repo to back them up and because that should be the main repository for your project. You can log into it by simply opening a Terminal in VSCode. The clone of your repo is in the /workspaces folder within the container file system (or storage *volume*, as it's called).
-
-## Risk Alert and Avoidance
-
-It is important to understand that commits made to git are stored in the Docker container serving up the develop environment.  if you delete the container or its storage volume (which you could do through Docker Desktop), this will erase the work stored in the container. To make your container-local changes persistent, stage/add and then commit your local changes to the local repo, then push your container-repo-local changes to your repository on GitHub.
-
-## Help Make It Even Better
-
-Let us know what you think. Better yet, make it better and send us a PR. You'll be completely set up to do that by the results of this procedure.
-
-## Legal and contact
-
-Copyright: © 2021, 2022 By Rectors and Visitors of the University of Virginia.
-Authors: Nicholas Phair, Vanessa Amos, Beth Epstein, Kevin Sullivan. 
-Contact Author: Kevin Sullivan. UVa CS Dept. sullivan@virginia.edu.
-Acknowledgments: Thank you to multiple students for reading, testing, fixing.
 
 
-[1]: https://wiki.debian.org/Apt
-[2]: https://brew.sh/
-[3]: https://chocolatey.org/
-[4]: https://flutter.dev/docs/get-started/install
-[5]: https://dart.dev/
-[6]: https://developer.android.com/studio
-[7]: https://developer.android.com/studio/run/emulator#install
-[8]: https://code.visualstudio.com/
-[10]: https://www.gnu.org/software/bash/
-[11]: https://docs.microsoft.com/en-us/powershell/
-[12]: https://github.com/kevinsullivan/moralpain_config
-[13]: https://code.visualstudio.com/docs/remote/containers
+
