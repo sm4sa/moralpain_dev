@@ -29,6 +29,7 @@ class RecentReports extends StatelessWidget {
           ),
           SizedBox(
             width: double.infinity,
+            height: 1000,
             child: DataTable2(
               columnSpacing: defaultPadding,
               minWidth: 600,
