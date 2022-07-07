@@ -8,24 +8,25 @@ You have come across a repository related to our work at the University of Virgi
 
 ### Mac/Linux
 
-#### Package manager
-
 Install the [Homebrew][2] package manager if it's not already installed. 
 
-#### Docker 
+```bash
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
+
+Install Docker Desktop if its not already installed.
 
 ```bash
 brew install docker
 ```
 
-#### VSCode
+Install VSCode if it's not already installed. 
 
 ```bash
 brew install --cask visual-studio-code
 ```
 
 Run VS code and install its "remote containers" extension.
-
 
 
 ### Windows
