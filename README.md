@@ -31,18 +31,16 @@ Run VS code and install its "remote containers" extension.
 
 ### Windows
 
-#### Package Manager
-
 Install the [chocolatey][3] package manager if it's not already installed.
 
 
-#### Docker 
+Install Docker Desktop if it's not already installed.  
 
 ```bash
 choco install docker-desktop
 ```
 
-#### Visual Studio Code 
+Install VSCode if it's not already installed.
 
 ```PowerShell
 choco install vscode
@@ -50,45 +48,25 @@ choco install vscode
 
 Run VS code and install its "remote containers" extension. 
 
-#### Java
-
 If you don't already have Java installed on your machine, [install it][15].
 
-#### Android sdkmanager
-
-This task installs sdkmanager among other components needed for the Android 
-emulator to run. Once you have it, you will use it to install additional
-Android packages needed by the emulator. 
+The next task installs sdkmanager, which you will then use to install Android software. Use Powershell.
 
 - Create or initialize the directory, C:\Android. 
 - CD to this directory. 
-- Download "Command Line Tools" [zip file][14]. 
-- Unzip it in place
+- Download Android's "Command Line Tools" [zip file][14]. 
+- Unzip it in place (in C:\Android)
 - CD into just unzipped cmdline_tools directory.
 - Create a subdirectory called tools ("mkdir tools")
-- Move all the contents of this cmdline_tools directory to tools ("mv * tools")
+- Move all the contents of the cmdline_tools directory (but for tools) to tools ("mv * tools")
 - Create/update Windows environment variable, ANDROID_SDK_ROOT="C:\Android"
 - Add the following paths to the Windows User or System search path
 -- "C:\Android\cmdline_tools\tools\bin"
 -- TODO: There are more, Kevin; add them
 - Exit and restart your terminal/shell to update its search path
-
-#### Android packages
-
-- sdkmanager "platform-tools" "platforms;android-31" "emulator".
-
-#### Emulator
-
-avdmanager create avd --name avd_31 --package "system-images;android-31;google_apis;x86_64"
-
-#### Disable warning
-
-```PowerShell
-echo # > c:\qemu.conf
-```
-
-#### Chrome Browser
-
+- Run: sdkmanager "platform-tools" "platforms;android-31" "emulator"
+- Run: avdmanager create avd --name avd_31 --package "system-images;android-31;google_apis;x86_64"
+-Run: echo # > c:\qemu.conf
 - Install the Chrome browser if necessary
 - Make it your default browser (sorry but it's required)
 - Run it and install the Chrome "Dart Debug" extension
