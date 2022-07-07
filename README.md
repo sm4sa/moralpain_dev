@@ -2,7 +2,9 @@
 
 SORRY, UNDER CONSTRUCTION. THERE ARE INCONSISTENCIES WITHIN. --SULLIVAN
 
-You have come across a repository related to our work at the University of Virginia to build and employ a platform for managing and learning about moral distress and responses to it. The only reason to spend much time here at the moment is that you're a member of our team already, or a close colleague, or you're looking to join. In that case, these instructions should suffice to get you up and running with a development and test environment. It comes in two parts: first you will configure your computer with software needed to run an Android emulator; and second, you will fork this repo then clone your fork to your local machine, whereupon you will commence to operate on it through a containerized operating system running within VSCode. For part one, we give instructions for setting up Mac/Linux and Windows machines, respectively. The instructions are the same for part two for both Mac/Linux and Windows operating systems.
+You have come across a repository related to our work at the University of Virginia to build and employ a platform for managing and learning about moral distress and responses to it. The only reason to spend much time here at the moment is that you're a member of our team already, or a close colleague, or you're looking to join. 
+
+In that case, these instructions should suffice to get you up and running with a development and test environment. It comes in two parts: (1) configure your computer with software needed to run an Android emulator; (2) fork this repo then clone your fork to your local machine, whereupon you can work on it through a containerized operating system running within VSCode. We give instructions for setting up an emulator on Mac/Linux and Windows machines, respectively. The remaining instructions are the same for both Mac/Linux and Windows.
 
 ## I. Install the Android emulator
 
