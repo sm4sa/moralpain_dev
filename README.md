@@ -1,67 +1,72 @@
-# Moral Distress App IDE Builder
+# Development Environment for Operation and Experiment Platform for A Moral Distress Learning System
 
 SORRY, UNDER CONSTRUCTION. THERE ARE INCONSISTENCIES WITHIN. --SULLIVAN
 
-Fork this repository to contribute to development of UVa's Moral Distress Reporting, Analysis, and Response system, a joint project between the Department of Computer Science and the School or Nursing. Follow the steps below and in a few minutes you should have a GitHub-repo-backed, VSCode-provided IDE opened to edit a fork of this repository cloned into a Docker container.  
+You have come across a repository related to our work at the University of Virginia to build and employ a platform for managing and learning about moral distress and responses to it. The only reason to spend much time here at the moment is that you're a member of our team already, or a close colleague, or you're looking to join. In that case, these instructions should suffice to get you up and running with a development and test environment. It comes in two parts: first you will configure your computer with software needed to run an Android emulator; and second, you will fork this repo then clone your fork to your local machine, whereupon you will commence to operate on it through a containerized operating system running within VSCode. For part one, we give instructions for setting up Mac/Linux and Windows machines, respectively. The instructions are the same for part two for both Mac/Linux and Windows operating systems.
 
-## Dependencies
+## Install the Android emulator
 
-### Shell
+### Mac/Linux
 
-A shell is a program with which we can, among many other things, issue
-commands to invoke tools and software. On macOS and Linux we will use
-the [Bash shell][10]. On Windows, we recommend [PowerShell][11]. Both
-of these should be available on your system already.
+#### Package manager
 
-### Package Manager
-A package manager tool allows you to install and manage software packages
-using command line commands. If you are on a Linux machine, we recommend
-that use the one provided by your distro (e.g. [apt for Ubuntu][1]). On 
-macOS, [Homebrew][2] is a popular choice. On Windows, we recommend that 
-you use [chocolatey][3].
+Install the [Homebrew][2] package manager if it's not already installed. 
 
-### Docker 
-Next, we install Docker. Docker will host our development environment. We
-provide a Docker [image][12] that comes with all of the required dependencies
-baked in.
+#### Docker 
 
 __macOS__
 ```bash
 brew install docker
 ```
 
-__Windows__
-```bash
-choco install docker-desktop
-```
-
-### Visual Studio Code 
-
-Next, install our IDE, [Visual Studio Code][8].
+#### VSCode
 
 __macOS__
 ```bash
 brew install --cask visual-studio-code
 ```
 
+
+
+### Windows
+
+#### Package Manager
+
+Install the [chocolatey][3] package manager if it's not already installed.
+
+
+#### Docker 
+
+__Windows__
+```bash
+choco install docker-desktop
+```
+
+#### Visual Studio Code 
+
+Next, install our IDE, [Visual Studio Code][8].
+
 __Windows__
 ```PowerShell
 choco install vscode
 ```
 
-Inside VS code, install the "remote containers" extension. We use it 
+Inside VS code, install the "remote containers" extension. 
+
+We use it 
 to provide you with a complete operating system and development environment
 for this project from within VSCode. You can read more about this pattern 
 of development in the [Visual Studio docs][13].
 
-###
+#### Java
 
 If you don't already have Java installed on your machine, [install it][15].
 
-### Android sdkmanager
+#### Android sdkmanager
 
-This task installs sdkmanager. You will then use it to install Android
-images onto emulators. 
+This task installs sdkmanager among other basic components needed for the
+Android emulator to run. Once you have it, you will use it to install Android
+packages needed for the emulator to run. 
 
 - Create or initialize the directory, C:\Android. 
 - CD to this directory. 
@@ -106,6 +111,10 @@ adb wait-for-device shell 'while [[ -z $(getprop sys.boot_completed) ]]; do slee
 ```
 
 ## Opening your clone of your fork of the Project in VS Code
+
+Fork this repository to contribute to development of UVa's Moral Distress Reporting, Analysis, and Response system, a joint project between the Department of Computer Science and the School or Nursing. Follow the steps below and in a few minutes you should have a GitHub-repo-backed, VSCode-provided IDE opened to edit a fork of this repository cloned into a Docker container.  
+
+
 
 Next, open up the `moralpain_dev` repository in VS Code. There will be several
 prompts to click through. You should, "Trust the Authors", "Reopen in
