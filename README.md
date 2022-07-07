@@ -1,4 +1,4 @@
-# Development Environment for Operation and Experiment Platform for A Moral Distress Learning System
+# Development Environment for a Moral Distress Learning System
 
 SORRY, UNDER CONSTRUCTION. THERE ARE INCONSISTENCIES WITHIN. --SULLIVAN
 
