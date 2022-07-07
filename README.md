@@ -14,19 +14,15 @@ Install the [Homebrew][2] package manager if it's not already installed.
 
 #### Docker 
 
-__macOS__
 ```bash
 brew install docker
 ```
 
 #### VSCode
 
-__macOS__
 ```bash
 brew install --cask visual-studio-code
 ```
-
-
 
 ### Windows
 
@@ -37,26 +33,17 @@ Install the [chocolatey][3] package manager if it's not already installed.
 
 #### Docker 
 
-__Windows__
 ```bash
 choco install docker-desktop
 ```
 
 #### Visual Studio Code 
 
-Next, install our IDE, [Visual Studio Code][8].
-
-__Windows__
 ```PowerShell
 choco install vscode
 ```
 
-Inside VS code, install the "remote containers" extension. 
-
-We use it 
-to provide you with a complete operating system and development environment
-for this project from within VSCode. You can read more about this pattern 
-of development in the [Visual Studio docs][13].
+Now run VS code and install its "remote containers" extension. 
 
 #### Java
 
@@ -64,37 +51,43 @@ If you don't already have Java installed on your machine, [install it][15].
 
 #### Android sdkmanager
 
-This task installs sdkmanager among other basic components needed for the
-Android emulator to run. Once you have it, you will use it to install Android
-packages needed for the emulator to run. 
+This task installs sdkmanager among other components needed for the Android 
+emulator to run. Once you have it, you will use it to install additional
+Android packages needed by the emulator. 
 
 - Create or initialize the directory, C:\Android. 
 - CD to this directory. 
 - Download "Command Line Tools" [zip file][14]. 
-- Unzip it in place. 
+- Unzip it in place
 - CD into just unzipped cmdline_tools directory.
 - Create a subdirectory called tools ("mkdir tools")
 - Move all the contents of this cmdline_tools directory to tools ("mv * tools")
 - Create/update Windows environment variable, ANDROID_SDK_ROOT="C:\Android"
 - Add the following paths to the Windows User or System search path
 -- "C:\Android\cmdline_tools\tools\bin" 
-- Exit and restart your terminal/shell to update its search path. 
-- You should be able to run the Android "sdkmanager" command from your shell
+- Exit and restart your terminal/shell to update its search path
 
-
-### Android packages
+#### Android packages
 
 - sdkmanager "platform-tools" "platforms;android-31" "emulator".
 
-### Create an emulator
+#### Create an emulator
 
 avdmanager create avd --name avd_31 --package "system-images;android-31;google_apis;x86_64"
 
-### Disable warning
+#### Disable warning
 
 ```PowerShell
 echo # > c:\qemu.conf
 ```
+
+#### Configure Chrome Browser
+
+Install the Chrome browser if necessary, make it the default browser, run it, and install
+the Chrome "Dart Debug" extension (it's required and only Chrome supports it).
+
+
+
 ### Launch emulator
 
 
@@ -106,9 +99,6 @@ __macOS__
 ```bash
 ./launch_emulator
 ```
-__Windows__
-Set your default browser to Chrome (sorry, but yeah, you have to do this)
-Install the "Dart debug" extension in Chrome (only Chrome supports it and it's needed here)
 ```PowerShell
 adb start-server
 emulator -avd avd_31
