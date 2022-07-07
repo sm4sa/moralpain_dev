@@ -3,7 +3,7 @@
     "Statement": [{
             "Effect": "Allow",
             "Action": ["s3:ListBucket", "s3:GetBucketLocation"],
-            "Resource": "arn:aws:s3:::moralpain-resources"
+            "Resource": "arn:aws:s3:::moralpain-submissions"
         },
         {
             "Effect": "Allow",
