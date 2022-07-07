@@ -97,7 +97,8 @@ __macOS__
 ./launch_emulator
 ```
 __Windows__
-Set your default browser to Chrome (sorry, but yeah, you have to do this) 
+Set your default browser to Chrome (sorry, but yeah, you have to do this)
+Install the "Dart debug" extension in Chrome (only Chrome supports it and it's needed here)
 ```PowerShell
 adb start-server
 emulator -avd avd_31
