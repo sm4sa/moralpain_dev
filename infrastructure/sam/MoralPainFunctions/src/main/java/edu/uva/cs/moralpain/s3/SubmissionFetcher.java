@@ -15,6 +15,7 @@ import software.amazon.awssdk.services.s3.model.S3Object;
 
 import java.time.Instant;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Predicate;
@@ -48,6 +49,9 @@ public class SubmissionFetcher implements RequestHandler<APIGatewayV2HTTPEvent, 
         String prefix = variableManager.getOrDefault("prefix", "");
 
         Map<String, String> qs = apiGatewayV2HTTPEvent.getQueryStringParameters();
+        if(qs == null) {
+            qs = Collections.EMPTY_MAP;
+        }
         SubmissionFetcherPredicateBuilder sfpb = new SubmissionFetcherPredicateBuilder(qs);
         String start = qs.getOrDefault("starttime", "");
 
@@ -72,6 +76,7 @@ public class SubmissionFetcher implements RequestHandler<APIGatewayV2HTTPEvent, 
                 .collect(Collectors.toList());
         String data = toJson(submissions);
         response.setBody(data);
+        response.setStatusCode(200);
 
         Map<String, String> headers = new HashMap<>();
         headers.put("Content-Type", "application/json");
