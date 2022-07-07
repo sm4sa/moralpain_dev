@@ -24,6 +24,10 @@ brew install docker
 brew install --cask visual-studio-code
 ```
 
+Run VS code and install its "remote containers" extension.
+
+
+
 ### Windows
 
 #### Package Manager
@@ -43,7 +47,7 @@ choco install docker-desktop
 choco install vscode
 ```
 
-Now run VS code and install its "remote containers" extension. 
+Run VS code and install its "remote containers" extension. 
 
 #### Java
 
@@ -64,14 +68,15 @@ Android packages needed by the emulator.
 - Move all the contents of this cmdline_tools directory to tools ("mv * tools")
 - Create/update Windows environment variable, ANDROID_SDK_ROOT="C:\Android"
 - Add the following paths to the Windows User or System search path
--- "C:\Android\cmdline_tools\tools\bin" 
+-- "C:\Android\cmdline_tools\tools\bin"
+-- TODO: There are more, Kevin; add them
 - Exit and restart your terminal/shell to update its search path
 
 #### Android packages
 
 - sdkmanager "platform-tools" "platforms;android-31" "emulator".
 
-#### Create an emulator
+#### Emulator
 
 avdmanager create avd --name avd_31 --package "system-images;android-31;google_apis;x86_64"
 
@@ -81,24 +86,26 @@ avdmanager create avd --name avd_31 --package "system-images;android-31;google_a
 echo # > c:\qemu.conf
 ```
 
-#### Configure Chrome Browser
+#### Chrome Browser
 
-Install the Chrome browser if necessary, make it the default browser, run it, and install
-the Chrome "Dart Debug" extension (it's required and only Chrome supports it).
-
-
-
-### Launch emulator
+- Install the Chrome browser if necessary
+- Make it your default browser (sorry but it's required)
+- Run it and install the Chrome "Dart Debug" extension
 
 
-## II. 
+## II. Fork and Clone our Repo
 
-## III. Run application software in emulator
 
-__macOS__
+## III. Run server software and emulator on host machine
+
+### Mac/Linux
+
 ```bash
 ./launch_emulator
 ```
+
+### Windows
+
 ```PowerShell
 adb start-server
 emulator -avd avd_31
