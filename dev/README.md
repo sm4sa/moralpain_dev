@@ -1,3 +1,3 @@
 # Documentation for developers
 
-- onboard.md
+- onboard.md: how to set up a development machine for this project
