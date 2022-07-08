@@ -1,4 +1,4 @@
-# Development Environment for a Moral Distress Cyber-Social System
+# A Cyber-Social System Around Moral Distress in Healthcare Delivery
 
 This repository related to work at the University of Virginia to develop and evaluate systems for learning about and mitigating moral distress and its impacts in healthcare delivery. 
 
