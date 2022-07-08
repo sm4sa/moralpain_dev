@@ -64,6 +64,29 @@ Resources:
             Method: post
             ApiId: !Ref ApiGatewayApi
 
+  FetchSubmissionsFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: FetchSubmissions
+      CodeUri: MoralPainFunctions
+      Handler: edu.uva.cs.moralpain.s3.SubmissionFetcher::handleRequest
+      Runtime: java8.al2
+      Architectures:
+        - x86_64
+      MemorySize: 512
+      Environment:
+        Variables:
+          bucket: moralpain-submissions
+          prefix: surveys
+      Role: !Sub arn:aws:iam::${AWS::AccountId}:role/lambda_fetch_submissions_role
+      Events:
+        Get:
+          Type: HttpApi
+          Properties:
+            Path: /admin/submissions
+            Method: get
+            ApiId: !Ref ApiGatewayApi
+
 Outputs:
   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
   # Find out more about other implicit resources you can reference within SAM
@@ -76,7 +99,13 @@ Outputs:
     Value: !GetAtt SubmitSurveyFunction.Arn
   SubmitVisitedResiliencyResourcesFunctionAPI:
     Description: "API Gateway endpoint URL for Prod stage for SubmitVisitedResiliencyResources function"
-    Value: !Sub "https://${ApiGatewayApi}.execute-api.${AWS::Region}.amazonaws.com/v1/ResiliencyResources/"
+    Value: !Sub "https://${ApiGatewayApi}.execute-api.${AWS::Region}.amazonaws.com/v1/resiliency/"
   SubmitVisitedResiliencyResourcesFunction:
     Description: "SubmitVisitedResiliencyResources Lambda Function ARN"
     Value: !GetAtt SubmitVisitedResiliencyResourcesFunction.Arn
+  FetchSubmissionsFunctionAPI:
+    Description: "API Gateway endpoint URL for Prod stage for FetchSubmissions function"
+    Value: !Sub "https://${ApiGatewayApi}.execute-api.${AWS::Region}.amazonaws.com/v1/admin/submissions/"
+  FetchSubmissionsFunction:
+    Description: "FetchSubmissions Lambda Function ARN"
+    Value: !GetAtt FetchSubmissionsFunction.Arn
