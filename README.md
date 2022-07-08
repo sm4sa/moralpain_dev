@@ -1,8 +1,8 @@
-# Development Environment for a Moral Distress Learning System
+# Development Environment for a Moral Distress Cyber-Social System
 
-SORRY, UNDER CONSTRUCTION. THERE ARE INCONSISTENCIES WITHIN. --SULLIVAN
+This repository related to our work at the University of Virginia to conceive, develop, and evaluate systems for learning about and mitigating moral distress and its impacts in healthcare delivery systems. The only reason to be here is that you're part of our team. 
 
-You have come across a repository related to our work at the University of Virginia to develop and deploy a system for managing and learning about moral distress in healthcare delivery systems and responses to it. The only reason to be here at the moment is that you're a member of our team  or a colleague looking to join. 
+BELOW IS UNDER CONSTRUCTION. THERE ARE INCONSISTENCIES. -- Sullivan
 
 In that case, these instructions should suffice to get you up and running with a development and test environment. It comes in two parts: (1) configure your host computer with software needed to run an Android emulator; (2) fork this repo then clone your fork to your local machine, whereupon you can work on it through a containerized operating system running within VSCode. 
 
