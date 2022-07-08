@@ -1,6 +1,6 @@
 # Configure your computer for development in this project
 
-UVa Moral Distress Reporting, Analysis, and Response project. Department of Computer Science and the School or Nursing. Follow the steps below to build and change our software. Contact Kevin Sullivan UVa Dept. Computer Science, sullivan@virginia.edu, for more information. \
+UVa Moral Distress Reporting, Analysis, and Response project. Department of Computer Science and the School or Nursing. Follow the steps below to build and change our software. Contact Kevin Sullivan UVa Dept. Computer Science, sullivan@virginia.edu, for more information. 
 
 ## Configure your local host machine (PC/laptop)
 
