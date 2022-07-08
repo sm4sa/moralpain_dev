@@ -112,6 +112,7 @@ WINDOWS:
 - Add the following paths to the Windows User or System search path
 -- "C:\Android\cmdline_tools\tools\bin"
 -- TODO: <add full list of path elements>
+- Avoid spurious warning by running this command: echo # > c:\qemu.conf
 - Exit and restart your terminal/shell
 
 #### Android SDK
