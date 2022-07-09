@@ -1,5 +1,6 @@
 import 'package:admin/api_repository.dart';
 import 'package:admin/screens/submissions/submissions.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -68,12 +69,24 @@ void main() {
         (tester) async {
           SubmissionsLoaded state = SubmissionsLoaded(Submissions());
           await pumpApp(tester, state);
-          expect(
-            find.text(
-              SubmissionsView.messageFromSubmissions(state.submissions),
-            ),
-            findsOneWidget,
+          Widget message = SubmissionsView.messageFromSubmissions(
+            state.submissions,
           );
+
+          // Verify that the message is either a Text or a CupertinoScrollbar
+          expect(
+            message.runtimeType == Text ||
+                message.runtimeType == CupertinoScrollbar,
+            isTrue,
+          );
+          
+          /*
+          If the message is a Text, verify that there exists a Text 
+          with matching data
+          */
+          if (message.runtimeType == Text) {
+            assert();
+          }
         },
       );
 
