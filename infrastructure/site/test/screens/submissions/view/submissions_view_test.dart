@@ -79,13 +79,17 @@ void main() {
                 message.runtimeType == CupertinoScrollbar,
             isTrue,
           );
-          
+
           /*
           If the message is a Text, verify that there exists a Text 
           with matching data
           */
           if (message.runtimeType == Text) {
-            assert();
+            String? data = (message as Text).data;
+            expect(data, isNotNull);
+            expect(find.text(data!), findsOneWidget);
+          } else if (message.runtimeType == CupertinoScrollbar) {
+            expect(find.byType(CupertinoScrollbar), findsOneWidget);
           }
         },
       );
