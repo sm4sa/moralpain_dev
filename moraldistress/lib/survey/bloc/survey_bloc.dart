@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logging/logging.dart';
 import 'package:moraldistress/api_repository.dart';
 import 'package:moralpainapi/moralpainapi.dart';
-import 'package:moralpainapi/src/model/survey.dart';
 import 'package:uuid/uuid.dart';
 
 part 'survey_state.dart';

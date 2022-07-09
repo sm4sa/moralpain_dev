@@ -1,6 +1,4 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:moraldistress/api_repository.dart';
 import 'package:moraldistress/assets/constants.dart' as Constants;
@@ -9,7 +7,6 @@ import 'package:expandable_text/expandable_text.dart';
 import 'package:moraldistress/submitted/view/submitted_route.dart';
 import 'package:moralpainapi/src/model/survey_section.dart';
 import 'package:moralpainapi/src/model/survey_option.dart';
-import 'package:moraldistress/submitted/view/submitted_view.dart';
 import 'package:expansion_tile_card/expansion_tile_card.dart';
 
 import '../survey.dart';
