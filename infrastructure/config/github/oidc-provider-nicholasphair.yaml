@@ -1,0 +1,4 @@
+template_path: gh_aws_oidc_provider.template
+parameters:
+  GitHubOrg: nicholasphair
+  RepositoryName: moralpain_dev
