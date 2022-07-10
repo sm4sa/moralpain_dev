@@ -340,9 +340,9 @@
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.datatype</groupId>
-            <artifactId>jackson-datatype-jaxrs</artifactId>
+            <artifactId>jackson-datatypes-collections</artifactId>
             <version>2.13.3</version>
-            <type>bundle</type>
+            <type>pom</type>
         </dependency>
     </dependencies>
     <properties>
