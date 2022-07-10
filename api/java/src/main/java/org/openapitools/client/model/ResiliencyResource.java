@@ -15,43 +15,59 @@ package org.openapitools.client.model;
 
 import java.util.Objects;
 import java.util.Arrays;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonTypeName;
-import com.fasterxml.jackson.annotation.JsonValue;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
+import com.google.gson.annotations.SerializedName;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import java.io.IOException;
 import org.openapitools.client.model.Icon;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.fasterxml.jackson.annotation.JsonTypeName;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
+import com.google.gson.TypeAdapterFactory;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+
+import org.openapitools.client.JSON;
 
 /**
  * ResiliencyResource
  */
-@JsonPropertyOrder({
-  ResiliencyResource.JSON_PROPERTY_RESOURCE_ID,
-  ResiliencyResource.JSON_PROPERTY_TITLE,
-  ResiliencyResource.JSON_PROPERTY_DESCRIPTION,
-  ResiliencyResource.JSON_PROPERTY_URL,
-  ResiliencyResource.JSON_PROPERTY_ICON
-})
-@JsonTypeName("resiliencyResource")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-05-20T14:16:52.838332-04:00[America/New_York]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-07-10T03:34:35.954Z[Etc/UTC]")
 public class ResiliencyResource {
-  public static final String JSON_PROPERTY_RESOURCE_ID = "resourceId";
+  public static final String SERIALIZED_NAME_RESOURCE_ID = "resourceId";
+  @SerializedName(SERIALIZED_NAME_RESOURCE_ID)
   private String resourceId;
 
-  public static final String JSON_PROPERTY_TITLE = "title";
+  public static final String SERIALIZED_NAME_TITLE = "title";
+  @SerializedName(SERIALIZED_NAME_TITLE)
   private String title;
 
-  public static final String JSON_PROPERTY_DESCRIPTION = "description";
+  public static final String SERIALIZED_NAME_DESCRIPTION = "description";
+  @SerializedName(SERIALIZED_NAME_DESCRIPTION)
   private String description;
 
-  public static final String JSON_PROPERTY_URL = "url";
+  public static final String SERIALIZED_NAME_URL = "url";
+  @SerializedName(SERIALIZED_NAME_URL)
   private String url;
 
-  public static final String JSON_PROPERTY_ICON = "icon";
+  public static final String SERIALIZED_NAME_ICON = "icon";
+  @SerializedName(SERIALIZED_NAME_ICON)
   private Icon icon;
 
   public ResiliencyResource() { 
@@ -69,16 +85,12 @@ public class ResiliencyResource {
   **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
-  @JsonProperty(JSON_PROPERTY_RESOURCE_ID)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
   public String getResourceId() {
     return resourceId;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_RESOURCE_ID)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setResourceId(String resourceId) {
     this.resourceId = resourceId;
   }
@@ -96,16 +108,12 @@ public class ResiliencyResource {
   **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
-  @JsonProperty(JSON_PROPERTY_TITLE)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
   public String getTitle() {
     return title;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_TITLE)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setTitle(String title) {
     this.title = title;
   }
@@ -123,16 +131,12 @@ public class ResiliencyResource {
   **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
-  @JsonProperty(JSON_PROPERTY_DESCRIPTION)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
   public String getDescription() {
     return description;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_DESCRIPTION)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setDescription(String description) {
     this.description = description;
   }
@@ -150,16 +154,12 @@ public class ResiliencyResource {
   **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
-  @JsonProperty(JSON_PROPERTY_URL)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
   public String getUrl() {
     return url;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_URL)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setUrl(String url) {
     this.url = url;
   }
@@ -177,19 +177,16 @@ public class ResiliencyResource {
   **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
-  @JsonProperty(JSON_PROPERTY_ICON)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
   public Icon getIcon() {
     return icon;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_ICON)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setIcon(Icon icon) {
     this.icon = icon;
   }
+
 
 
   @Override
@@ -237,5 +234,110 @@ public class ResiliencyResource {
     return o.toString().replace("\n", "\n    ");
   }
 
+
+  public static HashSet<String> openapiFields;
+  public static HashSet<String> openapiRequiredFields;
+
+  static {
+    // a set of all properties/fields (JSON key names)
+    openapiFields = new HashSet<String>();
+    openapiFields.add("resourceId");
+    openapiFields.add("title");
+    openapiFields.add("description");
+    openapiFields.add("url");
+    openapiFields.add("icon");
+
+    // a set of required properties/fields (JSON key names)
+    openapiRequiredFields = new HashSet<String>();
+  }
+
+ /**
+  * Validates the JSON Object and throws an exception if issues found
+  *
+  * @param jsonObj JSON Object
+  * @throws IOException if the JSON Object is invalid with respect to ResiliencyResource
+  */
+  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
+      if (jsonObj == null) {
+        if (ResiliencyResource.openapiRequiredFields.isEmpty()) {
+          return;
+        } else { // has required fields
+          throw new IllegalArgumentException(String.format("The required field(s) %s in ResiliencyResource is not found in the empty JSON string", ResiliencyResource.openapiRequiredFields.toString()));
+        }
+      }
+
+      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      // check to see if the JSON string contains additional fields
+      for (Entry<String, JsonElement> entry : entries) {
+        if (!ResiliencyResource.openapiFields.contains(entry.getKey())) {
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `ResiliencyResource` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+        }
+      }
+      if (jsonObj.get("resourceId") != null && !jsonObj.get("resourceId").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `resourceId` to be a primitive type in the JSON string but got `%s`", jsonObj.get("resourceId").toString()));
+      }
+      if (jsonObj.get("title") != null && !jsonObj.get("title").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `title` to be a primitive type in the JSON string but got `%s`", jsonObj.get("title").toString()));
+      }
+      if (jsonObj.get("description") != null && !jsonObj.get("description").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `description` to be a primitive type in the JSON string but got `%s`", jsonObj.get("description").toString()));
+      }
+      if (jsonObj.get("url") != null && !jsonObj.get("url").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `url` to be a primitive type in the JSON string but got `%s`", jsonObj.get("url").toString()));
+      }
+      // validate the optional field `icon`
+      if (jsonObj.getAsJsonObject("icon") != null) {
+        Icon.validateJsonObject(jsonObj.getAsJsonObject("icon"));
+      }
+  }
+
+  public static class CustomTypeAdapterFactory implements TypeAdapterFactory {
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
+       if (!ResiliencyResource.class.isAssignableFrom(type.getRawType())) {
+         return null; // this class only serializes 'ResiliencyResource' and its subtypes
+       }
+       final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
+       final TypeAdapter<ResiliencyResource> thisAdapter
+                        = gson.getDelegateAdapter(this, TypeToken.get(ResiliencyResource.class));
+
+       return (TypeAdapter<T>) new TypeAdapter<ResiliencyResource>() {
+           @Override
+           public void write(JsonWriter out, ResiliencyResource value) throws IOException {
+             JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
+             elementAdapter.write(out, obj);
+           }
+
+           @Override
+           public ResiliencyResource read(JsonReader in) throws IOException {
+             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
+             validateJsonObject(jsonObj);
+             return thisAdapter.fromJsonTree(jsonObj);
+           }
+
+       }.nullSafe();
+    }
+  }
+
+ /**
+  * Create an instance of ResiliencyResource given an JSON string
+  *
+  * @param jsonString JSON string
+  * @return An instance of ResiliencyResource
+  * @throws IOException if the JSON string is invalid with respect to ResiliencyResource
+  */
+  public static ResiliencyResource fromJson(String jsonString) throws IOException {
+    return JSON.getGson().fromJson(jsonString, ResiliencyResource.class);
+  }
+
+ /**
+  * Convert an instance of ResiliencyResource to an JSON string
+  *
+  * @return JSON string
+  */
+  public String toJson() {
+    return JSON.getGson().toJson(this);
+  }
 }
 

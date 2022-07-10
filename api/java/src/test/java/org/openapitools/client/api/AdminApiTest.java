@@ -14,6 +14,7 @@
 package org.openapitools.client.api;
 
 import org.openapitools.client.ApiException;
+import org.openapitools.client.model.AnalyticsResult;
 import org.openapitools.client.model.Submissions;
 import org.junit.Test;
 import org.junit.Ignore;
@@ -45,7 +46,7 @@ public class AdminApiTest {
         String operation = null;
         Integer starttime = null;
         Integer endtime = null;
-        Submissions response = api.getAnalytics(operation, starttime, endtime);
+        AnalyticsResult response = api.getAnalytics(operation, starttime, endtime);
 
         // TODO: test validations
     }
