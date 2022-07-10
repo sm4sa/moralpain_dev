@@ -49,11 +49,27 @@ public class AnalyticsResultTest {
     }
 
     /**
-     * Test the property 'value'
+     * Test the property 'result'
      */
     @Test
-    public void valueTest() {
-        // TODO: test value
+    public void resultTest() {
+        // TODO: test result
+    }
+
+    /**
+     * Test the property 'error'
+     */
+    @Test
+    public void errorTest() {
+        // TODO: test error
+    }
+
+    /**
+     * Test the property 'errormsg'
+     */
+    @Test
+    public void errormsgTest() {
+        // TODO: test errormsg
     }
 
 }

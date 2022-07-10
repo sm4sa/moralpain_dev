@@ -15,48 +15,32 @@ package org.openapitools.client.model;
 
 import java.util.Objects;
 import java.util.Arrays;
-import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
-import com.google.gson.annotations.SerializedName;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParseException;
-import com.google.gson.TypeAdapterFactory;
-import com.google.gson.reflect.TypeToken;
-
-import java.lang.reflect.Type;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
-
-import org.openapitools.client.JSON;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 
 /**
  * VisitedResiliencyResources
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-07-10T03:34:35.954Z[Etc/UTC]")
+@JsonPropertyOrder({
+  VisitedResiliencyResources.JSON_PROPERTY_SELECTIONS,
+  VisitedResiliencyResources.JSON_PROPERTY_TIMESTAMP
+})
+@JsonTypeName("visitedResiliencyResources")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-07-10T00:48:17.818184-04:00[America/New_York]")
 public class VisitedResiliencyResources {
-  public static final String SERIALIZED_NAME_SELECTIONS = "selections";
-  @SerializedName(SERIALIZED_NAME_SELECTIONS)
+  public static final String JSON_PROPERTY_SELECTIONS = "selections";
   private List<String> selections = null;
 
-  public static final String SERIALIZED_NAME_TIMESTAMP = "timestamp";
-  @SerializedName(SERIALIZED_NAME_TIMESTAMP)
+  public static final String JSON_PROPERTY_TIMESTAMP = "timestamp";
   private Integer timestamp;
 
   public VisitedResiliencyResources() { 
@@ -82,12 +66,16 @@ public class VisitedResiliencyResources {
   **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
+  @JsonProperty(JSON_PROPERTY_SELECTIONS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
   public List<String> getSelections() {
     return selections;
   }
 
 
+  @JsonProperty(JSON_PROPERTY_SELECTIONS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setSelections(List<String> selections) {
     this.selections = selections;
   }
@@ -105,16 +93,19 @@ public class VisitedResiliencyResources {
   **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
+  @JsonProperty(JSON_PROPERTY_TIMESTAMP)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
   public Integer getTimestamp() {
     return timestamp;
   }
 
 
+  @JsonProperty(JSON_PROPERTY_TIMESTAMP)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setTimestamp(Integer timestamp) {
     this.timestamp = timestamp;
   }
-
 
 
   @Override
@@ -156,95 +147,5 @@ public class VisitedResiliencyResources {
     return o.toString().replace("\n", "\n    ");
   }
 
-
-  public static HashSet<String> openapiFields;
-  public static HashSet<String> openapiRequiredFields;
-
-  static {
-    // a set of all properties/fields (JSON key names)
-    openapiFields = new HashSet<String>();
-    openapiFields.add("selections");
-    openapiFields.add("timestamp");
-
-    // a set of required properties/fields (JSON key names)
-    openapiRequiredFields = new HashSet<String>();
-  }
-
- /**
-  * Validates the JSON Object and throws an exception if issues found
-  *
-  * @param jsonObj JSON Object
-  * @throws IOException if the JSON Object is invalid with respect to VisitedResiliencyResources
-  */
-  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
-      if (jsonObj == null) {
-        if (VisitedResiliencyResources.openapiRequiredFields.isEmpty()) {
-          return;
-        } else { // has required fields
-          throw new IllegalArgumentException(String.format("The required field(s) %s in VisitedResiliencyResources is not found in the empty JSON string", VisitedResiliencyResources.openapiRequiredFields.toString()));
-        }
-      }
-
-      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
-      // check to see if the JSON string contains additional fields
-      for (Entry<String, JsonElement> entry : entries) {
-        if (!VisitedResiliencyResources.openapiFields.contains(entry.getKey())) {
-          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `VisitedResiliencyResources` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
-        }
-      }
-      // ensure the json data is an array
-      if (jsonObj.get("selections") != null && !jsonObj.get("selections").isJsonArray()) {
-        throw new IllegalArgumentException(String.format("Expected the field `selections` to be an array in the JSON string but got `%s`", jsonObj.get("selections").toString()));
-      }
-  }
-
-  public static class CustomTypeAdapterFactory implements TypeAdapterFactory {
-    @SuppressWarnings("unchecked")
-    @Override
-    public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
-       if (!VisitedResiliencyResources.class.isAssignableFrom(type.getRawType())) {
-         return null; // this class only serializes 'VisitedResiliencyResources' and its subtypes
-       }
-       final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
-       final TypeAdapter<VisitedResiliencyResources> thisAdapter
-                        = gson.getDelegateAdapter(this, TypeToken.get(VisitedResiliencyResources.class));
-
-       return (TypeAdapter<T>) new TypeAdapter<VisitedResiliencyResources>() {
-           @Override
-           public void write(JsonWriter out, VisitedResiliencyResources value) throws IOException {
-             JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
-             elementAdapter.write(out, obj);
-           }
-
-           @Override
-           public VisitedResiliencyResources read(JsonReader in) throws IOException {
-             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
-             validateJsonObject(jsonObj);
-             return thisAdapter.fromJsonTree(jsonObj);
-           }
-
-       }.nullSafe();
-    }
-  }
-
- /**
-  * Create an instance of VisitedResiliencyResources given an JSON string
-  *
-  * @param jsonString JSON string
-  * @return An instance of VisitedResiliencyResources
-  * @throws IOException if the JSON string is invalid with respect to VisitedResiliencyResources
-  */
-  public static VisitedResiliencyResources fromJson(String jsonString) throws IOException {
-    return JSON.getGson().fromJson(jsonString, VisitedResiliencyResources.class);
-  }
-
- /**
-  * Convert an instance of VisitedResiliencyResources to an JSON string
-  *
-  * @return JSON string
-  */
-  public String toJson() {
-    return JSON.getGson().toJson(this);
-  }
 }
 
