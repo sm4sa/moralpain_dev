@@ -50,4 +50,7 @@ Outputs:
   Role:
     Value: !GetAtt Role.Arn 
   GithubOidc:
-    Value: !GetAtt GithubOidc.Arn 
+    Value: !If 
+      - CreateOIDCProvider
+      - !Ref GithubOidc
+      - !Ref OIDCProviderArn
