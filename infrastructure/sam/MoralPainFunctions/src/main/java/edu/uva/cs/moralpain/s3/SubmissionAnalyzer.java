@@ -4,13 +4,21 @@ import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.amazonaws.services.lambda.runtime.events.APIGatewayV2HTTPEvent;
 import com.amazonaws.services.lambda.runtime.events.APIGatewayV2HTTPResponse;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import edu.uva.cs.moralpain.utils.S3Helper;
 import edu.uva.cs.moralpain.utils.VariableManager;
+
+import org.openapitools.client.model.AnalyticsResult;
 import org.openapitools.client.model.Submission;
+import org.openapitools.client.model.AnalyticsResult.OperationEnum;
+
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.ListObjectsV2Request;
 import software.amazon.awssdk.services.s3.model.S3Object;
 
+import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -76,54 +84,87 @@ public class SubmissionAnalyzer implements RequestHandler<APIGatewayV2HTTPEvent,
                     + "The valid values are: average, count, maximum, minimum.");
             response.setStatusCode(400);
         } else if (operation.equals("count")) {
-            response.setBody("" + submissions.size());
+            AnalyticsResult result = new AnalyticsResult();
+            result.setOperation(OperationEnum.COUNT);
+            result.setResult(new BigDecimal(submissions.size()));
+            result.setError(false);
+
+            response.setBody(toJson(result));
             response.setStatusCode(200);
         } else {
             Iterator<Submission> iterator = submissions.iterator();
+            AnalyticsResult result = new AnalyticsResult();
 
             if (operation.equals("average")) {
                 // Return error if there are no submissions!
                 if (submissions.size() == 0) {
-                    response.setStatusCode(400);
-                    response.setBody("There are no submissions in the given timeframe, "
+                    result.setOperation(OperationEnum.AVERAGE);
+                    result.setError(true);
+                    result.setErrormsg("There are no submissions in the given timeframe, "
                             + "so the average operation cannot be performed.");
+
+                    response.setBody(toJson(result));
+                    response.setStatusCode(200);
                 } else {
                     int sum = 0;
                     while (iterator.hasNext()) {
                         sum += iterator.next().getScore();
                     }
                     double avg = sum/submissions.size();
-                    response.setBody("" + avg);
+                    
+                    result.setOperation(OperationEnum.AVERAGE);
+                    result.setResult(new BigDecimal(avg));
+                    result.setError(false);
+
+                    response.setBody(toJson(result));
                     response.setStatusCode(200);
                 }
             } else if (operation.equals("maximum")) {
                 // Return error if there are no submissions!
                 if (submissions.size() == 0) {
-                    response.setStatusCode(400);
-                    response.setBody("There are no submissions in the given timeframe, "
+                    result.setOperation(OperationEnum.MAXIMUM);
+                    result.setError(true);
+                    result.setErrormsg("There are no submissions in the given timeframe, "
                             + "so the maximum operation cannot be performed.");
+
+                    response.setBody(toJson(result));
+                    response.setStatusCode(200);
                 } else {
                     int max = Integer.MIN_VALUE;
                     while (iterator.hasNext()) {
                         int current = iterator.next().getScore();
                         max = current > max ? current : max;
                     }
-                    response.setBody("" + max);
+                    
+                    result.setOperation(OperationEnum.MAXIMUM);
+                    result.setResult(new BigDecimal(max));
+                    result.setError(false);
+
+                    response.setBody(toJson(result));
                     response.setStatusCode(200);
                 }
             } else if (operation.equals("minimum")) {
                 // Return error if there are no submissions!
                 if (submissions.size() == 0) {
-                    response.setStatusCode(400);
-                    response.setBody("There are no submissions in the given timeframe, "
+                    result.setOperation(OperationEnum.MINIMUM);
+                    result.setError(true);
+                    result.setErrormsg("There are no submissions in the given timeframe, "
                             + "so the minimum operation cannot be performed.");
+
+                    response.setBody(toJson(result));
+                    response.setStatusCode(200);
                 } else {
                     int min = Integer.MAX_VALUE;
                     while (iterator.hasNext()) {
                         int current = iterator.next().getScore();
                         min = current < min ? current : min;
                     }
-                    response.setBody("" + min);
+                    
+                    result.setOperation(OperationEnum.MINIMUM);
+                    result.setResult(new BigDecimal(min));
+                    result.setError(false);
+
+                    response.setBody(toJson(result));
                     response.setStatusCode(200);
                 }
             }
@@ -154,5 +195,15 @@ public class SubmissionAnalyzer implements RequestHandler<APIGatewayV2HTTPEvent,
                 || operation.equals("count")
                 || operation.equals("maximum")
                 || operation.equals("minimum");
+    }
+
+    private String toJson(Object value) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            return objectMapper.writeValueAsString(value);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 }

@@ -13,12 +13,15 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.openapitools.client.model.Submission;
+import org.openapitools.client.model.AnalyticsResult.OperationEnum;
+
 import software.amazon.awssdk.core.exception.SdkException;
 import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.*;
 import software.amazon.awssdk.utils.builder.SdkBuilder;
 
+import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
@@ -101,6 +104,22 @@ public class SubmissionAnalyzerTest {
               .forEach(s3Client::deleteBucket);
     }
 
+    private String toJson(OperationEnum operation, BigDecimal result, boolean error, String errorMsg) {
+        String ret = "{\"operation\":";
+        ret += "\"" + operation.getValue() + "\",";
+        ret += "\"result\":";
+        ret += result + ",";
+        ret += "\"error\":";
+        ret += error + ",";
+        ret += "\"errormsg\":";
+        if (errorMsg == null) {
+            ret += "null}";
+        } else {
+            ret += "\"" + errorMsg + "\"}";
+        }
+        return ret;
+    }
+
     @Test
     public void whenHandleRequest_thenBodyIsNotEmpty() {
         SubmissionAnalyzer submissionAnalyzer = new SubmissionAnalyzer();
@@ -161,8 +180,11 @@ public class SubmissionAnalyzerTest {
         event.setQueryStringParameters(params);
         APIGatewayV2HTTPResponse response = submissionAnalyzer.handleRequest(event, new MockContext());
 
-        assertEquals(response.getStatusCode(), 200);
-        assertEquals(response.getBody(), "" + SUBMISSIONS_COUNT);
+        assertEquals(200, response.getStatusCode());
+        assertEquals(
+            toJson(OperationEnum.COUNT, new BigDecimal(SUBMISSIONS_COUNT), false, null),
+            response.getBody()
+        );
     }
 
     @Test
@@ -178,8 +200,11 @@ public class SubmissionAnalyzerTest {
         event.setQueryStringParameters(params);
         APIGatewayV2HTTPResponse response = submissionAnalyzer.handleRequest(event, new MockContext());
 
-        assertEquals(response.getStatusCode(), 200);
-        assertEquals(response.getBody(), "" + SUBMISSIONS_COUNT);
+        assertEquals(200, response.getStatusCode());
+        assertEquals(
+            toJson(OperationEnum.COUNT, new BigDecimal(SUBMISSIONS_COUNT), false, null),
+            response.getBody()
+        );
     }
 
     @Test
@@ -195,8 +220,11 @@ public class SubmissionAnalyzerTest {
         event.setQueryStringParameters(params);
         APIGatewayV2HTTPResponse response = submissionAnalyzer.handleRequest(event, new MockContext());
 
-        assertEquals(response.getStatusCode(), 200);
-        assertEquals(response.getBody(), "3");
+        assertEquals(200, response.getStatusCode());
+        assertEquals(
+            toJson(OperationEnum.COUNT, new BigDecimal(3), false, null),
+            response.getBody()
+        );
     }
     
     @Test
@@ -212,8 +240,11 @@ public class SubmissionAnalyzerTest {
         event.setQueryStringParameters(params);
         APIGatewayV2HTTPResponse response = submissionAnalyzer.handleRequest(event, new MockContext());
 
-        assertEquals(response.getStatusCode(), 200);
-        assertEquals(response.getBody(), "0");
+        assertEquals(200, response.getStatusCode());
+        assertEquals(
+            toJson(OperationEnum.COUNT, new BigDecimal(0), false, null),
+            response.getBody()
+        );
     }
 
     @Test
@@ -229,8 +260,11 @@ public class SubmissionAnalyzerTest {
         event.setQueryStringParameters(params);
         APIGatewayV2HTTPResponse response = submissionAnalyzer.handleRequest(event, new MockContext());
 
-        assertEquals(response.getStatusCode(), 200);
-        assertEquals(response.getBody(), "0");
+        assertEquals(200, response.getStatusCode());
+        assertEquals(
+            toJson(OperationEnum.COUNT, new BigDecimal(0), false, null),
+            response.getBody()
+        );
     }
 
     @Test
@@ -244,8 +278,11 @@ public class SubmissionAnalyzerTest {
         event.setQueryStringParameters(params);
         APIGatewayV2HTTPResponse response = submissionAnalyzer.handleRequest(event, new MockContext());
 
-        assertEquals(response.getStatusCode(), 200);
-        assertEquals(response.getBody(), "" + ((1.0 + 2 + 3 + 4)/5));
+        assertEquals(200, response.getStatusCode());
+        assertEquals(
+            toJson(OperationEnum.AVERAGE, new BigDecimal(2), false, null),
+            response.getBody()
+        );
     }
 
     @Test
@@ -262,11 +299,14 @@ public class SubmissionAnalyzerTest {
         APIGatewayV2HTTPResponse response = submissionAnalyzer.handleRequest(event, new MockContext());
 
         assertEquals(200, response.getStatusCode());
-        assertEquals("" + 0.0, response.getBody());
+        assertEquals(
+            toJson(OperationEnum.AVERAGE, new BigDecimal(0), false, null),
+            response.getBody()
+        );
     }
 
     @Test
-    public void givenAverageOperationAndEmptyTimeRange_whenHandleRequest_thenReturnBadRequest() {
+    public void givenAverageOperationAndEmptyTimeRange_whenHandleRequest_thenReturnErrorMsg() {
         SubmissionAnalyzer submissionAnalyzer = new SubmissionAnalyzer();
 
         APIGatewayV2HTTPEvent event = new APIGatewayV2HTTPEvent();
@@ -278,11 +318,12 @@ public class SubmissionAnalyzerTest {
         event.setQueryStringParameters(params);
         APIGatewayV2HTTPResponse response = submissionAnalyzer.handleRequest(event, new MockContext());
 
-        assertEquals(response.getStatusCode(), 400);
+        String errorMsg = "There are no submissions in the given timeframe, "
+                + "so the average operation cannot be performed.";
+        assertEquals(200, response.getStatusCode());
         assertEquals(
-            response.getBody(),
-            "There are no submissions in the given timeframe, "
-                    + "so the average operation cannot be performed."
+            toJson(OperationEnum.AVERAGE, null, true, errorMsg),
+            response.getBody()
         );
     }
 
@@ -298,7 +339,10 @@ public class SubmissionAnalyzerTest {
         APIGatewayV2HTTPResponse response = submissionAnalyzer.handleRequest(event, new MockContext());
 
         assertEquals(200, response.getStatusCode());
-        assertEquals("" + (SUBMISSIONS_COUNT - 1), response.getBody());
+        assertEquals(
+            toJson(OperationEnum.MAXIMUM, new BigDecimal(SUBMISSIONS_COUNT - 1), false, null),
+            response.getBody()
+        );
     }
 
     @Test
@@ -315,11 +359,14 @@ public class SubmissionAnalyzerTest {
         APIGatewayV2HTTPResponse response = submissionAnalyzer.handleRequest(event, new MockContext());
 
         assertEquals(200, response.getStatusCode());
-        assertEquals("0", response.getBody());
+        assertEquals(
+            toJson(OperationEnum.MAXIMUM, new BigDecimal(0), false, null),
+            response.getBody()
+        );
     }
 
     @Test
-    public void givenMaxOperationAndEmptyTimeRange_whenHandleRequest_thenReturnBadRequest() {
+    public void givenMaxOperationAndEmptyTimeRange_whenHandleRequest_thenReturnErrorMsg() {
         SubmissionAnalyzer submissionAnalyzer = new SubmissionAnalyzer();
 
         APIGatewayV2HTTPEvent event = new APIGatewayV2HTTPEvent();
@@ -331,10 +378,11 @@ public class SubmissionAnalyzerTest {
         event.setQueryStringParameters(params);
         APIGatewayV2HTTPResponse response = submissionAnalyzer.handleRequest(event, new MockContext());
 
-        assertEquals(400, response.getStatusCode());
+        String errorMsg = "There are no submissions in the given timeframe, "
+                + "so the maximum operation cannot be performed.";
+        assertEquals(200, response.getStatusCode());
         assertEquals(
-            "There are no submissions in the given timeframe, "
-                            + "so the maximum operation cannot be performed.",
+            toJson(OperationEnum.MAXIMUM, null, true, errorMsg),
             response.getBody()
         );
     }
@@ -351,7 +399,10 @@ public class SubmissionAnalyzerTest {
         APIGatewayV2HTTPResponse response = submissionAnalyzer.handleRequest(event, new MockContext());
 
         assertEquals(200, response.getStatusCode());
-        assertEquals("" + 0, response.getBody());
+        assertEquals(
+            toJson(OperationEnum.MINIMUM, new BigDecimal(0), false, null),
+            response.getBody()
+        );
     }
 
     @Test
@@ -368,11 +419,14 @@ public class SubmissionAnalyzerTest {
         APIGatewayV2HTTPResponse response = submissionAnalyzer.handleRequest(event, new MockContext());
 
         assertEquals(200, response.getStatusCode());
-        assertEquals("0", response.getBody());
+        assertEquals(
+            toJson(OperationEnum.MINIMUM, new BigDecimal(0), false, null),
+            response.getBody()
+        );
     }
 
     @Test
-    public void givenMinOperationAndEmptyTimeRange_whenHandleRequest_thenReturnBadRequest() {
+    public void givenMinOperationAndEmptyTimeRange_whenHandleRequest_thenReturnErrorMsg() {
         SubmissionAnalyzer submissionAnalyzer = new SubmissionAnalyzer();
 
         APIGatewayV2HTTPEvent event = new APIGatewayV2HTTPEvent();
@@ -384,10 +438,11 @@ public class SubmissionAnalyzerTest {
         event.setQueryStringParameters(params);
         APIGatewayV2HTTPResponse response = submissionAnalyzer.handleRequest(event, new MockContext());
 
-        assertEquals(400, response.getStatusCode());
+        String errorMsg = "There are no submissions in the given timeframe, "
+                + "so the minimum operation cannot be performed.";
+        assertEquals(200, response.getStatusCode());
         assertEquals(
-            "There are no submissions in the given timeframe, "
-                            + "so the minimum operation cannot be performed.",
+            toJson(OperationEnum.MINIMUM, null, true, errorMsg),
             response.getBody()
         );
     }
