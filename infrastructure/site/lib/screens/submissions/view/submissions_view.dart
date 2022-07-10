@@ -1,11 +1,9 @@
 import 'package:built_collection/built_collection.dart';
-import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:admin/screens/submissions/submissions.dart';
 import 'package:moralpainapi/moralpainapi.dart';
-
-import '../submissions.dart';
 
 class SubmissionsView extends StatelessWidget {
   @override
@@ -60,45 +58,13 @@ class SubmissionsView extends StatelessWidget {
     if (list.isEmpty) {
       return Text('List of submissions is empty.');
     }
-    return DataTable2(
-      columns: [
-        DataColumn(
-          label: Text('Submission Time'),
-        ),
-        DataColumn(
-          label: Text('Score'),
-        ),
-        DataColumn(label: Text('User Id')),
-      ],
-      rows: List.generate(
-        submissions.list!.length,
-        (index) => submissionDataRow(submissions.list![index]),
+    return CupertinoScrollbar(
+      child: ListView(
+        children: [
+          for (final submission in submissions.list!)
+            SubmissionListTile(submission),
+        ],
       ),
-    );
-  }
-
-  static DataRow submissionDataRow(Submission submission) {
-    return DataRow(
-      cells: [
-        DataCell(
-          submission.timestamp != null
-              ? Text(
-                  '${DateTime.fromMillisecondsSinceEpoch(
-                    submission.timestamp! * 1000,
-                  )}'
-                  ' (GMT)',
-                )
-              : Text('No date'),
-        ),
-        DataCell(
-          submission.score != null
-              ? Text('${submission.score}')
-              : Text('No score'),
-        ),
-        DataCell(
-          submission.id != null ? Text('${submission.id}') : Text('No user ID'),
-        ),
-      ],
     );
   }
 }

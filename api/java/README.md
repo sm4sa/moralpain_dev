@@ -4,7 +4,7 @@ MoralDistress API
 
 - API version: 1.0.0
 
-- Build date: 2022-05-20T14:16:52.838332-04:00[America/New_York]
+- Build date: 2022-07-10T00:48:17.818184-04:00[America/New_York]
 
 MoralDistress API.
 
@@ -40,7 +40,7 @@ Add this dependency to your project's POM:
 
 ```xml
 <dependency>
-  <groupId>org.openapitools</groupId>
+  <groupId>edu.uva.cs</groupId>
   <artifactId>openapi-java-client</artifactId>
   <version>1.0.0</version>
   <scope>compile</scope>
@@ -52,7 +52,7 @@ Add this dependency to your project's POM:
 Add this dependency to your project's build file:
 
 ```groovy
-compile "org.openapitools:openapi-java-client:1.0.0"
+compile "edu.uva.cs:openapi-java-client:1.0.0"
 ```
 
 ### Others
@@ -90,7 +90,7 @@ public class AdminApiExample {
         Integer starttime = 1640995200; // Integer | Minimum possible timestamp of a record in UTC seconds since Unix epoch.
         Integer endtime = 1647907200; // Integer | Maximum possible timestamp of a record in UTC seconds since Unix epoch.
         try {
-            Submissions result = apiInstance.getAnalytics(operation, starttime, endtime);
+            AnalyticsResult result = apiInstance.getAnalytics(operation, starttime, endtime);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling AdminApi#getAnalytics");
@@ -112,6 +112,7 @@ Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
 *AdminApi* | [**getAnalytics**](docs/AdminApi.md#getAnalytics) | **GET** /admin/analytics | Get data analysis
 *AdminApi* | [**getSubmissions**](docs/AdminApi.md#getSubmissions) | **GET** /admin/submissions | Get survey results
+*CorsApi* | [**optionsAdminSubmissions**](docs/CorsApi.md#optionsAdminSubmissions) | **OPTIONS** /admin/submissions | CORS admin submissions support
 *CorsApi* | [**optionsSurvey**](docs/CorsApi.md#optionsSurvey) | **OPTIONS** /survey | CORS survey support
 *CorsApi* | [**optionsVisitedResiliencyResources**](docs/CorsApi.md#optionsVisitedResiliencyResources) | **OPTIONS** /resiliency | CORS resiliency resources support
 *UserApi* | [**getResiliencyResources**](docs/UserApi.md#getResiliencyResources) | **GET** /resiliency | Get resiliency resources
