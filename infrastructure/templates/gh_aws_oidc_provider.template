@@ -9,6 +9,8 @@ Parameters:
     Description: Arn for the GitHub OIDC Provider.
     Default: ""
     Type: String
+  ManagedPolicyArns:
+    Type: List<String>
 
 Conditions:
   CreateOIDCProvider: !Equals 
@@ -19,6 +21,7 @@ Resources:
   Role:
     Type: AWS::IAM::Role
     Properties:
+      RoleName: !Sub github-oidc-provider-${GitHubOrg}-${RepositoryName}
       AssumeRolePolicyDocument:
         Statement:
           - Effect: Allow
@@ -31,6 +34,7 @@ Resources:
             Condition:
               StringLike:
                 token.actions.githubusercontent.com:sub: !Sub repo:${GitHubOrg}/${RepositoryName}:*
+      ManagedPolicyArns: !Ref ManagedPolicyArns
 
   GithubOidc:
     Type: AWS::IAM::OIDCProvider

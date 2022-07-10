@@ -8,10 +8,18 @@ on:
 jobs:
   docs:
     runs-on: ubuntu-latest
-    name: 
+    permissions:
+      id-token: write
+      contents: read
+    name: Upload to S3
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/github-oidc-provider-nicholasphair-moralpain_dev
+          aws-region: us-east-1
       - name: Print workspace path
         run: |
           echo $GITHUB_WORKSPACE
@@ -27,12 +35,6 @@ jobs:
         run: |
           echo $GITHUB_WORKSPACE
           ls -la $GITHUB_WORKSPACE
-      - name: Upload S3
-        uses: nicholasphair/upload-s3-action@master
-        id: S3
-        with:
-          aws_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY}}
-          aws_bucket: ${{ secrets.AWS_S3_PUBLIC_BUCKET }}
-          destination_dir: 'docs/'
-          source_dir: index.html
+      - name: Copy files to the test website with the AWS CLI
+        run: |
+          aws s3 cp index.html s3://moralpain-site/docs/index.html
