@@ -20,10 +20,6 @@ jobs:
         with:
           role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/github-oidc-provider-nicholasphair-moralpain_dev
           aws-region: us-east-1
-      - name: Print workspace path
-        run: |
-          echo $GITHUB_WORKSPACE
-          ls -la $GITHUB_WORKSPACE
       - name: redoc-cli 
         uses: seeebiii/redoc-cli-github-action@v9
         with:
@@ -31,10 +27,6 @@ jobs:
             build infrastructure/sam/api.yaml 
             --options docs/redoc.json
             --output ${GITHUB_WORKSPACE}/index.html
-      - name: Print workspace path 2
-        run: |
-          echo $GITHUB_WORKSPACE
-          ls -la $GITHUB_WORKSPACE
       - name: Copy files to the test website with the AWS CLI
         run: |
           aws s3 cp index.html s3://moralpain-site/docs/index.html
