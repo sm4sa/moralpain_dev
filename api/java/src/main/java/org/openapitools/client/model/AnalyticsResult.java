@@ -31,10 +31,12 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
  */
 @JsonPropertyOrder({
   AnalyticsResult.JSON_PROPERTY_OPERATION,
-  AnalyticsResult.JSON_PROPERTY_VALUE
+  AnalyticsResult.JSON_PROPERTY_RESULT,
+  AnalyticsResult.JSON_PROPERTY_ERROR,
+  AnalyticsResult.JSON_PROPERTY_ERRORMSG
 })
 @JsonTypeName("analyticsResult")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-05-20T14:16:52.838332-04:00[America/New_York]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-07-10T00:48:17.818184-04:00[America/New_York]")
 public class AnalyticsResult {
   /**
    * Gets or Sets operation
@@ -78,8 +80,14 @@ public class AnalyticsResult {
   public static final String JSON_PROPERTY_OPERATION = "operation";
   private OperationEnum operation;
 
-  public static final String JSON_PROPERTY_VALUE = "value";
-  private BigDecimal value;
+  public static final String JSON_PROPERTY_RESULT = "result";
+  private BigDecimal result;
+
+  public static final String JSON_PROPERTY_ERROR = "error";
+  private Boolean error;
+
+  public static final String JSON_PROPERTY_ERRORMSG = "errormsg";
+  private String errormsg;
 
   public AnalyticsResult() { 
   }
@@ -111,30 +119,84 @@ public class AnalyticsResult {
   }
 
 
-  public AnalyticsResult value(BigDecimal value) {
+  public AnalyticsResult result(BigDecimal result) {
     
-    this.value = value;
+    this.result = result;
     return this;
   }
 
    /**
-   * Get value
-   * @return value
+   * Get result
+   * @return result
   **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
-  @JsonProperty(JSON_PROPERTY_VALUE)
+  @JsonProperty(JSON_PROPERTY_RESULT)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
-  public BigDecimal getValue() {
-    return value;
+  public BigDecimal getResult() {
+    return result;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_VALUE)
+  @JsonProperty(JSON_PROPERTY_RESULT)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setValue(BigDecimal value) {
-    this.value = value;
+  public void setResult(BigDecimal result) {
+    this.result = result;
+  }
+
+
+  public AnalyticsResult error(Boolean error) {
+    
+    this.error = error;
+    return this;
+  }
+
+   /**
+   * Get error
+   * @return error
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "")
+  @JsonProperty(JSON_PROPERTY_ERROR)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+
+  public Boolean getError() {
+    return error;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_ERROR)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setError(Boolean error) {
+    this.error = error;
+  }
+
+
+  public AnalyticsResult errormsg(String errormsg) {
+    
+    this.errormsg = errormsg;
+    return this;
+  }
+
+   /**
+   * Get errormsg
+   * @return errormsg
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "")
+  @JsonProperty(JSON_PROPERTY_ERRORMSG)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+
+  public String getErrormsg() {
+    return errormsg;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_ERRORMSG)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setErrormsg(String errormsg) {
+    this.errormsg = errormsg;
   }
 
 
@@ -148,12 +210,14 @@ public class AnalyticsResult {
     }
     AnalyticsResult analyticsResult = (AnalyticsResult) o;
     return Objects.equals(this.operation, analyticsResult.operation) &&
-        Objects.equals(this.value, analyticsResult.value);
+        Objects.equals(this.result, analyticsResult.result) &&
+        Objects.equals(this.error, analyticsResult.error) &&
+        Objects.equals(this.errormsg, analyticsResult.errormsg);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(operation, value);
+    return Objects.hash(operation, result, error, errormsg);
   }
 
   @Override
@@ -161,7 +225,9 @@ public class AnalyticsResult {
     StringBuilder sb = new StringBuilder();
     sb.append("class AnalyticsResult {\n");
     sb.append("    operation: ").append(toIndentedString(operation)).append("\n");
-    sb.append("    value: ").append(toIndentedString(value)).append("\n");
+    sb.append("    result: ").append(toIndentedString(result)).append("\n");
+    sb.append("    error: ").append(toIndentedString(error)).append("\n");
+    sb.append("    errormsg: ").append(toIndentedString(errormsg)).append("\n");
     sb.append("}");
     return sb.toString();
   }

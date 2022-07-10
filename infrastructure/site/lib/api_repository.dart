@@ -15,6 +15,14 @@ class SubmissionsFetchFailure implements Exception {
   }
 }
 
+class SurveyFetchFailure implements Exception {
+  const SurveyFetchFailure([
+    this.message = 'An unknown exception occurred.',
+  ]);
+
+  final String message;
+}
+
 class ApiRepository {
   final log = Logger('AdminRepository');
 
@@ -47,6 +55,16 @@ class ApiRepository {
           .data!;
     } catch (err) {
       throw (SubmissionsFetchFailure(err.toString()));
+    }
+  }
+
+  Future<Survey> fetchSurvey() async {
+    final uapi = mapi.getUserApi();
+
+    try {
+      return (await uapi.getSurvey()).data!;
+    } catch (err) {
+      throw (SurveyFetchFailure(err.toString()));
     }
   }
 }

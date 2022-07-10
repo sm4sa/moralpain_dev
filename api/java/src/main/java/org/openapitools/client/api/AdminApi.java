@@ -20,6 +20,7 @@ import org.openapitools.client.Configuration;
 import org.openapitools.client.model.*;
 import org.openapitools.client.Pair;
 
+import org.openapitools.client.model.AnalyticsResult;
 import org.openapitools.client.model.Submissions;
 
 
@@ -28,7 +29,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-05-20T14:16:52.838332-04:00[America/New_York]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-07-10T00:48:17.818184-04:00[America/New_York]")
 public class AdminApi {
   private ApiClient apiClient;
 
@@ -54,10 +55,10 @@ public class AdminApi {
    * @param operation The analytic operation to perform on the data. (required)
    * @param starttime Minimum possible timestamp of a record in UTC seconds since Unix epoch. (optional)
    * @param endtime Maximum possible timestamp of a record in UTC seconds since Unix epoch. (optional)
-   * @return Submissions
+   * @return AnalyticsResult
    * @throws ApiException if fails to make API call
    */
-  public Submissions getAnalytics(String operation, Integer starttime, Integer endtime) throws ApiException {
+  public AnalyticsResult getAnalytics(String operation, Integer starttime, Integer endtime) throws ApiException {
     Object localVarPostBody = null;
     
     // verify the required parameter 'operation' is set
@@ -94,7 +95,7 @@ public class AdminApi {
 
     String[] localVarAuthNames = new String[] {  };
 
-    TypeReference<Submissions> localVarReturnType = new TypeReference<Submissions>() {};
+    TypeReference<AnalyticsResult> localVarReturnType = new TypeReference<AnalyticsResult>() {};
     return apiClient.invokeAPI(
         localVarPath,
         "GET",
