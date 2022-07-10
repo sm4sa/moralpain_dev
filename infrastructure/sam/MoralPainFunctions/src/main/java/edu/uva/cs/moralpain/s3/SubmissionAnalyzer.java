@@ -13,7 +13,6 @@ import edu.uva.cs.moralpain.utils.VariableManager;
 import org.openapitools.client.model.AnalyticsResult;
 import org.openapitools.client.model.Submission;
 import org.openapitools.client.model.AnalyticsResult.OperationEnum;
-
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.ListObjectsV2Request;
 import software.amazon.awssdk.services.s3.model.S3Object;
