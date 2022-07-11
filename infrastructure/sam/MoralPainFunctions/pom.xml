@@ -44,6 +44,8 @@
             <groupId>edu.uva.cs</groupId>
             <artifactId>moraldistressapi</artifactId>
             <version>${moraldistressapi.version}</version>
+            <scope>system</scope>
+            <systemPath>/workspaces/moralpain_dev/api/java/target/moraldistressapi-1.0.0.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>com.amazonaws</groupId>
