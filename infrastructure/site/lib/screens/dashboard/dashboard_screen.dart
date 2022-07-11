@@ -29,7 +29,7 @@ class DashboardScreen extends StatelessWidget {
                   child: Column(
                     children: [
                       SizedBox(height: defaultPadding),
-                      RecentReports(),
+                      SubmissionsRoute(repository: ApiRepository()),
                     ],
                   ),
                 ),

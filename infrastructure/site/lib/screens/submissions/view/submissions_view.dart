@@ -1,3 +1,4 @@
+import 'package:admin/screens/filter_submissions/filter_submissions.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -14,35 +15,40 @@ class SubmissionsView extends StatelessWidget {
   }
 
   Widget handleLoadEvents(BuildContext context, SubmissionsState state) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Survey Submissions'),
-      ),
-      body: Padding(
-        padding: EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [submissionsFromState(state)],
-        ),
+    return Padding(
+      padding: EdgeInsets.all(16.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          MultiBlocProvider(
+            providers: [
+              BlocProvider<SubmissionsBloc>(
+                create: (_) => context.read<SubmissionsBloc>(),
+              ),
+              BlocProvider<FilterSubmissionsBloc>(
+                create: (_) => FilterSubmissionsBloc(),
+              )
+            ],
+            child: const FilterSubmissionsView(),
+          ),
+          SizedBox(width: 20),
+          submissionsFromState(state),
+        ],
       ),
     );
   }
 
   static Widget submissionsFromState(SubmissionsState state) {
     if (state is SubmissionsInitial || state is SubmissionsLoading) {
-      return Expanded(child: Center(child: CircularProgressIndicator()));
+      return Center(child: CircularProgressIndicator());
     } else if (state is SubmissionsLoaded) {
-      return Expanded(
-        child: Center(
-          child: messageFromSubmissions(state.submissions),
-        ),
+      return Center(
+        child: messageFromSubmissions(state.submissions),
       );
     } else if (state is SubmissionsLoadFailed) {
-      return Expanded(
-        child: Center(
-          child: Text('Error fetching submissions'),
-        ),
+      return Center(
+        child: Text('Error fetching submissions'),
       );
     } else {
       assert(false);
