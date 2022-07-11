@@ -87,28 +87,28 @@ Resources:
             Method: get
             ApiId: !Ref ApiGatewayApi
   
-  AnalyzeSubmissionsFunction:
-    Type: AWS::Serverless::Function
-    Properties:
-      FunctionName: AnalyzeSubmissions
-      CodeUri: MoralPainFunctions
-      Handler: edu.uva.cs.moralpain.s3.SubmissionAnalyzer::handleRequest
-      Runtime: java8.al2
-      Architectures:
-        - x86_64
-      MemorySize: 512
-      Environment:
-        Variables:
-          bucket: moralpain-submissions
-          prefix: surveys
-      Role: !Sub arn:aws:iam::${AWS::AccountId}:role/lambda_analyze_submissions_role
-      Events:
-        Get:
-          Type: HttpApi
-          Properties:
-            Path: /admin/analytics
-            Method: get
-            ApiId: !Ref ApiGatewayApi
+  # AnalyzeSubmissionsFunction:
+  #   Type: AWS::Serverless::Function
+  #   Properties:
+  #     FunctionName: AnalyzeSubmissions
+  #     CodeUri: MoralPainFunctions
+  #     Handler: edu.uva.cs.moralpain.s3.SubmissionAnalyzer::handleRequest
+  #     Runtime: java8.al2
+  #     Architectures:
+  #       - x86_64
+  #     MemorySize: 512
+  #     Environment:
+  #       Variables:
+  #         bucket: moralpain-submissions
+  #         prefix: surveys
+  #     Role: !Sub arn:aws:iam::${AWS::AccountId}:role/lambda_analyze_submissions_role
+  #     Events:
+  #       Get:
+  #         Type: HttpApi
+  #         Properties:
+  #           Path: /admin/analytics
+  #           Method: get
+  #           ApiId: !Ref ApiGatewayApi
 
 Outputs:
   APIUri:

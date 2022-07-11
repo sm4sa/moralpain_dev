@@ -1,4 +1,6 @@
+import 'package:admin/screens/side_menu/side_menu.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class SideMenu extends StatelessWidget {
@@ -17,19 +19,20 @@ class SideMenu extends StatelessWidget {
             ),
           ),
           DrawerListTile(
-            title: "Dashboard",
+            title: "View Submissions",
             svgSrc: "assets/icons/menu_dashbord.svg",
-            press: () {},
+            press: () {
+              BlocProvider.of<SideMenuCubit>(context)
+                  .setView(DashboardView.SUBMISSIONS);
+            },
           ),
           DrawerListTile(
-            title: "Profile",
+            title: "Analyze",
             svgSrc: "assets/icons/menu_profile.svg",
-            press: () {},
-          ),
-          DrawerListTile(
-            title: "Settings",
-            svgSrc: "assets/icons/menu_setting.svg",
-            press: () {},
+            press: () {
+              BlocProvider.of<SideMenuCubit>(context)
+                  .setView(DashboardView.ANALYTICS);
+            },
           ),
         ],
       ),
