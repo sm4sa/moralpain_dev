@@ -1,10 +1,20 @@
 import 'package:admin/screens/side_menu/side_menu.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('SideMenu', () {
+    late SideMenuCubit cubit;
+    const Key viewSubmissionsKey =
+        const Key('sideMenu_viewSubmissions_drawerListTile');
+    const Key analyzeKey = const Key('sideMenu_analyze_drawerListTile');
+
+    setUp(() {
+      cubit = SideMenuCubit();
+    });
+
     testWidgets('Renders a DrawerHeader with an svg image', (tester) async {
       await tester.pumpWidget(MaterialApp(home: SideMenu()));
       expect(find.byType(DrawerHeader), findsOneWidget);
@@ -17,10 +27,43 @@ void main() {
       );
     });
 
-    testWidgets('Renders three DrawerListTiles', (tester) async {
+    testWidgets('Renders two DrawerListTiles', (tester) async {
       await tester.pumpWidget(MaterialApp(home: SideMenu()));
-      expect(find.byType(DrawerListTile), findsNWidgets(3));
+      expect(find.byType(DrawerListTile), findsNWidgets(2));
     });
+
+    testWidgets(
+      'Sets SideMenuCubit state to SUBMISSIONS '
+      'when "View Submission" tile is pressed',
+      (tester) async {
+        await tester.pumpWidget(
+          MaterialApp(
+            home: BlocProvider(
+              create: (_) => cubit,
+              child: SideMenu(),
+            ),
+          ),
+        );
+        await tester.tap(find.byKey(viewSubmissionsKey));
+        expect(cubit.state, equals(DashboardView.SUBMISSIONS));
+      },
+    );
+
+    testWidgets(
+      'Sets SideMenuCubit state to ANALYZE when "Analyze" tile is pressed',
+      (tester) async {
+        await tester.pumpWidget(
+          MaterialApp(
+            home: BlocProvider(
+              create: (_) => cubit,
+              child: SideMenu(),
+            ),
+          ),
+        );
+        await tester.tap(find.byKey(analyzeKey));
+        expect(cubit.state, equals(DashboardView.ANALYTICS));
+      },
+    );
   });
 
   group('DrawerListTile', () {

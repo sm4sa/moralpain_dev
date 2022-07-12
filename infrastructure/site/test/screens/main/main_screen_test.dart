@@ -47,4 +47,5 @@ Future<void> pumpApp(WidgetTester tester) async {
       ),
     ),
   );
+  await tester.pumpAndSettle();
 }

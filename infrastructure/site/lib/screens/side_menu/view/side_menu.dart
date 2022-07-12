@@ -19,6 +19,7 @@ class SideMenu extends StatelessWidget {
             ),
           ),
           DrawerListTile(
+            key: const Key('sideMenu_viewSubmissions_drawerListTile'),
             title: "View Submissions",
             svgSrc: "assets/icons/menu_dashbord.svg",
             press: () {
@@ -27,6 +28,7 @@ class SideMenu extends StatelessWidget {
             },
           ),
           DrawerListTile(
+            key: const Key('sideMenu_analyze_drawerListTile'),
             title: "Analyze",
             svgSrc: "assets/icons/menu_profile.svg",
             press: () {
