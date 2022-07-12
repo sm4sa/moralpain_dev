@@ -1,6 +1,5 @@
 import 'package:admin/screens/filter_submissions/filter_submissions.dart';
 import 'package:built_collection/built_collection.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:admin/screens/submissions/submissions.dart';
@@ -64,12 +63,13 @@ class SubmissionsView extends StatelessWidget {
     if (list.isEmpty) {
       return Text('List of submissions is empty.');
     }
-    return CupertinoScrollbar(
+    return Scrollbar(
       child: ListView(
         children: [
           for (final submission in submissions.list!)
             SubmissionListTile(submission),
         ],
+        shrinkWrap: true,
       ),
     );
   }
