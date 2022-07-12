@@ -17,7 +17,7 @@ class _$SurveySection extends SurveySection {
   final BuiltList<SurveyOption>? options;
 
   factory _$SurveySection([void Function(SurveySectionBuilder)? updates]) =>
-      (new SurveySectionBuilder()..update(updates)).build();
+      (new SurveySectionBuilder()..update(updates))._build();
 
   _$SurveySection._({this.sectionId, this.title, this.subtitle, this.options})
       : super._();
@@ -48,7 +48,7 @@ class _$SurveySection extends SurveySection {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('SurveySection')
+    return (newBuiltValueToStringHelper(r'SurveySection')
           ..add('sectionId', sectionId)
           ..add('title', title)
           ..add('subtitle', subtitle)
@@ -106,7 +106,9 @@ class SurveySectionBuilder
   }
 
   @override
-  _$SurveySection build() {
+  SurveySection build() => _build();
+
+  _$SurveySection _build() {
     _$SurveySection _$result;
     try {
       _$result = _$v ??
@@ -122,7 +124,7 @@ class SurveySectionBuilder
         _options?.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'SurveySection', _$failedField, e.toString());
+            r'SurveySection', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -131,4 +133,4 @@ class SurveySectionBuilder
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,no_leading_underscores_for_local_identifiers,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new,unnecessary_lambdas

@@ -2,6 +2,7 @@ import 'package:admin/api_repository.dart';
 import 'package:admin/screens/analytics0/analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:moralpainapi/moralpainapi.dart';
 
 class AnalyticsRoute extends StatelessWidget {
   const AnalyticsRoute({Key? key, required this.repository}) : super(key: key);
@@ -46,7 +47,11 @@ class AnalyticsView extends StatelessWidget {
     } else if (state is AnalyticsFailure) {
       return Text('Error fetching analytics.');
     } else if (state is AnalyticsSuccess) {
-      return Text('${state.result}');
+      if (state.result.error != null && !state.result.error!) {
+        return Text('Result is ${state.result.result}');
+      } else {
+        return Text('Error occurred: ${state.result.errormsg}');
+      }
     } else {
       assert(false);
       return ErrorWidget('Error State');

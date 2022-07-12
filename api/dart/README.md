@@ -47,15 +47,16 @@ import 'package:moralpainapi/moralpainapi.dart';
 
 
 final api = Moralpainapi().getAdminApi();
-final String operation = count; // String | The analytic operation to perform on the data.
 final int starttime = 1640995200; // int | Minimum possible timestamp of a record in UTC seconds since Unix epoch.
 final int endtime = 1647907200; // int | Maximum possible timestamp of a record in UTC seconds since Unix epoch.
+final int minscore = 1; // int | Minimum possible score of a record.
+final int maxscore = 5; // int | Maximum possible score of a record.
 
 try {
-    final response = await api.getAnalytics(operation, starttime, endtime);
+    final response = await api.getSubmissions(starttime, endtime, minscore, maxscore);
     print(response);
 } catch on DioError (e) {
-    print("Exception when calling AdminApi->getAnalytics: $e\n");
+    print("Exception when calling AdminApi->getSubmissions: $e\n");
 }
 
 ```
@@ -66,8 +67,8 @@ All URIs are relative to *http://localhost*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-[*AdminApi*](doc/AdminApi.md) | [**getAnalytics**](doc/AdminApi.md#getanalytics) | **GET** /admin/analytics | Get data analysis
 [*AdminApi*](doc/AdminApi.md) | [**getSubmissions**](doc/AdminApi.md#getsubmissions) | **GET** /admin/submissions | Get survey results
+[*CORSApi*](doc/CORSApi.md) | [**optionsAdminSubmissions**](doc/CORSApi.md#optionsadminsubmissions) | **OPTIONS** /admin/submissions | CORS admin submissions support
 [*CORSApi*](doc/CORSApi.md) | [**optionsSurvey**](doc/CORSApi.md#optionssurvey) | **OPTIONS** /survey | CORS survey support
 [*CORSApi*](doc/CORSApi.md) | [**optionsVisitedResiliencyResources**](doc/CORSApi.md#optionsvisitedresiliencyresources) | **OPTIONS** /resiliency | CORS resiliency resources support
 [*UserApi*](doc/UserApi.md) | [**getResiliencyResources**](doc/UserApi.md#getresiliencyresources) | **GET** /resiliency | Get resiliency resources
@@ -92,7 +93,12 @@ Class | Method | HTTP request | Description
 
 ## Documentation For Authorization
 
- All endpoints do not require authorization.
+
+## UserPool
+
+- **Type**: API key
+- **API key parameter name**: Authorization
+- **Location**: HTTP header
 
 
 ## Author

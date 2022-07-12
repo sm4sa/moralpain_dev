@@ -3,38 +3,29 @@ import 'package:moralpainapi/moralpainapi.dart';
 
 // tests for Submission
 void main() {
-  final json = '''
-    {
-      "score": 9,
-      "selections": [
-        "001",
-        "002"
-      ],
-      "timestamp": 0,
-      "id": "foo"
-    }
-  ''';
-  final instance = standardSerializers.fromJson(Submission.serializer, json)!;
+  final instance = SubmissionBuilder();
+  // TODO add properties to the builder and call build()
 
   group(Submission, () {
     // int score
     test('to test the property `score`', () async {
-      expect(9, instance.score);
+      // TODO
     });
 
     // BuiltList<String> selections
     test('to test the property `selections`', () async {
-      expect(2, instance.selections!.length);
+      // TODO
     });
 
     // int timestamp
     test('to test the property `timestamp`', () async {
-      expect(0, instance.timestamp);
+      // TODO
     });
 
     // String id
     test('to test the property `id`', () async {
-      expect("foo", instance.id);
+      // TODO
     });
+
   });
 }

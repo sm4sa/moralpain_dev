@@ -3,46 +3,34 @@ import 'package:moralpainapi/moralpainapi.dart';
 
 // tests for ResiliencyResource
 void main() {
-  final json = '''
-    { 
-      "resourceId": "Bush",
-      "title": "Machinehead",
-      "description": "Breathe In, Breathe Out",
-      "url": "https://www.youtube.com/watch?v=5WPbqYoz9HA",
-      "icon": { 
-        "codePoint": "U+0420",
-        "fontFamily": "Papyrus",
-        "fontPackage": "foo" 
-      } 
-    } 
-  ''';
-  final instance =
-      standardSerializers.fromJson(ResiliencyResource.serializer, json)!;
+  final instance = ResiliencyResourceBuilder();
+  // TODO add properties to the builder and call build()
 
   group(ResiliencyResource, () {
     // String resourceId
     test('to test the property `resourceId`', () async {
-      expect("Bush", instance.resourceId);
+      // TODO
     });
 
     // String title
     test('to test the property `title`', () async {
-      expect("Machinehead", instance.title);
+      // TODO
     });
 
     // String description
     test('to test the property `description`', () async {
-      expect("Breathe In, Breathe Out", instance.description);
+      // TODO
     });
 
     // String url
     test('to test the property `url`', () async {
-      expect("https://www.youtube.com/watch?v=5WPbqYoz9HA", instance.url);
+      // TODO
     });
 
     // Icon icon
     test('to test the property `icon`', () async {
-      expect("U+0420", instance.icon!.codePoint);
+      // TODO
     });
+
   });
 }

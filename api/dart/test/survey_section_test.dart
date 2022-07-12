@@ -3,44 +3,29 @@ import 'package:moralpainapi/moralpainapi.dart';
 
 // tests for SurveySection
 void main() {
-  final json = '''{ 
-    "sectionId": "123", 
-    "title": "Star Wars: Episode IV",
-    "subtitle": "A New Hope",
-    "options": [
-      {
-        "id": "foo",
-        "description": "foo"
-      },
-      {
-        "id": "bar",
-        "description": "bar"
-      }
-    ]
-  }''';
-  final instance =
-      standardSerializers.fromJson(SurveySection.serializer, json)!;
+  final instance = SurveySectionBuilder();
+  // TODO add properties to the builder and call build()
 
   group(SurveySection, () {
     // String sectionId
     test('to test the property `sectionId`', () async {
-      expect("123", instance.sectionId);
+      // TODO
     });
 
     // String title
     test('to test the property `title`', () async {
-      expect("Star Wars: Episode IV", instance.title);
+      // TODO
     });
 
     // String subtitle
     test('to test the property `subtitle`', () async {
-      expect("A New Hope", instance.subtitle);
+      // TODO
     });
 
     // BuiltList<SurveyOption> options
     test('to test the property `options`', () async {
-      expect(2, instance.options!.length);
-      expect("foo", instance.options!.first.id);
+      // TODO
     });
+
   });
 }

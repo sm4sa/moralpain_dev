@@ -81,12 +81,17 @@ class _$AnalyticsResult extends AnalyticsResult {
   @override
   final AnalyticsResultOperationEnum? operation;
   @override
-  final num? value;
+  final num? result;
+  @override
+  final bool? error;
+  @override
+  final String? errormsg;
 
   factory _$AnalyticsResult([void Function(AnalyticsResultBuilder)? updates]) =>
-      (new AnalyticsResultBuilder()..update(updates)).build();
+      (new AnalyticsResultBuilder()..update(updates))._build();
 
-  _$AnalyticsResult._({this.operation, this.value}) : super._();
+  _$AnalyticsResult._({this.operation, this.result, this.error, this.errormsg})
+      : super._();
 
   @override
   AnalyticsResult rebuild(void Function(AnalyticsResultBuilder) updates) =>
@@ -101,19 +106,25 @@ class _$AnalyticsResult extends AnalyticsResult {
     if (identical(other, this)) return true;
     return other is AnalyticsResult &&
         operation == other.operation &&
-        value == other.value;
+        result == other.result &&
+        error == other.error &&
+        errormsg == other.errormsg;
   }
 
   @override
   int get hashCode {
-    return $jf($jc($jc(0, operation.hashCode), value.hashCode));
+    return $jf($jc(
+        $jc($jc($jc(0, operation.hashCode), result.hashCode), error.hashCode),
+        errormsg.hashCode));
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('AnalyticsResult')
+    return (newBuiltValueToStringHelper(r'AnalyticsResult')
           ..add('operation', operation)
-          ..add('value', value))
+          ..add('result', result)
+          ..add('error', error)
+          ..add('errormsg', errormsg))
         .toString();
   }
 }
@@ -127,9 +138,17 @@ class AnalyticsResultBuilder
   set operation(AnalyticsResultOperationEnum? operation) =>
       _$this._operation = operation;
 
-  num? _value;
-  num? get value => _$this._value;
-  set value(num? value) => _$this._value = value;
+  num? _result;
+  num? get result => _$this._result;
+  set result(num? result) => _$this._result = result;
+
+  bool? _error;
+  bool? get error => _$this._error;
+  set error(bool? error) => _$this._error = error;
+
+  String? _errormsg;
+  String? get errormsg => _$this._errormsg;
+  set errormsg(String? errormsg) => _$this._errormsg = errormsg;
 
   AnalyticsResultBuilder() {
     AnalyticsResult._defaults(this);
@@ -139,7 +158,9 @@ class AnalyticsResultBuilder
     final $v = _$v;
     if ($v != null) {
       _operation = $v.operation;
-      _value = $v.value;
+      _result = $v.result;
+      _error = $v.error;
+      _errormsg = $v.errormsg;
       _$v = null;
     }
     return this;
@@ -157,12 +178,18 @@ class AnalyticsResultBuilder
   }
 
   @override
-  _$AnalyticsResult build() {
-    final _$result =
-        _$v ?? new _$AnalyticsResult._(operation: operation, value: value);
+  AnalyticsResult build() => _build();
+
+  _$AnalyticsResult _build() {
+    final _$result = _$v ??
+        new _$AnalyticsResult._(
+            operation: operation,
+            result: result,
+            error: error,
+            errormsg: errormsg);
     replace(_$result);
     return _$result;
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,no_leading_underscores_for_local_identifiers,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new,unnecessary_lambdas

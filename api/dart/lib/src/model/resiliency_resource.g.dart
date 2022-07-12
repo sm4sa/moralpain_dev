@@ -20,7 +20,7 @@ class _$ResiliencyResource extends ResiliencyResource {
 
   factory _$ResiliencyResource(
           [void Function(ResiliencyResourceBuilder)? updates]) =>
-      (new ResiliencyResourceBuilder()..update(updates)).build();
+      (new ResiliencyResourceBuilder()..update(updates))._build();
 
   _$ResiliencyResource._(
       {this.resourceId, this.title, this.description, this.url, this.icon})
@@ -58,7 +58,7 @@ class _$ResiliencyResource extends ResiliencyResource {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('ResiliencyResource')
+    return (newBuiltValueToStringHelper(r'ResiliencyResource')
           ..add('resourceId', resourceId)
           ..add('title', title)
           ..add('description', description)
@@ -121,7 +121,9 @@ class ResiliencyResourceBuilder
   }
 
   @override
-  _$ResiliencyResource build() {
+  ResiliencyResource build() => _build();
+
+  _$ResiliencyResource _build() {
     _$ResiliencyResource _$result;
     try {
       _$result = _$v ??
@@ -138,7 +140,7 @@ class ResiliencyResourceBuilder
         _icon?.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'ResiliencyResource', _$failedField, e.toString());
+            r'ResiliencyResource', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -147,4 +149,4 @@ class ResiliencyResourceBuilder
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,no_leading_underscores_for_local_identifiers,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new,unnecessary_lambdas
