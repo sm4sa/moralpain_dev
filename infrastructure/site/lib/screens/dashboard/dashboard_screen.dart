@@ -1,5 +1,5 @@
 import 'package:admin/api_repository.dart';
-import 'package:admin/screens/analytics/analytics.dart';
+import 'package:admin/screens/analytics0/analytics.dart';
 import 'package:admin/screens/side_menu/side_menu.dart';
 import 'package:admin/screens/submissions/view/view.dart';
 import 'package:admin/constants.dart';
@@ -32,9 +32,7 @@ class DashboardScreen extends StatelessWidget {
                             case DashboardView.SUBMISSIONS:
                               return SubmissionsRoute(repository: repository);
                             case DashboardView.ANALYTICS:
-                              //return AnalyticsRoute(repository: repository);
-                              return Text(
-                                  'Placeholder for the Analytics Route');
+                              return AnalyticsRoute(repository: repository);
                           }
                         },
                       ),
