@@ -2,6 +2,7 @@
 SDK_VERSION="31"
 CMDLINE_VERSION="8512546"
 
+
 set_download_url() {
   case "$(uname -s)" in
      Darwin) 
@@ -19,6 +20,7 @@ set_download_url() {
   dl_url="https://dl.google.com/android/repository/commandlinetools-${platform}-${CMDLINE_VERSION}_latest.zip"
 }
 
+
 install_tools() {
   tempdir="$(mktemp -d)"
   pushd "$tempdir"
@@ -33,6 +35,7 @@ install_tools() {
   rm -r "$tempdir"
   set_env
 }
+
 
 set_env() {
   ANDROID_SDK_ROOT=/opt/android
@@ -57,10 +60,25 @@ install_sdk() {
   yes | sdkmanager --licenses
 }
 
+
 create_emulator() {
   avdmanager create avd \
     --name avd_${SDK_VERSION} \
     --package "system-images;android-${SDK_VERSION};google_apis;x86_64"
+}
+
+
+set_config() {
+  config="$1"
+  val="$2"
+
+  path="${HOME}/.android/avd/avd_${SDK_VERSION}.avd/config.ini"
+  sed -r -i.bak "/^${config} ?=/s,=.*,= ${val}," "${path}"
+}
+
+
+configure_emulator() {
+  set_config "hw\.keyboard" "yes"
 }
 
 if ! set_download_url; then
@@ -72,3 +90,4 @@ fi
 install_tools
 install_sdk
 create_emulator
+configure_emulator
