@@ -47,14 +47,30 @@ class AnalyticsView extends StatelessWidget {
     } else if (state is AnalyticsFailure) {
       return Text('Error fetching analytics.');
     } else if (state is AnalyticsSuccess) {
+      print(state.result);
       if (state.result.error != null && !state.result.error!) {
-        return Text('Result is ${state.result.result}');
+        return Text(messageFromResult(
+          operation: state.result.operation!,
+          result: state.result.result!,
+        ));
       } else {
-        return Text('Error occurred: ${state.result.errormsg}');
+        return Text('Error fetching analytics: ${state.result.errormsg}');
       }
     } else {
       assert(false);
       return ErrorWidget('Error State');
+    }
+  }
+
+  String messageFromResult({
+    required AnalyticsResultOperationEnum operation,
+    required num result,
+  }) {
+    switch (operation) {
+      case AnalyticsResultOperationEnum.count:
+        return 'The number of submissions is $result.';
+      default:
+        return 'The $operation score is $result.';
     }
   }
 }

@@ -76,10 +76,14 @@ class ApiRepository {
     int? starttime,
     int? endtime,
   }) async {
-    final aapi = mapi.getAdminApi();
-    return AnalyticsResult();
+    String json =
+        '{"operation": "maximum", "result": null, "error": true, "errormsg": "sample error message"}';
+    return standardSerializers.fromJson(AnalyticsResult.serializer, json)!;
 
-    /*try {
+    /*
+    final aapi = mapi.getAdminApi();
+    
+    try {
       return (await aapi.getAnalytics(
         operation: operation,
         starttime: starttime,
