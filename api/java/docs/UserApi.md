@@ -2,12 +2,12 @@
 
 All URIs are relative to *http://localhost*
 
-Method | HTTP request | Description
-------------- | ------------- | -------------
-[**getResiliencyResources**](UserApi.md#getResiliencyResources) | **GET** /resiliency | Get resiliency resources
-[**getSurvey**](UserApi.md#getSurvey) | **GET** /survey | Get the MDQ
-[**submitSurvey**](UserApi.md#submitSurvey) | **POST** /survey | Submit a completed MDQ
-[**submitVisitedResiliencyResources**](UserApi.md#submitVisitedResiliencyResources) | **POST** /resiliency | Submit visited resiliency resources
+| Method | HTTP request | Description |
+|------------- | ------------- | -------------|
+| [**getResiliencyResources**](UserApi.md#getResiliencyResources) | **GET** /resiliency | Get resiliency resources |
+| [**getSurvey**](UserApi.md#getSurvey) | **GET** /survey | Get the MDQ |
+| [**submitSurvey**](UserApi.md#submitSurvey) | **POST** /survey | Submit a completed MDQ |
+| [**submitVisitedResiliencyResources**](UserApi.md#submitVisitedResiliencyResources) | **POST** /resiliency | Submit visited resiliency resources |
 
 
 
@@ -177,9 +177,9 @@ public class Example {
 ### Parameters
 
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **submission** | [**Submission**](Submission.md)|  | [optional]
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **submission** | [**Submission**](Submission.md)|  | [optional] |
 
 ### Return type
 
@@ -243,9 +243,9 @@ public class Example {
 ### Parameters
 
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **visitedResiliencyResources** | [**VisitedResiliencyResources**](VisitedResiliencyResources.md)|  | [optional]
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **visitedResiliencyResources** | [**VisitedResiliencyResources**](VisitedResiliencyResources.md)|  | [optional] |
 
 ### Return type
 

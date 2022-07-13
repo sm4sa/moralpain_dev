@@ -9,16 +9,16 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.uva.cs.moralpain.utils.S3Helper;
 import edu.uva.cs.moralpain.utils.VariableManager;
 import org.openapitools.client.model.Submission;
+import org.openapitools.client.model.Submissions;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.ListObjectsV2Request;
 import software.amazon.awssdk.services.s3.model.S3Object;
 
 import java.time.Instant;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import static edu.uva.cs.moralpain.utils.S3Helper.createS3Client;
@@ -66,16 +66,15 @@ public class SubmissionFetcher implements RequestHandler<APIGatewayV2HTTPEvent, 
         }
         ListObjectsV2Request listObjectsV2Request = builder.build();
 
-        Collection submissions = client.listObjectsV2(listObjectsV2Request).contents().stream()
+        List<Submission> submissions = client.listObjectsV2(listObjectsV2Request).contents().stream()
                 .map(S3Object::key)
                 .filter(sfpb.beforeOrAtEndTime())
                 .map(key -> S3Helper.getObjectAsSubmission(client, bucket, key))
                 .filter(sfpb.inScoreRange())
-                .map(this::toJson)
-                .filter(((Predicate<String>) String::isEmpty).negate())
                 .collect(Collectors.toList());
-        String data = toJson(submissions);
-        response.setBody(data);
+        Submissions data = new Submissions();
+        data.setList(submissions);
+        response.setBody(toJson(data));
         response.setStatusCode(200);
 
         Map<String, String> headers = new HashMap<>();

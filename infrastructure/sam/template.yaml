@@ -86,11 +86,33 @@ Resources:
             Path: /admin/submissions
             Method: get
             ApiId: !Ref ApiGatewayApi
+  
+  # AnalyzeSubmissionsFunction:
+  #   Type: AWS::Serverless::Function
+  #   Properties:
+  #     FunctionName: AnalyzeSubmissions
+  #     CodeUri: MoralPainFunctions
+  #     Handler: edu.uva.cs.moralpain.s3.SubmissionAnalyzer::handleRequest
+  #     Runtime: java8.al2
+  #     Architectures:
+  #       - x86_64
+  #     MemorySize: 512
+  #     Environment:
+  #       Variables:
+  #         bucket: moralpain-submissions
+  #         prefix: surveys
+  #     Role: !Sub arn:aws:iam::${AWS::AccountId}:role/lambda_analyze_submissions_role
+  #     Events:
+  #       Get:
+  #         Type: HttpApi
+  #         Properties:
+  #           Path: /admin/analytics
+  #           Method: get
+  #           ApiId: !Ref ApiGatewayApi
 
 Outputs:
-  # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
-  # Find out more about other implicit resources you can reference within SAM
-  # https://github.com/awslabs/serverless-application-model/blob/master/docs/internals/generated_resources.rst#api
+  APIUri:
+    Value: !Sub "https://${ApiGatewayApi}.execute-api.${AWS::Region}.amazonaws.com"
   SubimitSurveyFunctionAPI:
     Description: "API Gateway endpoint URL for Prod stage for SubmitSurvey function"
     Value: !Sub "https://${ApiGatewayApi}.execute-api.${AWS::Region}.amazonaws.com/v1/survey/"

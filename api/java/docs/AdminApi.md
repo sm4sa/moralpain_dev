@@ -2,16 +2,16 @@
 
 All URIs are relative to *http://localhost*
 
-Method | HTTP request | Description
-------------- | ------------- | -------------
-[**getAnalytics**](AdminApi.md#getAnalytics) | **GET** /admin/analytics | Get data analysis
-[**getSubmissions**](AdminApi.md#getSubmissions) | **GET** /admin/submissions | Get survey results
+| Method | HTTP request | Description |
+|------------- | ------------- | -------------|
+| [**getAnalytics**](AdminApi.md#getAnalytics) | **GET** /admin/analytics | Get data analysis |
+| [**getSubmissions**](AdminApi.md#getSubmissions) | **GET** /admin/submissions | Get survey results |
 
 
 
 ## getAnalytics
 
-> Submissions getAnalytics(operation, starttime, endtime)
+> AnalyticsResult getAnalytics(operation, starttime, endtime)
 
 Get data analysis
 
@@ -37,7 +37,7 @@ public class Example {
         Integer starttime = 1640995200; // Integer | Minimum possible timestamp of a record in UTC seconds since Unix epoch.
         Integer endtime = 1647907200; // Integer | Maximum possible timestamp of a record in UTC seconds since Unix epoch.
         try {
-            Submissions result = apiInstance.getAnalytics(operation, starttime, endtime);
+            AnalyticsResult result = apiInstance.getAnalytics(operation, starttime, endtime);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling AdminApi#getAnalytics");
@@ -53,15 +53,15 @@ public class Example {
 ### Parameters
 
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **operation** | **String**| The analytic operation to perform on the data. | [enum: average, count, maximum, minimum]
- **starttime** | **Integer**| Minimum possible timestamp of a record in UTC seconds since Unix epoch. | [optional]
- **endtime** | **Integer**| Maximum possible timestamp of a record in UTC seconds since Unix epoch. | [optional]
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **operation** | **String**| The analytic operation to perform on the data. | [enum: average, count, maximum, minimum] |
+| **starttime** | **Integer**| Minimum possible timestamp of a record in UTC seconds since Unix epoch. | [optional] |
+| **endtime** | **Integer**| Maximum possible timestamp of a record in UTC seconds since Unix epoch. | [optional] |
 
 ### Return type
 
-[**Submissions**](Submissions.md)
+[**AnalyticsResult**](AnalyticsResult.md)
 
 ### Authorization
 
@@ -125,12 +125,12 @@ public class Example {
 ### Parameters
 
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **starttime** | **Integer**| Minimum possible timestamp of a record in UTC seconds since Unix epoch. | [optional]
- **endtime** | **Integer**| Maximum possible timestamp of a record in UTC seconds since Unix epoch. | [optional]
- **minscore** | **Integer**| Minimum possible score of a record. | [optional]
- **maxscore** | **Integer**| Maximum possible score of a record. | [optional]
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **starttime** | **Integer**| Minimum possible timestamp of a record in UTC seconds since Unix epoch. | [optional] |
+| **endtime** | **Integer**| Maximum possible timestamp of a record in UTC seconds since Unix epoch. | [optional] |
+| **minscore** | **Integer**| Minimum possible score of a record. | [optional] |
+| **maxscore** | **Integer**| Maximum possible score of a record. | [optional] |
 
 ### Return type
 
@@ -149,6 +149,5 @@ No authorization required
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **200** | 200 response |  -  |
-| **400** | 400 Bad Request |  -  |
+| **200** | 200 response |  * Access-Control-Allow-Origin -  <br>  * Access-Control-Allow-Methods -  <br>  * Access-Control-Allow-Headers -  <br>  |
 

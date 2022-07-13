@@ -1,8 +1,7 @@
 import 'package:admin/controllers/MenuController.dart';
 import 'package:admin/screens/dashboard/components/header.dart';
-import 'package:admin/screens/dashboard/components/recent_reports.dart';
+import 'package:admin/screens/submissions/submissions.dart';
 import 'package:admin/screens/dashboard/dashboard_screen.dart';
-import 'package:admin/screens/main/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
@@ -15,9 +14,14 @@ void main() {
         expect(find.byType(Header), findsOneWidget);
       });
 
-      testWidgets('RecentReports', (tester) async {
+      testWidgets('SubmissionsRoute', (tester) async {
         await buildApp(tester);
-        expect(find.byType(RecentReports), findsOneWidget);
+        expect(find.byType(SubmissionsRoute), findsOneWidget);
+      });
+
+      testWidgets('SubmissionsView', (tester) async {
+        await buildApp(tester);
+        expect(find.byType(SubmissionsView), findsOneWidget);
       });
     });
   });
@@ -38,4 +42,5 @@ Future<void> buildApp(WidgetTester tester) async {
       ),
     ),
   );
+  await tester.pumpAndSettle();
 }

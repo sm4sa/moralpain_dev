@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:admin/api_repository.dart';
 import 'package:admin/screens/submissions/submissions.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -68,12 +71,28 @@ void main() {
         (tester) async {
           SubmissionsLoaded state = SubmissionsLoaded(Submissions());
           await pumpApp(tester, state);
-          expect(
-            find.text(
-              SubmissionsView.messageFromSubmissions(state.submissions),
-            ),
-            findsOneWidget,
+          Widget message = SubmissionsView.messageFromSubmissions(
+            state.submissions,
           );
+
+          // Verify that the message is either a Text or a CupertinoScrollbar
+          expect(
+            message.runtimeType == Text ||
+                message.runtimeType == CupertinoScrollbar,
+            isTrue,
+          );
+
+          /*
+          If the message is a Text, verify that there exists a Text 
+          with matching data
+          */
+          if (message.runtimeType == Text) {
+            String? data = (message as Text).data;
+            expect(data, isNotNull);
+            expect(find.text(data!), findsOneWidget);
+          } else if (message.runtimeType == CupertinoScrollbar) {
+            expect(find.byType(CupertinoScrollbar), findsOneWidget);
+          }
         },
       );
 
@@ -82,6 +101,67 @@ void main() {
         await pumpApp(tester, SubmissionsLoadFailed());
         expect(find.text(errorMsg), findsOneWidget);
       });
+    });
+
+    group('messageFromSubmissions', () {
+      test('returns correct Text if list of submissions is null', () {
+        Submissions submissions = Submissions();
+        expect(submissions.list, isNull);
+
+        Widget message = SubmissionsView.messageFromSubmissions(submissions);
+        expect(message.runtimeType, equals(Text));
+        expect((message as Text).data, equals('No list of submissions.'));
+      });
+
+      test('returns correct Text if list of submissions is empty', () {
+        String json = '{"list": []}';
+        Submissions? submissions = standardSerializers.fromJson(
+          Submissions.serializer,
+          json,
+        );
+        expect(submissions, isNotNull);
+        expect(submissions!.list, isNotNull);
+        expect(submissions.list!.length, equals(0));
+
+        Widget message = SubmissionsView.messageFromSubmissions(submissions);
+        expect(message.runtimeType, equals(Text));
+        expect((message as Text).data, equals('List of submissions is empty.'));
+      });
+
+      testWidgets(
+        'returns ListView with all submissions '
+        'if list of Submissions is not empty',
+        (tester) async {
+          // Generate Submissions object and verify that it is correct
+          File file = File(
+            '/workspaces/moralpain_dev/infrastructure/site/test/screens/submissions/view/submissions_example.json',
+          );
+          String json = file.readAsStringSync();
+          Submissions? submissions = standardSerializers.fromJson(
+            Submissions.serializer,
+            json,
+          );
+          expect(submissions, isNotNull);
+          expect(submissions!.list, isNotNull);
+          expect(submissions.list!.length, equals(2));
+
+          // Render message
+          await tester.pumpWidget(MaterialApp(
+            home: Scaffold(
+              body: SubmissionsView.messageFromSubmissions(submissions),
+            ),
+          ));
+
+          // Verify that the message is a scrollbar
+          expect(find.byType(CupertinoScrollbar), findsOneWidget);
+
+          // Verify that the scrollbar contains a ListView
+          expect(find.byType(ListView), findsOneWidget);
+
+          // Verify that the ListView contains exactly 2 SubmissionListTiles
+          expect(find.byType(SubmissionListTile), findsNWidgets(2));
+        },
+      );
     });
   });
 }
