@@ -1,13 +1,11 @@
-import 'package:admin/responsive.dart';
-import 'package:admin/screens/dashboard/components/my_fields.dart';
-import 'package:admin/screens/dashboard/components/recent_reports.dart';
+import 'package:admin/api_repository.dart';
+import 'package:admin/screens/analytics/analytics.dart';
+import 'package:admin/screens/side_menu/side_menu.dart';
+import 'package:admin/screens/submissions/view/view.dart';
+import 'package:admin/constants.dart';
+import 'package:admin/screens/dashboard/components/header.dart';
 import 'package:flutter/material.dart';
-
-import '../../constants.dart';
-import 'components/header.dart';
-
-import 'components/recent_reports.dart';
-import 'components/storage_details.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class DashboardScreen extends StatelessWidget {
   @override
@@ -27,7 +25,19 @@ class DashboardScreen extends StatelessWidget {
                   child: Column(
                     children: [
                       SizedBox(height: defaultPadding),
-                      RecentReports(),
+                      BlocBuilder<SideMenuCubit, DashboardView>(
+                        builder: (context, state) {
+                          ApiRepository repository = ApiRepository();
+                          switch (state) {
+                            case DashboardView.SUBMISSIONS:
+                              return SubmissionsRoute(repository: repository);
+                            case DashboardView.ANALYTICS:
+                              //return AnalyticsRoute(repository: repository);
+                              return Text(
+                                  'Placeholder for the Analytics Route');
+                          }
+                        },
+                      ),
                     ],
                   ),
                 ),

@@ -1,8 +1,7 @@
 import 'package:admin/controllers/MenuController.dart';
 import 'package:admin/screens/dashboard/dashboard_screen.dart';
-import 'package:admin/screens/main/components/side_menu.dart';
+import 'package:admin/screens/side_menu/side_menu.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:admin/screens/main/main_screen.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';

@@ -29,6 +29,7 @@ class RecentReports extends StatelessWidget {
           ),
           SizedBox(
             width: double.infinity,
+            height: 1000,
             child: DataTable2(
               columnSpacing: defaultPadding,
               minWidth: 600,
@@ -88,9 +89,7 @@ void _onRecentReportDataRowTapped(BuildContext context, RecentReport fileInfo) {
     MaterialPageRoute(
       fullscreenDialog: true,
       builder: (context) => SubmissionsRoute(
-        repository: ApiRepository(
-          basePathOverride: 'http://127.0.0.1:4010',
-        ),
+        repository: ApiRepository(),
       ),
     ),
   );

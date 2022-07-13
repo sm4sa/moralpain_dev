@@ -15,6 +15,27 @@ class SubmissionsFetchFailure implements Exception {
   }
 }
 
+class AnalyticsFetchFailure implements Exception {
+  const AnalyticsFetchFailure([
+    this.message = 'An unknown exception occurred.',
+  ]);
+
+  final String message;
+
+  @override
+  String toString() {
+    return 'AnalyticsFetchFailure($message)';
+  }
+}
+
+class SurveyFetchFailure implements Exception {
+  const SurveyFetchFailure([
+    this.message = 'An unknown exception occurred.',
+  ]);
+
+  final String message;
+}
+
 class ApiRepository {
   final log = Logger('AdminRepository');
 
@@ -46,7 +67,37 @@ class ApiRepository {
       ))
           .data!;
     } catch (err) {
-      throw (SubmissionsFetchFailure(err.toString()));
+      throw SubmissionsFetchFailure(err.toString());
+    }
+  }
+
+  Future<AnalyticsResult> fetchAnalytics({
+    required String operation,
+    int? starttime,
+    int? endtime,
+  }) async {
+    final aapi = mapi.getAdminApi();
+    return AnalyticsResult();
+
+    /*try {
+      return (await aapi.getAnalytics(
+        operation: operation,
+        starttime: starttime,
+        endtime: endtime,
+      ))
+          .value!;
+    } catch (err) {
+      throw AnalyticsFetchFailure(err.toString());
+    }*/
+  }
+
+  Future<Survey> fetchSurvey() async {
+    final uapi = mapi.getUserApi();
+
+    try {
+      return (await uapi.getSurvey()).data!;
+    } catch (err) {
+      throw (SurveyFetchFailure(err.toString()));
     }
   }
 }

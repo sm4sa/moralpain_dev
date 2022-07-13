@@ -7,7 +7,8 @@ import '../submissions.dart';
 class SubmissionsRoute extends StatelessWidget {
   final ApiRepository repository;
 
-  const SubmissionsRoute({Key? key, required this.repository});
+  const SubmissionsRoute({Key? key, required this.repository})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
