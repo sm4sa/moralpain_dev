@@ -39,7 +39,7 @@ class AnalyticsView extends StatelessWidget {
     );
   }
 
-  Widget analyticsFromState(AnalyticsState state) {
+  static Widget analyticsFromState(AnalyticsState state) {
     if (state is AnalyticsInitial) {
       return Text('No analytics yet.');
     } else if (state is AnalyticsInProgress) {
@@ -47,7 +47,6 @@ class AnalyticsView extends StatelessWidget {
     } else if (state is AnalyticsFailure) {
       return Text('Error fetching analytics.');
     } else if (state is AnalyticsSuccess) {
-      print(state.result);
       if (state.result.error != null && !state.result.error!) {
         return Text(messageFromResult(
           operation: state.result.operation!,
@@ -62,7 +61,7 @@ class AnalyticsView extends StatelessWidget {
     }
   }
 
-  String messageFromResult({
+  static String messageFromResult({
     required AnalyticsResultOperationEnum operation,
     required num result,
   }) {

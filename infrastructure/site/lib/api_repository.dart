@@ -76,23 +76,18 @@ class ApiRepository {
     int? starttime,
     int? endtime,
   }) async {
-    String json =
-        '{"operation": "maximum", "result": null, "error": true, "errormsg": "sample error message"}';
-    return standardSerializers.fromJson(AnalyticsResult.serializer, json)!;
-
-    /*
     final aapi = mapi.getAdminApi();
-    
+
     try {
-      return (await aapi.getAnalytics(
+      var response = await aapi.getAnalytics(
         operation: operation,
         starttime: starttime,
         endtime: endtime,
-      ))
-          .value!;
+      );
+      return response.data!;
     } catch (err) {
       throw AnalyticsFetchFailure(err.toString());
-    }*/
+    }
   }
 
   Future<Survey> fetchSurvey() async {
