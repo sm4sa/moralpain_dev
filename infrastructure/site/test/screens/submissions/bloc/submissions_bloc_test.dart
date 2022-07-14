@@ -16,7 +16,12 @@ void main() {
     setUp(() {
       apiRepository = MockApiRepository();
       when(
-        () => apiRepository.fetchSubmissions(),
+        () => apiRepository.fetchSubmissions(
+          starttime: any(named: 'starttime'),
+          endtime: any(named: 'endtime'),
+          minscore: any(named: 'minscore'),
+          maxscore: any(named: 'maxscore'),
+        ),
       ).thenAnswer((_) => Future.value(mockSubmisions));
     });
 
@@ -81,8 +86,12 @@ void main() {
         'emits failure state '
         'when fetchSubmissions fails',
         setUp: () {
-          when(() => apiRepository.fetchSubmissions())
-              .thenThrow(Exception('oops'));
+          when(() => apiRepository.fetchSubmissions(
+                starttime: any(named: 'starttime'),
+                endtime: any(named: 'endtime'),
+                minscore: any(named: 'minscore'),
+                maxscore: any(named: 'maxscore'),
+              )).thenThrow(Exception('oops'));
         },
         build: buildBloc,
         act: (bloc) => bloc.add(buildEvent()),
