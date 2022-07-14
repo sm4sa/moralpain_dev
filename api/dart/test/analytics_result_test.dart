@@ -12,8 +12,18 @@ void main() {
       // TODO
     });
 
-    // num value
-    test('to test the property `value`', () async {
+    // num result
+    test('to test the property `result`', () async {
+      // TODO
+    });
+
+    // bool error
+    test('to test the property `error`', () async {
+      // TODO
+    });
+
+    // String errormsg
+    test('to test the property `errormsg`', () async {
       // TODO
     });
 

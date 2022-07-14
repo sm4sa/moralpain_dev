@@ -14,7 +14,7 @@ class _$VisitedResiliencyResources extends VisitedResiliencyResources {
 
   factory _$VisitedResiliencyResources(
           [void Function(VisitedResiliencyResourcesBuilder)? updates]) =>
-      (new VisitedResiliencyResourcesBuilder()..update(updates)).build();
+      (new VisitedResiliencyResourcesBuilder()..update(updates))._build();
 
   _$VisitedResiliencyResources._({this.selections, this.timestamp}) : super._();
 
@@ -42,7 +42,7 @@ class _$VisitedResiliencyResources extends VisitedResiliencyResources {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('VisitedResiliencyResources')
+    return (newBuiltValueToStringHelper(r'VisitedResiliencyResources')
           ..add('selections', selections)
           ..add('timestamp', timestamp))
         .toString();
@@ -90,7 +90,9 @@ class VisitedResiliencyResourcesBuilder
   }
 
   @override
-  _$VisitedResiliencyResources build() {
+  VisitedResiliencyResources build() => _build();
+
+  _$VisitedResiliencyResources _build() {
     _$VisitedResiliencyResources _$result;
     try {
       _$result = _$v ??
@@ -103,7 +105,7 @@ class VisitedResiliencyResourcesBuilder
         _selections?.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'VisitedResiliencyResources', _$failedField, e.toString());
+            r'VisitedResiliencyResources', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -112,4 +114,4 @@ class VisitedResiliencyResourcesBuilder
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,no_leading_underscores_for_local_identifiers,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new,unnecessary_lambdas

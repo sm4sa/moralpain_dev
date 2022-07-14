@@ -8,6 +8,7 @@ import 'package:built_value/serializer.dart';
 import 'package:dio/dio.dart';
 
 import 'package:moralpainapi/src/api_util.dart';
+import 'package:moralpainapi/src/model/analytics_result.dart';
 import 'package:moralpainapi/src/model/submissions.dart';
 
 class AdminApi {
@@ -32,9 +33,9 @@ class AdminApi {
   /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
   /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
   ///
-  /// Returns a [Future] containing a [Response] with a [Submissions] as data
+  /// Returns a [Future] containing a [Response] with a [AnalyticsResult] as data
   /// Throws [DioError] if API call or serialization fails
-  Future<Response<Submissions>> getAnalytics({ 
+  Future<Response<AnalyticsResult>> getAnalytics({ 
     required String operation,
     int? starttime,
     int? endtime,
@@ -73,14 +74,14 @@ class AdminApi {
       onReceiveProgress: onReceiveProgress,
     );
 
-    Submissions _responseData;
+    AnalyticsResult _responseData;
 
     try {
-      const _responseType = FullType(Submissions);
+      const _responseType = FullType(AnalyticsResult);
       _responseData = _serializers.deserialize(
         _response.data!,
         specifiedType: _responseType,
-      ) as Submissions;
+      ) as AnalyticsResult;
 
     } catch (error, stackTrace) {
       throw DioError(
@@ -91,7 +92,7 @@ class AdminApi {
       )..stackTrace = stackTrace;
     }
 
-    return Response<Submissions>(
+    return Response<AnalyticsResult>(
       data: _responseData,
       headers: _response.headers,
       isRedirect: _response.isRedirect,

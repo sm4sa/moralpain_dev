@@ -103,6 +103,10 @@ Submit a completed Moral Distress Questionnaire and Moral Distress Score to the 
 ### Example
 ```dart
 import 'package:moralpainapi/api.dart';
+// TODO Configure API key authorization: UserPool
+//defaultApiClient.getAuthentication<ApiKeyAuth>('UserPool').apiKey = 'YOUR_API_KEY';
+// uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+//defaultApiClient.getAuthentication<ApiKeyAuth>('UserPool').apiKeyPrefix = 'Bearer';
 
 final api = Moralpainapi().getUserApi();
 final Submission submission = ; // Submission | 
@@ -127,7 +131,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[UserPool](../README.md#UserPool)
 
 ### HTTP request headers
 
@@ -146,6 +150,10 @@ Submit the list of resources visited by this user to the database.
 ### Example
 ```dart
 import 'package:moralpainapi/api.dart';
+// TODO Configure API key authorization: UserPool
+//defaultApiClient.getAuthentication<ApiKeyAuth>('UserPool').apiKey = 'YOUR_API_KEY';
+// uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+//defaultApiClient.getAuthentication<ApiKeyAuth>('UserPool').apiKeyPrefix = 'Bearer';
 
 final api = Moralpainapi().getUserApi();
 final VisitedResiliencyResources visitedResiliencyResources = ; // VisitedResiliencyResources | 
@@ -170,7 +178,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[UserPool](../README.md#UserPool)
 
 ### HTTP request headers
 

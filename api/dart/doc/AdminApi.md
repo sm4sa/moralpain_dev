@@ -14,7 +14,7 @@ Method | HTTP request | Description
 
 
 # **getAnalytics**
-> Submissions getAnalytics(operation, starttime, endtime)
+> AnalyticsResult getAnalytics(operation, starttime, endtime)
 
 Get data analysis
 
@@ -47,7 +47,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**Submissions**](Submissions.md)
+[**AnalyticsResult**](AnalyticsResult.md)
 
 ### Authorization
 

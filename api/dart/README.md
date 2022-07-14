@@ -68,6 +68,7 @@ Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
 [*AdminApi*](doc/AdminApi.md) | [**getAnalytics**](doc/AdminApi.md#getanalytics) | **GET** /admin/analytics | Get data analysis
 [*AdminApi*](doc/AdminApi.md) | [**getSubmissions**](doc/AdminApi.md#getsubmissions) | **GET** /admin/submissions | Get survey results
+[*CORSApi*](doc/CORSApi.md) | [**optionsAdminSubmissions**](doc/CORSApi.md#optionsadminsubmissions) | **OPTIONS** /admin/submissions | CORS admin submissions support
 [*CORSApi*](doc/CORSApi.md) | [**optionsSurvey**](doc/CORSApi.md#optionssurvey) | **OPTIONS** /survey | CORS survey support
 [*CORSApi*](doc/CORSApi.md) | [**optionsVisitedResiliencyResources**](doc/CORSApi.md#optionsvisitedresiliencyresources) | **OPTIONS** /resiliency | CORS resiliency resources support
 [*UserApi*](doc/UserApi.md) | [**getResiliencyResources**](doc/UserApi.md#getresiliencyresources) | **GET** /resiliency | Get resiliency resources
@@ -92,7 +93,12 @@ Class | Method | HTTP request | Description
 
 ## Documentation For Authorization
 
- All endpoints do not require authorization.
+
+## UserPool
+
+- **Type**: API key
+- **API key parameter name**: Authorization
+- **Location**: HTTP header
 
 
 ## Author

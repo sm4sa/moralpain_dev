@@ -48,3 +48,6 @@ app.*.map.json
 # Java
 target
 .aws-sam
+
+# Dart API Client
+*.g.dart

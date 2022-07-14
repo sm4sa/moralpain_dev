@@ -194,7 +194,14 @@ class UserApi {
         ...?headers,
       },
       extra: <String, dynamic>{
-        'secure': <Map<String, String>>[],
+        'secure': <Map<String, String>>[
+          {
+            'type': 'apiKey',
+            'name': 'UserPool',
+            'keyName': 'Authorization',
+            'where': 'header',
+          },
+        ],
         ...?extra,
       },
       contentType: 'application/json',
@@ -283,7 +290,14 @@ class UserApi {
         ...?headers,
       },
       extra: <String, dynamic>{
-        'secure': <Map<String, String>>[],
+        'secure': <Map<String, String>>[
+          {
+            'type': 'apiKey',
+            'name': 'UserPool',
+            'keyName': 'Authorization',
+            'where': 'header',
+          },
+        ],
         ...?extra,
       },
       contentType: 'application/json',

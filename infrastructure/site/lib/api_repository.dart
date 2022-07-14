@@ -77,18 +77,17 @@ class ApiRepository {
     int? endtime,
   }) async {
     final aapi = mapi.getAdminApi();
-    return AnalyticsResult();
 
-    /*try {
-      return (await aapi.getAnalytics(
+    try {
+      var response = await aapi.getAnalytics(
         operation: operation,
         starttime: starttime,
         endtime: endtime,
-      ))
-          .value!;
+      );
+      return response.data!;
     } catch (err) {
       throw AnalyticsFetchFailure(err.toString());
-    }*/
+    }
   }
 
   Future<Survey> fetchSurvey() async {

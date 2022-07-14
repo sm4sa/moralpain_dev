@@ -15,7 +15,7 @@ class _$Icon extends Icon {
   final String? fontPackage;
 
   factory _$Icon([void Function(IconBuilder)? updates]) =>
-      (new IconBuilder()..update(updates)).build();
+      (new IconBuilder()..update(updates))._build();
 
   _$Icon._({this.codePoint, this.fontFamily, this.fontPackage}) : super._();
 
@@ -43,7 +43,7 @@ class _$Icon extends Icon {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('Icon')
+    return (newBuiltValueToStringHelper(r'Icon')
           ..add('codePoint', codePoint)
           ..add('fontFamily', fontFamily)
           ..add('fontPackage', fontPackage))
@@ -93,7 +93,9 @@ class IconBuilder implements Builder<Icon, IconBuilder> {
   }
 
   @override
-  _$Icon build() {
+  Icon build() => _build();
+
+  _$Icon _build() {
     final _$result = _$v ??
         new _$Icon._(
             codePoint: codePoint,
@@ -104,4 +106,4 @@ class IconBuilder implements Builder<Icon, IconBuilder> {
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,no_leading_underscores_for_local_identifiers,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new,unnecessary_lambdas

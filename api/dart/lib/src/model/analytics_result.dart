@@ -12,14 +12,22 @@ part 'analytics_result.g.dart';
 ///
 /// Properties:
 /// * [operation] 
-/// * [value] 
+/// * [result] 
+/// * [error] 
+/// * [errormsg] 
 abstract class AnalyticsResult implements Built<AnalyticsResult, AnalyticsResultBuilder> {
     @BuiltValueField(wireName: r'operation')
     AnalyticsResultOperationEnum? get operation;
     // enum operationEnum {  average,  count,  maximum,  minimum,  };
 
-    @BuiltValueField(wireName: r'value')
-    num? get value;
+    @BuiltValueField(wireName: r'result')
+    num? get result;
+
+    @BuiltValueField(wireName: r'error')
+    bool? get error;
+
+    @BuiltValueField(wireName: r'errormsg')
+    String? get errormsg;
 
     AnalyticsResult._();
 
@@ -49,11 +57,23 @@ class _$AnalyticsResultSerializer implements StructuredSerializer<AnalyticsResul
                 ..add(serializers.serialize(object.operation,
                     specifiedType: const FullType(AnalyticsResultOperationEnum)));
         }
-        if (object.value != null) {
+        if (object.result != null) {
             result
-                ..add(r'value')
-                ..add(serializers.serialize(object.value,
+                ..add(r'result')
+                ..add(serializers.serialize(object.result,
                     specifiedType: const FullType(num)));
+        }
+        if (object.error != null) {
+            result
+                ..add(r'error')
+                ..add(serializers.serialize(object.error,
+                    specifiedType: const FullType(bool)));
+        }
+        if (object.errormsg != null) {
+            result
+                ..add(r'errormsg')
+                ..add(serializers.serialize(object.errormsg,
+                    specifiedType: const FullType(String)));
         }
         return result;
     }
@@ -75,10 +95,20 @@ class _$AnalyticsResultSerializer implements StructuredSerializer<AnalyticsResul
                         specifiedType: const FullType(AnalyticsResultOperationEnum)) as AnalyticsResultOperationEnum;
                     result.operation = valueDes;
                     break;
-                case r'value':
+                case r'result':
                     final valueDes = serializers.deserialize(value,
                         specifiedType: const FullType(num)) as num;
-                    result.value = valueDes;
+                    result.result = valueDes;
+                    break;
+                case r'error':
+                    final valueDes = serializers.deserialize(value,
+                        specifiedType: const FullType(bool)) as bool;
+                    result.error = valueDes;
+                    break;
+                case r'errormsg':
+                    final valueDes = serializers.deserialize(value,
+                        specifiedType: const FullType(String)) as String;
+                    result.errormsg = valueDes;
                     break;
             }
         }
