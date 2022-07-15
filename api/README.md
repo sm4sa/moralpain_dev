@@ -46,12 +46,18 @@ To run OpenAPI Generator for the Java client, switch to the `java` directory. If
 
 ```bash
 rm -rf *
-java -jar /path/to/openapi-generator-cli.jar generate -i ../../infrastructure/sam/api.yaml --generate-alias-as-model --additional-properties pubName=moralpainapi -g java
+java -jar path/to/openapi-generator-cli.jar generate \
+  --input-spec ../../infrastructure/sam/api.yaml \
+  --additional-properties library=apache-httpclient,groupId=edu.uva.cs,artifactId=moraldistressapi \
+  --generator-name java
 ```
 
 If you used any other method to install the CLI, use the following commands:
 
 ```bash
 rm -rf *
-openapi-generator-cli generate -i ../../infrastructure/sam/api.yaml --generate-alias-as-model --additional-properties pubName=moralpainapi -g java
+openapi-generator-cli generate \
+  --input-spec ../../infrastructure/sam/api.yaml \
+  --additional-properties library=apache-httpclient,groupId=edu.uva.cs,artifactId=moraldistressapi \
+  --generator-name java
 ```
