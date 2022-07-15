@@ -1,0 +1,30 @@
+name: Publish web app to S3.
+
+on:
+  push:
+    branches:
+        - main
+
+jobs:
+  docs:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    name: Upload to S3
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/github-oidc-provider-${{ github.repository_owner }}-moralpain_dev
+          aws-region: us-east-1
+      - name: Build web application
+        run: |
+          cd ${GITHUB_WORKSPACE}/infrastructure/site
+          flutter build web
+      - name: Copy files to the test website with the AWS CLI
+        run: |
+          cd ${GITHUB_WORKSPACE}/infrastructure/site
+          aws s3 cp web/* s3://moralpain-site/
