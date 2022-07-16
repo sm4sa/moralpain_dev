@@ -20,6 +20,8 @@ jobs:
         with:
           role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/github-oidc-provider-${{ github.repository_owner }}-moralpain_dev
           aws-region: us-east-1
+      - name: Install Flutter
+        run: sudo snap install flutter --classic
       - name: Build web application
         run: |
           cd ${GITHUB_WORKSPACE}/infrastructure/site
