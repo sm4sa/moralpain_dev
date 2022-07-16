@@ -29,4 +29,4 @@ jobs:
       - name: Copy files to the test website with the AWS CLI
         run: |
           cd ${GITHUB_WORKSPACE}/infrastructure/site
-          aws s3 cp web/* s3://moralpain-site/admin
+          aws s3 cp web s3://moralpain-site/admin
