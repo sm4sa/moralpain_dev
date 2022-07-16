@@ -5,6 +5,13 @@
         "Action": [
             "s3:Put*"
         ],
+        "Resource": "arn:aws:s3:::moralpain-site/admin/*"
+    },
+    {
+        "Effect": "Allow",
+        "Action": [
+            "s3:Put*"
+        ],
         "Resource": "arn:aws:s3:::moralpain-site/docs/*"
     }]
 }
