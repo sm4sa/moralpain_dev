@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:admin/api_repository.dart';
+import 'package:admin/screens/filter_submissions/filter_submissions.dart';
 import 'package:admin/screens/submissions/submissions.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +11,6 @@ import 'package:moralpainapi/moralpainapi.dart';
 
 void main() {
   group('SubmissionsView', () {
-    final String title = 'Survey Submissions';
     final String errorMsg = 'Error fetching submissions';
 
     late ApiRepository repository;
@@ -23,21 +23,60 @@ void main() {
 
     Future<void> pumpApp(WidgetTester tester) async {
       await tester.pumpWidget(MaterialApp(
-        home: RepositoryProvider.value(
-          value: repository,
-          child: BlocProvider(
-            create: (_) => bloc,
-            child: SubmissionsView(),
+        home: Scaffold(
+          body: RepositoryProvider.value(
+            value: repository,
+            child: BlocProvider(
+              create: (_) => bloc,
+              child: SubmissionsView(),
+            ),
           ),
         ),
       ));
     }
 
     group('renders', () {
-      testWidgets('AppBar with correct title text', (tester) async {
+      testWidgets('FilterSubmissionsView', (tester) async {
         await pumpApp(tester);
-        expect(find.byType(AppBar), findsOneWidget);
-        expect(find.text(title), findsOneWidget);
+        expect(find.byType(FilterSubmissionsView), findsOneWidget);
+      });
+
+      testWidgets('submissionsFromState()', (tester) async {
+        await pumpApp(tester);
+        // There should always be a Center widget, no matter what.
+        expect(find.byType(Center), findsOneWidget);
+
+        /* 
+        There should be exactly one of the following:
+          * a CircularProgressIndicator (if status is SubmissionsInitial or 
+              SubmissionsLoading)
+          * a Scrollbar (if status is SubmissionsLoaded)
+          * a Text (if status is SubmissionsLoadFailure)
+        */
+        Finder findProgressIndicators = find.descendant(
+          of: find.byType(Center),
+          matching: find.byType(CircularProgressIndicator),
+        );
+        Finder findScrollbars = find.descendant(
+          of: find.byType(Center),
+          matching: find.byType(Scrollbar),
+        );
+        Finder findTexts = find.descendant(
+          of: find.byType(Center),
+          matching: find.byType(Text),
+        );
+
+        int numProgressIndicators = findProgressIndicators.evaluate().length;
+        int numScrollbars = findScrollbars.evaluate().length;
+        int numTexts = findTexts.evaluate().length;
+
+        bool isInitialOrLoading =
+            numProgressIndicators == 1 && numScrollbars == 0 && numTexts == 0;
+        bool isLoaded = numProgressIndicators == 0 && numScrollbars == 1;
+        bool isLoadFailure =
+            numProgressIndicators == 0 && numScrollbars == 0 && numTexts == 1;
+
+        expect(isInitialOrLoading || isLoaded || isLoadFailure, isTrue);
       });
     });
 
@@ -153,7 +192,7 @@ void main() {
           ));
 
           // Verify that the message is a scrollbar
-          expect(find.byType(CupertinoScrollbar), findsOneWidget);
+          expect(find.byType(Scrollbar), findsOneWidget);
 
           // Verify that the scrollbar contains a ListView
           expect(find.byType(ListView), findsOneWidget);
