@@ -1,5 +1,5 @@
 import 'package:admin/screens/filter_submissions/filter_submissions.dart';
-import 'package:admin/screens/submissions/bloc/submissions_bloc.dart';
+import 'package:admin/screens/submissions/submissions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
