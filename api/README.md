@@ -16,47 +16,21 @@ Essentially, the `dart` and `java` directories each contain a separate, auto-gen
 
 If you modify the OpenAPI template, you will likely need to update the API client files to match the new specifications. To do this, you must run OpenAPI Generator for both the Dart client and the Java client.
 
-### Installing the OpenAPI Generator CLI
-
-Please refer to [the instructions on the OpenAPI Generator Website](https://openapi-generator.tech/docs/installation) for instructions on how to install the OpenAPI Generator CLI.
-
 ### Updating the Dart client
 
-To run OpenAPI Generator for the Dart client, switch to the `dart` directory. If you installed the OpenAPI Generator CLI as a `.jar` file, use the following commands:
+To run OpenAPI Generator for the Dart client, switch to the `dart` directory and use the following commands:
 
 ```bash
-rm -rf *
-java -jar /path/to/openapi-generator-cli.jar generate -i ../../infrastructure/sam/api.yaml --generate-alias-as-model --additional-properties pubName=moralpainapi -g dart-dio
-flutter pub get
-flutter pub run build_runner build
-```
-
-If you used any other method to install the CLI, use the following commands:
-
-```bash
-rm -rf *
-openapi-generator-cli generate -i ../../infrastructure/sam/api.yaml --generate-alias-as-model --additional-properties pubName=moralpainapi -g dart-dio
-flutter pub get
+java -jar ../../openapi-generator-cli.jar generate -i ../../infrastructure/sam/api.yaml --generate-alias-as-model --additional-properties pubName=moralpainapi -g dart-dio
 flutter pub run build_runner build
 ```
 
 ### Updating the Java client
 
-To run OpenAPI Generator for the Java client, switch to the `java` directory. If you installed the OpenAPI Generator CLI as a `.jar` file, use the following commands:
+To run OpenAPI Generator for the Java client, switch to the `java` directory and use the following commands:
 
 ```bash
-rm -rf *
-java -jar path/to/openapi-generator-cli.jar generate \
-  --input-spec ../../infrastructure/sam/api.yaml \
-  --additional-properties library=apache-httpclient,groupId=edu.uva.cs,artifactId=moraldistressapi \
-  --generator-name java
-```
-
-If you used any other method to install the CLI, use the following commands:
-
-```bash
-rm -rf *
-openapi-generator-cli generate \
+java -jar ../../openapi-generator-cli.jar generate \
   --input-spec ../../infrastructure/sam/api.yaml \
   --additional-properties library=apache-httpclient,groupId=edu.uva.cs,artifactId=moraldistressapi \
   --generator-name java
