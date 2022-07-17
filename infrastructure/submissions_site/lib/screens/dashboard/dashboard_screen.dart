@@ -25,17 +25,7 @@ class DashboardScreen extends StatelessWidget {
                   child: Column(
                     children: [
                       SizedBox(height: defaultPadding),
-                      BlocBuilder<SideMenuCubit, DashboardView>(
-                        builder: (context, state) {
-                          ApiRepository repository = ApiRepository();
-                          switch (state) {
-                            case DashboardView.SUBMISSIONS:
-                              return SubmissionsRoute(repository: repository);
-                            case DashboardView.ANALYTICS:
-                              return AnalyticsRoute(repository: repository);
-                          }
-                        },
-                      ),
+                      SubmissionsRoute(repository: ApiRepository()),
                     ],
                   ),
                 ),
