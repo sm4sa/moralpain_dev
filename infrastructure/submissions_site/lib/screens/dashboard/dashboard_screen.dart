@@ -1,11 +1,8 @@
 import 'package:submissions_site/api_repository.dart';
-import 'package:submissions_site/screens/analytics0/analytics.dart';
-import 'package:submissions_site/screens/side_menu/side_menu.dart';
 import 'package:submissions_site/screens/submissions/view/view.dart';
 import 'package:submissions_site/constants.dart';
 import 'package:submissions_site/screens/dashboard/components/header.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class DashboardScreen extends StatelessWidget {
   @override

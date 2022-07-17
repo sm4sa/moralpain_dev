@@ -22,19 +22,7 @@ class SideMenu extends StatelessWidget {
             key: const Key('sideMenu_viewSubmissions_drawerListTile'),
             title: "View Submissions",
             svgSrc: "assets/icons/menu_dashbord.svg",
-            press: () {
-              BlocProvider.of<SideMenuCubit>(context)
-                  .setView(DashboardView.SUBMISSIONS);
-            },
-          ),
-          DrawerListTile(
-            key: const Key('sideMenu_analyze_drawerListTile'),
-            title: "Analyze",
-            svgSrc: "assets/icons/menu_profile.svg",
-            press: () {
-              BlocProvider.of<SideMenuCubit>(context)
-                  .setView(DashboardView.ANALYTICS);
-            },
+            press: () {},
           ),
         ],
       ),
