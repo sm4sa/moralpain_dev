@@ -15,17 +15,14 @@ void main() {
 
     Future<void> pumpApp(WidgetTester tester) async {
       await tester.pumpWidget(MaterialApp(
-        home: SubmissionsRoute(repository: repository),
+        home: Scaffold(
+          body: SubmissionsRoute(repository: repository),
+        ),
       ));
       await tester.pumpAndSettle();
     }
 
     group('renders', () {
-      testWidgets('BlocProvider', (tester) async {
-        await pumpApp(tester);
-        expect(find.byType(BlocProviderSubmissionsBloc), findsOneWidget);
-      });
-
       testWidgets('SubmissionsView', (tester) async {
         await pumpApp(tester);
         expect(find.byType(SubmissionsView), findsOneWidget);

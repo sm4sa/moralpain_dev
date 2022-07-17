@@ -183,5 +183,41 @@ void main() {
         },
       );
     });
+
+    group('messageFromResult', () {
+      const num result = 3;
+
+      test('returns correct message for average operation', () {
+        expect(
+          AnalyticsView.messageFromResult(
+              operation: AnalyticsResultOperationEnum.average, result: result),
+          equals('The average score is $result.'),
+        );
+      });
+
+      test('returns correct message for count operation', () {
+        expect(
+          AnalyticsView.messageFromResult(
+              operation: AnalyticsResultOperationEnum.count, result: result),
+          equals('The number of submissions is $result.'),
+        );
+      });
+
+      test('returns correct message for maximum operation', () {
+        expect(
+          AnalyticsView.messageFromResult(
+              operation: AnalyticsResultOperationEnum.maximum, result: result),
+          equals('The maximum score is $result.'),
+        );
+      });
+
+      test('returns correct message for minimum operation', () {
+        expect(
+          AnalyticsView.messageFromResult(
+              operation: AnalyticsResultOperationEnum.minimum, result: result),
+          equals('The minimum score is $result.'),
+        );
+      });
+    });
   });
 }
