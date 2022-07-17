@@ -1,6 +1,5 @@
 import 'package:analytics_site/api_repository.dart';
 import 'package:analytics_site/models/RecentReport.dart';
-import 'package:analytics_site/screens/submissions/submissions.dart';
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -85,12 +84,5 @@ DataRow recentReportDataRow(BuildContext context, RecentReport fileInfo) {
 }
 
 void _onRecentReportDataRowTapped(BuildContext context, RecentReport fileInfo) {
-  Navigator.of(context).push(
-    MaterialPageRoute(
-      fullscreenDialog: true,
-      builder: (context) => SubmissionsRoute(
-        repository: ApiRepository(),
-      ),
-    ),
-  );
+  // do nothing
 }

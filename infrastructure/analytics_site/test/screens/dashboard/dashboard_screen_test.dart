@@ -1,11 +1,8 @@
 import 'package:analytics_site/controllers/MenuController.dart';
 import 'package:analytics_site/screens/analytics0/analytics.dart';
 import 'package:analytics_site/screens/dashboard/components/header.dart';
-import 'package:analytics_site/screens/side_menu/side_menu.dart';
-import 'package:analytics_site/screens/submissions/submissions.dart';
 import 'package:analytics_site/screens/dashboard/dashboard_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
 
@@ -17,42 +14,26 @@ void main() {
         expect(find.byType(Header), findsOneWidget);
       });
 
-      testWidgets('SubmissionsRoute', (tester) async {
+      testWidgets('AnalyticsRoute', (tester) async {
         await buildApp(tester);
-        expect(find.byType(SubmissionsRoute), findsOneWidget);
+        expect(find.byType(AnalyticsRoute), findsOneWidget);
       });
 
-      testWidgets('SubmissionsView', (tester) async {
+      testWidgets('AnalyticsView', (tester) async {
         await buildApp(tester);
-        expect(find.byType(SubmissionsView), findsOneWidget);
-        expect(find.byType(AnalyticsView), findsNothing);
+        expect(find.byType(AnalyticsView), findsOneWidget);
       });
-
-      testWidgets(
-        'AnalyticsView if SideMenu state is ANALYTICS',
-        (tester) async {
-          await buildApp(
-            tester,
-            SideMenuCubit()..setView(DashboardView.ANALYTICS),
-          );
-          expect(find.byType(AnalyticsView), findsOneWidget);
-          expect(find.byType(SubmissionsView), findsNothing);
-        },
-      );
     });
   });
 }
 
-Future<void> buildApp(WidgetTester tester, [SideMenuCubit? cubit]) async {
+Future<void> buildApp(WidgetTester tester) async {
   await tester.pumpWidget(
     MaterialApp(
       home: MultiProvider(
         providers: [
           ChangeNotifierProvider(
             create: (_) => MenuController(),
-          ),
-          BlocProvider<SideMenuCubit>(
-            create: (_) => cubit ?? SideMenuCubit(),
           ),
         ],
         child: Scaffold(

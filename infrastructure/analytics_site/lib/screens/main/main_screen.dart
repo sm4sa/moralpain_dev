@@ -23,26 +23,23 @@ class MainScreen extends StatelessWidget {
     return Scaffold(
       key: context.read<MenuController>().scaffoldKey,
       drawer: SideMenu(),
-      body: BlocProvider<SideMenuCubit>(
-        create: (_) => SideMenuCubit(),
-        child: SafeArea(
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // We want this side menu only for large screen
-              if (Responsive.isDesktop(context))
-                Expanded(
-                  // default flex = 1
-                  // and it takes 1/6 part of the screen
-                  child: SideMenu(),
-                ),
+      body: SafeArea(
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // We want this side menu only for large screen
+            if (Responsive.isDesktop(context))
               Expanded(
-                // It takes 5/6 part of the screen
-                flex: 5,
-                child: DashboardScreen(),
+                // default flex = 1
+                // and it takes 1/6 part of the screen
+                child: SideMenu(),
               ),
-            ],
-          ),
+            Expanded(
+              // It takes 5/6 part of the screen
+              flex: 5,
+              child: DashboardScreen(),
+            ),
+          ],
         ),
       ),
     );
