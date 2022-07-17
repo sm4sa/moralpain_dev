@@ -173,7 +173,7 @@ void main() {
         (tester) async {
           // Generate Submissions object and verify that it is correct
           File file = File(
-            '/workspaces/moralpain_dev/infrastructure/site/test/screens/submissions/view/submissions_example.json',
+            '/workspaces/moralpain_dev/infrastructure/submissions_site/test/screens/submissions/view/submissions_example.json',
           );
           String json = file.readAsStringSync();
           Submissions? submissions = standardSerializers.fromJson(

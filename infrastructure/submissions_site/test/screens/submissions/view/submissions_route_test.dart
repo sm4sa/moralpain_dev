@@ -11,7 +11,11 @@ class MockApiRepository extends Mock implements ApiRepository {}
 
 void main() {
   group('SubmissionsRoute', () {
-    final ApiRepository repository = MockApiRepository();
+    late ApiRepository repository;
+
+    setUp(() {
+      repository = MockApiRepository();
+    });
 
     Future<void> pumpApp(WidgetTester tester) async {
       await tester.pumpWidget(MaterialApp(
