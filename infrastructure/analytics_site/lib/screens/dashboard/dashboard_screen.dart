@@ -1,11 +1,8 @@
 import 'package:analytics_site/api_repository.dart';
 import 'package:analytics_site/screens/analytics0/analytics.dart';
-import 'package:analytics_site/screens/side_menu/side_menu.dart';
-import 'package:analytics_site/screens/submissions/view/view.dart';
 import 'package:analytics_site/constants.dart';
 import 'package:analytics_site/screens/dashboard/components/header.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class DashboardScreen extends StatelessWidget {
   @override
@@ -25,17 +22,7 @@ class DashboardScreen extends StatelessWidget {
                   child: Column(
                     children: [
                       SizedBox(height: defaultPadding),
-                      BlocBuilder<SideMenuCubit, DashboardView>(
-                        builder: (context, state) {
-                          ApiRepository repository = ApiRepository();
-                          switch (state) {
-                            case DashboardView.SUBMISSIONS:
-                              return SubmissionsRoute(repository: repository);
-                            case DashboardView.ANALYTICS:
-                              return AnalyticsRoute(repository: repository);
-                          }
-                        },
-                      ),
+                      AnalyticsRoute(repository: ApiRepository())
                     ],
                   ),
                 ),
