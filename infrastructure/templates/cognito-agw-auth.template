@@ -31,12 +31,32 @@ Resources:
           Mutable: false
           Required: true
 
+  UserPoolDomain: 
+    Type: AWS::Cognito::UserPoolDomain 
+    Properties:
+      UserPoolId: !Ref UserPool 
+      Domain: !Sub ${Name}-user-pool-domain
+
   UserPoolClient:
     Type: "AWS::Cognito::UserPoolClient"
     Properties:
       ClientName: !Sub ${Name}-client
+      CallbackURLs:
+        - 'myapp://'
+      LogoutURLs:
+        - 'myapp://'
+      AllowedOAuthFlows:
+        - code
+      AllowedOAuthScopes:
+        - aws.cognito.signin.user.admin
+        - email
+        - openid
+        - phone
+        - profile
       GenerateSecret: false
       UserPoolId: !Ref UserPool
+      SupportedIdentityProviders:
+        - COGNITO
 
   ResourceServer:
     Type: AWS::Cognito::UserPoolResourceServer
