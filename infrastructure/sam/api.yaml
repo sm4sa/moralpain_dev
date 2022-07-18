@@ -59,8 +59,6 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/submission'
-      security:
-        - UserPool: []
       responses:
         '200':
           description: |-
@@ -181,8 +179,6 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/visitedResiliencyResources'
-      security:
-        - UserPool: []
       responses:
         '200':
           description: |-
@@ -488,17 +484,6 @@ paths:
                 {}
 
 components:
-  securitySchemes:
-    UserPool: 
-      type: apiKey
-      name: Authorization
-      in: header
-      x-amazon-apigateway-authtype: cognito_user_pools
-      x-amazon-apigateway-authorizer: 
-        type: cognito_user_pools
-        # TODO (nphair): Find a better way than hardcoding ids.
-        providerARNs: 
-          - "arn:aws:cognito-idp:${AWS::Region}:${AWS::AccountId}:userpool/${AWS::Region}_pqNwySoyF"
   schemas:
     survey:
       type: object
