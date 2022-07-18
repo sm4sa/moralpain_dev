@@ -24,9 +24,13 @@ jobs:
         run: sudo snap install flutter --classic
       - name: Build web application
         run: |
-          cd ${GITHUB_WORKSPACE}/infrastructure/site
+          cd ${GITHUB_WORKSPACE}/infrastructure/analytics_site
+          flutter build web
+          cd ${GITHUB_WORKSPACE}/infrastructure/submissions_site
           flutter build web
       - name: Copy files to the test website with the AWS CLI
         run: |
-          cd ${GITHUB_WORKSPACE}/infrastructure/site
-          aws s3 cp web s3://moralpain-site/admin --recursive
+          cd ${GITHUB_WORKSPACE}/infrastructure/analytics_site
+          aws s3 cp web s3://moralpain-site/admin_analytics --recursive
+          cd ${GITHUB_WORKSPACE}/infrastructure/submissions_site
+          aws s3 cp web s3://moralpain-site/admin_submissions --recursive
