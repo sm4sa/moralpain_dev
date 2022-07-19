@@ -173,7 +173,7 @@ void main() {
         (tester) async {
           // Generate Submissions object and verify that it is correct
           File file = File(
-            '/workspaces/moralpain_dev/infrastructure/submissions_site/test/screens/submissions/view/submissions_example.json',
+            '/workspaces/moralpain_dev/infrastructure/submissions_site/test/submissions/view/submissions_example.json',
           );
           String json = file.readAsStringSync();
           Submissions? submissions = standardSerializers.fromJson(
@@ -192,7 +192,7 @@ void main() {
           ));
 
           // Verify that the message is a scrollbar
-          expect(find.byType(Scrollbar), findsOneWidget);
+          expect(find.byType(SingleChildScrollView), findsOneWidget);
 
           // Verify that the scrollbar contains a ListView
           expect(find.byType(ListView), findsOneWidget);
