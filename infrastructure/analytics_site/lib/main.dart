@@ -1,5 +1,6 @@
+import 'package:analytics_site/api_repository.dart';
 import 'package:analytics_site/constants.dart';
-import 'package:analytics_site/screens/login/login.dart';
+import 'package:analytics_site/screens/analytics0/view/view.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -20,7 +21,9 @@ class MyApp extends StatelessWidget {
             .apply(bodyColor: Colors.white),
         canvasColor: secondaryColor,
       ),
-      home: LoginPage(),
+      home: Scaffold(
+        body: AnalyticsRoute(repository: ApiRepository()),
+      ),
     );
   }
 }

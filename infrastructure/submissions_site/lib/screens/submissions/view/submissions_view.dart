@@ -63,7 +63,7 @@ class SubmissionsView extends StatelessWidget {
     if (list.isEmpty) {
       return Text('List of submissions is empty.');
     }
-    return Scrollbar(
+    return SingleChildScrollView(
       child: ListView(
         children: [
           for (final submission in submissions.list!)
