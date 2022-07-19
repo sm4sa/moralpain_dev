@@ -1,9 +1,8 @@
-import 'package:submissions_site/api_repository.dart';
-import 'package:submissions_site/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
-import 'screens/submissions/submissions.dart';
+import 'package:submissions_site/api_repository.dart';
+import 'package:submissions_site/constants.dart';
+import 'package:submissions_site/submissions/submissions.dart';
 
 void main() {
   runApp(MyApp());

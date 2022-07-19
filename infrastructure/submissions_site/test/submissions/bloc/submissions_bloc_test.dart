@@ -1,5 +1,5 @@
 import 'package:submissions_site/api_repository.dart';
-import 'package:submissions_site/screens/submissions/submissions.dart';
+import 'package:submissions_site/submissions/submissions.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';

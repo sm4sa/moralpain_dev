@@ -1,4 +1,4 @@
-import 'package:submissions_site/screens/submissions/submissions.dart';
+import 'package:submissions_site/submissions/submissions.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:moralpainapi/moralpainapi.dart';
 

@@ -1,8 +1,8 @@
-import 'package:submissions_site/screens/filter_submissions/filter_submissions.dart';
+import 'package:submissions_site/filter_submissions/filter_submissions.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:submissions_site/screens/submissions/submissions.dart';
+import 'package:submissions_site/submissions/submissions.dart';
 import 'package:moralpainapi/moralpainapi.dart';
 
 class SubmissionsView extends StatelessWidget {

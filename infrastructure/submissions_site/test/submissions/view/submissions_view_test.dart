@@ -1,8 +1,8 @@
 import 'dart:io';
 
 import 'package:submissions_site/api_repository.dart';
-import 'package:submissions_site/screens/filter_submissions/filter_submissions.dart';
-import 'package:submissions_site/screens/submissions/submissions.dart';
+import 'package:submissions_site/filter_submissions/filter_submissions.dart';
+import 'package:submissions_site/submissions/submissions.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

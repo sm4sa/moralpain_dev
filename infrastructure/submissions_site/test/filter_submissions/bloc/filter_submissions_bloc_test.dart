@@ -1,4 +1,4 @@
-import 'package:submissions_site/screens/filter_submissions/filter_submissions.dart';
+import 'package:submissions_site/filter_submissions/filter_submissions.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 
