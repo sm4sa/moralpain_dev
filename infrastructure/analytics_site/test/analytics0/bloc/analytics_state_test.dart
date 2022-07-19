@@ -1,4 +1,4 @@
-import 'package:analytics_site/screens/analytics0/analytics.dart';
+import 'package:analytics_site/analytics0/analytics.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:moralpainapi/moralpainapi.dart';
 

@@ -1,5 +1,5 @@
 import 'package:analytics_site/api_repository.dart';
-import 'package:analytics_site/screens/analytics0/bloc/analytics_bloc.dart';
+import 'package:analytics_site/analytics0/analytics.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';

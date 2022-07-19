@@ -1,6 +1,5 @@
 import 'package:analytics_site/api_repository.dart';
-import 'package:analytics_site/screens/analytics0/bloc/analytics_bloc.dart';
-import 'package:analytics_site/screens/analytics0/view/analytics_view.dart';
+import 'package:analytics_site/analytics0/analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
