@@ -1,5 +1,5 @@
 import 'package:analytics_site/api_repository.dart';
-import 'package:analytics_site/screens/analytics0/analytics.dart';
+import 'package:analytics_site/analytics0/analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:moralpainapi/moralpainapi.dart';
