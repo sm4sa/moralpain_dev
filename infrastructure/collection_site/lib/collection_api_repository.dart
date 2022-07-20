@@ -39,7 +39,6 @@ abstract class CollectionApiRepository<T> {
     required this.paramDefs,
     String? basePathOverride,
   }) {
-    print(basePathOverride);
     mapi = Moralpainapi(
         basePathOverride: basePathOverride ??
             'https://umd7orqgt1.execute-api.us-east-1.amazonaws.com/v1');
