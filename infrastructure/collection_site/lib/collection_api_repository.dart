@@ -37,10 +37,12 @@ abstract class CollectionApiRepository<T> {
 
   CollectionApiRepository({
     required this.paramDefs,
-    String? basePathOverride =
-        'https://umd7orqgt1.execute-api.us-east-1.amazonaws.com/v1',
+    String? basePathOverride,
   }) {
-    mapi = Moralpainapi(basePathOverride: basePathOverride);
+    print(basePathOverride);
+    mapi = Moralpainapi(
+        basePathOverride: basePathOverride ??
+            'https://umd7orqgt1.execute-api.us-east-1.amazonaws.com/v1');
     mapi.dio.options.connectTimeout = 30 * 1000;
     mapi.dio.options.receiveTimeout = 30 * 1000;
     mapi.dio.options.sendTimeout = 30 * 1000;
