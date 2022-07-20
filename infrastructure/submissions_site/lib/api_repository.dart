@@ -16,8 +16,6 @@ class SubmissionsFetchFailure implements Exception {
 }
 
 class ApiRepository extends CollectionApiRepository<Submission> {
-  late Moralpainapi mapi;
-
   ApiRepository({String? basePathOverride})
       : super(paramDefs: {
           'starttime': int,
