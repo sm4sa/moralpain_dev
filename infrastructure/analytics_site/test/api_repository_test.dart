@@ -20,10 +20,10 @@ void main() {
     late Moralpainapi mapi;
     late AdminApi aapi;
 
-    Submissions returnSubmissions = Submissions();
-    Future<Response<Submissions>> returnResponse = Future.value(
-      Response<Submissions>(
-        data: returnSubmissions,
+    AnalyticsResult returnResult = AnalyticsResult();
+    Future<Response<AnalyticsResult>> returnResponse = Future.value(
+      Response<AnalyticsResult>(
+        data: returnResult,
         requestOptions: RequestOptions(path: ''),
       ),
     );
@@ -40,64 +40,57 @@ void main() {
 
       apiRepository.setApi(mapi);
       when(() => mapi.getAdminApi()).thenReturn(aapi);
-      when(() => aapi.getSubmissions(
+      when(() => aapi.getAnalytics(
+            operation: any(named: 'operation'),
             starttime: any(named: 'starttime'),
             endtime: any(named: 'endtime'),
-            minscore: any(named: 'minscore'),
-            maxscore: any(named: 'maxscore'),
           )).thenAnswer((_) => returnResponse);
     });
 
-    group('fetchSubmissions', () {
+    group('fetchAnalytics', () {
+      String operation = 'minimum';
       int? starttime = 1640995200;
       int? endtime = 1647907200;
-      int? minscore = 0;
-      int? maxscore = 10;
 
-      test('calls getSubmissions with correct parameters', () async {
+      test('calls getAnalytics with correct parameters', () async {
         try {
-          await apiRepository.fetchSubmissions(
+          await apiRepository.fetchAnalytics(
+            operation: operation,
             starttime: starttime,
             endtime: endtime,
-            minscore: minscore,
-            maxscore: maxscore,
           );
         } catch (_) {}
-        verify(() => aapi.getSubmissions(
+        verify(() => aapi.getAnalytics(
+              operation: operation,
               starttime: starttime,
               endtime: endtime,
-              minscore: minscore,
-              maxscore: maxscore,
             )).called(1);
       });
 
-      test('throws when getSubmissions fails', () async {
-        when(() => aapi.getSubmissions(
+      test('throws when getAnalytics fails', () async {
+        when(() => aapi.getAnalytics(
+              operation: any(named: 'operation'),
               starttime: any(named: 'starttime'),
               endtime: any(named: 'endtime'),
-              minscore: any(named: 'minscore'),
-              maxscore: any(named: 'maxscore'),
             )).thenThrow(Exception('oops'));
         expect(
-          () async => await apiRepository.fetchSubmissions(
+          () async => await apiRepository.fetchAnalytics(
+            operation: operation,
             starttime: starttime,
             endtime: endtime,
-            minscore: minscore,
-            maxscore: maxscore,
           ),
-          throwsA(isA<SubmissionsFetchFailure>()),
+          throwsA(isA<AnalyticsFetchFailure>()),
         );
       });
 
-      test('returns correct Submissions list on success', () async {
+      test('returns correct AnalyticsResult on success', () async {
         expect(
-          await apiRepository.fetchSubmissions(
+          await apiRepository.fetchAnalytics(
+            operation: operation,
             starttime: starttime,
             endtime: endtime,
-            minscore: minscore,
-            maxscore: maxscore,
           ),
-          equals(returnSubmissions),
+          equals(returnResult),
         );
       });
     });
