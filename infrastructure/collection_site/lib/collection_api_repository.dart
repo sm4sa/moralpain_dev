@@ -37,7 +37,7 @@ abstract class CollectionApiRepository<T> {
 
   CollectionApiRepository({
     required this.paramDefs,
-    String basePathOverride =
+    String? basePathOverride =
         'https://umd7orqgt1.execute-api.us-east-1.amazonaws.com/v1',
   }) {
     mapi = Moralpainapi(basePathOverride: basePathOverride);
@@ -48,15 +48,17 @@ abstract class CollectionApiRepository<T> {
 
   Future<List<T>> fetchCollection(Map<String, dynamic> params);
 
-  bool paramsAreValid(Map<String, dynamic> params) {
-    bool ret = true;
+  void validateParams(Map<String, dynamic> params) {
     paramDefs.forEach((name, type) {
       if (params.containsKey(name) &&
           params[name] != null &&
           params[name].runtimeType != type) {
-        ret = false;
+        throw CollectionParamsInvalidException(
+          paramName: name,
+          expectedType: paramDefs[name]!,
+          actualType: params[name].runtimeType,
+        );
       }
     });
-    return ret;
   }
 }

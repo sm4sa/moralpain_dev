@@ -1,4 +1,5 @@
 import 'dart:async' show Future;
+import 'package:collection_site/collection_site.dart';
 import 'package:moralpainapi/moralpainapi.dart';
 
 class SubmissionsFetchFailure implements Exception {
@@ -14,36 +15,37 @@ class SubmissionsFetchFailure implements Exception {
   }
 }
 
-class ApiRepository {
+class ApiRepository extends CollectionApiRepository<Submission> {
   late Moralpainapi mapi;
 
-  ApiRepository(
-      {String basePathOverride =
-          'https://umd7orqgt1.execute-api.us-east-1.amazonaws.com/v1'}) {
-    mapi = Moralpainapi(basePathOverride: basePathOverride);
-    mapi.dio.options.connectTimeout = 30 * 1000;
-    mapi.dio.options.receiveTimeout = 30 * 1000;
-    mapi.dio.options.sendTimeout = 30 * 1000;
-  }
+  ApiRepository({String? basePathOverride})
+      : super(paramDefs: {
+          'starttime': int,
+          'endtime': int,
+          'minscore': int,
+          'maxscore': int,
+        }, basePathOverride: basePathOverride);
 
-  Future<Submissions> fetchSubmissions({
-    int? starttime,
-    int? endtime,
-    int? minscore,
-    int? maxscore,
-  }) async {
+  @override
+  Future<List<Submission>> fetchCollection(Map<String, dynamic> params) async {
+    // Verify that the parameters are valid
+    validateParams(params);
+
+    // Call getSubmissions() with the given parameters
     final aapi = mapi.getAdminApi();
 
     try {
-      return (await aapi.getSubmissions(
-        starttime: starttime,
-        endtime: endtime,
-        minscore: minscore,
-        maxscore: maxscore,
+      Submissions submissions = (await aapi.getSubmissions(
+        starttime: params['starttime'],
+        endtime: params['endtime'],
+        minscore: params['minscore'],
+        maxscore: params['maxscore'],
       ))
           .data!;
+      if (submissions.list != null) return submissions.list!.toList();
+      return [];
     } catch (err) {
-      throw SubmissionsFetchFailure(err.toString());
+      throw CollectionFetchFailure<Submission>(err.toString());
     }
   }
 }
