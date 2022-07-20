@@ -54,7 +54,7 @@ abstract class CollectionApiRepository<T> {
       if (params.containsKey(name) &&
           params[name] != null &&
           params[name].runtimeType != type) {
-        throw CollectionParamsInvalidException(
+        throw CollectionParamsInvalidException<T>(
           paramName: name,
           expectedType: paramDefs[name]!,
           actualType: params[name].runtimeType,
