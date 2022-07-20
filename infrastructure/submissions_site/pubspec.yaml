@@ -37,6 +37,8 @@ dependencies:
   bloc: ^8.0.3
   flutter_bloc: ^8.0.1
   uuid: 3.0.5
+  collection_site:
+    path: ../collection_site
   moralpainapi:
     path: ../../api/dart/
 
