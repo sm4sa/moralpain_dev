@@ -1,24 +1,16 @@
-import 'package:submissions_site/api_repository.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:collection_site/collection_site.dart';
+import 'package:flutter/material.dart';
+import 'package:moralpainapi/moralpainapi.dart';
+import 'package:submissions_site/submissions/submissions.dart';
 
-import '../submissions.dart';
-
-class SubmissionsRoute extends StatelessWidget {
-  final ApiRepository repository;
-
-  const SubmissionsRoute({Key? key, required this.repository})
-      : super(key: key);
+class SubmissionsRoute extends CollectionRoute<Submission> {
+  const SubmissionsRoute({
+    Key? key,
+    required CollectionApiRepository<Submission> repository,
+  }) : super(key: key, repository: repository);
 
   @override
-  Widget build(BuildContext context) {
-    return RepositoryProvider.value(
-      value: repository,
-      child: BlocProvider(
-        create: (_) => SubmissionsBloc(repository: repository)
-          ..add(SubmissionsLoadEvent()),
-        child: SubmissionsView(),
-      ),
-    );
+  Widget display(Submission item) {
+    return SubmissionListTile(item);
   }
 }
