@@ -35,7 +35,12 @@ void main() {
 
     testWidgets('fetches submissions list on initialization', (tester) async {
       await pumpApp(tester);
-      verify(() => repository.fetchSubmissions()).called(1);
+      verify(() => repository.fetchCollection({
+            'starttime': null,
+            'endtime': null,
+            'minscore': null,
+            'maxscore': null,
+          })).called(1);
     });
   });
 }

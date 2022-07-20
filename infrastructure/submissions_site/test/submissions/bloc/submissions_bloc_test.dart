@@ -1,14 +1,16 @@
-import 'package:submissions_site/api_repository.dart';
-import 'package:submissions_site/submissions/submissions.dart';
 import 'package:bloc_test/bloc_test.dart';
+import 'package:built_collection/built_collection.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:moralpainapi/moralpainapi.dart';
+import 'package:submissions_site/api_repository.dart';
+import 'package:submissions_site/submissions/submissions.dart';
 
 class MockApiRepository extends Mock implements ApiRepository {}
 
 void main() {
-  final mockSubmisions = Submissions();
+  final mockSubmissionList = <Submission>[];
+  late Submissions mockSubmissions;
 
   group('SubmissionsBloc', () {
     late ApiRepository apiRepository;
@@ -16,13 +18,12 @@ void main() {
     setUp(() {
       apiRepository = MockApiRepository();
       when(
-        () => apiRepository.fetchSubmissions(
-          starttime: any(named: 'starttime'),
-          endtime: any(named: 'endtime'),
-          minscore: any(named: 'minscore'),
-          maxscore: any(named: 'maxscore'),
-        ),
-      ).thenAnswer((_) => Future.value(mockSubmisions));
+        () => apiRepository.fetchCollection(any()),
+      ).thenAnswer((_) => Future.value(mockSubmissionList));
+
+      final builder = SubmissionsBuilder();
+      builder.list = ListBuilder(mockSubmissionList);
+      mockSubmissions = builder.build();
     });
 
     SubmissionsBloc buildBloc() {
@@ -60,14 +61,12 @@ void main() {
         build: buildBloc,
         act: (bloc) => bloc.add(buildEvent()),
         verify: (_) {
-          verify(
-            () => apiRepository.fetchSubmissions(
-              starttime: starttime,
-              endtime: endtime,
-              minscore: minscore,
-              maxscore: maxscore,
-            ),
-          ).called(1);
+          verify(() => apiRepository.fetchCollection({
+                'starttime': starttime,
+                'endtime': endtime,
+                'minscore': minscore,
+                'maxscore': maxscore,
+              })).called(1);
         },
       );
 
@@ -78,7 +77,7 @@ void main() {
         act: (bloc) => bloc.add(buildEvent()),
         expect: () => [
           SubmissionsLoading(),
-          SubmissionsLoaded(mockSubmisions),
+          SubmissionsLoaded(mockSubmissions),
         ],
       );
 
@@ -86,12 +85,12 @@ void main() {
         'emits failure state '
         'when fetchSubmissions fails',
         setUp: () {
-          when(() => apiRepository.fetchSubmissions(
-                starttime: any(named: 'starttime'),
-                endtime: any(named: 'endtime'),
-                minscore: any(named: 'minscore'),
-                maxscore: any(named: 'maxscore'),
-              )).thenThrow(Exception('oops'));
+          when(() => apiRepository.fetchCollection({
+                'starttime': starttime,
+                'endtime': endtime,
+                'minscore': minscore,
+                'maxscore': maxscore,
+              })).thenThrow(Exception('oops'));
         },
         build: buildBloc,
         act: (bloc) => bloc.add(buildEvent()),
