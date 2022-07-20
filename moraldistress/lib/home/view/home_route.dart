@@ -1,8 +1,17 @@
+import 'package:amplify_authenticator/amplify_authenticator.dart';
 import 'package:flutter/material.dart';
 
 import 'package:moraldistress/assets/constants.dart' as Constants;
 import 'package:moraldistress/assets/colors.dart' as uvacolors;
 import '../../thermometer/thermometer.dart';
+import 'package:amplify_authenticator/amplify_authenticator.dart';
+import 'package:amplify_authenticator/src/constants/authenticator_constants.dart';
+import 'package:amplify_authenticator/src/keys.dart';
+import 'package:amplify_authenticator/src/state/auth_state.dart';
+import 'package:amplify_authenticator/src/state/inherited_auth_bloc.dart';
+import 'package:amplify_authenticator/src/utils/list.dart';
+import 'package:amplify_authenticator/src/widgets/component.dart';
+import 'package:amplify_authenticator/src/widgets/progress.dart';
 
 class HomeRoute extends StatelessWidget {
   const HomeRoute({Key? key}) : super(key: key);
@@ -14,21 +23,52 @@ class HomeRoute extends StatelessWidget {
       body: CustomPaint(
           painter: HomePainter(),
           child: Center(
-              child: ElevatedButton(
-            style: ButtonStyle(
-                elevation: MaterialStateProperty.all(4),
-                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(18.0)))),
-            child: const Text(Constants.HOME_BUTTON_TEXT),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => const ThermometerRoute()),
-              );
-            },
-          ))),
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                ElevatedButton(
+                  style: ButtonStyle(
+                      elevation: MaterialStateProperty.all(4),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(18.0)))),
+                  child: const Text(Constants.HOME_BUTTON_TEXT),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const ThermometerRoute()),
+                    );
+                  },
+                ),
+                MySignOutButton()
+              ]))),
+    );
+  }
+}
+
+class MySignOutButton extends StatelessAuthenticatorComponent {
+  /// {@macro amplify_authenticator.sign_out_button}
+  const MySignOutButton({Key? key = keySignOutButton}) : super(key: key);
+
+  @override
+  Widget builder(
+    BuildContext context,
+    AuthenticatorState state,
+    AuthStringResolver stringResolver,
+  ) {
+    final ButtonResolver buttonResolver = stringResolver.buttons;
+
+    return ElevatedButton(
+      onPressed: state.signOut,
+      child: Text(
+        buttonResolver.signout(context),
+      ),
+      style: ButtonStyle(
+          elevation: MaterialStateProperty.all(4),
+          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+              RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(18.0)))),
     );
   }
 }
