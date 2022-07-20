@@ -1,5 +1,6 @@
+import 'package:collection_site/collection/bloc/collection_bloc.dart';
+import 'package:moralpainapi/moralpainapi.dart';
 import 'package:submissions_site/filter_submissions/filter_submissions.dart';
-import 'package:submissions_site/submissions/submissions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -83,20 +84,20 @@ class FilterSubmissionsView extends StatelessWidget {
           onPressed: () {
             FilterSubmissionsState state =
                 BlocProvider.of<FilterSubmissionsBloc>(context).state;
-            BlocProvider.of<SubmissionsBloc>(context).add(
-              SubmissionsLoadEvent(
-                starttime: state.starttime != null
+            BlocProvider.of<CollectionBloc<Submission>>(context).add(
+              CollectionStarted<Submission>({
+                'starttime': state.starttime != null
                     ? int.tryParse(state.starttime!)
                     : null,
-                endtime:
+                'endtime':
                     state.endtime != null ? int.tryParse(state.endtime!) : null,
-                minscore: state.minscore != null
+                'minscore': state.minscore != null
                     ? int.tryParse(state.minscore!)
                     : null,
-                maxscore: state.starttime != null
+                'maxscore': state.starttime != null
                     ? int.tryParse(state.maxscore!)
                     : null,
-              ),
+              }),
             );
           },
           child: Text('Filter'),
