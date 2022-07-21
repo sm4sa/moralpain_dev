@@ -8,8 +8,7 @@ part 'collection_state.dart';
 class CollectionBloc<T> extends Bloc<CollectionEvent<T>, CollectionState<T>> {
   final CollectionApiRepository<T> repository;
 
-  CollectionBloc({required this.repository})
-      : super(const CollectionInitial()) {
+  CollectionBloc({required this.repository}) : super(CollectionInitial<T>()) {
     on<CollectionStarted<T>>(_onLoad);
   }
 
@@ -17,14 +16,14 @@ class CollectionBloc<T> extends Bloc<CollectionEvent<T>, CollectionState<T>> {
     CollectionStarted<T> event,
     Emitter<CollectionState<T>> emit,
   ) async {
-    emit(const CollectionInProgress());
+    emit(CollectionInProgress<T>());
 
     List<T> data;
     try {
       data = await repository.fetchCollection(event.params);
-      emit(CollectionSuccess(data));
+      emit(CollectionSuccess<T>(data));
     } catch (_) {
-      emit(const CollectionFailure());
+      emit(CollectionFailure<T>());
     }
   }
 }
