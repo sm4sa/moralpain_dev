@@ -62,11 +62,11 @@ class CollectionView<T> extends StatelessWidget {
   Widget handleLoadEvents(BuildContext context, CollectionState<T> state) {
     return Padding(
       padding: const EdgeInsets.all(16),
-      child: collectionFromState(state),
+      child: contentFromState(state),
     );
   }
 
-  Widget collectionFromState(CollectionState<T> state) {
+  Widget contentFromState(CollectionState<T> state) {
     if (state is CollectionInitial<T>) {
       return Center(child: Text(initialMessage));
     } else if (state is CollectionInProgress<T>) {
