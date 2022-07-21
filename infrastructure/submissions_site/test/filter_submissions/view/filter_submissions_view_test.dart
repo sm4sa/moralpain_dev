@@ -1,18 +1,19 @@
+import 'package:collection_site/collection_site.dart';
 import 'package:submissions_site/filter_submissions/filter_submissions.dart';
-import 'package:submissions_site/submissions/submissions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:moralpainapi/moralpainapi.dart';
 
 class MockFilterSubmissionsBloc extends Mock implements FilterSubmissionsBloc {}
 
-class MockSubmissionsBloc extends Mock implements SubmissionsBloc {}
+class MockSubmissionsBloc extends Mock implements CollectionBloc<Submission> {}
 
 void main() {
   group('FilterSubmissionsView', () {
     late FilterSubmissionsBloc filterSubmissionsBloc;
-    late SubmissionsBloc submissionsBloc;
+    late CollectionBloc<Submission> submissionsBloc;
 
     const starttime = 1;
     const endtime = 732468;
@@ -36,9 +37,9 @@ void main() {
           .thenAnswer((_) => Future<void>.value());
 
       submissionsBloc = MockSubmissionsBloc();
-      when(() => submissionsBloc.state).thenReturn(SubmissionsInitial());
+      when(() => submissionsBloc.state).thenReturn(const CollectionInitial());
       when(() => submissionsBloc.stream).thenAnswer(
-        (_) => Stream.value(SubmissionsInitial()),
+        (_) => Stream.value(const CollectionInitial()),
       );
       when(() => submissionsBloc.close())
           .thenAnswer((_) => Future<void>.value());
@@ -52,7 +53,9 @@ void main() {
             BlocProvider<FilterSubmissionsBloc>.value(
               value: filterSubmissionsBloc,
             ),
-            BlocProvider<SubmissionsBloc>.value(value: submissionsBloc),
+            BlocProvider<CollectionBloc<Submission>>.value(
+              value: submissionsBloc,
+            ),
           ],
           child: FilterSubmissionsView(),
         )),
@@ -142,7 +145,12 @@ void main() {
         await pumpApp(tester);
         await tester.tap(find.byKey(button_key));
         verify(
-          () => submissionsBloc.add(SubmissionsLoadEvent()),
+          () => submissionsBloc.add(const CollectionStarted({
+            'starttime': null,
+            'endtime': null,
+            'minscore': null,
+            'maxscore': null,
+          })),
         ).called(1);
       },
     );
@@ -160,18 +168,14 @@ void main() {
           maxscore: maxscore.toString(),
         ));
         await pumpApp(tester);
-        /*await tester.enterText(find.byKey(starttime_key), starttime.toString());
-        await tester.enterText(find.byKey(endtime_key), endtime.toString());
-        await tester.enterText(find.byKey(minscore_key), minscore.toString());
-        await tester.enterText(find.byKey(maxscore_key), maxscore.toString());*/
         await tester.tap(find.byKey(button_key));
         verify(
-          () => submissionsBloc.add(SubmissionsLoadEvent(
-            starttime: starttime,
-            endtime: endtime,
-            minscore: minscore,
-            maxscore: maxscore,
-          )),
+          () => submissionsBloc.add(CollectionStarted({
+            'starttime': starttime,
+            'endtime': endtime,
+            'minscore': minscore,
+            'maxscore': maxscore,
+          })),
         ).called(1);
       },
     );
