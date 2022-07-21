@@ -98,7 +98,7 @@ void main() {
         );
       });
 
-      test('returns correct Submissions list on success', () async {
+      test('returns correct Submission list on success', () async {
         expect(
           await apiRepository.fetchCollection({
             'starttime': starttime,
