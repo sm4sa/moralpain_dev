@@ -1,7 +1,8 @@
-import 'package:submissions_site/constants.dart';
-import 'package:submissions_site/screens/login/login.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:submissions_site/api_repository.dart';
+import 'package:submissions_site/constants.dart';
+import 'package:submissions_site/submissions/submissions.dart';
 
 void main() {
   runApp(MyApp());
@@ -20,7 +21,17 @@ class MyApp extends StatelessWidget {
             .apply(bodyColor: Colors.white),
         canvasColor: secondaryColor,
       ),
-      home: LoginPage(),
+      home: Scaffold(
+        body: SafeArea(
+          child: SingleChildScrollView(
+            padding: EdgeInsets.all(defaultPadding),
+            child: Expanded(
+              flex: 5,
+              child: SubmissionsRoute(repository: ApiRepository()),
+            ),
+          ),
+        ),
+      ),
     );
   }
 }
