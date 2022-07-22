@@ -49,6 +49,7 @@ Resources:
         - 'myapp://'
       LogoutURLs:
         - 'myapp://'
+      AllowedOAuthFlowsUserPoolClient: true
       AllowedOAuthFlows:
         - code
       AllowedOAuthScopes:

@@ -1,8 +1,10 @@
 import 'package:amplify_authenticator/amplify_authenticator.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 
 import 'package:moraldistress/assets/constants.dart' as Constants;
 import 'package:moraldistress/assets/colors.dart' as uvacolors;
+import '../../auth/auth_cubit.dart';
 import '../../thermometer/thermometer.dart';
 import 'package:amplify_authenticator/amplify_authenticator.dart';
 import 'package:amplify_authenticator/src/constants/authenticator_constants.dart';
@@ -41,34 +43,17 @@ class HomeRoute extends StatelessWidget {
                     );
                   },
                 ),
-                MySignOutButton()
+                ElevatedButton(
+                  style: ButtonStyle(
+                      elevation: MaterialStateProperty.all(4),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(18.0)))),
+                  child: const Text("Sign out"),
+                  onPressed: () =>
+                      BlocProvider.of<AuthCubit>(context).signOut(),
+                ),
               ]))),
-    );
-  }
-}
-
-class MySignOutButton extends StatelessAuthenticatorComponent {
-  /// {@macro amplify_authenticator.sign_out_button}
-  const MySignOutButton({Key? key = keySignOutButton}) : super(key: key);
-
-  @override
-  Widget builder(
-    BuildContext context,
-    AuthenticatorState state,
-    AuthStringResolver stringResolver,
-  ) {
-    final ButtonResolver buttonResolver = stringResolver.buttons;
-
-    return ElevatedButton(
-      onPressed: state.signOut,
-      child: Text(
-        buttonResolver.signout(context),
-      ),
-      style: ButtonStyle(
-          elevation: MaterialStateProperty.all(4),
-          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-              RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(18.0)))),
     );
   }
 }
