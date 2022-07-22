@@ -85,13 +85,7 @@ Class | Method | HTTP request | Description
  - [SurveyOption](doc/SurveyOption.md)
  - [SurveySection](doc/SurveySection.md)
 
-
 ## Documentation For Authorization
 
  All endpoints do not require authorization.
-
-
 ## Author
-
-
-
