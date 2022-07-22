@@ -9,7 +9,7 @@ packages:
     source: hosted
     version: "41.0.0"
   amplify_auth_cognito:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: amplify_auth_cognito
       url: "https://pub.dartlang.org"
@@ -30,7 +30,7 @@ packages:
     source: hosted
     version: "0.6.2"
   amplify_authenticator:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: amplify_authenticator
       url: "https://pub.dartlang.org"
@@ -51,7 +51,7 @@ packages:
     source: hosted
     version: "0.6.2"
   amplify_flutter:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: amplify_flutter
       url: "https://pub.dartlang.org"
@@ -162,6 +162,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.0"
+  cognito_authentication_repository:
+    dependency: "direct main"
+    description:
+      path: "packages/cognito_authentication_repository"
+      relative: true
+    source: path
+    version: "1.0.0"
   collection:
     dependency: transitive
     description:

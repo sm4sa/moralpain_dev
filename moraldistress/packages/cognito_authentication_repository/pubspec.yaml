@@ -1,0 +1,19 @@
+name: cognito_authentication_repository
+description: Dart package for the cognito authentication domain.
+version: 1.0.0
+publish_to: none
+
+environment:
+  sdk: ">=2.16.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  amplify_flutter: ^0.6.0
+  amplify_auth_cognito: ^0.6.0
+  amplify_authenticator: ^0.2.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  mocktail: ^0.2.0

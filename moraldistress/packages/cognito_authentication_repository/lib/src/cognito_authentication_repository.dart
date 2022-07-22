@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:amplify_flutter/amplify_flutter.dart';
 
-class AuthRepository {
+class CognitoAuthenticationRepository {
   Future<String> fetchUserIdFromAttributes() async {
     try {
       final attributes = await Amplify.Auth.fetchUserAttributes().timeout(
@@ -48,8 +48,7 @@ class AuthRepository {
     try {
       final session = await Amplify.Auth.fetchAuthSession();
       if (session.isSignedIn) {
-        var x = await fetchUserIdFromAttributes();
-        return x;
+        return await fetchUserIdFromAttributes();
       } else {
         throw Exception('Not signed in');
       }

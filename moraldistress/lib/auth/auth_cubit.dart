@@ -1,21 +1,20 @@
-import 'package:moraldistress/auth/auth_repository.dart';
+import 'package:cognito_authentication_repository/cognito_authentication_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {
-  final authRepo = AuthRepository();
+  final authRepo = CognitoAuthenticationRepository();
 
   AuthCubit() : super(UnknownAuthState());
 
   void signIn() async {
     try {
       final userId = await authRepo.webSignIn();
-      if (userId != null && userId.isNotEmpty) {
+      if (userId.isNotEmpty) {
         emit(Authenticated(userId: userId));
       } else {
         emit(Unauthenticated());
       }
-      //} on Exception {
     } catch (e) {
       emit(Unauthenticated());
     }
@@ -33,7 +32,7 @@ class AuthCubit extends Cubit<AuthState> {
   void attemptAutoSignIn() async {
     try {
       final userId = await authRepo.attemptAutoSignIn();
-      if (userId != null && userId.isNotEmpty) {
+      if (userId.isNotEmpty) {
         emit(Authenticated(userId: userId));
       } else {
         emit(Unauthenticated());
