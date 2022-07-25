@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:moraldistress/assets/constants.dart' as Constants;
+import 'package:uva_themed_widgets/src/colors.dart' as uvacolors;
+import 'package:moraldistress/assets/constants.dart' as constants;
 import 'package:moraldistress/survey/view/survey_route.dart';
 import 'package:moraldistress/api_repository.dart';
 import '../thermometer.dart';
@@ -16,11 +17,11 @@ class ThermometerView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color(Constants.COLORS_UVA_BLUE),
-        title: const Text(Constants.APPBAR_TEXT),
+        backgroundColor: const Color(uvacolors.COLORS_UVA_BLUE),
+        title: const Text(constants.APPBAR_TEXT),
       ),
       body: Padding(
-          padding: EdgeInsets.all(Constants.PADDING),
+          padding: EdgeInsets.all(constants.PADDING),
           child: OrientationBuilder(builder: (context, orientation) {
             if (orientation == Orientation.portrait) {
               return _potraitMode();
@@ -41,7 +42,7 @@ class ThermometerView extends StatelessWidget {
             );
           },
           child: const Icon(Icons.navigate_next),
-          backgroundColor: const Color(Constants.COLORS_UVA_BLUE)),
+          backgroundColor: const Color(uvacolors.COLORS_UVA_BLUE)),
     );
   }
 
@@ -64,11 +65,11 @@ class ThermometerView extends StatelessWidget {
 
   Widget thermometerLandscapeText() =>
       Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Text(Constants.THERMOMETER_TITLE,
-            style: TextStyle(fontSize: Constants.THERMOMETER_TITLE_FONT_SIZE)),
+        Text(constants.THERMOMETER_TITLE,
+            style: TextStyle(fontSize: constants.THERMOMETER_TITLE_FONT_SIZE)),
         SizedBox(height: 10),
         Text(
-          Constants.THERMOMETER_INSTRUCTIONS,
+          constants.THERMOMETER_INSTRUCTIONS,
         ),
       ]);
 
@@ -76,12 +77,12 @@ class ThermometerView extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(Constants.THERMOMETER_TITLE,
+            Text(constants.THERMOMETER_TITLE,
                 style:
-                    TextStyle(fontSize: Constants.THERMOMETER_TITLE_FONT_SIZE)),
+                    TextStyle(fontSize: constants.THERMOMETER_TITLE_FONT_SIZE)),
             SizedBox(height: 10),
             Text(
-              Constants.THERMOMETER_INSTRUCTIONS,
+              constants.THERMOMETER_INSTRUCTIONS,
             ),
             SizedBox(height: 10),
             Expanded(

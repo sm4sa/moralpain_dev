@@ -9,9 +9,14 @@ class AuthCubit extends Cubit<AuthState> {
 
   void signIn() async {
     try {
-      final userId = await authRepo.webSignIn();
-      if (userId.isNotEmpty) {
-        emit(Authenticated(userId: userId));
+      // Call signout to remove any old state. Docs warn of this -
+      // https://docs.amplify.aws/lib/auth/signin/q/platform/flutter/#sign-in-a-user
+      if (!await authRepo.isAuthenticated() || !await authRepo.isAuthorized()) {
+        signOut();
+      }
+
+      if (await authRepo.signIn() && await authRepo.isAuthorized()) {
+        emit(Authenticated(userId: "foo"));
       } else {
         emit(Unauthenticated());
       }
@@ -31,9 +36,8 @@ class AuthCubit extends Cubit<AuthState> {
 
   void attemptAutoSignIn() async {
     try {
-      final userId = await authRepo.attemptAutoSignIn();
-      if (userId.isNotEmpty) {
-        emit(Authenticated(userId: userId));
+      if (await authRepo.isAuthenticated() && await authRepo.isAuthorized()) {
+        emit(Authenticated(userId: "foo"));
       } else {
         emit(Unauthenticated());
       }

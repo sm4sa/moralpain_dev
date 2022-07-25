@@ -1,5 +1,5 @@
-name: cognito_authentication_repository
-description: Dart package for the cognito authentication domain.
+name: uva_themed_widgets
+description: Widgets stylized for UVA.
 version: 1.0.0
 publish_to: none
 
@@ -9,8 +9,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  amplify_flutter: ^0.6.0
-  amplify_auth_cognito: ^0.6.0
 
 dev_dependencies:
   flutter_test:

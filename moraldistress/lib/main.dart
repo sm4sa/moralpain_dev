@@ -5,5 +5,4 @@ import 'app.dart';
 
 void main() {
   runApp(AuthWrappedApp());
-  //runApp(MoralDistressApp());
 }

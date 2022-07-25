@@ -1,12 +1,11 @@
-import 'dart:math';
-
+import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
 
 class CognitoAuthenticationRepository {
   Future<String> fetchUserIdFromAttributes() async {
     try {
       final attributes = await Amplify.Auth.fetchUserAttributes().timeout(
-        Duration(seconds: 5),
+        Duration(seconds: 15),
         onTimeout: () =>
             throw Exception('failed to fetch attributes in reasonable time'),
       );
@@ -14,44 +13,54 @@ class CognitoAuthenticationRepository {
           .firstWhere((element) => element.userAttributeKey.key == 'sub');
       final userId = subAttribute.value;
       return userId;
+    } on NotAuthorizedException catch (e) {
+      throw e;
     } catch (e) {
+      print('unexpected exception ${e}');
       throw e;
     }
   }
 
-  // Sign in
-  Future<String> webSignIn() async {
+  // Proxy for verifying authorization - should hit /userInfo with an
+  // access token.
+  Future<bool> isAuthorized() async {
     try {
-      final result = await Amplify.Auth.signInWithWebUI();
-      if (result.isSignedIn) {
-        // get user id
-        return await fetchUserIdFromAttributes();
-      } else {
-        throw Exception('could not sign in');
-      }
+      final attributes = await Amplify.Auth.fetchUserAttributes()
+          .timeout(Duration(seconds: 15), onTimeout: () => List.empty());
+      return attributes.isNotEmpty;
+    } on NotAuthorizedException {
+      return false;
     } catch (e) {
+      print('unexpected exception ${e}');
       throw e;
     }
   }
 
-  // Sign out
+  Future<bool> isAuthenticated() async {
+    try {
+      // NB (nphair): We need
+      final session = await Amplify.Auth.fetchAuthSession(
+        options: CognitoSessionOptions(getAWSCredentials: true),
+      );
+      return session.isSignedIn;
+    } on SessionExpiredException {
+      return false;
+    } on SignedOutException {
+      return false;
+    } catch (e) {
+      print('unexpected exception ${e}');
+      throw e;
+    }
+  }
+
+  Future<bool> signIn() async {
+    final result = await Amplify.Auth.signInWithWebUI();
+    return result.isSignedIn;
+  }
+
   Future<void> signOut() async {
     try {
       await Amplify.Auth.signOut();
-    } catch (e) {
-      throw e;
-    }
-  }
-
-  // Auto sign in
-  Future<String> attemptAutoSignIn() async {
-    try {
-      final session = await Amplify.Auth.fetchAuthSession();
-      if (session.isSignedIn) {
-        return await fetchUserIdFromAttributes();
-      } else {
-        throw Exception('Not signed in');
-      }
     } catch (e) {
       throw e;
     }

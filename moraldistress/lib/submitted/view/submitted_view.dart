@@ -4,11 +4,11 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
 import 'package:moraldistress/assets/constants.dart' as Constants;
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:moraldistress/assets/colors.dart' as uvacolors;
 import 'package:moraldistress/submitted/submitted.dart';
 import 'package:moralpainapi/moralpainapi.dart' as api;
 import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
+import 'package:uva_themed_widgets/src/colors.dart' as uvacolors;
 
 class SubmittedView extends StatelessWidget {
   const SubmittedView({Key? key}) : super(key: key);

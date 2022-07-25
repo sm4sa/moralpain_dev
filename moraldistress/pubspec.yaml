@@ -21,6 +21,10 @@ dependencies:
     path: ../api/dart/
   cognito_authentication_repository:
     path: packages/cognito_authentication_repository
+  uva_themed_widgets:
+    path: packages/uva_themed_widgets
+  amplify_flutter: ^0.6.0
+  amplify_auth_cognito: ^0.6.0
 
 dev_dependencies:
   bloc_test: ^9.0.3

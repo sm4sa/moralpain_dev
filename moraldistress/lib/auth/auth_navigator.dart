@@ -15,13 +15,6 @@ class AppNavigator extends StatelessWidget {
         pages: [
           if (state is Unauthenticated) MaterialPage(child: AuthView()),
           if (state is Authenticated) MaterialPage(child: HomeRoute()),
-          //child: BlocProvider(
-          //  //create: (context) => TodoCubit(userId: state.userId)
-          //  //  ..getTodos()
-          //  //  ..observeTodo(),
-          //  child: HomeRoute());
-          //),
-          //)
           if (state is UnknownAuthState) MaterialPage(child: LoadingView())
         ],
         onPopPage: (route, result) => route.didPop(result),

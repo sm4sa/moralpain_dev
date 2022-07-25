@@ -1,19 +1,10 @@
-import 'package:amplify_authenticator/amplify_authenticator.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 
 import 'package:moraldistress/assets/constants.dart' as Constants;
-import 'package:moraldistress/assets/colors.dart' as uvacolors;
+import 'package:uva_themed_widgets/src/colors.dart' as uvacolors;
 import '../../auth/auth_cubit.dart';
 import '../../thermometer/thermometer.dart';
-import 'package:amplify_authenticator/amplify_authenticator.dart';
-import 'package:amplify_authenticator/src/constants/authenticator_constants.dart';
-import 'package:amplify_authenticator/src/keys.dart';
-import 'package:amplify_authenticator/src/state/auth_state.dart';
-import 'package:amplify_authenticator/src/state/inherited_auth_bloc.dart';
-import 'package:amplify_authenticator/src/utils/list.dart';
-import 'package:amplify_authenticator/src/widgets/component.dart';
-import 'package:amplify_authenticator/src/widgets/progress.dart';
 
 class HomeRoute extends StatelessWidget {
   const HomeRoute({Key? key}) : super(key: key);

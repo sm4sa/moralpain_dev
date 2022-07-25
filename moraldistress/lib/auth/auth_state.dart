@@ -8,4 +8,8 @@ class Authenticated extends AuthState {
   Authenticated({required this.userId});
 }
 
-class Unauthenticated extends AuthState {}
+class Unauthenticated extends AuthState {
+  final bool error;
+
+  Unauthenticated({this.error = false});
+}

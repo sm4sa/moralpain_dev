@@ -1,13 +1,10 @@
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
-import 'package:amplify_authenticator/amplify_authenticator.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:moraldistress/app.dart';
-import 'package:moraldistress/home/home.dart';
-import 'package:moraldistress/auth/app_navigator.dart';
+import 'package:moraldistress/auth/auth_navigator.dart';
 import 'package:moraldistress/auth/loading_view.dart';
-import 'package:moraldistress/assets/colors.dart' as uvacolors;
+import 'package:uva_themed_widgets/src/colors.dart' as uvacolors;
 
 import 'amplifyconfiguration.dart';
 import 'auth/auth_cubit.dart';

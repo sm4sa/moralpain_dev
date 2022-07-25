@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'home/home.dart';
-import 'package:moraldistress/assets/colors.dart' as uvacolors;
+import 'package:uva_themed_widgets/src/colors.dart' as uvacolors;
 
 class MoralDistressApp extends StatelessWidget {
   const MoralDistressApp({super.key});
