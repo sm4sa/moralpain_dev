@@ -1,6 +1,6 @@
 {
 	"name": "moralpain",
-    "image": "ghcr.io/nicholasphair/moralpain_config:sha-3869c3f",
+    "image": "ghcr.io/kevinsullivan/moralpain_config:sha-8e65d95",
     "containerEnv": {
         "WORKSPACE_FOLDER": "${containerWorkspaceFolder}"
     },
