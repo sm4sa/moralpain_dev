@@ -2,8 +2,6 @@ namespace collection
 
 universe u
 
-namespace collection
-
 class has_collection (collection_type : Type u → Type u) :=
 -- ACTIONS ("CONSTANTS AND OPERATIONS")
 -- empty/starting state for a collection
@@ -23,5 +21,4 @@ class has_collection (collection_type : Type u → Type u) :=
 
 -- LAWS ("operational principle")
 -- TBD
-]end collection 
 end collection
