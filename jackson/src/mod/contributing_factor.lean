@@ -33,6 +33,11 @@ inductive contributing_factor : Type u
 
 namespace contributing_factor
 
+/-
+Homework: is this another example/instance ot tags?
+Or more precisely autotagging based on our "formula?"
+-/
+
 open contributing_factor
 
 inductive category : Type
@@ -102,6 +107,6 @@ def get_description : contributing_factor → string
 | system_emphasize_productivity_measures := "Feeling pressured to emphasize productivity/quality measures over patients"
 | _ := "Other"
 
-instance : has_repr contributing_factor := ⟨get_description⟩
+instance : has_repr contributing_factor := ⟨get_description⟩    -- nice: KS
 
 end contributing_factor
