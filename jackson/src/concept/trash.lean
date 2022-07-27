@@ -23,14 +23,14 @@ def trash_state
 
 def do_init 
   (available_collection_type : Type u → Type u)  
-  [c: collection.has_collection available_collection_type] 
+  [c₁ : collection.has_collection available_collection_type] 
   (trash_collection_type : Type u → Type u) 
-  [collection.has_collection trash_collection_type]
+  [c₂ : collection.has_collection trash_collection_type]
   (item_type : Type u) 
   [e : decidable_eq item_type] :=
 (
-  (@collection.has_collection.init available_collection_type c item_type e), 
-  (@collection.has_collection.init trash_collection_type c item_type e)
+  (@collection.has_collection.init available_collection_type c₁ item_type e), 
+  (@collection.has_collection.init trash_collection_type c₂ item_type e)
 )
 
 
