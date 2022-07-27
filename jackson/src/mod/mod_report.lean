@@ -20,11 +20,14 @@ collection of I's stored as an S."
 OK, but this is totally wrong. Hang up for later.
 -/
 
-structure mod_report {c : Type u → Type u} [collection.has_collection c] : Type u :=
+structure mod_report 
+  {coll_impl : Type u → Type u} 
+  [collection.has_collection coll_impl] : 
+  Type u :=
 (time : time_utc)
-(score : fin 11)   -- Note, sorry: "fin 11" is (basically) cryptic for 0..10 inclusive.
+(score : fin 11)   -- Read "fin 11" as 0..10 inclusive (TODO)
 (id : uuid)
-(contributing_factors : c contributing_factor)
+(contributing_factors : coll_impl contributing_factor)
 
 
 -- ACTIONS
