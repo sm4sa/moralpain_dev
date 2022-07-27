@@ -75,6 +75,15 @@ def set_contributing_factors
 -- We wouldn't have considered this without Daniel's enumeration 
 -- of some fundamental concepts (e.g., tags) 
 
+def get_dec_eq_instance
+  (c : Type u → Type u)
+  [collection.has_collection c]
+  [decidable_eq (c contributing_factor)] :
+  decidable_eq (@mod_report c _) :=
+begin
+tactic.mk_dec_eq_instance,
+end
+
 -- "DISPLAY"
 
 def get_repr_instance 
