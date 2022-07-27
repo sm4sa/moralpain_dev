@@ -17,14 +17,6 @@ collection.has_collection.insert l 0
 
 #reduce insert_0 ns   -- evaluates to [0,1,2,3]
 
-/-
-TODO: Why? Expression (insert_0 ns) not reducing in this context
--/ 
-example : (insert_0 ns) = [0,1,2,3] := 
-begin
-  exact rfl,    -- ⊢ insert_0 ns = [0, 1, 2, 3]
-end
-
 example : (insert_0 ns) = [0,1,2,3] :=
 begin
   /-

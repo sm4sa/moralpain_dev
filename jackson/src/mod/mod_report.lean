@@ -15,7 +15,8 @@ namespace mod_report
 
 /-
 KS: Boom. This is where we "compose" collection with mod_report, by applying
-"collection S I" to "list T" and mod_report, yielding the new concept of ____ 
+"collection S I" to "list T" and mod_report, yielding the new concept of "a 
+collection of I's stored as an S." 
 OK, but this is totally wrong. Hang up for later.
 -/
 
@@ -27,7 +28,6 @@ structure mod_report {c : Type u → Type u} [collection.has_collection c] : Typ
 
 
 -- ACTIONS
-
 
 def set_time 
   {c : Type u → Type u} 
