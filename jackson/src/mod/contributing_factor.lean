@@ -111,17 +111,4 @@ instance : has_repr contributing_factor := ⟨get_description⟩    -- nice: KS
 
 end contributing_factor
 
--- instance : decidable_eq contributing_factor :=
--- begin
--- simp only [decidable_eq, decidable_rel],
--- intros,
--- have h₀ := classical.em (a = b),
--- apply or.elim,
--- end
--- λ (a b : contributing_factor),
---   if (a = b) then decidable.is_true sorry else decidable.is_false sorry
--- λ (a b : contributing_factor),
---   match (classical.em (a = b)) with
---   (or.inl h) := decidable.is_true h,
---   (or.inr h) := decidable.is_false h
---   end
+instance : decidable_eq contributing_factor := by tactic.mk_dec_eq_instance
