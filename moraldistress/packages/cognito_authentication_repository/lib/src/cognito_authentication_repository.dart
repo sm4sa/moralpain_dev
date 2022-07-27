@@ -39,9 +39,10 @@ class CognitoAuthenticationRepository {
   Future<bool> isAuthenticated() async {
     try {
       // NB (nphair): We need
-      final session = await Amplify.Auth.fetchAuthSession(
-        options: CognitoSessionOptions(getAWSCredentials: true),
-      );
+      final session = await Amplify.Auth.fetchAuthSession();
+      //final session = await Amplify.Auth.fetchAuthSession(
+      //  options: CognitoSessionOptions(getAWSCredentials: true),
+      //);
       return session.isSignedIn;
     } on SessionExpiredException {
       return false;
