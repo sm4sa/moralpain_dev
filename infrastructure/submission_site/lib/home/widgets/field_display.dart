@@ -2,8 +2,13 @@ import 'package:flutter/material.dart';
 
 class FieldDisplay extends StatelessWidget {
   final String text;
+  final void Function() onPressed;
 
-  const FieldDisplay({required this.text, Key? key}) : super(key: key);
+  const FieldDisplay({
+    required this.text,
+    required this.onPressed,
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +20,7 @@ class FieldDisplay extends StatelessWidget {
           style: const TextStyle(fontSize: 20),
         ),
         const SizedBox(width: 15.0),
-        IconButton(onPressed: () {}, icon: const Icon(Icons.edit)),
+        IconButton(onPressed: onPressed, icon: const Icon(Icons.edit)),
       ],
     );
   }

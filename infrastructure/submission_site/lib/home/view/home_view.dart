@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:moralpainapi/moralpainapi.dart' show Submission;
+import 'package:submission_site/home/home.dart';
+import 'package:submission_site/score/view/score_view.dart';
 
 class SubmissionView extends StatelessWidget {
   final Submission submission;
@@ -20,37 +22,28 @@ class SubmissionView extends StatelessWidget {
                   'Time submitted: ${submission.timestamp != null ? DateTime.fromMillisecondsSinceEpoch(
                       submission.timestamp! * 1000,
                     ).toString() : 'null'}',
+              onPressed: () {},
             ),
             FieldDisplay(
               text: 'Score: ${submission.score} out of 10',
+              onPressed: () {
+                print('Score edit button pressed');
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const ScoreView(),
+                    fullscreenDialog: true,
+                  ),
+                );
+              },
             ),
             FieldDisplay(
               text: 'Contributing factors: ${submission.selections}',
+              onPressed: () {},
             ),
           ],
         ),
       ),
-    );
-  }
-}
-
-class FieldDisplay extends StatelessWidget {
-  final String text;
-
-  const FieldDisplay({required this.text, Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text(
-          text,
-          style: const TextStyle(fontSize: 20),
-        ),
-        const SizedBox(width: 15.0),
-        IconButton(onPressed: () {}, icon: const Icon(Icons.edit)),
-      ],
     );
   }
 }
