@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:submission_site/datetime/datetime.dart';
 import 'package:submission_site/home/home.dart';
 import 'package:submission_site/score/score.dart';
 
@@ -22,7 +23,18 @@ class HomeView extends StatelessWidget {
                   text: 'Time submitted: ${DateTime.fromMillisecondsSinceEpoch(
                     state.timestamp * 1000,
                   ).toString()}',
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => BlocProvider<HomeBloc>.value(
+                          value: bloc,
+                          child: const DatetimeRoute(),
+                        ),
+                        fullscreenDialog: true,
+                      ),
+                    );
+                  },
                 ),
                 FieldDisplay(
                   text: 'Score: ${state.score} out of 10',

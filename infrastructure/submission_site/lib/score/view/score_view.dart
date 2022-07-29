@@ -17,7 +17,7 @@ class ScoreView extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             DropdownButtonHideUnderline(
-              child: DropdownButtonFormField(
+              child: DropdownButtonFormField<int>(
                 hint: const Text('Score'),
                 items: [
                   for (int i = 0; i <= 10; i++)
@@ -28,7 +28,7 @@ class ScoreView extends StatelessWidget {
                 ],
                 value: cubit.state,
                 onChanged: (value) {
-                  cubit.set(value as int);
+                  cubit.set(value!);
                 },
               ),
             ),
@@ -46,7 +46,7 @@ class ScoreView extends StatelessWidget {
                 ElevatedButton(
                     onPressed: () {
                       final bloc = BlocProvider.of<HomeBloc>(context);
-                      bloc.add(HomeScoreSet(cubit.state));
+                      bloc.add(HomeScoreChanged(cubit.state));
                       Navigator.pop(context);
                     },
                     child: const Text('OK'))

@@ -11,10 +11,18 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       : super(
           HomeState.fromSubmission(submission),
         ) {
-    on<HomeScoreSet>(_onScoreSet);
+    on<HomeTimestampChanged>(_onTimestampChanged);
+    on<HomeScoreChanged>(_onScoreChanged);
   }
 
-  void _onScoreSet(HomeScoreSet event, Emitter<HomeState> emit) async {
+  void _onTimestampChanged(
+    HomeTimestampChanged event,
+    Emitter<HomeState> emit,
+  ) async {
+    emit(state.copyWith(timestamp: event.timestamp));
+  }
+
+  void _onScoreChanged(HomeScoreChanged event, Emitter<HomeState> emit) async {
     emit(state.copyWith(score: event.score));
   }
 }

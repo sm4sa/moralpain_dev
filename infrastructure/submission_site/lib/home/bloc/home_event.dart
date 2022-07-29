@@ -4,11 +4,20 @@ abstract class HomeEvent extends Equatable {
   const HomeEvent();
 }
 
-class HomeScoreSet extends HomeEvent {
-  final int score;
+class HomeTimestampChanged extends HomeEvent {
+  final int timestamp;
 
-  const HomeScoreSet(this.score);
+  const HomeTimestampChanged(this.timestamp);
 
   @override
-  List<Object?> get props => [score];
+  List<Object> get props => [timestamp];
+}
+
+class HomeScoreChanged extends HomeEvent {
+  final int score;
+
+  const HomeScoreChanged(this.score);
+
+  @override
+  List<Object> get props => [score];
 }
