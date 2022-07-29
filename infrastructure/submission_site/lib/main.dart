@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
             .apply(bodyColor: Colors.white),
         canvasColor: secondaryColor,
       ),
-      home: SubmissionView(builder.build()),
+      home: HomeRoute(builder.build()),
     );
   }
 }

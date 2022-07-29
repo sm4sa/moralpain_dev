@@ -1,49 +1,53 @@
 import 'package:flutter/material.dart';
-import 'package:moralpainapi/moralpainapi.dart' show Submission;
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:submission_site/home/home.dart';
-import 'package:submission_site/score/view/score_view.dart';
+import 'package:submission_site/score/score.dart';
 
-class SubmissionView extends StatelessWidget {
-  final Submission submission;
-
-  const SubmissionView(this.submission, {Key? key}) : super(key: key);
+class HomeView extends StatelessWidget {
+  const HomeView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text('Submission ID ${submission.id}')),
-      body: Center(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            FieldDisplay(
-              text:
-                  'Time submitted: ${submission.timestamp != null ? DateTime.fromMillisecondsSinceEpoch(
-                      submission.timestamp! * 1000,
-                    ).toString() : 'null'}',
-              onPressed: () {},
+    return BlocBuilder<HomeBloc, HomeState>(
+      builder: (context, state) {
+        final bloc = BlocProvider.of<HomeBloc>(context);
+        return Scaffold(
+          appBar: AppBar(title: Text('Submission ID ${state.id}')),
+          body: Center(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                FieldDisplay(
+                  text: 'Time submitted: ${DateTime.fromMillisecondsSinceEpoch(
+                    state.timestamp * 1000,
+                  ).toString()}',
+                  onPressed: () {},
+                ),
+                FieldDisplay(
+                  text: 'Score: ${state.score} out of 10',
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => BlocProvider<HomeBloc>.value(
+                          value: bloc,
+                          child: const ScoreRoute(),
+                        ),
+                        fullscreenDialog: true,
+                      ),
+                    );
+                  },
+                ),
+                FieldDisplay(
+                  text: 'Contributing factors: ${state.selections}',
+                  onPressed: () {},
+                ),
+              ],
             ),
-            FieldDisplay(
-              text: 'Score: ${submission.score} out of 10',
-              onPressed: () {
-                print('Score edit button pressed');
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const ScoreView(),
-                    fullscreenDialog: true,
-                  ),
-                );
-              },
-            ),
-            FieldDisplay(
-              text: 'Contributing factors: ${submission.selections}',
-              onPressed: () {},
-            ),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 }

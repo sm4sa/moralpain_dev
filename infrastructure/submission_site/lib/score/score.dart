@@ -1,1 +1,2 @@
-export 'view/score_view.dart';
+export 'cubit/score_cubit.dart';
+export 'view/view.dart';
