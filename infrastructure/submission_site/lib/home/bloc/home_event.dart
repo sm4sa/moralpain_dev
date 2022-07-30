@@ -21,3 +21,19 @@ class HomeScoreChanged extends HomeEvent {
   @override
   List<Object> get props => [score];
 }
+
+class HomeSelectionsChanged extends HomeEvent {
+  final List<String> selections;
+
+  const HomeSelectionsChanged(this.selections);
+
+  @override
+  List<Object> get props => [selections];
+}
+
+class HomeSurveyRequested extends HomeEvent {
+  const HomeSurveyRequested();
+
+  @override
+  List<Object> get props => [];
+}

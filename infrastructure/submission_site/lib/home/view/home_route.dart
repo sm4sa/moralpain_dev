@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:moralpainapi/moralpainapi.dart';
+import 'package:submission_site/api_repository.dart';
 import 'package:submission_site/home/home.dart';
 
 class HomeRoute extends StatelessWidget {
@@ -11,7 +12,10 @@ class HomeRoute extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<HomeBloc>(
-      create: (_) => HomeBloc(submission),
+      create: (_) => HomeBloc(
+        submission: submission,
+        repository: ApiRepository(),
+      )..add(const HomeSurveyRequested()),
       child: const HomeView(),
     );
   }

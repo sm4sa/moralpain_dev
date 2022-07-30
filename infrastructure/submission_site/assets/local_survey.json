@@ -1,0 +1,138 @@
+{
+    "version": "1.0.0",
+    "sections": [
+        {
+            "sectionId": "001",
+            "title": "Patient",
+            "subtitle": "Patient subtitle",
+            "options": [
+                {
+                    "id": "001_01",
+                    "description": "Feeling pressured to give unnecessary/inappropriate test and/or treatments"
+                },
+                {
+                    "id": "001_02",
+                    "description": "Having to continue aggressive treatment not in the patient's best interest"
+                },
+                {
+                    "id": "001_03",
+                    "description": "Causing unnecessary suffering or do not relieve pain/symptoms"
+                },
+                {
+                    "id": "001_04",
+                    "description": "Ignoring situations of inadequate informed consent"
+                },
+                {
+                    "id": "001_05",
+                    "description": "Witnessing providers giving \"false hope\" to patients/families"
+                },
+                {
+                    "id": "001_06",
+                    "description": "Other"
+                }
+            ]
+        },
+        {
+            "sectionId": "002",
+            "title": "Team",
+            "subtitle": "Team subtitle",
+            "options": [
+                {
+                    "id": "002_01",
+                    "description": "Seeing unclear/inconsistent treatment plans or goals of care"
+                },
+                {
+                    "id": "002_02",
+                    "description": "Witnessing lack of provider continuity"
+                },
+                {
+                    "id": "002_03",
+                    "description": "Fearing retribution if I speak up"
+                },
+                {
+                    "id": "002_04",
+                    "description": "Witnessing other team members not competent in providing quality care"
+                },
+                {
+                    "id": "002_05",
+                    "description": "Fearing litigation"
+                },
+                {
+                    "id": "002_06",
+                    "description": "Feeling pressured to ignore medical error(s)"
+                },
+                {
+                    "id": "002_07",
+                    "description": "Feeling not supported enough to report a violation of procedure/ethics"
+                },
+                {
+                    "id": "002_08",
+                    "description": "Working with teams who don't treat patients with dignity/respect"
+                },
+                {
+                    "id": "002_09",
+                    "description": "Feeling unsafe/bullied amongst own colleagues"
+                },
+                {
+                    "id": "002_10",
+                    "description": "Working within power structures that compromise patient care"
+                },
+                {
+                    "id": "002_11",
+                    "description": "Witnessing poor team communication"
+                },
+                {
+                    "id": "002_12",
+                    "description": "Witnessing inconsistent messages to patient/family"
+                },
+                {
+                    "id": "002_13",
+                    "description": "Other"
+                }
+            ]
+        },
+        {
+            "sectionId": "003",
+            "title": "System",
+            "subtitle": "System subtitle",
+            "options": [
+                {
+                    "id": "003_01",
+                    "description": "Caring for patients not qualified to care for"
+                },
+                {
+                    "id": "003_02",
+                    "description": "Caring for more patients than is safe"
+                },
+                {
+                    "id": "003_03",
+                    "description": "Experiencing lack of administrative/managerial support"
+                },
+                {
+                    "id": "003_04",
+                    "description": "Feeling required to work with abusive patients/family members"
+                },
+                {
+                    "id": "003_05",
+                    "description": "Feeling pressured from admin/insurers to reduce costs over patient care"
+                },
+                {
+                    "id": "003_06",
+                    "description": "Experiencing lack of resources/beds/equipment"
+                },
+                {
+                    "id": "003_07",
+                    "description": "Experiencing excessive documentation requirements"
+                },
+                {
+                    "id": "003_08",
+                    "description": "Feeling pressured to emphasize productivity/quality measures over patients"
+                },
+                {
+                    "id": "003_09",
+                    "description": "Other"
+                }
+            ]
+        }
+    ]
+}
