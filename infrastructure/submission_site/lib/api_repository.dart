@@ -1,3 +1,4 @@
+import 'package:built_collection/built_collection.dart';
 import 'package:flutter/services.dart';
 import 'package:logging/logging.dart';
 import 'package:moralpainapi/moralpainapi.dart';
@@ -23,6 +24,25 @@ class ApiRepository {
     mapi.dio.options.connectTimeout = 30 * 1000;
     mapi.dio.options.receiveTimeout = 30 * 1000;
     mapi.dio.options.sendTimeout = 30 * 1000;
+  }
+
+  /// Fetches the submission with the given ID.
+  Future<Submission> fetchSubmission(String id) async {
+    // TODO: have this method call the API client instead of returning a dummy
+    final builder = SubmissionBuilder();
+    builder.id = '119ada26-a0ba-4991-82f4-d6aa7c73c503';
+    builder.score = 4;
+    builder.timestamp = 1658944322;
+    builder.selections = ListBuilder(['001_01', '001_02', '001_03', '001_04']);
+    return builder.build();
+  }
+
+  /// Submits the given submission to the database.
+  ///
+  /// Returns true if submission is successful and false otherwise.
+  Future<bool> submitSubmission(Submission submission) async {
+    /// TODO: have this method call the API client instead of returning a dummy
+    return false;
   }
 
   /// Fetch the latest version of the moral distress survey from the API.

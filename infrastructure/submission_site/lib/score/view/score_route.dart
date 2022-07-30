@@ -10,7 +10,7 @@ class ScoreRoute extends StatelessWidget {
   Widget build(BuildContext context) {
     final bloc = BlocProvider.of<HomeBloc>(context);
     return BlocProvider<ScoreCubit>(
-      create: (_) => ScoreCubit(bloc.state.score),
+      create: (_) => ScoreCubit(bloc.state.score!),
       child: const ScoreView(),
     );
   }

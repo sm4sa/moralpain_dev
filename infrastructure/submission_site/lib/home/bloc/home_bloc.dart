@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-
+import 'package:built_collection/built_collection.dart';
 import 'package:equatable/equatable.dart';
 import 'package:moralpainapi/moralpainapi.dart';
 import 'package:submission_site/api_repository.dart';
@@ -12,19 +12,25 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   HomeBloc({required Submission submission, required this.repository})
       : super(
-          HomeState.fromSubmission(submission),
+          const HomeState(),
         ) {
     on<HomeTimestampChanged>(_onTimestampChanged);
     on<HomeScoreChanged>(_onScoreChanged);
     on<HomeSelectionsChanged>(_onSelectionsChanged);
+    on<HomeSubmissionRequested>(_onSubmissionRequested);
     on<HomeSurveyRequested>(_onSurveyRequested);
+    on<HomeChangesReverted>(_onChangesReverted);
+    on<HomeChangesSubmitted>(_onChangesSubmitted);
   }
 
   void _onTimestampChanged(
     HomeTimestampChanged event,
     Emitter<HomeState> emit,
   ) async {
-    emit(state.copyWith(timestamp: event.timestamp));
+    emit(state.copyWith(
+      timestamp: event.timestamp,
+      submitStatus: SubmitStatus.none,
+    ));
   }
 
   void _onScoreChanged(HomeScoreChanged event, Emitter<HomeState> emit) async {
@@ -35,7 +41,33 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     HomeSelectionsChanged event,
     Emitter<HomeState> emit,
   ) async {
-    emit(state.copyWith(selections: event.selections));
+    emit(state.copyWith(
+      selections: event.selections,
+      submitStatus: SubmitStatus.none,
+    ));
+  }
+
+  void _onSubmissionRequested(
+    HomeSubmissionRequested event,
+    Emitter<HomeState> emit,
+  ) async {
+    emit(state.copyWith(submissionStatus: SubmissionStatus.loading));
+    try {
+      Submission submission = await repository.fetchSubmission(
+        event.submissionId,
+      );
+      emit(state.copyWith(
+        id: submission.id!,
+        score: submission.score!,
+        timestamp: submission.timestamp!,
+        selections: submission.selections!.toList(),
+        submission: submission,
+        submissionStatus: SubmissionStatus.success,
+      ));
+      add(const HomeSurveyRequested());
+    } catch (err) {
+      emit(state.copyWith(submissionStatus: SubmissionStatus.failure));
+    }
   }
 
   void _onSurveyRequested(
@@ -48,6 +80,40 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       emit(state.copyWith(survey: survey, surveyStatus: SurveyStatus.success));
     } catch (err) {
       emit(state.copyWith(surveyStatus: SurveyStatus.failure));
+    }
+  }
+
+  void _onChangesReverted(
+    HomeChangesReverted event,
+    Emitter<HomeState> emit,
+  ) async {
+    emit(state.copyWith(
+      timestamp: state.submission!.timestamp,
+      score: state.submission!.score,
+      selections: state.submission!.selections!.toList(),
+      submitStatus: SubmitStatus.none,
+    ));
+  }
+
+  void _onChangesSubmitted(
+    HomeChangesSubmitted event,
+    Emitter<HomeState> emit,
+  ) async {
+    final builder = SubmissionBuilder();
+    builder.id = state.id!;
+    builder.timestamp = state.timestamp!;
+    builder.score = state.score!;
+    builder.selections = ListBuilder(state.selections!);
+    final newSubmission = builder.build();
+
+    final success = await repository.submitSubmission(newSubmission);
+    if (success) {
+      emit(state.copyWith(
+        submission: newSubmission,
+        submitStatus: SubmitStatus.success,
+      ));
+    } else {
+      emit(state.copyWith(submitStatus: SubmitStatus.failure));
     }
   }
 }

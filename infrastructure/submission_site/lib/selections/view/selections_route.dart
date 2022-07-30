@@ -10,7 +10,7 @@ class SelectionsRoute extends StatelessWidget {
   Widget build(BuildContext context) {
     final homeBloc = BlocProvider.of<HomeBloc>(context);
     return BlocProvider<SelectionsBloc>(
-      create: (_) => SelectionsBloc(homeBloc.state.selections),
+      create: (_) => SelectionsBloc(homeBloc.state.selections!),
       child: const SelectionsView(),
     );
   }

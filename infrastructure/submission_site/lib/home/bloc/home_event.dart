@@ -2,6 +2,9 @@ part of 'home_bloc.dart';
 
 abstract class HomeEvent extends Equatable {
   const HomeEvent();
+
+  @override
+  List<Object> get props => [];
 }
 
 class HomeTimestampChanged extends HomeEvent {
@@ -31,9 +34,23 @@ class HomeSelectionsChanged extends HomeEvent {
   List<Object> get props => [selections];
 }
 
-class HomeSurveyRequested extends HomeEvent {
-  const HomeSurveyRequested();
+class HomeSubmissionRequested extends HomeEvent {
+  final String submissionId;
+
+  const HomeSubmissionRequested(this.submissionId);
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [submissionId];
+}
+
+class HomeSurveyRequested extends HomeEvent {
+  const HomeSurveyRequested();
+}
+
+class HomeChangesReverted extends HomeEvent {
+  const HomeChangesReverted();
+}
+
+class HomeChangesSubmitted extends HomeEvent {
+  const HomeChangesSubmitted();
 }

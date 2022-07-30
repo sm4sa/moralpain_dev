@@ -10,7 +10,7 @@ class DatetimeRoute extends StatelessWidget {
   Widget build(BuildContext context) {
     final bloc = BlocProvider.of<HomeBloc>(context);
     return BlocProvider<DatetimeBloc>(
-      create: (_) => DatetimeBloc(bloc.state.timestamp),
+      create: (_) => DatetimeBloc(bloc.state.timestamp!),
       child: const DatetimeView(),
     );
   }
