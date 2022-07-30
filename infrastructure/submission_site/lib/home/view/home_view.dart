@@ -244,7 +244,7 @@ class HomeView extends StatelessWidget {
         break;
       case SubmitStatus.failure:
         alert = AlertDialog(
-          title: const Text('Error fetching submissions.'),
+          title: const Text('Error submitting changes.'),
           actions: [
             TextButton(
               onPressed: () {
