@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:submission_site/home/bloc/home_bloc.dart';
+import 'package:submission_site/home/home.dart';
 
 void main() {
   group('HomeTimestampChanged', () {
