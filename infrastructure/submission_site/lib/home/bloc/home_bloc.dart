@@ -10,7 +10,7 @@ part 'home_state.dart';
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final ApiRepository repository;
 
-  HomeBloc({required Submission submission, required this.repository})
+  HomeBloc({required this.repository})
       : super(
           const HomeState(),
         ) {

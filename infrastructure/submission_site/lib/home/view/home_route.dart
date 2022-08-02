@@ -13,7 +13,6 @@ class HomeRoute extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider<HomeBloc>(
       create: (_) => HomeBloc(
-        submission: submission,
         repository: ApiRepository(),
       )..add(const HomeSubmissionRequested(
           '119ada26-a0ba-4991-82f4-d6aa7c73c503',
