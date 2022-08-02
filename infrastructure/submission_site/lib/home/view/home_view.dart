@@ -214,10 +214,13 @@ class HomeView extends StatelessWidget {
   }
 
   String _getSelectionDescription(String id, Survey survey) {
+    List<String> ids = id.split('_');
     for (SurveySection section in survey.sections!) {
-      for (SurveyOption option in section.options!) {
-        if (option.id! == id) {
-          return option.description!;
+      if (section.sectionId! == ids[0]) {
+        for (SurveyOption option in section.options!) {
+          if (option.id! == ids[1]) {
+            return option.description!;
+          }
         }
       }
     }

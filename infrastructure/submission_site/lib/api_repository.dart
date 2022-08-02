@@ -33,7 +33,7 @@ class ApiRepository {
     builder.id = '119ada26-a0ba-4991-82f4-d6aa7c73c503';
     builder.score = 4;
     builder.timestamp = 1658944322;
-    builder.selections = ListBuilder(['001_01', '001_02', '001_03', '001_04']);
+    builder.selections = ListBuilder(['001_02', '001_03', '002_02', '004_06']);
     return builder.build();
   }
 

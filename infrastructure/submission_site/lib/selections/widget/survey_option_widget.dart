@@ -15,7 +15,7 @@ class SurveyOptionsWidget extends StatelessWidget {
     return Column(
       children: options.map(
         (option) {
-          return SurveyOptionListTile(option);
+          return SurveyOptionListTile(sectionId: sectionId, option: option);
         },
       ).toList(),
     );
@@ -23,9 +23,15 @@ class SurveyOptionsWidget extends StatelessWidget {
 }
 
 class SurveyOptionListTile extends StatefulWidget {
+  final String sectionId;
+
   final SurveyOption option;
 
-  const SurveyOptionListTile(this.option, {Key? key}) : super(key: key);
+  const SurveyOptionListTile({
+    required this.sectionId,
+    required this.option,
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<SurveyOptionListTile> createState() => _SurveyOptionListTileState();
@@ -37,7 +43,7 @@ class _SurveyOptionListTileState extends State<SurveyOptionListTile> {
   @override
   Widget build(BuildContext context) {
     final bloc = BlocProvider.of<SelectionsBloc>(context);
-    _checked = bloc.state.selections.contains(widget.option.id!);
+    _checked = bloc.state.selections.contains(_id);
     return CheckboxListTile(
       controlAffinity: ListTileControlAffinity.leading,
       title: Text(widget.option.description!),
@@ -47,11 +53,13 @@ class _SurveyOptionListTileState extends State<SurveyOptionListTile> {
           _checked = value!;
         });
         if (value!) {
-          bloc.add(SelectionsSelectionAdded(widget.option.id!));
+          bloc.add(SelectionsSelectionAdded(_id));
         } else {
-          bloc.add(SelectionsSelectionRemoved(widget.option.id!));
+          bloc.add(SelectionsSelectionRemoved(_id));
         }
       },
     );
   }
+
+  String get _id => '${widget.sectionId}_${widget.option.id!}';
 }
