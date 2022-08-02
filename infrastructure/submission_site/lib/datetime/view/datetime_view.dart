@@ -9,11 +9,11 @@ class DatetimeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<DatetimeBloc, DatetimeState>(
-      buildWhen: (previous, current) {
+      /*buildWhen: (previous, current) {
         return previous.year != current.year ||
             previous.month != current.month ||
             previous.day != current.day;
-      },
+      },*/
       builder: (context, state) {
         final datetimeBloc = BlocProvider.of<DatetimeBloc>(context);
         return Scaffold(
@@ -180,8 +180,13 @@ class DatetimeView extends StatelessWidget {
                             state.minute,
                             state.second,
                           );
+                          print('onPressed datetime is: ${datetime.year} '
+                              '${datetime.month} ${datetime.day} '
+                              '${datetime.hour} ${datetime.minute} '
+                              '${datetime.second}');
                           final int timestamp =
                               (datetime.millisecondsSinceEpoch / 1000) as int;
+                          print('onPressed timestamp is: $timestamp');
                           final homeBloc = BlocProvider.of<HomeBloc>(context);
                           homeBloc.add(HomeTimestampChanged(timestamp));
                           Navigator.pop(context);

@@ -39,7 +39,8 @@ class DatetimeState extends Equatable {
   }
 
   static DatetimeState fromTimestamp(int timestamp) {
-    final datetime = DateTime.fromMillisecondsSinceEpoch(timestamp * 1000);
+    final datetime =
+        DateTime.fromMillisecondsSinceEpoch(timestamp * 1000).toUtc();
     return DatetimeState(
       year: datetime.year,
       month: Month.fromInt(datetime.month),

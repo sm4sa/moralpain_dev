@@ -27,6 +27,7 @@ class HomeView extends StatelessWidget {
                   body: Center(child: CircularProgressIndicator()),
                 );
               case SurveyStatus.success:
+                print('HomeView timestamp: ${state.timestamp}');
                 final bloc = BlocProvider.of<HomeBloc>(context);
                 final areChanges =
                     state.timestamp != state.submission!.timestamp ||
@@ -48,9 +49,7 @@ class HomeView extends StatelessWidget {
                           children: [
                             FieldDisplay(
                               text:
-                                  'Time submitted: ${DateTime.fromMillisecondsSinceEpoch(
-                                state.timestamp! * 1000,
-                              ).toString()}',
+                                  'Time submitted: ${_displayTimestamp(state.timestamp!)}',
                               onPressed: () {
                                 Navigator.push(
                                   context,
@@ -201,6 +200,15 @@ class HomeView extends StatelessWidget {
       if (a[i] != b[i]) return false;
     }
     return true;
+  }
+
+  String _displayTimestamp(int timestamp) {
+    final datetime =
+        DateTime.fromMillisecondsSinceEpoch(timestamp * 1000).toUtc();
+    String datetimeString = datetime.toString();
+    datetimeString = datetimeString.substring(0, datetimeString.length - 5);
+    datetimeString += ' (UTC)';
+    return datetimeString;
   }
 
   String _displaySelections(List<String> selections, Survey survey) {
