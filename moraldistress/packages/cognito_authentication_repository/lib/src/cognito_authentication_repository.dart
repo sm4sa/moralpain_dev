@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
 
@@ -38,15 +40,15 @@ class CognitoAuthenticationRepository {
 
   Future<bool> isAuthenticated() async {
     try {
-      // NB (nphair): We need
-      final session = await Amplify.Auth.fetchAuthSession();
-      //final session = await Amplify.Auth.fetchAuthSession(
-      //  options: CognitoSessionOptions(getAWSCredentials: true),
-      //);
+      final session = await Amplify.Auth.fetchAuthSession(
+        options: CognitoSessionOptions(getAWSCredentials: true),
+      ).timeout(Duration(seconds: 15));
       return session.isSignedIn;
     } on SessionExpiredException {
       return false;
     } on SignedOutException {
+      return false;
+    } on TimeoutException {
       return false;
     } catch (e) {
       print('unexpected exception ${e}');
@@ -64,6 +66,22 @@ class CognitoAuthenticationRepository {
       await Amplify.Auth.signOut();
     } catch (e) {
       throw e;
+    }
+  }
+
+  // Async generator
+  Stream<AWSCredentials> latestCredentials() async* {
+    while (true) {
+      try {
+        final session = await Amplify.Auth.fetchAuthSession(
+          options: CognitoSessionOptions(getAWSCredentials: true),
+        ) as CognitoAuthSession;
+        yield session.credentials!;
+      } catch (e) {
+        print('unexpected exception ${e}');
+        throw e;
+      }
+      await Future<void>.delayed(const Duration(minutes: 1));
     }
   }
 }

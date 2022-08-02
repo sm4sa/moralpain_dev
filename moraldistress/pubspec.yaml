@@ -23,8 +23,11 @@ dependencies:
     path: packages/cognito_authentication_repository
   uva_themed_widgets:
     path: packages/uva_themed_widgets
+  aws_signature_v4_interceptor:
+    path: packages/aws_signature_v4_interceptor
   amplify_flutter: ^0.6.0
   amplify_auth_cognito: ^0.6.0
+  aws_common: ^0.1.0
 
 dev_dependencies:
   bloc_test: ^9.0.3

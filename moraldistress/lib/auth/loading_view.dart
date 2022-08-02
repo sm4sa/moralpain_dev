@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:uva_themed_widgets/uva_themed_widgets.dart';
 
 class LoadingView extends StatelessWidget {
   @override
@@ -6,7 +7,7 @@ class LoadingView extends StatelessWidget {
     return Container(
       color: Colors.white,
       child: Center(
-        child: CircularProgressIndicator(),
+        child: UVACircularProgressIndicator(),
       ),
     );
   }

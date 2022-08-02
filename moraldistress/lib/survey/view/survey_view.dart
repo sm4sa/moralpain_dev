@@ -70,15 +70,16 @@ class SurveyViewState extends State<SurveyView> {
       if (!state.success) {
         showDialog(context: context, builder: failedSubmitScreenBuilder);
       } else {
-        // TODO (nphair): APIRepository should aready exist. Figure out how
-        // to access it instead of creating a new one.
-
-        // Prevent going back after submitting.
+        Navigator.of(context, rootNavigator: true).pop();
         Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(
-                builder: (context) =>
-                    SubmittedRoute(repository: ApiRepository())),
+                builder: (_) => SubmittedRoute(
+                      repository:
+                          BlocProvider.of<SurveyBloc>(context).repository,
+                      authRepository:
+                          BlocProvider.of<SurveyBloc>(context).authRepository,
+                    )),
             (route) => route.isFirst);
       }
     } else {
