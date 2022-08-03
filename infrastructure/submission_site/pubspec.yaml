@@ -40,6 +40,7 @@ dependencies:
   logging: ^1.0.2
   expansion_tile_card: ^2.0.0
   mocktail: ^0.3.0
+  bloc_test: ^9.0.3
 
 dev_dependencies:
   flutter_test:
