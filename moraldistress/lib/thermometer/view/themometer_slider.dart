@@ -4,7 +4,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:moraldistress/thermometer/cubit/thermometer_cubit.dart';
-import 'package:moraldistress/assets/constants.dart' as Constants;
+import 'package:uva_themed_widgets/src/colors.dart' as uvacolors;
 
 class ThermometerSliderTrackShape extends SliderTrackShape {
   // TODO (nphair): Parameterize these.
@@ -195,7 +195,7 @@ class _ThermometerWidgetState extends State<ThermometerWidget> {
             activeTrackColor: Colors.black,
             trackShape: ThermometerSliderTrackShape(state.toInt()),
             showValueIndicator: ShowValueIndicator.never,
-            valueIndicatorColor: Color(Constants.COLORS_UVA_BLUE),
+            valueIndicatorColor: Color(uvacolors.COLORS_UVA_BLUE),
             thumbShape: ThermometerThumbShape(),
             overlayShape: RoundSliderOverlayShape(overlayRadius: 10),
           ),

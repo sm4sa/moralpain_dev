@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+const int COLORS_UVA_BLUE = 0xFF232D4B;
+const int COLORS_UVA_ORANGE = 0xFFE57200;
+
 const UVABlue = const MaterialColor(0xFF232D4B, const <int, Color>{
   50: const Color(0xFF202944),
   100: const Color(0xFF1C243C),
