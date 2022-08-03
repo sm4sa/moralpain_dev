@@ -33,6 +33,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/survey'
+      security:
+        - sigv4Reference: []
       x-amazon-apigateway-integration:
         httpMethod: get
         type: aws
@@ -77,6 +79,8 @@ paths:
             text/plain:
               schema:
                 type: string
+      security:
+        - sigv4Reference: []
       x-amazon-apigateway-integration:
         httpMethod: post
         type: aws_proxy
@@ -111,6 +115,8 @@ paths:
               schema:
                 type: string
           content: {}
+      security:
+        - sigv4Reference: []
       x-amazon-apigateway-integration:
         type: mock
         requestTemplates:
@@ -154,6 +160,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/resiliencyResources'
+      security:
+        - sigv4Reference: []
       x-amazon-apigateway-integration:
         httpMethod: get
         type: aws
@@ -231,6 +239,8 @@ paths:
               schema:
                 type: string
           content: {}
+      security:
+        - sigv4Reference: []
       x-amazon-apigateway-integration:
         type: mock
         requestTemplates:
@@ -303,6 +313,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/submissions'
+      security:
+        - sigv4Reference: []
       x-amazon-apigateway-integration:
         # NB (nphair): Post request are always used for invoking a lambda.
         # https://docs.aws.amazon.com/lambda/latest/dg/API_Invoke.html
@@ -339,6 +351,8 @@ paths:
               schema:
                 type: string
           content: {}
+      security:
+        - sigv4Reference: []
       x-amazon-apigateway-integration:
         type: mock
         requestTemplates:
@@ -423,6 +437,8 @@ paths:
             application/json:
               schema:
                 type: string
+      security:
+        - sigv4Reference: []
       x-amazon-apigateway-integration:
         # NB (nphair): Post request are always used for invoking a lambda.
         # https://docs.aws.amazon.com/lambda/latest/dg/API_Invoke.html
@@ -465,6 +481,8 @@ paths:
               schema:
                 type: string
           content: {}
+      security:
+        - sigv4Reference: []
       x-amazon-apigateway-integration:
         type: mock
         requestTemplates:
@@ -484,6 +502,12 @@ paths:
                 {}
 
 components:
+  securitySchemes:
+    sigv4Reference:
+      type: apiKey
+      name: Authorization
+      in: header
+      x-amazon-apigateway-authtype: awsSigv4
   schemas:
     survey:
       type: object
