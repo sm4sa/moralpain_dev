@@ -31,13 +31,19 @@ class ResourcesBloc extends Bloc<ResourcesEvent, ResourcesState> {
     on<ResourceVisitedEvent>(_onUpdate);
 
     credentialsStream =
-        authRepository.latestCredentials().listen(refreshCredentials);
+        authRepository.latestCredentialGenerator().listen(refreshCredentials);
   }
 
   void refreshCredentials(AWSCredentials credentials) {
     var credsSigFlavor = awssig.AWSCredentials(credentials.awsAccessKey!,
         credentials.awsSecretKey!, credentials.sessionToken);
     repository.credentialRefresh(credsSigFlavor);
+  }
+
+  @override
+  Future<void> close() async {
+    await credentialsStream?.cancel();
+    await super.close();
   }
 
   void _onLoad(ResourcesLoadEvent event, Emitter<ResourcesState> emit) async {

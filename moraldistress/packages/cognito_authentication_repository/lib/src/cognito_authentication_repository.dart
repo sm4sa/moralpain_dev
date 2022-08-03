@@ -56,6 +56,18 @@ class CognitoAuthenticationRepository {
     }
   }
 
+  Future<AWSCredentials> fetchUserCredentials() async {
+    try {
+      final session = await Amplify.Auth.fetchAuthSession(
+        options: CognitoSessionOptions(getAWSCredentials: true),
+      ).timeout(Duration(seconds: 15)) as CognitoAuthSession;
+      return session.credentials!;
+    } catch (e) {
+      print('failed to fetch user credentials');
+      throw e;
+    }
+  }
+
   Future<bool> signIn() async {
     final result = await Amplify.Auth.signInWithWebUI();
     return result.isSignedIn;
@@ -70,7 +82,7 @@ class CognitoAuthenticationRepository {
   }
 
   // Async generator
-  Stream<AWSCredentials> latestCredentials() async* {
+  Stream<AWSCredentials> latestCredentialGenerator() async* {
     while (true) {
       try {
         final session = await Amplify.Auth.fetchAuthSession(

@@ -23,7 +23,8 @@ class SubmittedView extends StatelessWidget {
       body: Submitted(),
       floatingActionButton: FloatingActionButton(
           onPressed: () {
-            context.read<ResourcesBloc>().add(VisitedResourcesSubmitEvent());
+            BlocProvider.of<ResourcesBloc>(context)
+                .add(VisitedResourcesSubmitEvent());
             Navigator.of(context).popUntil((route) => route.isFirst);
           },
           child: Icon(Icons.home_rounded)),

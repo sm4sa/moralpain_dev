@@ -8,18 +8,15 @@ import '../../auth/auth_cubit.dart';
 import 'submitted_view.dart';
 
 class SubmittedRoute extends StatelessWidget {
-  final ApiRepository repository;
-  final CognitoAuthenticationRepository authRepository;
-
-  const SubmittedRoute(
-      {Key? key, required this.repository, required this.authRepository});
+  const SubmittedRoute({Key? key});
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => ResourcesBloc(
-        repository: repository,
-        authRepository: authRepository,
+        repository: RepositoryProvider.of<ApiRepository>(context),
+        authRepository:
+            RepositoryProvider.of<CognitoAuthenticationRepository>(context),
       )..add(ResourcesLoadEvent()),
       child: SubmittedView(),
     );

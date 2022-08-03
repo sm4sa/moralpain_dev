@@ -3,16 +3,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {
-  final authRepo = CognitoAuthenticationRepository();
+  final CognitoAuthenticationRepository authRepo;
 
-  AuthCubit() : super(UnknownAuthState());
+  AuthCubit(this.authRepo) : super(UnknownAuthState());
 
   void signIn() async {
     try {
-      // Call signout to remove any old state. Docs warn of this -
-      // https://docs.amplify.aws/lib/auth/signin/q/platform/flutter/#sign-in-a-user
-      if (!await authRepo.isAuthenticated() || !await authRepo.isAuthorized()) {
-        signOut();
+      if (await shouldClearState()) {
+        await authRepo.signOut();
       }
 
       if (await authRepo.signIn() && await authRepo.isAuthorized()) {
@@ -23,6 +21,21 @@ class AuthCubit extends Cubit<AuthState> {
     } catch (e) {
       emit(Unauthenticated());
     }
+  }
+
+  /**
+   * Carefully call signout to remove any old state. 
+   * Docs warn of this -
+   * https://docs.amplify.aws/lib/auth/signin/q/platform/flutter/#sign-in-a-user
+   */
+  Future<bool> shouldClearState() async {
+    bool isauthn = await authRepo.isAuthenticated();
+    if (!isauthn) {
+      return false;
+    }
+
+    bool isauthz = await authRepo.isAuthorized();
+    return isauthz != isauthn;
   }
 
   void signOut() async {

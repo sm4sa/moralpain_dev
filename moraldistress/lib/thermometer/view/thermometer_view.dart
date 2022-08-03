@@ -1,3 +1,4 @@
+import 'package:cognito_authentication_repository/cognito_authentication_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -35,9 +36,6 @@ class ThermometerView extends StatelessWidget {
               context,
               MaterialPageRoute(
                   builder: (ctx) => SurveyRoute(
-                      repository: ApiRepository(),
-                      // NB (nphair): Not sure if it is best practive to reach into
-                      // the bloc for the state like this.
                       score: context.read<ThermometerCubit>().state.toInt())),
             );
           },

@@ -32,7 +32,7 @@ class SurveyBloc extends Bloc<SurveyEvent, SurveyState> {
     on<SurveyUpdateEvent>(_onUpdate);
 
     credentialsStream =
-        authRepository.latestCredentials().listen(refreshCredentials);
+        authRepository.latestCredentialGenerator().listen(refreshCredentials);
   }
 
   void refreshCredentials(AWSCredentials credentials) {
@@ -49,6 +49,11 @@ class SurveyBloc extends Bloc<SurveyEvent, SurveyState> {
 
   void _onLoad(SurveyLoadEvent event, Emitter<SurveyState> emit) async {
     emit(SurveyLoading());
+
+    if (!await repository.isSigning()) {
+      var creds = await authRepository.fetchUserCredentials();
+      refreshCredentials(creds);
+    }
 
     final data = await repository.fetchSurvey();
     emit(SurveyLoaded(data));

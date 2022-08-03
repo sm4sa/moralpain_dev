@@ -1,3 +1,4 @@
+import 'package:cognito_authentication_repository/cognito_authentication_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:moraldistress/api_repository.dart';
@@ -73,13 +74,7 @@ class SurveyViewState extends State<SurveyView> {
         Navigator.of(context, rootNavigator: true).pop();
         Navigator.pushAndRemoveUntil(
             context,
-            MaterialPageRoute(
-                builder: (_) => SubmittedRoute(
-                      repository:
-                          BlocProvider.of<SurveyBloc>(context).repository,
-                      authRepository:
-                          BlocProvider.of<SurveyBloc>(context).authRepository,
-                    )),
+            MaterialPageRoute(builder: (_) => SubmittedRoute()),
             (route) => route.isFirst);
       }
     } else {
