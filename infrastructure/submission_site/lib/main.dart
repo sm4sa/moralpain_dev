@@ -15,12 +15,6 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    final builder = SubmissionBuilder();
-    builder.id = '119ada26-a0ba-4991-82f4-d6aa7c73c503';
-    builder.score = 4;
-    builder.timestamp = 1658944322;
-    builder.selections = ListBuilder(['001_01', '001_02', '001_03', '001_04']);
-
     return MaterialApp(
       title: 'Flutter Admin Panel',
       theme: ThemeData.dark().copyWith(
@@ -29,7 +23,7 @@ class MyApp extends StatelessWidget {
             .apply(bodyColor: Colors.white),
         canvasColor: secondaryColor,
       ),
-      home: HomeRoute(builder.build()),
+      home: const HomeRoute(),
     );
   }
 }
