@@ -15,34 +15,50 @@ package org.openapitools.client.model;
 
 import java.util.Objects;
 import java.util.Arrays;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonTypeName;
-import com.fasterxml.jackson.annotation.JsonValue;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
+import com.google.gson.annotations.SerializedName;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.fasterxml.jackson.annotation.JsonTypeName;
+import java.io.IOException;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
+import com.google.gson.TypeAdapterFactory;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+
+import org.openapitools.client.JSON;
 
 /**
  * Icon
  */
-@JsonPropertyOrder({
-  Icon.JSON_PROPERTY_CODE_POINT,
-  Icon.JSON_PROPERTY_FONT_FAMILY,
-  Icon.JSON_PROPERTY_FONT_PACKAGE
-})
-@JsonTypeName("icon")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-07-10T00:48:17.818184-04:00[America/New_York]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-08-03T18:52:51.342920Z[Etc/UTC]")
 public class Icon {
-  public static final String JSON_PROPERTY_CODE_POINT = "codePoint";
+  public static final String SERIALIZED_NAME_CODE_POINT = "codePoint";
+  @SerializedName(SERIALIZED_NAME_CODE_POINT)
   private String codePoint;
 
-  public static final String JSON_PROPERTY_FONT_FAMILY = "fontFamily";
+  public static final String SERIALIZED_NAME_FONT_FAMILY = "fontFamily";
+  @SerializedName(SERIALIZED_NAME_FONT_FAMILY)
   private String fontFamily;
 
-  public static final String JSON_PROPERTY_FONT_PACKAGE = "fontPackage";
+  public static final String SERIALIZED_NAME_FONT_PACKAGE = "fontPackage";
+  @SerializedName(SERIALIZED_NAME_FONT_PACKAGE)
   private String fontPackage;
 
   public Icon() { 
@@ -60,16 +76,12 @@ public class Icon {
   **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
-  @JsonProperty(JSON_PROPERTY_CODE_POINT)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
   public String getCodePoint() {
     return codePoint;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_CODE_POINT)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setCodePoint(String codePoint) {
     this.codePoint = codePoint;
   }
@@ -87,16 +99,12 @@ public class Icon {
   **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
-  @JsonProperty(JSON_PROPERTY_FONT_FAMILY)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
   public String getFontFamily() {
     return fontFamily;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_FONT_FAMILY)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setFontFamily(String fontFamily) {
     this.fontFamily = fontFamily;
   }
@@ -114,19 +122,16 @@ public class Icon {
   **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
-  @JsonProperty(JSON_PROPERTY_FONT_PACKAGE)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
   public String getFontPackage() {
     return fontPackage;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_FONT_PACKAGE)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setFontPackage(String fontPackage) {
     this.fontPackage = fontPackage;
   }
+
 
 
   @Override
@@ -170,5 +175,101 @@ public class Icon {
     return o.toString().replace("\n", "\n    ");
   }
 
+
+  public static HashSet<String> openapiFields;
+  public static HashSet<String> openapiRequiredFields;
+
+  static {
+    // a set of all properties/fields (JSON key names)
+    openapiFields = new HashSet<String>();
+    openapiFields.add("codePoint");
+    openapiFields.add("fontFamily");
+    openapiFields.add("fontPackage");
+
+    // a set of required properties/fields (JSON key names)
+    openapiRequiredFields = new HashSet<String>();
+  }
+
+ /**
+  * Validates the JSON Object and throws an exception if issues found
+  *
+  * @param jsonObj JSON Object
+  * @throws IOException if the JSON Object is invalid with respect to Icon
+  */
+  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
+      if (jsonObj == null) {
+        if (Icon.openapiRequiredFields.isEmpty()) {
+          return;
+        } else { // has required fields
+          throw new IllegalArgumentException(String.format("The required field(s) %s in Icon is not found in the empty JSON string", Icon.openapiRequiredFields.toString()));
+        }
+      }
+
+      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
+      // check to see if the JSON string contains additional fields
+      for (Entry<String, JsonElement> entry : entries) {
+        if (!Icon.openapiFields.contains(entry.getKey())) {
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `Icon` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+        }
+      }
+      if (jsonObj.get("codePoint") != null && !jsonObj.get("codePoint").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `codePoint` to be a primitive type in the JSON string but got `%s`", jsonObj.get("codePoint").toString()));
+      }
+      if (jsonObj.get("fontFamily") != null && !jsonObj.get("fontFamily").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `fontFamily` to be a primitive type in the JSON string but got `%s`", jsonObj.get("fontFamily").toString()));
+      }
+      if (jsonObj.get("fontPackage") != null && !jsonObj.get("fontPackage").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `fontPackage` to be a primitive type in the JSON string but got `%s`", jsonObj.get("fontPackage").toString()));
+      }
+  }
+
+  public static class CustomTypeAdapterFactory implements TypeAdapterFactory {
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
+       if (!Icon.class.isAssignableFrom(type.getRawType())) {
+         return null; // this class only serializes 'Icon' and its subtypes
+       }
+       final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
+       final TypeAdapter<Icon> thisAdapter
+                        = gson.getDelegateAdapter(this, TypeToken.get(Icon.class));
+
+       return (TypeAdapter<T>) new TypeAdapter<Icon>() {
+           @Override
+           public void write(JsonWriter out, Icon value) throws IOException {
+             JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
+             elementAdapter.write(out, obj);
+           }
+
+           @Override
+           public Icon read(JsonReader in) throws IOException {
+             JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
+             validateJsonObject(jsonObj);
+             return thisAdapter.fromJsonTree(jsonObj);
+           }
+
+       }.nullSafe();
+    }
+  }
+
+ /**
+  * Create an instance of Icon given an JSON string
+  *
+  * @param jsonString JSON string
+  * @return An instance of Icon
+  * @throws IOException if the JSON string is invalid with respect to Icon
+  */
+  public static Icon fromJson(String jsonString) throws IOException {
+    return JSON.getGson().fromJson(jsonString, Icon.class);
+  }
+
+ /**
+  * Convert an instance of Icon to an JSON string
+  *
+  * @return JSON string
+  */
+  public String toJson() {
+    return JSON.getGson().toJson(this);
+  }
 }
 

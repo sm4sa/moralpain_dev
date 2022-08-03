@@ -111,6 +111,7 @@ class AdminApi {
   /// * [starttime] - Minimum possible timestamp of a record in UTC seconds since Unix epoch.
   /// * [endtime] - Maximum possible timestamp of a record in UTC seconds since Unix epoch.
   /// * [minscore] - Minimum possible score of a record.
+  /// * [uuid] - If this parameter is set, all other parameters are ignored. This method fetches  only the submission with the given UUID, or an empty list if no such submission  exists. 
   /// * [maxscore] - Maximum possible score of a record.
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
@@ -125,6 +126,7 @@ class AdminApi {
     int? starttime,
     int? endtime,
     int? minscore,
+    String? uuid,
     int? maxscore,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -150,6 +152,7 @@ class AdminApi {
       if (starttime != null) r'starttime': encodeQueryParameter(_serializers, starttime, const FullType(int)),
       if (endtime != null) r'endtime': encodeQueryParameter(_serializers, endtime, const FullType(int)),
       if (minscore != null) r'minscore': encodeQueryParameter(_serializers, minscore, const FullType(int)),
+      if (uuid != null) r'uuid': encodeQueryParameter(_serializers, uuid, const FullType(String)),
       if (maxscore != null) r'maxscore': encodeQueryParameter(_serializers, maxscore, const FullType(int)),
     };
 

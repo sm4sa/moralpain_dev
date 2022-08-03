@@ -10,9 +10,8 @@ All URIs are relative to *http://localhost*
 | [**submitVisitedResiliencyResources**](UserApi.md#submitVisitedResiliencyResources) | **POST** /resiliency | Submit visited resiliency resources |
 
 
-
-## getResiliencyResources
-
+<a name="getResiliencyResources"></a>
+# **getResiliencyResources**
 > ResiliencyResources getResiliencyResources()
 
 Get resiliency resources
@@ -20,7 +19,6 @@ Get resiliency resources
 Fetch the recommended resiliency resources from the database. 
 
 ### Example
-
 ```java
 // Import classes:
 import org.openapitools.client.ApiClient;
@@ -30,27 +28,26 @@ import org.openapitools.client.models.*;
 import org.openapitools.client.api.UserApi;
 
 public class Example {
-    public static void main(String[] args) {
-        ApiClient defaultClient = Configuration.getDefaultApiClient();
-        defaultClient.setBasePath("http://localhost");
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost");
 
-        UserApi apiInstance = new UserApi(defaultClient);
-        try {
-            ResiliencyResources result = apiInstance.getResiliencyResources();
-            System.out.println(result);
-        } catch (ApiException e) {
-            System.err.println("Exception when calling UserApi#getResiliencyResources");
-            System.err.println("Status code: " + e.getCode());
-            System.err.println("Reason: " + e.getResponseBody());
-            System.err.println("Response headers: " + e.getResponseHeaders());
-            e.printStackTrace();
-        }
+    UserApi apiInstance = new UserApi(defaultClient);
+    try {
+      ResiliencyResources result = apiInstance.getResiliencyResources();
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling UserApi#getResiliencyResources");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
     }
+  }
 }
 ```
 
 ### Parameters
-
 This endpoint does not need any parameter.
 
 ### Return type
@@ -63,18 +60,16 @@ No authorization required
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
-- **Accept**: application/json
-
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | 200 response |  * Access-Control-Allow-Origin -  <br>  * Access-Control-Allow-Methods -  <br>  * Access-Control-Allow-Headers -  <br>  |
 
-
-## getSurvey
-
+<a name="getSurvey"></a>
+# **getSurvey**
 > Survey getSurvey()
 
 Get the MDQ
@@ -82,7 +77,6 @@ Get the MDQ
 Fetch the latest moral distress questionnaire (MDQ) from the database. 
 
 ### Example
-
 ```java
 // Import classes:
 import org.openapitools.client.ApiClient;
@@ -92,27 +86,26 @@ import org.openapitools.client.models.*;
 import org.openapitools.client.api.UserApi;
 
 public class Example {
-    public static void main(String[] args) {
-        ApiClient defaultClient = Configuration.getDefaultApiClient();
-        defaultClient.setBasePath("http://localhost");
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost");
 
-        UserApi apiInstance = new UserApi(defaultClient);
-        try {
-            Survey result = apiInstance.getSurvey();
-            System.out.println(result);
-        } catch (ApiException e) {
-            System.err.println("Exception when calling UserApi#getSurvey");
-            System.err.println("Status code: " + e.getCode());
-            System.err.println("Reason: " + e.getResponseBody());
-            System.err.println("Response headers: " + e.getResponseHeaders());
-            e.printStackTrace();
-        }
+    UserApi apiInstance = new UserApi(defaultClient);
+    try {
+      Survey result = apiInstance.getSurvey();
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling UserApi#getSurvey");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
     }
+  }
 }
 ```
 
 ### Parameters
-
 This endpoint does not need any parameter.
 
 ### Return type
@@ -125,18 +118,16 @@ No authorization required
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
-- **Accept**: application/json
-
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | 200 response |  * Access-Control-Allow-Origin -  <br>  * Access-Control-Allow-Methods -  <br>  * Access-Control-Allow-Headers -  <br>  |
 
-
-## submitSurvey
-
+<a name="submitSurvey"></a>
+# **submitSurvey**
 > String submitSurvey(submission)
 
 Submit a completed MDQ
@@ -144,38 +135,43 @@ Submit a completed MDQ
 Submit a completed Moral Distress Questionnaire and Moral Distress Score to the database. 
 
 ### Example
-
 ```java
 // Import classes:
 import org.openapitools.client.ApiClient;
 import org.openapitools.client.ApiException;
 import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
 import org.openapitools.client.models.*;
 import org.openapitools.client.api.UserApi;
 
 public class Example {
-    public static void main(String[] args) {
-        ApiClient defaultClient = Configuration.getDefaultApiClient();
-        defaultClient.setBasePath("http://localhost");
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost");
+    
+    // Configure API key authorization: UserPool
+    ApiKeyAuth UserPool = (ApiKeyAuth) defaultClient.getAuthentication("UserPool");
+    UserPool.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //UserPool.setApiKeyPrefix("Token");
 
-        UserApi apiInstance = new UserApi(defaultClient);
-        Submission submission = new Submission(); // Submission | 
-        try {
-            String result = apiInstance.submitSurvey(submission);
-            System.out.println(result);
-        } catch (ApiException e) {
-            System.err.println("Exception when calling UserApi#submitSurvey");
-            System.err.println("Status code: " + e.getCode());
-            System.err.println("Reason: " + e.getResponseBody());
-            System.err.println("Response headers: " + e.getResponseHeaders());
-            e.printStackTrace();
-        }
+    UserApi apiInstance = new UserApi(defaultClient);
+    Submission submission = new Submission(); // Submission | 
+    try {
+      String result = apiInstance.submitSurvey(submission);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling UserApi#submitSurvey");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
     }
+  }
 }
 ```
 
 ### Parameters
-
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
@@ -187,22 +183,20 @@ public class Example {
 
 ### Authorization
 
-No authorization required
+[UserPool](../README.md#UserPool)
 
 ### HTTP request headers
 
-- **Content-Type**: application/json
-- **Accept**: text/plain
-
+ - **Content-Type**: application/json
+ - **Accept**: text/plain
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | 200 response |  * Access-Control-Allow-Origin -  <br>  * Access-Control-Allow-Methods -  <br>  * Access-Control-Allow-Headers -  <br>  |
 
-
-## submitVisitedResiliencyResources
-
+<a name="submitVisitedResiliencyResources"></a>
+# **submitVisitedResiliencyResources**
 > String submitVisitedResiliencyResources(visitedResiliencyResources)
 
 Submit visited resiliency resources
@@ -210,38 +204,43 @@ Submit visited resiliency resources
 Submit the list of resources visited by this user to the database. 
 
 ### Example
-
 ```java
 // Import classes:
 import org.openapitools.client.ApiClient;
 import org.openapitools.client.ApiException;
 import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
 import org.openapitools.client.models.*;
 import org.openapitools.client.api.UserApi;
 
 public class Example {
-    public static void main(String[] args) {
-        ApiClient defaultClient = Configuration.getDefaultApiClient();
-        defaultClient.setBasePath("http://localhost");
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost");
+    
+    // Configure API key authorization: UserPool
+    ApiKeyAuth UserPool = (ApiKeyAuth) defaultClient.getAuthentication("UserPool");
+    UserPool.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //UserPool.setApiKeyPrefix("Token");
 
-        UserApi apiInstance = new UserApi(defaultClient);
-        VisitedResiliencyResources visitedResiliencyResources = new VisitedResiliencyResources(); // VisitedResiliencyResources | 
-        try {
-            String result = apiInstance.submitVisitedResiliencyResources(visitedResiliencyResources);
-            System.out.println(result);
-        } catch (ApiException e) {
-            System.err.println("Exception when calling UserApi#submitVisitedResiliencyResources");
-            System.err.println("Status code: " + e.getCode());
-            System.err.println("Reason: " + e.getResponseBody());
-            System.err.println("Response headers: " + e.getResponseHeaders());
-            e.printStackTrace();
-        }
+    UserApi apiInstance = new UserApi(defaultClient);
+    VisitedResiliencyResources visitedResiliencyResources = new VisitedResiliencyResources(); // VisitedResiliencyResources | 
+    try {
+      String result = apiInstance.submitVisitedResiliencyResources(visitedResiliencyResources);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling UserApi#submitVisitedResiliencyResources");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
     }
+  }
 }
 ```
 
 ### Parameters
-
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
@@ -253,13 +252,12 @@ public class Example {
 
 ### Authorization
 
-No authorization required
+[UserPool](../README.md#UserPool)
 
 ### HTTP request headers
 
-- **Content-Type**: application/json
-- **Accept**: text/plain
-
+ - **Content-Type**: application/json
+ - **Accept**: text/plain
 
 ### HTTP response details
 | Status code | Description | Response headers |
