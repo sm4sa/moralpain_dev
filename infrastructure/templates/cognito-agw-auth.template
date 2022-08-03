@@ -34,6 +34,18 @@ Resources:
           AttributeDataType: String
           Mutable: false
           Required: true
+        - Name: experimentRole
+          AttributeDataType: String
+          Mutable: false
+          Required: false
+        - Name: experimentRole2
+          AttributeDataType: String
+          Mutable: false
+          Required: false
+        - Name: experimentRole3
+          AttributeDataType: String
+          Mutable: true
+          Required: false
 
   UserPoolDomain: 
     Type: AWS::Cognito::UserPoolDomain 
