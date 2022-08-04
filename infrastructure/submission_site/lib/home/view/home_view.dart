@@ -9,7 +9,6 @@ class HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<HomeBloc, HomeState>(
       builder: (context, state) {
-        print('rebuilding HomeView!');
         switch (state.submissionStatus) {
           case SubmissionStatus.initial:
           case SubmissionStatus.loading:
