@@ -31,12 +31,12 @@ class HomeView extends StatelessWidget {
                 final areChanges =
                     state.timestamp != state.submission!.timestamp ||
                         state.score != state.submission!.score ||
-                        !_areListsEqual(
+                        !areListsEqual(
                           state.selections!,
                           state.submission!.selections!.toList(),
                         );
                 WidgetsBinding.instance.addPostFrameCallback(
-                    (_) => _showSubmitStatusDialog(context, state));
+                    (_) => showSubmitStatusDialog(context, state));
                 return Scaffold(
                   appBar: AppBar(title: Text('Submission ID ${state.id}')),
                   body: Center(
@@ -51,7 +51,7 @@ class HomeView extends StatelessWidget {
                               children: [
                                 FieldDisplay(
                                   text:
-                                      'Time submitted: ${_displayTimestamp(state.timestamp!)}',
+                                      'Time submitted: ${displayTimestamp(state.timestamp!)}',
                                   onPressed: () {
                                     Navigator.push(
                                       context,
@@ -83,8 +83,8 @@ class HomeView extends StatelessWidget {
                                   },
                                 ),
                                 FieldDisplay(
-                                  text: 'Contributing factors:'
-                                      '${_displaySelections(state.selections!, state.survey!)}',
+                                  text: 'Contributing factors: '
+                                      '${displaySelections(state.selections!, state.survey!)}',
                                   onPressed: () {
                                     Navigator.push(
                                       context,
@@ -202,7 +202,8 @@ class HomeView extends StatelessWidget {
     );
   }
 
-  bool _areListsEqual(List a, List b) {
+  @visibleForTesting
+  static bool areListsEqual(List a, List b) {
     if (a.length != b.length) return false;
     for (int i = 0; i < a.length; i++) {
       if (a[i] != b[i]) return false;
@@ -210,7 +211,8 @@ class HomeView extends StatelessWidget {
     return true;
   }
 
-  String _displayTimestamp(int timestamp) {
+  @visibleForTesting
+  static String displayTimestamp(int timestamp) {
     final datetime =
         DateTime.fromMillisecondsSinceEpoch(timestamp * 1000).toUtc();
     String datetimeString = datetime.toString();
@@ -219,17 +221,19 @@ class HomeView extends StatelessWidget {
     return datetimeString;
   }
 
-  String _displaySelections(List<String> selections, Survey survey) {
+  @visibleForTesting
+  static String displaySelections(List<String> selections, Survey survey) {
     if (selections.isEmpty) return ' none';
     String ret = '\n';
     for (String id in selections) {
-      ret += '• ${_getSelectionDescription(id, survey)}';
+      ret += '• ${getSelectionDescription(id, survey)}';
       if (id != selections.last) ret += '\n';
     }
     return ret;
   }
 
-  String _getSelectionDescription(String id, Survey survey) {
+  @visibleForTesting
+  static String getSelectionDescription(String id, Survey survey) {
     List<String> ids = id.split('_');
     for (SurveySection section in survey.sections!) {
       if (section.sectionId! == ids[0]) {
@@ -243,7 +247,8 @@ class HomeView extends StatelessWidget {
     return 'Couldn\'t find description.';
   }
 
-  void _showSubmitStatusDialog(BuildContext context, HomeState state) {
+  @visibleForTesting
+  static void showSubmitStatusDialog(BuildContext context, HomeState state) {
     AlertDialog alert;
     switch (state.submitStatus) {
       case SubmitStatus.none:
