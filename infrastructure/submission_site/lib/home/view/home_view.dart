@@ -27,7 +27,6 @@ class HomeView extends StatelessWidget {
                   body: Center(child: CircularProgressIndicator()),
                 );
               case SurveyStatus.success:
-                print('HomeView timestamp: ${state.timestamp}');
                 final bloc = BlocProvider.of<HomeBloc>(context);
                 final areChanges =
                     state.timestamp != state.submission!.timestamp ||
