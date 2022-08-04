@@ -7,7 +7,7 @@ import 'package:submission_site/score/score.dart';
 import 'package:submission_site/selections/selections.dart';
 
 class FieldList extends StatelessWidget {
-  const FieldList({Key? key}) : super(key: key);
+  FieldList({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
