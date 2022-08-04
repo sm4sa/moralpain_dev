@@ -40,137 +40,146 @@ class HomeView extends StatelessWidget {
                 return Scaffold(
                   appBar: AppBar(title: Text('Submission ID ${state.id}')),
                   body: Center(
-                    child: Expanded(
-                      child: SingleChildScrollView(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            FieldDisplay(
-                              text:
-                                  'Time submitted: ${_displayTimestamp(state.timestamp!)}',
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        BlocProvider<HomeBloc>.value(
-                                      value: bloc,
-                                      child: const DatetimeRoute(),
-                                    ),
-                                    fullscreenDialog: true,
-                                  ),
-                                );
-                              },
-                            ),
-                            FieldDisplay(
-                              text: 'Score: ${state.score} out of 10',
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        BlocProvider<HomeBloc>.value(
-                                      value: bloc,
-                                      child: const ScoreRoute(),
-                                    ),
-                                    fullscreenDialog: true,
-                                  ),
-                                );
-                              },
-                            ),
-                            FieldDisplay(
-                              text: 'Contributing factors:'
-                                  '${_displaySelections(state.selections!, state.survey!)}',
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        BlocProvider<HomeBloc>.value(
-                                      value: bloc,
-                                      child: const SelectionsRoute(),
-                                    ),
-                                    fullscreenDialog: true,
-                                  ),
-                                );
-                              },
-                            ),
-                            const SizedBox(height: 50.0),
-                            Row(
+                    child: Flex(
+                      direction: Axis.horizontal,
+                      children: [
+                        Expanded(
+                          child: SingleChildScrollView(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                ElevatedButton(
-                                  onPressed: areChanges
-                                      ? () {
-                                          final alert = AlertDialog(
-                                            title: const Text(
-                                              'Are you sure you want to revert your changes?',
-                                            ),
-                                            actions: [
-                                              TextButton(
-                                                onPressed: () {
-                                                  Navigator.of(context).pop();
-                                                },
-                                                child: const Text('No'),
-                                              ),
-                                              TextButton(
-                                                onPressed: () {
-                                                  bloc.add(
-                                                    const HomeChangesReverted(),
-                                                  );
-                                                  Navigator.of(context).pop();
-                                                },
-                                                child: const Text('Yes'),
-                                              )
-                                            ],
-                                          );
-                                          showDialog(
-                                              context: context,
-                                              builder: (_) => alert);
-                                        }
-                                      : null,
-                                  child: const Text('Revert Changes'),
+                                FieldDisplay(
+                                  text:
+                                      'Time submitted: ${_displayTimestamp(state.timestamp!)}',
+                                  onPressed: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            BlocProvider<HomeBloc>.value(
+                                          value: bloc,
+                                          child: const DatetimeRoute(),
+                                        ),
+                                        fullscreenDialog: true,
+                                      ),
+                                    );
+                                  },
                                 ),
-                                const SizedBox(width: 30.0),
-                                ElevatedButton(
-                                  onPressed: areChanges
-                                      ? () {
-                                          final alert = AlertDialog(
-                                            title: const Text(
-                                              'Are you sure you want to submit your changes?',
-                                            ),
-                                            actions: [
-                                              TextButton(
-                                                onPressed: () {
-                                                  Navigator.of(context).pop();
-                                                },
-                                                child: const Text('No'),
-                                              ),
-                                              TextButton(
-                                                onPressed: () async {
-                                                  bloc.add(
-                                                    const HomeChangesSubmitted(),
-                                                  );
-                                                  Navigator.of(context).pop();
-                                                },
-                                                child: const Text('Yes'),
-                                              )
-                                            ],
-                                          );
-                                          showDialog(
-                                              context: context,
-                                              builder: (_) => alert);
-                                        }
-                                      : null,
-                                  child: const Text('Submit Changes'),
+                                FieldDisplay(
+                                  text: 'Score: ${state.score} out of 10',
+                                  onPressed: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            BlocProvider<HomeBloc>.value(
+                                          value: bloc,
+                                          child: const ScoreRoute(),
+                                        ),
+                                        fullscreenDialog: true,
+                                      ),
+                                    );
+                                  },
                                 ),
-                                const SizedBox(height: 50.0)
+                                FieldDisplay(
+                                  text: 'Contributing factors:'
+                                      '${_displaySelections(state.selections!, state.survey!)}',
+                                  onPressed: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            BlocProvider<HomeBloc>.value(
+                                          value: bloc,
+                                          child: const SelectionsRoute(),
+                                        ),
+                                        fullscreenDialog: true,
+                                      ),
+                                    );
+                                  },
+                                ),
+                                const SizedBox(height: 50.0),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    ElevatedButton(
+                                      onPressed: areChanges
+                                          ? () {
+                                              final alert = AlertDialog(
+                                                title: const Text(
+                                                  'Are you sure you want to revert your changes?',
+                                                ),
+                                                actions: [
+                                                  TextButton(
+                                                    onPressed: () {
+                                                      Navigator.of(context)
+                                                          .pop();
+                                                    },
+                                                    child: const Text('No'),
+                                                  ),
+                                                  TextButton(
+                                                    onPressed: () {
+                                                      bloc.add(
+                                                        const HomeChangesReverted(),
+                                                      );
+                                                      Navigator.of(context)
+                                                          .pop();
+                                                    },
+                                                    child: const Text('Yes'),
+                                                  )
+                                                ],
+                                              );
+                                              showDialog(
+                                                  context: context,
+                                                  builder: (_) => alert);
+                                            }
+                                          : null,
+                                      child: const Text('Revert Changes'),
+                                    ),
+                                    const SizedBox(width: 30.0),
+                                    ElevatedButton(
+                                      onPressed: areChanges
+                                          ? () {
+                                              final alert = AlertDialog(
+                                                title: const Text(
+                                                  'Are you sure you want to submit your changes?',
+                                                ),
+                                                actions: [
+                                                  TextButton(
+                                                    onPressed: () {
+                                                      Navigator.of(context)
+                                                          .pop();
+                                                    },
+                                                    child: const Text('No'),
+                                                  ),
+                                                  TextButton(
+                                                    onPressed: () async {
+                                                      bloc.add(
+                                                        const HomeChangesSubmitted(),
+                                                      );
+                                                      Navigator.of(context)
+                                                          .pop();
+                                                    },
+                                                    child: const Text('Yes'),
+                                                  )
+                                                ],
+                                              );
+                                              showDialog(
+                                                  context: context,
+                                                  builder: (_) => alert);
+                                            }
+                                          : null,
+                                      child: const Text('Submit Changes'),
+                                    ),
+                                    const SizedBox(height: 50.0)
+                                  ],
+                                )
                               ],
-                            )
-                          ],
-                        ),
-                      ),
+                            ),
+                          ),
+                        )
+                      ],
                     ),
                   ),
                 );

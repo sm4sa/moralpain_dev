@@ -12,8 +12,7 @@ class FieldDisplay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
+    return Wrap(
       children: [
         Text(
           text,
