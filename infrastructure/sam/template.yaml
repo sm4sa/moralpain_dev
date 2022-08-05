@@ -5,6 +5,12 @@ Description: >
 
   SAM Template for moralpain
 
+Parameters:
+  Prefix:
+    Description: unique identifier for resources
+    Type: String
+    Default: ''
+
 # More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
 Globals:
   Function:
@@ -21,7 +27,7 @@ Resources:
   SubmitSurveyFunction:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
-      FunctionName: SubmitSurvey
+      FunctionName: !Sub ${Prefix}SubmitSurvey
       CodeUri: MoralPainFunctions
       Handler: edu.uva.cs.moralpain.s3.UniqueKeyUploader::handleRequest
       Runtime: java8.al2
@@ -44,7 +50,7 @@ Resources:
   SubmitVisitedResiliencyResourcesFunction:
     Type: AWS::Serverless::Function
     Properties:
-      FunctionName: SubmitVisitedResiliencyResources
+      FunctionName: !Sub ${Prefix}SubmitVisitedResiliencyResources
       CodeUri: MoralPainFunctions
       Handler: edu.uva.cs.moralpain.s3.UniqueKeyUploader::handleRequest
       Runtime: java8.al2
@@ -67,7 +73,7 @@ Resources:
   FetchSubmissionsFunction:
     Type: AWS::Serverless::Function
     Properties:
-      FunctionName: FetchSubmissions
+      FunctionName: !Sub ${Prefix}FetchSubmissions
       CodeUri: MoralPainFunctions
       Handler: edu.uva.cs.moralpain.s3.SubmissionFetcher::handleRequest
       Runtime: java8.al2
@@ -90,7 +96,7 @@ Resources:
   AnalyzeSubmissionsFunction:
     Type: AWS::Serverless::Function
     Properties:
-      FunctionName: AnalyzeSubmissions
+      FunctionName: !Sub ${Prefix}AnalyzeSubmissions
       CodeUri: MoralPainFunctions
       Handler: edu.uva.cs.moralpain.s3.SubmissionAnalyzer::handleRequest
       Runtime: java8.al2
