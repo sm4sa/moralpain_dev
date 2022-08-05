@@ -3,7 +3,7 @@ version=0.1
 stack_name = "moralpain-api"
 
 [default.deploy.parameters]
-s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-mg5hrwidlmdq"
+s3_bucket = "moralpain-templates"
 region = "us-east-1"
 confirm_changeset = true
 capabilities = "CAPABILITY_IAM"
