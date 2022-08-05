@@ -290,6 +290,15 @@ paths:
             minimum: 0
             maximum: 10
           example: 5
+        - in: query
+          name: uuid
+          description: >
+            If this parameter is specified, all other parameters are ignored
+            and only the submission with the given UUID is fetched.
+            If no such submission exists, an empty list is fetched.
+          schema:
+            type: string
+          example: f2f2011c8d2547849dfce99ae4b75797
       responses:
         '200':
           description: 200 response

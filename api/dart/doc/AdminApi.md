@@ -61,7 +61,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **getSubmissions**
-> Submissions getSubmissions(starttime, endtime, minscore, maxscore)
+> Submissions getSubmissions(starttime, endtime, minscore, maxscore, uuid)
 
 Get survey results
 
@@ -76,9 +76,10 @@ final int starttime = 1640995200; // int | Minimum possible timestamp of a recor
 final int endtime = 1647907200; // int | Maximum possible timestamp of a record in UTC seconds since Unix epoch.
 final int minscore = 1; // int | Minimum possible score of a record.
 final int maxscore = 5; // int | Maximum possible score of a record.
+final String uuid = f2f2011c8d2547849dfce99ae4b75797; // String | If this parameter is specified, all other parameters are ignored and only the submission with the given UUID is fetched. If no such submission exists, an empty list is fetched. 
 
 try {
-    final response = api.getSubmissions(starttime, endtime, minscore, maxscore);
+    final response = api.getSubmissions(starttime, endtime, minscore, maxscore, uuid);
     print(response);
 } catch on DioError (e) {
     print('Exception when calling AdminApi->getSubmissions: $e\n');
@@ -93,6 +94,7 @@ Name | Type | Description  | Notes
  **endtime** | **int**| Maximum possible timestamp of a record in UTC seconds since Unix epoch. | [optional] 
  **minscore** | **int**| Minimum possible score of a record. | [optional] 
  **maxscore** | **int**| Maximum possible score of a record. | [optional] 
+ **uuid** | **String**| If this parameter is specified, all other parameters are ignored and only the submission with the given UUID is fetched. If no such submission exists, an empty list is fetched.  | [optional] 
 
 ### Return type
 

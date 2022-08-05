@@ -333,6 +333,17 @@ paths:
           minimum: 0
           type: integer
         style: form
+      - description: "If this parameter is specified, all other parameters are ignored\
+          \ and only the submission with the given UUID is fetched. If no such submission\
+          \ exists, an empty list is fetched.\n"
+        example: f2f2011c8d2547849dfce99ae4b75797
+        explode: true
+        in: query
+        name: uuid
+        required: false
+        schema:
+          type: string
+        style: form
       responses:
         "200":
           content:
