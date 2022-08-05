@@ -229,7 +229,6 @@ public class AdminApi {
      * @param starttime Minimum possible timestamp of a record in UTC seconds since Unix epoch. (optional)
      * @param endtime Maximum possible timestamp of a record in UTC seconds since Unix epoch. (optional)
      * @param minscore Minimum possible score of a record. (optional)
-     * @param uuid If this parameter is set, all other parameters are ignored. This method fetches  only the submission with the given UUID, or an empty list if no such submission  exists.  (optional)
      * @param maxscore Maximum possible score of a record. (optional)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
@@ -240,7 +239,7 @@ public class AdminApi {
         <tr><td> 200 </td><td> 200 response </td><td>  * Access-Control-Allow-Origin -  <br>  * Access-Control-Allow-Methods -  <br>  * Access-Control-Allow-Headers -  <br>  </td></tr>
      </table>
      */
-    public okhttp3.Call getSubmissionsCall(Integer starttime, Integer endtime, Integer minscore, String uuid, Integer maxscore, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call getSubmissionsCall(Integer starttime, Integer endtime, Integer minscore, Integer maxscore, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -277,10 +276,6 @@ public class AdminApi {
             localVarQueryParams.addAll(localVarApiClient.parameterToPair("minscore", minscore));
         }
 
-        if (uuid != null) {
-            localVarQueryParams.addAll(localVarApiClient.parameterToPair("uuid", uuid));
-        }
-
         if (maxscore != null) {
             localVarQueryParams.addAll(localVarApiClient.parameterToPair("maxscore", maxscore));
         }
@@ -306,10 +301,10 @@ public class AdminApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call getSubmissionsValidateBeforeCall(Integer starttime, Integer endtime, Integer minscore, String uuid, Integer maxscore, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call getSubmissionsValidateBeforeCall(Integer starttime, Integer endtime, Integer minscore, Integer maxscore, final ApiCallback _callback) throws ApiException {
         
 
-        okhttp3.Call localVarCall = getSubmissionsCall(starttime, endtime, minscore, uuid, maxscore, _callback);
+        okhttp3.Call localVarCall = getSubmissionsCall(starttime, endtime, minscore, maxscore, _callback);
         return localVarCall;
 
     }
@@ -320,7 +315,6 @@ public class AdminApi {
      * @param starttime Minimum possible timestamp of a record in UTC seconds since Unix epoch. (optional)
      * @param endtime Maximum possible timestamp of a record in UTC seconds since Unix epoch. (optional)
      * @param minscore Minimum possible score of a record. (optional)
-     * @param uuid If this parameter is set, all other parameters are ignored. This method fetches  only the submission with the given UUID, or an empty list if no such submission  exists.  (optional)
      * @param maxscore Maximum possible score of a record. (optional)
      * @return Submissions
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -330,8 +324,8 @@ public class AdminApi {
         <tr><td> 200 </td><td> 200 response </td><td>  * Access-Control-Allow-Origin -  <br>  * Access-Control-Allow-Methods -  <br>  * Access-Control-Allow-Headers -  <br>  </td></tr>
      </table>
      */
-    public Submissions getSubmissions(Integer starttime, Integer endtime, Integer minscore, String uuid, Integer maxscore) throws ApiException {
-        ApiResponse<Submissions> localVarResp = getSubmissionsWithHttpInfo(starttime, endtime, minscore, uuid, maxscore);
+    public Submissions getSubmissions(Integer starttime, Integer endtime, Integer minscore, Integer maxscore) throws ApiException {
+        ApiResponse<Submissions> localVarResp = getSubmissionsWithHttpInfo(starttime, endtime, minscore, maxscore);
         return localVarResp.getData();
     }
 
@@ -341,7 +335,6 @@ public class AdminApi {
      * @param starttime Minimum possible timestamp of a record in UTC seconds since Unix epoch. (optional)
      * @param endtime Maximum possible timestamp of a record in UTC seconds since Unix epoch. (optional)
      * @param minscore Minimum possible score of a record. (optional)
-     * @param uuid If this parameter is set, all other parameters are ignored. This method fetches  only the submission with the given UUID, or an empty list if no such submission  exists.  (optional)
      * @param maxscore Maximum possible score of a record. (optional)
      * @return ApiResponse&lt;Submissions&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -351,8 +344,8 @@ public class AdminApi {
         <tr><td> 200 </td><td> 200 response </td><td>  * Access-Control-Allow-Origin -  <br>  * Access-Control-Allow-Methods -  <br>  * Access-Control-Allow-Headers -  <br>  </td></tr>
      </table>
      */
-    public ApiResponse<Submissions> getSubmissionsWithHttpInfo(Integer starttime, Integer endtime, Integer minscore, String uuid, Integer maxscore) throws ApiException {
-        okhttp3.Call localVarCall = getSubmissionsValidateBeforeCall(starttime, endtime, minscore, uuid, maxscore, null);
+    public ApiResponse<Submissions> getSubmissionsWithHttpInfo(Integer starttime, Integer endtime, Integer minscore, Integer maxscore) throws ApiException {
+        okhttp3.Call localVarCall = getSubmissionsValidateBeforeCall(starttime, endtime, minscore, maxscore, null);
         Type localVarReturnType = new TypeToken<Submissions>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -363,7 +356,6 @@ public class AdminApi {
      * @param starttime Minimum possible timestamp of a record in UTC seconds since Unix epoch. (optional)
      * @param endtime Maximum possible timestamp of a record in UTC seconds since Unix epoch. (optional)
      * @param minscore Minimum possible score of a record. (optional)
-     * @param uuid If this parameter is set, all other parameters are ignored. This method fetches  only the submission with the given UUID, or an empty list if no such submission  exists.  (optional)
      * @param maxscore Maximum possible score of a record. (optional)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
@@ -374,9 +366,9 @@ public class AdminApi {
         <tr><td> 200 </td><td> 200 response </td><td>  * Access-Control-Allow-Origin -  <br>  * Access-Control-Allow-Methods -  <br>  * Access-Control-Allow-Headers -  <br>  </td></tr>
      </table>
      */
-    public okhttp3.Call getSubmissionsAsync(Integer starttime, Integer endtime, Integer minscore, String uuid, Integer maxscore, final ApiCallback<Submissions> _callback) throws ApiException {
+    public okhttp3.Call getSubmissionsAsync(Integer starttime, Integer endtime, Integer minscore, Integer maxscore, final ApiCallback<Submissions> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = getSubmissionsValidateBeforeCall(starttime, endtime, minscore, uuid, maxscore, _callback);
+        okhttp3.Call localVarCall = getSubmissionsValidateBeforeCall(starttime, endtime, minscore, maxscore, _callback);
         Type localVarReturnType = new TypeToken<Submissions>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;

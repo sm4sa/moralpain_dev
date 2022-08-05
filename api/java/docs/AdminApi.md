@@ -77,7 +77,7 @@ No authorization required
 
 <a name="getSubmissions"></a>
 # **getSubmissions**
-> Submissions getSubmissions(starttime, endtime, minscore, uuid, maxscore)
+> Submissions getSubmissions(starttime, endtime, minscore, maxscore)
 
 Get survey results
 
@@ -101,10 +101,9 @@ public class Example {
     Integer starttime = 1640995200; // Integer | Minimum possible timestamp of a record in UTC seconds since Unix epoch.
     Integer endtime = 1647907200; // Integer | Maximum possible timestamp of a record in UTC seconds since Unix epoch.
     Integer minscore = 1; // Integer | Minimum possible score of a record.
-    String uuid = "f2f2011c8d2547849dfce99ae4b75797"; // String | If this parameter is set, all other parameters are ignored. This method fetches  only the submission with the given UUID, or an empty list if no such submission  exists. 
     Integer maxscore = 5; // Integer | Maximum possible score of a record.
     try {
-      Submissions result = apiInstance.getSubmissions(starttime, endtime, minscore, uuid, maxscore);
+      Submissions result = apiInstance.getSubmissions(starttime, endtime, minscore, maxscore);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminApi#getSubmissions");
@@ -124,7 +123,6 @@ public class Example {
 | **starttime** | **Integer**| Minimum possible timestamp of a record in UTC seconds since Unix epoch. | [optional] |
 | **endtime** | **Integer**| Maximum possible timestamp of a record in UTC seconds since Unix epoch. | [optional] |
 | **minscore** | **Integer**| Minimum possible score of a record. | [optional] |
-| **uuid** | **String**| If this parameter is set, all other parameters are ignored. This method fetches  only the submission with the given UUID, or an empty list if no such submission  exists.  | [optional] |
 | **maxscore** | **Integer**| Maximum possible score of a record. | [optional] |
 
 ### Return type
