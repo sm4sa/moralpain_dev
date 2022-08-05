@@ -25,6 +25,14 @@ java -jar ../../openapi-generator-cli.jar generate -i ../../infrastructure/sam/a
 flutter pub run build_runner build
 ```
 
+### Updating the Java client
+
+To run OpenAPI Generator for the Java client, switch to the `java` directory and use the following command:
+
+```bash
+java -jar ../../openapi-generator-cli.jar generate -i ../../infrastructure/sam/api.yaml --generate-alias-as-model --additional-properties pubName=moralpainapi -g java
+```
+
 ## Documentation for API Endpoints
 
 All URIs are relative to *http://localhost*
