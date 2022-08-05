@@ -291,26 +291,33 @@ void main() {
     });
 
     group('showSubmitDialog', () {
+      void setMockBlocSubmitStatus(SubmitStatus submitStatus) {
+        setMockBlockState(
+          HomeState(
+            id: 'a',
+            timestamp: 0,
+            score: 0,
+            selections: const [],
+            submission: Submission(),
+            submissionStatus: SubmissionStatus.success,
+            survey: Survey(),
+            surveyStatus: SurveyStatus.success,
+            submitStatus: submitStatus,
+          ),
+        );
+      }
+
       testWidgets('when SubmitStatus is none does nothing', (tester) async {
-        setMockBlockState(const HomeState(submitStatus: SubmitStatus.none));
+        setMockBlocSubmitStatus(SubmitStatus.none);
+        await pumpApp(tester);
         expect(find.byType(AlertDialog), findsNothing);
       });
 
       group('when SubmitStatus is success', () {
         testWidgets('renders correct alert dialog', (tester) async {
-          setMockBlockState(
-            HomeState(
-              id: 'a',
-              timestamp: 0,
-              score: 0,
-              selections: const [],
-              submission: Submission(),
-              submissionStatus: SubmissionStatus.success,
-              submitStatus: SubmitStatus.success,
-            ),
-          );
+          setMockBlocSubmitStatus(SubmitStatus.success);
           await pumpApp(tester);
-          await tester.pump(const Duration(seconds: 5));
+          await tester.pumpAndSettle();
           expect(find.byType(AlertDialog), findsOneWidget);
           expect(find.text('Changes submitted!'), findsOneWidget);
           expect(find.text('OK'), findsOneWidget);
