@@ -10,375 +10,166 @@
  * Do not edit the class manually.
  */
 
-
 package org.openapitools.client.api;
 
-import org.openapitools.client.ApiCallback;
-import org.openapitools.client.ApiClient;
+import com.fasterxml.jackson.core.type.TypeReference;
+
 import org.openapitools.client.ApiException;
-import org.openapitools.client.ApiResponse;
+import org.openapitools.client.ApiClient;
 import org.openapitools.client.Configuration;
+import org.openapitools.client.model.*;
 import org.openapitools.client.Pair;
-import org.openapitools.client.ProgressRequestBody;
-import org.openapitools.client.ProgressResponseBody;
-
-import com.google.gson.reflect.TypeToken;
-
-import java.io.IOException;
-
 
 import org.openapitools.client.model.AnalyticsResult;
 import org.openapitools.client.model.Submissions;
 
-import java.lang.reflect.Type;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import javax.ws.rs.core.GenericType;
 
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-08-06T18:59:24.183129Z[Etc/UTC]")
 public class AdminApi {
-    private ApiClient localVarApiClient;
-    private int localHostIndex;
-    private String localCustomBaseUrl;
+  private ApiClient apiClient;
 
-    public AdminApi() {
-        this(Configuration.getDefaultApiClient());
+  public AdminApi() {
+    this(Configuration.getDefaultApiClient());
+  }
+
+  public AdminApi(ApiClient apiClient) {
+    this.apiClient = apiClient;
+  }
+
+  public ApiClient getApiClient() {
+    return apiClient;
+  }
+
+  public void setApiClient(ApiClient apiClient) {
+    this.apiClient = apiClient;
+  }
+
+  /**
+   * Get data analysis
+   * Perform an analysis on the records in the database that match the query paramters. 
+   * @param operation The analytic operation to perform on the data. (required)
+   * @param starttime Minimum possible timestamp of a record in UTC seconds since Unix epoch. (optional)
+   * @param endtime Maximum possible timestamp of a record in UTC seconds since Unix epoch. (optional)
+   * @return AnalyticsResult
+   * @throws ApiException if fails to make API call
+   */
+  public AnalyticsResult getAnalytics(String operation, Integer starttime, Integer endtime) throws ApiException {
+    Object localVarPostBody = null;
+    
+    // verify the required parameter 'operation' is set
+    if (operation == null) {
+      throw new ApiException(400, "Missing the required parameter 'operation' when calling getAnalytics");
     }
+    
+    // create path and map variables
+    String localVarPath = "/admin/analytics";
 
-    public AdminApi(ApiClient apiClient) {
-        this.localVarApiClient = apiClient;
-    }
+    // query params
+    List<Pair> localVarQueryParams = new ArrayList<Pair>();
+    List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+    Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+    Map<String, String> localVarCookieParams = new HashMap<String, String>();
+    Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
-    public ApiClient getApiClient() {
-        return localVarApiClient;
-    }
+    localVarQueryParams.addAll(apiClient.parameterToPair("starttime", starttime));
+    localVarQueryParams.addAll(apiClient.parameterToPair("endtime", endtime));
+    localVarQueryParams.addAll(apiClient.parameterToPair("operation", operation));
 
-    public void setApiClient(ApiClient apiClient) {
-        this.localVarApiClient = apiClient;
-    }
+    
+    
+    
+    final String[] localVarAccepts = {
+      "application/json"
+    };
+    final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
 
-    public int getHostIndex() {
-        return localHostIndex;
-    }
+    final String[] localVarContentTypes = {
+      
+    };
+    final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
 
-    public void setHostIndex(int hostIndex) {
-        this.localHostIndex = hostIndex;
-    }
+    String[] localVarAuthNames = new String[] {  };
 
-    public String getCustomBaseUrl() {
-        return localCustomBaseUrl;
-    }
+    TypeReference<AnalyticsResult> localVarReturnType = new TypeReference<AnalyticsResult>() {};
+    return apiClient.invokeAPI(
+        localVarPath,
+        "GET",
+        localVarQueryParams,
+        localVarCollectionQueryParams,
+        localVarPostBody,
+        localVarHeaderParams,
+        localVarCookieParams,
+        localVarFormParams,
+        localVarAccept,
+        localVarContentType,
+        localVarAuthNames,
+        localVarReturnType
+    );
+  }
+  /**
+   * Get survey results
+   * Fetch from the database all of the records that match the query parameters. 
+   * @param starttime Minimum possible timestamp of a record in UTC seconds since Unix epoch. (optional)
+   * @param endtime Maximum possible timestamp of a record in UTC seconds since Unix epoch. (optional)
+   * @param minscore Minimum possible score of a record. (optional)
+   * @param maxscore Maximum possible score of a record. (optional)
+   * @param uuid If this parameter is specified, all other parameters are ignored and only the submission with the given UUID is fetched. If no such submission exists, an empty list is fetched.  (optional)
+   * @return Submissions
+   * @throws ApiException if fails to make API call
+   */
+  public Submissions getSubmissions(Integer starttime, Integer endtime, Integer minscore, Integer maxscore, String uuid) throws ApiException {
+    Object localVarPostBody = null;
+    
+    // create path and map variables
+    String localVarPath = "/admin/submissions";
 
-    public void setCustomBaseUrl(String customBaseUrl) {
-        this.localCustomBaseUrl = customBaseUrl;
-    }
+    // query params
+    List<Pair> localVarQueryParams = new ArrayList<Pair>();
+    List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+    Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+    Map<String, String> localVarCookieParams = new HashMap<String, String>();
+    Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
-    /**
-     * Build call for getAnalytics
-     * @param operation The analytic operation to perform on the data. (required)
-     * @param starttime Minimum possible timestamp of a record in UTC seconds since Unix epoch. (optional)
-     * @param endtime Maximum possible timestamp of a record in UTC seconds since Unix epoch. (optional)
-     * @param _callback Callback for upload/download progress
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> 200 response </td><td>  * Access-Control-Allow-Origin -  <br>  * Access-Control-Allow-Methods -  <br>  * Access-Control-Allow-Headers -  <br>  </td></tr>
-        <tr><td> 400 </td><td> 400 Bad Request </td><td>  * Access-Control-Allow-Origin -  <br>  * Access-Control-Allow-Methods -  <br>  * Access-Control-Allow-Headers -  <br>  </td></tr>
-     </table>
-     */
-    public okhttp3.Call getAnalyticsCall(String operation, Integer starttime, Integer endtime, final ApiCallback _callback) throws ApiException {
-        String basePath = null;
-        // Operation Servers
-        String[] localBasePaths = new String[] {  };
+    localVarQueryParams.addAll(apiClient.parameterToPair("starttime", starttime));
+    localVarQueryParams.addAll(apiClient.parameterToPair("endtime", endtime));
+    localVarQueryParams.addAll(apiClient.parameterToPair("minscore", minscore));
+    localVarQueryParams.addAll(apiClient.parameterToPair("maxscore", maxscore));
+    localVarQueryParams.addAll(apiClient.parameterToPair("uuid", uuid));
 
-        // Determine Base Path to Use
-        if (localCustomBaseUrl != null){
-            basePath = localCustomBaseUrl;
-        } else if ( localBasePaths.length > 0 ) {
-            basePath = localBasePaths[localHostIndex];
-        } else {
-            basePath = null;
-        }
+    
+    
+    
+    final String[] localVarAccepts = {
+      "application/json"
+    };
+    final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
 
-        Object localVarPostBody = null;
+    final String[] localVarContentTypes = {
+      
+    };
+    final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
 
-        // create path and map variables
-        String localVarPath = "/admin/analytics";
+    String[] localVarAuthNames = new String[] {  };
 
-        List<Pair> localVarQueryParams = new ArrayList<Pair>();
-        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-        Map<String, String> localVarCookieParams = new HashMap<String, String>();
-        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
-        if (starttime != null) {
-            localVarQueryParams.addAll(localVarApiClient.parameterToPair("starttime", starttime));
-        }
-
-        if (endtime != null) {
-            localVarQueryParams.addAll(localVarApiClient.parameterToPair("endtime", endtime));
-        }
-
-        if (operation != null) {
-            localVarQueryParams.addAll(localVarApiClient.parameterToPair("operation", operation));
-        }
-
-        final String[] localVarAccepts = {
-            "application/json"
-        };
-        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) {
-            localVarHeaderParams.put("Accept", localVarAccept);
-        }
-
-        final String[] localVarContentTypes = {
-            
-        };
-        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
-        if (localVarContentType != null) {
-            localVarHeaderParams.put("Content-Type", localVarContentType);
-        }
-
-        String[] localVarAuthNames = new String[] {  };
-        return localVarApiClient.buildCall(basePath, localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
-    }
-
-    @SuppressWarnings("rawtypes")
-    private okhttp3.Call getAnalyticsValidateBeforeCall(String operation, Integer starttime, Integer endtime, final ApiCallback _callback) throws ApiException {
-        
-        // verify the required parameter 'operation' is set
-        if (operation == null) {
-            throw new ApiException("Missing the required parameter 'operation' when calling getAnalytics(Async)");
-        }
-        
-
-        okhttp3.Call localVarCall = getAnalyticsCall(operation, starttime, endtime, _callback);
-        return localVarCall;
-
-    }
-
-    /**
-     * Get data analysis
-     * Perform an analysis on the records in the database that match the query paramters. 
-     * @param operation The analytic operation to perform on the data. (required)
-     * @param starttime Minimum possible timestamp of a record in UTC seconds since Unix epoch. (optional)
-     * @param endtime Maximum possible timestamp of a record in UTC seconds since Unix epoch. (optional)
-     * @return AnalyticsResult
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> 200 response </td><td>  * Access-Control-Allow-Origin -  <br>  * Access-Control-Allow-Methods -  <br>  * Access-Control-Allow-Headers -  <br>  </td></tr>
-        <tr><td> 400 </td><td> 400 Bad Request </td><td>  * Access-Control-Allow-Origin -  <br>  * Access-Control-Allow-Methods -  <br>  * Access-Control-Allow-Headers -  <br>  </td></tr>
-     </table>
-     */
-    public AnalyticsResult getAnalytics(String operation, Integer starttime, Integer endtime) throws ApiException {
-        ApiResponse<AnalyticsResult> localVarResp = getAnalyticsWithHttpInfo(operation, starttime, endtime);
-        return localVarResp.getData();
-    }
-
-    /**
-     * Get data analysis
-     * Perform an analysis on the records in the database that match the query paramters. 
-     * @param operation The analytic operation to perform on the data. (required)
-     * @param starttime Minimum possible timestamp of a record in UTC seconds since Unix epoch. (optional)
-     * @param endtime Maximum possible timestamp of a record in UTC seconds since Unix epoch. (optional)
-     * @return ApiResponse&lt;AnalyticsResult&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> 200 response </td><td>  * Access-Control-Allow-Origin -  <br>  * Access-Control-Allow-Methods -  <br>  * Access-Control-Allow-Headers -  <br>  </td></tr>
-        <tr><td> 400 </td><td> 400 Bad Request </td><td>  * Access-Control-Allow-Origin -  <br>  * Access-Control-Allow-Methods -  <br>  * Access-Control-Allow-Headers -  <br>  </td></tr>
-     </table>
-     */
-    public ApiResponse<AnalyticsResult> getAnalyticsWithHttpInfo(String operation, Integer starttime, Integer endtime) throws ApiException {
-        okhttp3.Call localVarCall = getAnalyticsValidateBeforeCall(operation, starttime, endtime, null);
-        Type localVarReturnType = new TypeToken<AnalyticsResult>(){}.getType();
-        return localVarApiClient.execute(localVarCall, localVarReturnType);
-    }
-
-    /**
-     * Get data analysis (asynchronously)
-     * Perform an analysis on the records in the database that match the query paramters. 
-     * @param operation The analytic operation to perform on the data. (required)
-     * @param starttime Minimum possible timestamp of a record in UTC seconds since Unix epoch. (optional)
-     * @param endtime Maximum possible timestamp of a record in UTC seconds since Unix epoch. (optional)
-     * @param _callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> 200 response </td><td>  * Access-Control-Allow-Origin -  <br>  * Access-Control-Allow-Methods -  <br>  * Access-Control-Allow-Headers -  <br>  </td></tr>
-        <tr><td> 400 </td><td> 400 Bad Request </td><td>  * Access-Control-Allow-Origin -  <br>  * Access-Control-Allow-Methods -  <br>  * Access-Control-Allow-Headers -  <br>  </td></tr>
-     </table>
-     */
-    public okhttp3.Call getAnalyticsAsync(String operation, Integer starttime, Integer endtime, final ApiCallback<AnalyticsResult> _callback) throws ApiException {
-
-        okhttp3.Call localVarCall = getAnalyticsValidateBeforeCall(operation, starttime, endtime, _callback);
-        Type localVarReturnType = new TypeToken<AnalyticsResult>(){}.getType();
-        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
-        return localVarCall;
-    }
-    /**
-     * Build call for getSubmissions
-     * @param starttime Minimum possible timestamp of a record in UTC seconds since Unix epoch. (optional)
-     * @param endtime Maximum possible timestamp of a record in UTC seconds since Unix epoch. (optional)
-     * @param minscore Minimum possible score of a record. (optional)
-     * @param maxscore Maximum possible score of a record. (optional)
-     * @param uuid If this parameter is specified, all other parameters are ignored and only the submission with the given UUID is fetched. If no such submission exists, an empty list is fetched.  (optional)
-     * @param _callback Callback for upload/download progress
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> 200 response </td><td>  * Access-Control-Allow-Origin -  <br>  * Access-Control-Allow-Methods -  <br>  * Access-Control-Allow-Headers -  <br>  </td></tr>
-     </table>
-     */
-    public okhttp3.Call getSubmissionsCall(Integer starttime, Integer endtime, Integer minscore, Integer maxscore, String uuid, final ApiCallback _callback) throws ApiException {
-        String basePath = null;
-        // Operation Servers
-        String[] localBasePaths = new String[] {  };
-
-        // Determine Base Path to Use
-        if (localCustomBaseUrl != null){
-            basePath = localCustomBaseUrl;
-        } else if ( localBasePaths.length > 0 ) {
-            basePath = localBasePaths[localHostIndex];
-        } else {
-            basePath = null;
-        }
-
-        Object localVarPostBody = null;
-
-        // create path and map variables
-        String localVarPath = "/admin/submissions";
-
-        List<Pair> localVarQueryParams = new ArrayList<Pair>();
-        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-        Map<String, String> localVarCookieParams = new HashMap<String, String>();
-        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
-        if (starttime != null) {
-            localVarQueryParams.addAll(localVarApiClient.parameterToPair("starttime", starttime));
-        }
-
-        if (endtime != null) {
-            localVarQueryParams.addAll(localVarApiClient.parameterToPair("endtime", endtime));
-        }
-
-        if (minscore != null) {
-            localVarQueryParams.addAll(localVarApiClient.parameterToPair("minscore", minscore));
-        }
-
-        if (maxscore != null) {
-            localVarQueryParams.addAll(localVarApiClient.parameterToPair("maxscore", maxscore));
-        }
-
-        if (uuid != null) {
-            localVarQueryParams.addAll(localVarApiClient.parameterToPair("uuid", uuid));
-        }
-
-        final String[] localVarAccepts = {
-            "application/json"
-        };
-        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) {
-            localVarHeaderParams.put("Accept", localVarAccept);
-        }
-
-        final String[] localVarContentTypes = {
-            
-        };
-        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
-        if (localVarContentType != null) {
-            localVarHeaderParams.put("Content-Type", localVarContentType);
-        }
-
-        String[] localVarAuthNames = new String[] {  };
-        return localVarApiClient.buildCall(basePath, localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
-    }
-
-    @SuppressWarnings("rawtypes")
-    private okhttp3.Call getSubmissionsValidateBeforeCall(Integer starttime, Integer endtime, Integer minscore, Integer maxscore, String uuid, final ApiCallback _callback) throws ApiException {
-        
-
-        okhttp3.Call localVarCall = getSubmissionsCall(starttime, endtime, minscore, maxscore, uuid, _callback);
-        return localVarCall;
-
-    }
-
-    /**
-     * Get survey results
-     * Fetch from the database all of the records that match the query parameters. 
-     * @param starttime Minimum possible timestamp of a record in UTC seconds since Unix epoch. (optional)
-     * @param endtime Maximum possible timestamp of a record in UTC seconds since Unix epoch. (optional)
-     * @param minscore Minimum possible score of a record. (optional)
-     * @param maxscore Maximum possible score of a record. (optional)
-     * @param uuid If this parameter is specified, all other parameters are ignored and only the submission with the given UUID is fetched. If no such submission exists, an empty list is fetched.  (optional)
-     * @return Submissions
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> 200 response </td><td>  * Access-Control-Allow-Origin -  <br>  * Access-Control-Allow-Methods -  <br>  * Access-Control-Allow-Headers -  <br>  </td></tr>
-     </table>
-     */
-    public Submissions getSubmissions(Integer starttime, Integer endtime, Integer minscore, Integer maxscore, String uuid) throws ApiException {
-        ApiResponse<Submissions> localVarResp = getSubmissionsWithHttpInfo(starttime, endtime, minscore, maxscore, uuid);
-        return localVarResp.getData();
-    }
-
-    /**
-     * Get survey results
-     * Fetch from the database all of the records that match the query parameters. 
-     * @param starttime Minimum possible timestamp of a record in UTC seconds since Unix epoch. (optional)
-     * @param endtime Maximum possible timestamp of a record in UTC seconds since Unix epoch. (optional)
-     * @param minscore Minimum possible score of a record. (optional)
-     * @param maxscore Maximum possible score of a record. (optional)
-     * @param uuid If this parameter is specified, all other parameters are ignored and only the submission with the given UUID is fetched. If no such submission exists, an empty list is fetched.  (optional)
-     * @return ApiResponse&lt;Submissions&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> 200 response </td><td>  * Access-Control-Allow-Origin -  <br>  * Access-Control-Allow-Methods -  <br>  * Access-Control-Allow-Headers -  <br>  </td></tr>
-     </table>
-     */
-    public ApiResponse<Submissions> getSubmissionsWithHttpInfo(Integer starttime, Integer endtime, Integer minscore, Integer maxscore, String uuid) throws ApiException {
-        okhttp3.Call localVarCall = getSubmissionsValidateBeforeCall(starttime, endtime, minscore, maxscore, uuid, null);
-        Type localVarReturnType = new TypeToken<Submissions>(){}.getType();
-        return localVarApiClient.execute(localVarCall, localVarReturnType);
-    }
-
-    /**
-     * Get survey results (asynchronously)
-     * Fetch from the database all of the records that match the query parameters. 
-     * @param starttime Minimum possible timestamp of a record in UTC seconds since Unix epoch. (optional)
-     * @param endtime Maximum possible timestamp of a record in UTC seconds since Unix epoch. (optional)
-     * @param minscore Minimum possible score of a record. (optional)
-     * @param maxscore Maximum possible score of a record. (optional)
-     * @param uuid If this parameter is specified, all other parameters are ignored and only the submission with the given UUID is fetched. If no such submission exists, an empty list is fetched.  (optional)
-     * @param _callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> 200 response </td><td>  * Access-Control-Allow-Origin -  <br>  * Access-Control-Allow-Methods -  <br>  * Access-Control-Allow-Headers -  <br>  </td></tr>
-     </table>
-     */
-    public okhttp3.Call getSubmissionsAsync(Integer starttime, Integer endtime, Integer minscore, Integer maxscore, String uuid, final ApiCallback<Submissions> _callback) throws ApiException {
-
-        okhttp3.Call localVarCall = getSubmissionsValidateBeforeCall(starttime, endtime, minscore, maxscore, uuid, _callback);
-        Type localVarReturnType = new TypeToken<Submissions>(){}.getType();
-        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
-        return localVarCall;
-    }
+    TypeReference<Submissions> localVarReturnType = new TypeReference<Submissions>() {};
+    return apiClient.invokeAPI(
+        localVarPath,
+        "GET",
+        localVarQueryParams,
+        localVarCollectionQueryParams,
+        localVarPostBody,
+        localVarHeaderParams,
+        localVarCookieParams,
+        localVarFormParams,
+        localVarAccept,
+        localVarContentType,
+        localVarAuthNames,
+        localVarReturnType
+    );
+  }
 }

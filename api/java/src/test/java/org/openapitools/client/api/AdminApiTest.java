@@ -66,7 +66,8 @@ public class AdminApiTest {
         Integer endtime = null;
         Integer minscore = null;
         Integer maxscore = null;
-        Submissions response = api.getSubmissions(starttime, endtime, minscore, maxscore);
+        String uuid = null;
+        Submissions response = api.getSubmissions(starttime, endtime, minscore, maxscore, uuid);
 
         // TODO: test validations
     }

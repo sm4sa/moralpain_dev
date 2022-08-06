@@ -34,6 +34,20 @@ public class CorsApiTest {
     private final CorsApi api = new CorsApi();
 
     /**
+     * CORS admin analytics support
+     *
+     * Enable CORS by returning correct headers 
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void optionsAdminAnalyticsTest() throws ApiException {
+        api.optionsAdminAnalytics();
+
+        // TODO: test validations
+    }
+    /**
      * CORS admin submissions support
      *
      * Enable CORS by returning correct headers 

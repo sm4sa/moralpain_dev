@@ -8,8 +8,9 @@ All URIs are relative to *http://localhost*
 | [**getSubmissions**](AdminApi.md#getSubmissions) | **GET** /admin/submissions | Get survey results |
 
 
-<a name="getAnalytics"></a>
-# **getAnalytics**
+
+## getAnalytics
+
 > AnalyticsResult getAnalytics(operation, starttime, endtime)
 
 Get data analysis
@@ -17,6 +18,7 @@ Get data analysis
 Perform an analysis on the records in the database that match the query paramters. 
 
 ### Example
+
 ```java
 // Import classes:
 import org.openapitools.client.ApiClient;
@@ -26,29 +28,30 @@ import org.openapitools.client.models.*;
 import org.openapitools.client.api.AdminApi;
 
 public class Example {
-  public static void main(String[] args) {
-    ApiClient defaultClient = Configuration.getDefaultApiClient();
-    defaultClient.setBasePath("http://localhost");
+    public static void main(String[] args) {
+        ApiClient defaultClient = Configuration.getDefaultApiClient();
+        defaultClient.setBasePath("http://localhost");
 
-    AdminApi apiInstance = new AdminApi(defaultClient);
-    String operation = "average"; // String | The analytic operation to perform on the data.
-    Integer starttime = 1640995200; // Integer | Minimum possible timestamp of a record in UTC seconds since Unix epoch.
-    Integer endtime = 1647907200; // Integer | Maximum possible timestamp of a record in UTC seconds since Unix epoch.
-    try {
-      AnalyticsResult result = apiInstance.getAnalytics(operation, starttime, endtime);
-      System.out.println(result);
-    } catch (ApiException e) {
-      System.err.println("Exception when calling AdminApi#getAnalytics");
-      System.err.println("Status code: " + e.getCode());
-      System.err.println("Reason: " + e.getResponseBody());
-      System.err.println("Response headers: " + e.getResponseHeaders());
-      e.printStackTrace();
+        AdminApi apiInstance = new AdminApi(defaultClient);
+        String operation = "average"; // String | The analytic operation to perform on the data.
+        Integer starttime = 1640995200; // Integer | Minimum possible timestamp of a record in UTC seconds since Unix epoch.
+        Integer endtime = 1647907200; // Integer | Maximum possible timestamp of a record in UTC seconds since Unix epoch.
+        try {
+            AnalyticsResult result = apiInstance.getAnalytics(operation, starttime, endtime);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling AdminApi#getAnalytics");
+            System.err.println("Status code: " + e.getCode());
+            System.err.println("Reason: " + e.getResponseBody());
+            System.err.println("Response headers: " + e.getResponseHeaders());
+            e.printStackTrace();
+        }
     }
-  }
 }
 ```
 
 ### Parameters
+
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
@@ -66,8 +69,9 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
 
 ### HTTP response details
 | Status code | Description | Response headers |
@@ -75,8 +79,9 @@ No authorization required
 | **200** | 200 response |  * Access-Control-Allow-Origin -  <br>  * Access-Control-Allow-Methods -  <br>  * Access-Control-Allow-Headers -  <br>  |
 | **400** | 400 Bad Request |  * Access-Control-Allow-Origin -  <br>  * Access-Control-Allow-Methods -  <br>  * Access-Control-Allow-Headers -  <br>  |
 
-<a name="getSubmissions"></a>
-# **getSubmissions**
+
+## getSubmissions
+
 > Submissions getSubmissions(starttime, endtime, minscore, maxscore, uuid)
 
 Get survey results
@@ -84,6 +89,7 @@ Get survey results
 Fetch from the database all of the records that match the query parameters. 
 
 ### Example
+
 ```java
 // Import classes:
 import org.openapitools.client.ApiClient;
@@ -93,31 +99,32 @@ import org.openapitools.client.models.*;
 import org.openapitools.client.api.AdminApi;
 
 public class Example {
-  public static void main(String[] args) {
-    ApiClient defaultClient = Configuration.getDefaultApiClient();
-    defaultClient.setBasePath("http://localhost");
+    public static void main(String[] args) {
+        ApiClient defaultClient = Configuration.getDefaultApiClient();
+        defaultClient.setBasePath("http://localhost");
 
-    AdminApi apiInstance = new AdminApi(defaultClient);
-    Integer starttime = 1640995200; // Integer | Minimum possible timestamp of a record in UTC seconds since Unix epoch.
-    Integer endtime = 1647907200; // Integer | Maximum possible timestamp of a record in UTC seconds since Unix epoch.
-    Integer minscore = 1; // Integer | Minimum possible score of a record.
-    Integer maxscore = 5; // Integer | Maximum possible score of a record.
-    String uuid = "f2f2011c8d2547849dfce99ae4b75797"; // String | If this parameter is specified, all other parameters are ignored and only the submission with the given UUID is fetched. If no such submission exists, an empty list is fetched. 
-    try {
-      Submissions result = apiInstance.getSubmissions(starttime, endtime, minscore, maxscore, uuid);
-      System.out.println(result);
-    } catch (ApiException e) {
-      System.err.println("Exception when calling AdminApi#getSubmissions");
-      System.err.println("Status code: " + e.getCode());
-      System.err.println("Reason: " + e.getResponseBody());
-      System.err.println("Response headers: " + e.getResponseHeaders());
-      e.printStackTrace();
+        AdminApi apiInstance = new AdminApi(defaultClient);
+        Integer starttime = 1640995200; // Integer | Minimum possible timestamp of a record in UTC seconds since Unix epoch.
+        Integer endtime = 1647907200; // Integer | Maximum possible timestamp of a record in UTC seconds since Unix epoch.
+        Integer minscore = 1; // Integer | Minimum possible score of a record.
+        Integer maxscore = 5; // Integer | Maximum possible score of a record.
+        String uuid = "f2f2011c8d2547849dfce99ae4b75797"; // String | If this parameter is specified, all other parameters are ignored and only the submission with the given UUID is fetched. If no such submission exists, an empty list is fetched. 
+        try {
+            Submissions result = apiInstance.getSubmissions(starttime, endtime, minscore, maxscore, uuid);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling AdminApi#getSubmissions");
+            System.err.println("Status code: " + e.getCode());
+            System.err.println("Reason: " + e.getResponseBody());
+            System.err.println("Response headers: " + e.getResponseHeaders());
+            e.printStackTrace();
+        }
     }
-  }
 }
 ```
 
 ### Parameters
+
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
@@ -137,8 +144,9 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
 
 ### HTTP response details
 | Status code | Description | Response headers |
