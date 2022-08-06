@@ -8,6 +8,7 @@ class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<HomeBloc, HomeState>(
+      buildWhen: (previous, current) => previous != current,
       builder: (context, state) {
         switch (state.submissionStatus) {
           case SubmissionStatus.initial:
@@ -91,7 +92,7 @@ class HomeView extends StatelessWidget {
         return;
       case SubmitStatus.success:
         alert = AlertDialog(
-          title: const Text('Changes sbumitted!'),
+          title: const Text('Changes submitted!'),
           actions: [
             TextButton(
               onPressed: () {
