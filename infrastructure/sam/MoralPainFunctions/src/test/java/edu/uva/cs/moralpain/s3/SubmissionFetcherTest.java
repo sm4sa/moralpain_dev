@@ -174,6 +174,43 @@ public class SubmissionFetcherTest {
 
   @Test
   public void givenBigTimeRange_whenHandleRequest_thenAllSubmissionsFetched() {
-    
+    SubmissionFetcher submissionFetcher = new SubmissionFetcher();
+
+    APIGatewayV2HTTPEvent event = new APIGatewayV2HTTPEvent();
+    Map<String, String> params = new HashMap<>();
+    params.put("starttime", "" + (DEFAULT_TIMESTAMP - 5));
+    params.put("endtime", "" + (DEFAULT_TIMESTAMP + 5));
+
+    event.setQueryStringParameters(params);
+    APIGatewayV2HTTPResponse response = submissionFetcher.handleRequest(event, new MockContext());
+
+    Submissions expectedSubmissions = new Submissions();
+    for (Submission s : SUBMISSIONS) {
+      expectedSubmissions.addListItem(s);
+    }
+
+    assertEquals(200, response.getStatusCode());
+    assertEquals(toJson(expectedSubmissions), response.getBody());
+  }
+
+  @Test
+  public void givenSmallTimeRange_whenHandleRequest_thenFewSubmissionsFetched() {
+    SubmissionFetcher submissionFetcher = new SubmissionFetcher();
+
+    APIGatewayV2HTTPEvent event = new APIGatewayV2HTTPEvent();
+    Map<String, String> params = new HashMap<>();
+    params.put("starttime", "" + (DEFAULT_TIMESTAMP + 1));
+    params.put("endtime", "" + (DEFAULT_TIMESTAMP + 3));
+
+    event.setQueryStringParameters(params);
+    APIGatewayV2HTTPResponse response = submissionFetcher.handleRequest(event, new MockContext());
+
+    Submissions expectedSubmissions = new Submissions();
+    for (int i = 1; i <= 3; i++) {
+      expectedSubmissions.addListItem(SUBMISSIONS[i]);
+    }
+
+    assertEquals(200, response.getStatusCode());
+    assertEquals(toJson(expectedSubmissions), response.getBody());
   }
 }
