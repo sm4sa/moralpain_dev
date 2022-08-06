@@ -1,8 +1,11 @@
 import 'dart:async' show Future;
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:logging/logging.dart';
-//import 'package:moralpain/assets/constants.dart' as Constants;
 import 'package:moralpainapi/moralpainapi.dart';
+import 'package:aws_signature_v4_interceptor/aws_signature_v4_interceptor.dart';
+import 'package:dio/dio.dart';
+
+import 'package:aws_signature_v4/aws_signature_v4.dart';
 
 class ApiRepository {
   Logger log = Logger('SurveyRepository');
@@ -15,6 +18,31 @@ class ApiRepository {
     mapi.dio.options.connectTimeout = 30 * 1000;
     mapi.dio.options.receiveTimeout = 30 * 1000;
     mapi.dio.options.sendTimeout = 30 * 1000;
+  }
+
+  Future<void> credentialRefresh(AWSCredentials credentials) async {
+    var provider = StaticCredentialsProvider(credentials);
+
+    try {
+      final interceptor =
+          mapi.dio.interceptors.whereType<AWSSignatureInterceptor>().first;
+      interceptor.credentialsProvider = provider;
+    } on StateError {
+      const region = 'us-east-1';
+      final scope =
+          AWSCredentialScope.raw(region: region, service: 'execute-api');
+      mapi.dio.interceptors.add(AWSSignatureInterceptor(provider, scope));
+    }
+  }
+
+  Future<bool> isSigning() async {
+    try {
+      return mapi.dio.interceptors
+          .whereType<AWSSignatureInterceptor>()
+          .isNotEmpty;
+    } on StateError {
+      return false;
+    }
   }
 
   /**

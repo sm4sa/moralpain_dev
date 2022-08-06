@@ -33,6 +33,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/survey'
+      security:
+        - sigv4Reference: []
       x-amazon-apigateway-integration:
         httpMethod: get
         type: aws
@@ -59,8 +61,6 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/submission'
-      security:
-        - UserPool: []
       responses:
         '200':
           description: |-
@@ -79,6 +79,8 @@ paths:
             text/plain:
               schema:
                 type: string
+      security:
+        - sigv4Reference: []
       x-amazon-apigateway-integration:
         httpMethod: post
         type: aws_proxy
@@ -113,6 +115,8 @@ paths:
               schema:
                 type: string
           content: {}
+      security:
+        - sigv4Reference: []
       x-amazon-apigateway-integration:
         type: mock
         requestTemplates:
@@ -156,6 +160,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/resiliencyResources'
+      security:
+        - sigv4Reference: []
       x-amazon-apigateway-integration:
         httpMethod: get
         type: aws
@@ -181,8 +187,6 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/visitedResiliencyResources'
-      security:
-        - UserPool: []
       responses:
         '200':
           description: |-
@@ -235,6 +239,8 @@ paths:
               schema:
                 type: string
           content: {}
+      security:
+        - sigv4Reference: []
       x-amazon-apigateway-integration:
         type: mock
         requestTemplates:
@@ -307,6 +313,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/submissions'
+      security:
+        - sigv4Reference: []
       x-amazon-apigateway-integration:
         # NB (nphair): Post request are always used for invoking a lambda.
         # https://docs.aws.amazon.com/lambda/latest/dg/API_Invoke.html
@@ -343,6 +351,8 @@ paths:
               schema:
                 type: string
           content: {}
+      security:
+        - sigv4Reference: []
       x-amazon-apigateway-integration:
         type: mock
         requestTemplates:
@@ -427,6 +437,8 @@ paths:
             application/json:
               schema:
                 type: string
+      security:
+        - sigv4Reference: []
       x-amazon-apigateway-integration:
         # NB (nphair): Post request are always used for invoking a lambda.
         # https://docs.aws.amazon.com/lambda/latest/dg/API_Invoke.html
@@ -469,6 +481,8 @@ paths:
               schema:
                 type: string
           content: {}
+      security:
+        - sigv4Reference: []
       x-amazon-apigateway-integration:
         type: mock
         requestTemplates:
@@ -489,16 +503,11 @@ paths:
 
 components:
   securitySchemes:
-    UserPool: 
+    sigv4Reference:
       type: apiKey
       name: Authorization
       in: header
-      x-amazon-apigateway-authtype: cognito_user_pools
-      x-amazon-apigateway-authorizer: 
-        type: cognito_user_pools
-        # TODO (nphair): Find a better way than hardcoding ids.
-        providerARNs: 
-          - "arn:aws:cognito-idp:${AWS::Region}:${AWS::AccountId}:userpool/${AWS::Region}_pqNwySoyF"
+      x-amazon-apigateway-authtype: awsSigv4
   schemas:
     survey:
       type: object

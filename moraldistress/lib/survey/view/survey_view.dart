@@ -1,13 +1,15 @@
+import 'package:cognito_authentication_repository/cognito_authentication_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:moraldistress/api_repository.dart';
 import 'package:moraldistress/assets/constants.dart' as Constants;
-import 'package:moraldistress/assets/colors.dart' as uvacolors;
 import 'package:expandable_text/expandable_text.dart';
 import 'package:moraldistress/submitted/view/submitted_route.dart';
 import 'package:moralpainapi/src/model/survey_section.dart';
 import 'package:moralpainapi/src/model/survey_option.dart';
 import 'package:expansion_tile_card/expansion_tile_card.dart';
+
+import 'package:uva_themed_widgets/uva_themed_widgets.dart';
 
 import '../survey.dart';
 
@@ -69,15 +71,10 @@ class SurveyViewState extends State<SurveyView> {
       if (!state.success) {
         showDialog(context: context, builder: failedSubmitScreenBuilder);
       } else {
-        // TODO (nphair): APIRepository should aready exist. Figure out how
-        // to access it instead of creating a new one.
-
-        // Prevent going back after submitting.
+        Navigator.of(context, rootNavigator: true).pop();
         Navigator.pushAndRemoveUntil(
             context,
-            MaterialPageRoute(
-                builder: (context) =>
-                    SubmittedRoute(repository: ApiRepository())),
+            MaterialPageRoute(builder: (_) => SubmittedRoute()),
             (route) => route.isFirst);
       }
     } else {
@@ -299,22 +296,4 @@ class SurveyOptionsWidgetState extends State<SurveyOptionsWidget> {
           }).toList());
         });
   }
-}
-
-class UVACircularProgressIndicator extends CircularProgressIndicator {
-  @override
-  Color? get backgroundColor => uvacolors.UVABlue;
-
-  @override
-  Animation<Color?>? get valueColor =>
-      AlwaysStoppedAnimation(uvacolors.UVAOrange);
-}
-
-class UVALinearProgressIndicator extends LinearProgressIndicator {
-  @override
-  double? get minHeight => 10;
-
-  @override
-  Animation<Color?>? get valueColor =>
-      AlwaysStoppedAnimation(uvacolors.UVAOrange);
 }

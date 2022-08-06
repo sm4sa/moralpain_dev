@@ -1,7 +1,9 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 
 import 'package:moraldistress/assets/constants.dart' as Constants;
-import 'package:moraldistress/assets/colors.dart' as uvacolors;
+import 'package:uva_themed_widgets/src/colors.dart' as uvacolors;
+import '../../auth/auth_cubit.dart';
 import '../../thermometer/thermometer.dart';
 
 class HomeRoute extends StatelessWidget {
@@ -14,21 +16,35 @@ class HomeRoute extends StatelessWidget {
       body: CustomPaint(
           painter: HomePainter(),
           child: Center(
-              child: ElevatedButton(
-            style: ButtonStyle(
-                elevation: MaterialStateProperty.all(4),
-                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(18.0)))),
-            child: const Text(Constants.HOME_BUTTON_TEXT),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => const ThermometerRoute()),
-              );
-            },
-          ))),
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                ElevatedButton(
+                  style: ButtonStyle(
+                      elevation: MaterialStateProperty.all(4),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(18.0)))),
+                  child: const Text(Constants.HOME_BUTTON_TEXT),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const ThermometerRoute()),
+                    );
+                  },
+                ),
+                ElevatedButton(
+                  style: ButtonStyle(
+                      elevation: MaterialStateProperty.all(4),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(18.0)))),
+                  child: const Text("Sign out"),
+                  onPressed: () =>
+                      BlocProvider.of<AuthCubit>(context).signOut(),
+                ),
+              ]))),
     );
   }
 }
