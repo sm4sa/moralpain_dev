@@ -12,6 +12,7 @@ import org.openapitools.client.model.Submission;
 import org.openapitools.client.model.Submissions;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.ListObjectsV2Request;
+import software.amazon.awssdk.services.s3.model.ListObjectsV2Response;
 import software.amazon.awssdk.services.s3.model.S3Object;
 
 import java.time.Instant;
@@ -66,12 +67,21 @@ public class SubmissionFetcher implements RequestHandler<APIGatewayV2HTTPEvent, 
         }
         ListObjectsV2Request listObjectsV2Request = builder.build();
 
-        List<Submission> submissions = client.listObjectsV2(listObjectsV2Request).contents().stream()
+        List<Submission> submissions;
+        if (qs.get("uuid") == null) {
+            submissions = client.listObjectsV2(listObjectsV2Request).contents().stream()
                 .map(S3Object::key)
                 .filter(sfpb.beforeOrAtEndTime())
                 .map(key -> S3Helper.getObjectAsSubmission(client, bucket, key))
                 .filter(sfpb.inScoreRange())
                 .collect(Collectors.toList());
+        } else {
+            submissions = client.listObjectsV2(listObjectsV2Request).contents().stream()
+                .map(S3Object::key)
+                .map(key -> S3Helper.getObjectAsSubmission(client, bucket, key))
+                .filter(sfpb.hasUuid())
+                .collect(Collectors.toList());
+        }
         Submissions data = new Submissions();
         data.setList(submissions);
         response.setBody(toJson(data));
