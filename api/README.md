@@ -30,7 +30,10 @@ flutter pub run build_runner build
 To run OpenAPI Generator for the Java client, switch to the `java` directory and use the following command:
 
 ```bash
-java -jar ../../openapi-generator-cli.jar generate -i ../../infrastructure/sam/api.yaml --generate-alias-as-model --additional-properties pubName=moralpainapi -g java
+java -jar ../../openapi-generator-cli.jar generate \
+  --input-spec ../../infrastructure/sam/api.yaml \
+  --additional-properties library=apache-httpclient,groupId=edu.uva.cs,artifactId=moraldistressapi \
+  --generator-name java
 ```
 
 ## Documentation for API Endpoints
