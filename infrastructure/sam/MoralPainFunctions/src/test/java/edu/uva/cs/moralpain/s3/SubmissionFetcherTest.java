@@ -20,6 +20,7 @@ import software.amazon.awssdk.services.s3.model.*;
 import software.amazon.awssdk.utils.builder.SdkBuilder;
 
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -209,6 +210,212 @@ public class SubmissionFetcherTest {
     for (int i = 1; i <= 3; i++) {
       expectedSubmissions.addListItem(SUBMISSIONS[i]);
     }
+
+    assertEquals(200, response.getStatusCode());
+    assertEquals(toJson(expectedSubmissions), response.getBody());
+  }
+
+  @Test
+  public void givenEmptyTimeRange_whenHandleRequest_thenNoSubmissionsFetched() {
+    SubmissionFetcher submissionFetcher = new SubmissionFetcher();
+
+    APIGatewayV2HTTPEvent event = new APIGatewayV2HTTPEvent();
+    Map<String, String> params = new HashMap<>();
+    params.put("starttime", "" + (DEFAULT_TIMESTAMP + 10));
+    params.put("endtime", "" + (DEFAULT_TIMESTAMP + 50));
+
+    event.setQueryStringParameters(params);
+    APIGatewayV2HTTPResponse response = submissionFetcher.handleRequest(event, new MockContext());
+
+    Submissions expectedSubmissions = new Submissions();
+    expectedSubmissions.setList(new ArrayList<>());
+
+    assertEquals(200, response.getStatusCode());
+    assertEquals(toJson(expectedSubmissions), response.getBody());
+  }
+
+  @Test
+  public void givenInvertedTimeRange_whenHandleRequest_thenNoSubmissionsFetched() {
+    SubmissionFetcher submissionFetcher = new SubmissionFetcher();
+
+    APIGatewayV2HTTPEvent event = new APIGatewayV2HTTPEvent();
+    Map<String, String> params = new HashMap<>();
+    params.put("starttime", "" + (DEFAULT_TIMESTAMP + 4));
+    params.put("endtime", "" + DEFAULT_TIMESTAMP);
+
+    event.setQueryStringParameters(params);
+    APIGatewayV2HTTPResponse response = submissionFetcher.handleRequest(event, new MockContext());
+
+    Submissions expectedSubmissions = new Submissions();
+    expectedSubmissions.setList(new ArrayList<>());
+
+    assertEquals(200, response.getStatusCode());
+    assertEquals(toJson(expectedSubmissions), response.getBody());
+  }
+
+  @Test
+  public void givenBigScoreRange_whenHandleRequest_thenAllSubmissionsFetched() {
+    SubmissionFetcher submissionFetcher = new SubmissionFetcher();
+
+    APIGatewayV2HTTPEvent event = new APIGatewayV2HTTPEvent();
+    Map<String, String> params = new HashMap<>();
+    params.put("minscore", "0");
+    params.put("maxscore", "10");
+
+    event.setQueryStringParameters(params);
+    APIGatewayV2HTTPResponse response = submissionFetcher.handleRequest(event, new MockContext());
+
+    Submissions expectedSubmissions = new Submissions();
+    for (Submission s : SUBMISSIONS) {
+      expectedSubmissions.addListItem(s);
+    }
+
+    assertEquals(200, response.getStatusCode());
+    assertEquals(toJson(expectedSubmissions), response.getBody());
+  }
+
+  @Test
+  public void givenSmallScoreRange_whenHandleRequest_thenSomeSubmissionsFetched() {
+    SubmissionFetcher submissionFetcher = new SubmissionFetcher();
+
+    APIGatewayV2HTTPEvent event = new APIGatewayV2HTTPEvent();
+    Map<String, String> params = new HashMap<>();
+    params.put("minscore", "1");
+    params.put("maxscore", "3");
+
+    event.setQueryStringParameters(params);
+    APIGatewayV2HTTPResponse response = submissionFetcher.handleRequest(event, new MockContext());
+
+    Submissions expectedSubmissions = new Submissions();
+    for (int i = 1; i <= 3; i++) {
+      expectedSubmissions.addListItem(SUBMISSIONS[i]);
+    }
+
+    assertEquals(200, response.getStatusCode());
+    assertEquals(toJson(expectedSubmissions), response.getBody());
+  }
+
+  @Test
+  public void givenEmptyScoreRange_whenHandleRequest_thenNoSubmissionsFetched() {
+    SubmissionFetcher submissionFetcher = new SubmissionFetcher();
+
+    APIGatewayV2HTTPEvent event = new APIGatewayV2HTTPEvent();
+    Map<String, String> params = new HashMap<>();
+    params.put("minscore", "6");
+    params.put("maxscore", "6");
+
+    event.setQueryStringParameters(params);
+    APIGatewayV2HTTPResponse response = submissionFetcher.handleRequest(event, new MockContext());
+
+    Submissions expectedSubmissions = new Submissions();
+    expectedSubmissions.setList(new ArrayList<>());
+
+    assertEquals(200, response.getStatusCode());
+    assertEquals(toJson(expectedSubmissions), response.getBody());
+  }
+
+  @Test
+  public void givenInvertedScoreRange_whenHandleRequest_thenNoSubmissionsFetched() {
+    SubmissionFetcher submissionFetcher = new SubmissionFetcher();
+
+    APIGatewayV2HTTPEvent event = new APIGatewayV2HTTPEvent();
+    Map<String, String> params = new HashMap<>();
+    params.put("minscore", "4");
+    params.put("maxscore", "0");
+
+    event.setQueryStringParameters(params);
+    APIGatewayV2HTTPResponse response = submissionFetcher.handleRequest(event, new MockContext());
+
+    Submissions expectedSubmissions = new Submissions();
+    expectedSubmissions.setList(new ArrayList<>());
+
+    assertEquals(200, response.getStatusCode());
+    assertEquals(toJson(expectedSubmissions), response.getBody());
+  }
+
+  @Test
+  public void givenOverlappingTimeRangeAndScoreRange_whenHandleRequest_thenSomeSubmissionsFetched() {
+    SubmissionFetcher submissionFetcher = new SubmissionFetcher();
+
+    APIGatewayV2HTTPEvent event = new APIGatewayV2HTTPEvent();
+    Map<String, String> params = new HashMap<>();
+    params.put("starttime", "" + DEFAULT_TIMESTAMP);
+    params.put("endtime", "" + (DEFAULT_TIMESTAMP + 2));
+    params.put("minscore", "1");
+    params.put("maxscore", "3");
+
+    event.setQueryStringParameters(params);
+    APIGatewayV2HTTPResponse response = submissionFetcher.handleRequest(event, new MockContext());
+
+    Submissions expectedSubmissions = new Submissions();
+    for (int i = 1; i <= 2; i++) {
+      expectedSubmissions.addListItem(SUBMISSIONS[i]);
+    }
+
+    assertEquals(200, response.getStatusCode());
+    assertEquals(toJson(expectedSubmissions), response.getBody());
+  }
+
+  @Test
+  public void givenNonOverlappingTimeRangeAndScoreRange_whenHandleRequest_thenNoSubmissionsFetched() {
+    SubmissionFetcher submissionFetcher = new SubmissionFetcher();
+
+    APIGatewayV2HTTPEvent event = new APIGatewayV2HTTPEvent();
+    Map<String, String> params = new HashMap<>();
+    params.put("starttime", "" + DEFAULT_TIMESTAMP);
+    params.put("endtime", "" + (DEFAULT_TIMESTAMP + 1));
+    params.put("minscore", "3");
+    params.put("maxscore", "4");
+
+    event.setQueryStringParameters(params);
+    APIGatewayV2HTTPResponse response = submissionFetcher.handleRequest(event, new MockContext());
+
+    Submissions expectedSubmissions = new Submissions();
+    expectedSubmissions.setList(new ArrayList<>());
+
+    assertEquals(200, response.getStatusCode());
+    assertEquals(toJson(expectedSubmissions), response.getBody());
+  }
+
+  @Test
+  public void givenExistingUUIDAndAllOtherParams_whenHandleRequest_thenOneSubmissionFetched() {
+    SubmissionFetcher submissionFetcher = new SubmissionFetcher();
+
+    APIGatewayV2HTTPEvent event = new APIGatewayV2HTTPEvent();
+    Map<String, String> params = new HashMap<>();
+    params.put("starttime", "" + DEFAULT_TIMESTAMP);
+    params.put("endtime", "" + (DEFAULT_TIMESTAMP + 2));
+    params.put("minscore", "1");
+    params.put("maxscore", "3");
+    params.put("uuid", "4");
+
+    event.setQueryStringParameters(params);
+    APIGatewayV2HTTPResponse response = submissionFetcher.handleRequest(event, new MockContext());
+
+    Submissions expectedSubmissions = new Submissions();
+    expectedSubmissions.addListItem(SUBMISSIONS[4]);
+
+    assertEquals(200, response.getStatusCode());
+    assertEquals(toJson(expectedSubmissions), response.getBody());
+  }
+
+  @Test
+  public void givenNonexistentUUIDAndAllOtherParams_whenHandleRequest_thenNoSubmissionsFetched() {
+    SubmissionFetcher submissionFetcher = new SubmissionFetcher();
+
+    APIGatewayV2HTTPEvent event = new APIGatewayV2HTTPEvent();
+    Map<String, String> params = new HashMap<>();
+    params.put("starttime", "" + DEFAULT_TIMESTAMP);
+    params.put("endtime", "" + (DEFAULT_TIMESTAMP + 2));
+    params.put("minscore", "1");
+    params.put("maxscore", "3");
+    params.put("uuid", "9");
+
+    event.setQueryStringParameters(params);
+    APIGatewayV2HTTPResponse response = submissionFetcher.handleRequest(event, new MockContext());
+
+    Submissions expectedSubmissions = new Submissions();
+    expectedSubmissions.setList(new ArrayList<>());
 
     assertEquals(200, response.getStatusCode());
     assertEquals(toJson(expectedSubmissions), response.getBody());
