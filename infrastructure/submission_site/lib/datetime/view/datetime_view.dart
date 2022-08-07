@@ -9,11 +9,6 @@ class DatetimeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<DatetimeBloc, DatetimeState>(
-      /*buildWhen: (previous, current) {
-        return previous.year != current.year ||
-            previous.month != current.month ||
-            previous.day != current.day;
-      },*/
       builder: (context, state) {
         final datetimeBloc = BlocProvider.of<DatetimeBloc>(context);
         return Scaffold(
@@ -23,139 +18,172 @@ class DatetimeView extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Row(
+                Wrap(
                   children: [
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.all(5.0),
-                        child: DropdownButtonHideUnderline(
-                          child: DropdownButtonFormField<int>(
-                            hint: const Text('Year'),
-                            items: [
-                              for (int i = 1970;
-                                  i <= DateTime.now().year + 1;
-                                  i++)
-                                DropdownMenuItem<int>(
-                                  value: i,
-                                  child: Text('$i'),
-                                ),
-                            ],
-                            value: state.year,
-                            onChanged: (value) {
-                              datetimeBloc.add(DatetimeYearChanged(value!));
-                            },
+                    Flex(
+                      direction: Axis.horizontal,
+                      children: [
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.all(5.0),
+                            child: DropdownButtonHideUnderline(
+                              child: DropdownButtonFormField<int>(
+                                hint: const Text('Year'),
+                                items: [
+                                  for (int i = 1970;
+                                      i <= DateTime.now().year + 1;
+                                      i++)
+                                    DropdownMenuItem<int>(
+                                      value: i,
+                                      child: Text('$i'),
+                                    ),
+                                ],
+                                value: state.year,
+                                onChanged: (value) {
+                                  datetimeBloc.add(DatetimeYearChanged(value!));
+                                },
+                              ),
+                            ),
                           ),
                         ),
-                      ),
+                      ],
                     ),
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.all(5.0),
-                        child: DropdownButtonHideUnderline(
-                          child: DropdownButtonFormField<Month>(
-                            hint: const Text('Month'),
-                            items: [
-                              for (Month month in Month.values)
-                                DropdownMenuItem<Month>(
-                                  value: month,
-                                  child: Text(month.toString()),
-                                ),
-                            ],
-                            value: state.month,
-                            onChanged: (value) {
-                              datetimeBloc.add(DatetimeMonthChanged(value!));
-                            },
+                    Flex(
+                      direction: Axis.horizontal,
+                      children: [
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.all(5.0),
+                            child: DropdownButtonHideUnderline(
+                              child: DropdownButtonFormField<Month>(
+                                hint: const Text('Month'),
+                                items: [
+                                  for (Month month in Month.values)
+                                    DropdownMenuItem<Month>(
+                                      value: month,
+                                      child: Text(month.toString()),
+                                    ),
+                                ],
+                                value: state.month,
+                                onChanged: (value) {
+                                  datetimeBloc
+                                      .add(DatetimeMonthChanged(value!));
+                                },
+                              ),
+                            ),
                           ),
                         ),
-                      ),
+                      ],
                     ),
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.all(5.0),
-                        child: DropdownButtonHideUnderline(
-                          child: DropdownButtonFormField<int>(
-                            hint: const Text('Day'),
-                            items: [
-                              for (int i = 1;
-                                  i <= state.month.numberOfDays(state.year);
-                                  i++)
-                                DropdownMenuItem<int>(
-                                  value: i,
-                                  child: Text('$i'),
-                                ),
-                            ],
-                            value: state.day,
-                            onChanged: (value) {
-                              datetimeBloc.add(DatetimeDayChanged(value!));
-                            },
+                    Flex(
+                      direction: Axis.horizontal,
+                      children: [
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.all(5.0),
+                            child: DropdownButtonHideUnderline(
+                              child: DropdownButtonFormField<int>(
+                                hint: const Text('Day'),
+                                items: [
+                                  for (int i = 1;
+                                      i <= state.month.numberOfDays(state.year);
+                                      i++)
+                                    DropdownMenuItem<int>(
+                                      value: i,
+                                      child: Text('$i'),
+                                    ),
+                                ],
+                                value: state.day,
+                                onChanged: (value) {
+                                  datetimeBloc.add(DatetimeDayChanged(value!));
+                                },
+                              ),
+                            ),
                           ),
                         ),
-                      ),
+                      ],
                     ),
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.all(5.0),
-                        child: DropdownButtonHideUnderline(
-                          child: DropdownButtonFormField<int>(
-                            hint: const Text('Hour'),
-                            items: [
-                              for (int i = 0; i <= 23; i++)
-                                DropdownMenuItem<int>(
-                                  value: i,
-                                  child: Text('$i'),
-                                ),
-                            ],
-                            value: state.hour,
-                            onChanged: (value) {
-                              datetimeBloc.add(DatetimeHourChanged(value!));
-                            },
+                    Flex(
+                      direction: Axis.horizontal,
+                      children: [
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.all(5.0),
+                            child: DropdownButtonHideUnderline(
+                              child: DropdownButtonFormField<int>(
+                                hint: const Text('Hour'),
+                                items: [
+                                  for (int i = 0; i <= 23; i++)
+                                    DropdownMenuItem<int>(
+                                      value: i,
+                                      child: Text('$i'),
+                                    ),
+                                ],
+                                value: state.hour,
+                                onChanged: (value) {
+                                  datetimeBloc.add(DatetimeHourChanged(value!));
+                                },
+                              ),
+                            ),
                           ),
                         ),
-                      ),
+                      ],
                     ),
                     const Text(':'),
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.all(5.0),
-                        child: DropdownButtonHideUnderline(
-                          child: DropdownButtonFormField<int>(
-                            hint: const Text('Minute'),
-                            items: [
-                              for (int i = 0; i <= 59; i++)
-                                DropdownMenuItem<int>(
-                                  value: i,
-                                  child: i < 10 ? Text('0$i') : Text('$i'),
-                                ),
-                            ],
-                            value: state.minute,
-                            onChanged: (value) {
-                              datetimeBloc.add(DatetimeMinuteChanged(value!));
-                            },
+                    Flex(
+                      direction: Axis.horizontal,
+                      children: [
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.all(5.0),
+                            child: DropdownButtonHideUnderline(
+                              child: DropdownButtonFormField<int>(
+                                hint: const Text('Minute'),
+                                items: [
+                                  for (int i = 0; i <= 59; i++)
+                                    DropdownMenuItem<int>(
+                                      value: i,
+                                      child: i < 10 ? Text('0$i') : Text('$i'),
+                                    ),
+                                ],
+                                value: state.minute,
+                                onChanged: (value) {
+                                  datetimeBloc
+                                      .add(DatetimeMinuteChanged(value!));
+                                },
+                              ),
+                            ),
                           ),
                         ),
-                      ),
+                      ],
                     ),
                     const Text(':'),
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.all(5.0),
-                        child: DropdownButtonHideUnderline(
-                          child: DropdownButtonFormField<int>(
-                            hint: const Text('Second'),
-                            items: [
-                              for (int i = 0; i <= 59; i++)
-                                DropdownMenuItem<int>(
-                                  value: i,
-                                  child: i < 10 ? Text('0$i') : Text('$i'),
-                                ),
-                            ],
-                            value: state.second,
-                            onChanged: (value) {
-                              datetimeBloc.add(DatetimeSecondChanged(value!));
-                            },
+                    Flex(
+                      direction: Axis.horizontal,
+                      children: [
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.all(5.0),
+                            child: DropdownButtonHideUnderline(
+                              child: DropdownButtonFormField<int>(
+                                hint: const Text('Second'),
+                                items: [
+                                  for (int i = 0; i <= 59; i++)
+                                    DropdownMenuItem<int>(
+                                      value: i,
+                                      child: i < 10 ? Text('0$i') : Text('$i'),
+                                    ),
+                                ],
+                                value: state.second,
+                                onChanged: (value) {
+                                  datetimeBloc
+                                      .add(DatetimeSecondChanged(value!));
+                                },
+                              ),
+                            ),
                           ),
                         ),
-                      ),
+                      ],
                     ),
                   ],
                 ),
@@ -180,13 +208,8 @@ class DatetimeView extends StatelessWidget {
                             state.minute,
                             state.second,
                           );
-                          print('onPressed datetime is: ${datetime.year} '
-                              '${datetime.month} ${datetime.day} '
-                              '${datetime.hour} ${datetime.minute} '
-                              '${datetime.second}');
                           final int timestamp =
                               (datetime.millisecondsSinceEpoch / 1000) as int;
-                          print('onPressed timestamp is: $timestamp');
                           final homeBloc = BlocProvider.of<HomeBloc>(context);
                           homeBloc.add(HomeTimestampChanged(timestamp));
                           Navigator.pop(context);
