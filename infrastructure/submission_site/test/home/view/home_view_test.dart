@@ -143,28 +143,6 @@ void main() {
           });
 
           /*testWidgets(
-            'three FieldDisplay widgets, each with correct text',
-            (tester) async {
-              await pumpApp(tester);
-              expect(find.byType(FieldDisplay), findsNWidgets(3));
-              expect(
-                find.text(
-                  'Time submitted: ${FieldList.displayTimestamp(timestamp)}',
-                ),
-                findsOneWidget,
-              );
-              expect(find.text('Score: $score out of 10'), findsOneWidget);
-              expect(
-                find.text(
-                  'Contributing factors: '
-                  '${FieldList.displaySelections(selections, survey)}',
-                ),
-                findsOneWidget,
-              );
-            },
-          );
-
-          testWidgets(
             'two ElevatedButtons, each with correct text',
             (tester) async {
               await pumpApp(tester);
@@ -310,17 +288,51 @@ void main() {
       testWidgets('when SubmitStatus is none does nothing', (tester) async {
         setMockBlocSubmitStatus(SubmitStatus.none);
         await pumpApp(tester);
+        await tester.pumpAndSettle();
         expect(find.byType(AlertDialog), findsNothing);
       });
 
       group('when SubmitStatus is success', () {
-        testWidgets('renders correct alert dialog', (tester) async {
+        setUp(() {
           setMockBlocSubmitStatus(SubmitStatus.success);
+        });
+
+        testWidgets('renders correct alert dialog', (tester) async {
           await pumpApp(tester);
           await tester.pumpAndSettle();
           expect(find.byType(AlertDialog), findsOneWidget);
           expect(find.text('Changes submitted!'), findsOneWidget);
           expect(find.text('OK'), findsOneWidget);
+        });
+
+        testWidgets('clicking OK makes alert dialog disappear', (tester) async {
+          await pumpApp(tester);
+          await tester.pumpAndSettle();
+          await tester.tap(find.text('OK'));
+          await tester.pumpAndSettle();
+          expect(find.byType(AlertDialog), findsNothing);
+        });
+      });
+
+      group('when SubmitStatus is failure', () {
+        setUp(() {
+          setMockBlocSubmitStatus(SubmitStatus.failure);
+        });
+
+        testWidgets('renders correct alert dialog', (tester) async {
+          await pumpApp(tester);
+          await tester.pumpAndSettle();
+          expect(find.byType(AlertDialog), findsOneWidget);
+          expect(find.text('Error submitting changes.'), findsOneWidget);
+          expect(find.text('OK'), findsOneWidget);
+        });
+
+        testWidgets('clicking OK makes alert dialog disappear', (tester) async {
+          await pumpApp(tester);
+          await tester.pumpAndSettle();
+          await tester.tap(find.text('OK'));
+          await tester.pumpAndSettle();
+          expect(find.byType(AlertDialog), findsNothing);
         });
       });
     });
