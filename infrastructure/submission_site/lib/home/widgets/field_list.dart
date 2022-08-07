@@ -15,6 +15,7 @@ class FieldList extends StatelessWidget {
     return Column(
       children: [
         FieldDisplay(
+          key: const Key('fieldList_timestampEdit_fieldDisplay'),
           text: 'Time submitted: ${displayTimestamp(bloc.state.timestamp!)}',
           onPressed: () {
             Navigator.push(
@@ -30,6 +31,7 @@ class FieldList extends StatelessWidget {
           },
         ),
         FieldDisplay(
+          key: const Key('fieldList_scoreEdit_fieldDisplay'),
           text: 'Score: ${bloc.state.score} out of 10',
           onPressed: () {
             Navigator.push(
@@ -45,6 +47,7 @@ class FieldList extends StatelessWidget {
           },
         ),
         FieldDisplay(
+          key: const Key('fieldList_contributingFactorsEdit_fieldDisplay'),
           text: 'Contributing factors: '
               '${displaySelections(
             bloc.state.selections!,

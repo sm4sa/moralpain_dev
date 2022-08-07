@@ -12,6 +12,8 @@ class FieldDisplay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String name = (key as ValueKey).value;
+    name = name.split('_')[1];
     return Wrap(
       children: [
         Text(
@@ -19,7 +21,11 @@ class FieldDisplay extends StatelessWidget {
           style: const TextStyle(fontSize: 20),
         ),
         const SizedBox(width: 15.0),
-        IconButton(onPressed: onPressed, icon: const Icon(Icons.edit)),
+        IconButton(
+          key: Key('fieldDisplay_${name}_iconButton'),
+          onPressed: onPressed,
+          icon: const Icon(Icons.edit),
+        ),
       ],
     );
   }
