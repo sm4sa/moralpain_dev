@@ -142,17 +142,9 @@ void main() {
             expect(find.byType(RevertSubmitChangesWidget), findsOneWidget);
           });
 
-          /*testWidgets(
-            'two ElevatedButtons, each with correct text',
-            (tester) async {
-              await pumpApp(tester);
-              expect(find.byType(ElevatedButton), findsNWidgets(2));
-              expect(find.text('Revert Changes'), findsOneWidget);
-              expect(find.text('Submit Changes'), findsOneWidget);
-            },
-          );*/
-
           // TODO: test buttons' effect on FieldDisplays
+
+          // TODO: test that buttons are enabled/disabled at the right time
         });
       });
 
