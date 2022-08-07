@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:submission_site/responsive.dart';
 
 abstract class Dropdown extends StatelessWidget {
   Dropdown({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return MediaQuery.of(context).orientation == Orientation.landscape
+    return Responsive.isDesktop(context)
         ? _landscapeView(context)
         : _portraitView(context);
   }
