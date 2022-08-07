@@ -61,7 +61,7 @@ public class SubmissionFetcherPredicateBuilder {
 
     public Predicate<Submission> hasUuid() {
         String uuid = this.queryStringParams.get("uuid");
-        return submission -> submission.getId().equals(uuid);
+        return submission -> submission != null && submission.getId().equals(uuid);
     }
 
 }
