@@ -4,7 +4,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:moralpainapi/moralpainapi.dart';
+import 'package:submission_site/datetime/datetime.dart';
 import 'package:submission_site/home/home.dart';
+import 'package:submission_site/score/score.dart';
+import 'package:submission_site/selections/selections.dart';
 
 class MockHomeBloc extends Mock implements HomeBloc {}
 
@@ -12,6 +15,11 @@ void main() {
   group('FieldList', () {
     late HomeState mockState;
     late HomeBloc mockBloc;
+
+    const Key timestampButtonKey = Key('fieldDisplay_timestampEdit_iconButton');
+    const Key scoreButtonKey = Key('fieldDisplay_scoreEdit_iconButton');
+    const Key selectionsButtonKey =
+        Key('fieldDisplay_contributingFactorsEdit_iconButton');
 
     setUp(() {
       // Build mock submission
@@ -121,19 +129,49 @@ void main() {
     testWidgets('IconButtons have correct keys', (tester) async {
       await pumpApp(tester);
       expect(
-        find.byKey(const Key('fieldDisplay_timestampEdit_iconButton')),
+        find.byKey(timestampButtonKey),
         findsOneWidget,
       );
       expect(
-        find.byKey(const Key('fieldDisplay_scoreEdit_iconButton')),
+        find.byKey(scoreButtonKey),
         findsOneWidget,
       );
       expect(
-        find.byKey(
-          const Key('fieldDisplay_contributingFactorsEdit_iconButton'),
-        ),
+        find.byKey(selectionsButtonKey),
         findsOneWidget,
       );
     });
+
+    testWidgets(
+      'Clicking the timestamp edit button pulls up a DatetimeRoute',
+      (tester) async {
+        await pumpApp(tester);
+        await tester.tap(find.byKey(timestampButtonKey));
+        await tester.pumpAndSettle();
+        expect(find.byType(DatetimeRoute), findsOneWidget);
+      },
+    );
+
+    testWidgets(
+      'Clicking the score edit button pulls up a ScoreRoute',
+      (tester) async {
+        await pumpApp(tester);
+        await tester.tap(find.byKey(scoreButtonKey));
+        await tester.pumpAndSettle();
+        expect(find.byType(ScoreRoute), findsOneWidget);
+      },
+    );
+
+    testWidgets(
+      'Clicking the selections edit button pulls up a SelectionsRoute',
+      (tester) async {
+        await pumpApp(tester);
+        await tester.tap(find.byKey(selectionsButtonKey));
+        await tester.pumpAndSettle();
+        expect(find.byType(SelectionsRoute), findsOneWidget);
+      },
+    );
+
+    // TODO: test the effects of each Route on FieldList
   });
 }
