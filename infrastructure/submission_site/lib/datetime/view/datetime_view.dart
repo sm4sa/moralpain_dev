@@ -70,7 +70,7 @@ class DatetimeView extends StatelessWidget {
                             state.second,
                           );
                           final int timestamp =
-                              (datetime.millisecondsSinceEpoch / 1000) as int;
+                              (datetime.millisecondsSinceEpoch / 1000).floor();
                           final homeBloc = BlocProvider.of<HomeBloc>(context);
                           homeBloc.add(HomeTimestampChanged(timestamp));
                           Navigator.pop(context);
