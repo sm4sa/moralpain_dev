@@ -1,3 +1,4 @@
+import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:submission_site/datetime/datetime.dart';
 
@@ -226,6 +227,220 @@ void main() {
           expect(Month.december.numberOfDays(nonLeapYear), equals(31));
         });
       });
+    });
+
+    group('fromInt()', () {
+      group('returns correct value for', () {
+        test('1', () {
+          expect(Month.fromInt(1), equals(Month.january));
+        });
+
+        test('2', () {
+          expect(Month.fromInt(2), equals(Month.february));
+        });
+
+        test('3', () {
+          expect(Month.fromInt(3), equals(Month.march));
+        });
+
+        test('4', () {
+          expect(Month.fromInt(4), equals(Month.april));
+        });
+
+        test('5', () {
+          expect(Month.fromInt(5), equals(Month.may));
+        });
+
+        test('6', () {
+          expect(Month.fromInt(6), equals(Month.june));
+        });
+
+        test('7', () {
+          expect(Month.fromInt(7), equals(Month.july));
+        });
+
+        test('8', () {
+          expect(Month.fromInt(8), equals(Month.august));
+        });
+
+        test('9', () {
+          expect(Month.fromInt(9), equals(Month.september));
+        });
+
+        test('10', () {
+          expect(Month.fromInt(10), equals(Month.october));
+        });
+
+        test('11', () {
+          expect(Month.fromInt(11), equals(Month.november));
+        });
+
+        test('12', () {
+          expect(Month.fromInt(12), equals(Month.december));
+        });
+      });
+
+      group('throws error for', () {
+        test('value less than 1', () {
+          expect(() => Month.fromInt(0), throwsA(isA<AssertionError>()));
+        });
+
+        test('value greater than 12', () {
+          expect(() => Month.fromInt(13), throwsA(isA<AssertionError>()));
+        });
+      });
+    });
+  });
+
+  group('DatetimeBloc', () {
+    const int defaultTimestamp = 1657036800;
+    const int defaultYear = 2022;
+    const Month defaultMonth = Month.july;
+    const int defaultDay = 5;
+    const int defaultHour = 16;
+    const int defaultMinute = 0;
+    const int defaultSecond = 0;
+
+    DatetimeBloc buildBloc() => DatetimeBloc(defaultTimestamp);
+
+    group('constructor', () {
+      test('works properly', () {
+        expect(buildBloc, returnsNormally);
+      });
+
+      test('has correct initial state', () {
+        expect(
+          buildBloc().state,
+          equals(const DatetimeState(
+            year: defaultYear,
+            month: defaultMonth,
+            day: defaultDay,
+            hour: defaultHour,
+            minute: defaultMinute,
+            second: defaultSecond,
+          )),
+        );
+      });
+    });
+
+    group('YearChanged', () {
+      const int newYear = 2002;
+
+      blocTest<DatetimeBloc, DatetimeState>(
+        'emits state with updated year',
+        build: buildBloc,
+        act: (bloc) => bloc.add(const DatetimeYearChanged(newYear)),
+        expect: () => [
+          const DatetimeState(
+            year: newYear,
+            month: defaultMonth,
+            day: defaultDay,
+            hour: defaultHour,
+            minute: defaultMinute,
+            second: defaultSecond,
+          ),
+        ],
+      );
+    });
+
+    group('MonthChanged', () {
+      const Month newMonth = Month.april;
+
+      blocTest<DatetimeBloc, DatetimeState>(
+        'emits state with updated month',
+        build: buildBloc,
+        act: (bloc) => bloc.add(const DatetimeMonthChanged(newMonth)),
+        expect: () => [
+          const DatetimeState(
+            year: defaultYear,
+            month: newMonth,
+            day: defaultDay,
+            hour: defaultHour,
+            minute: defaultMinute,
+            second: defaultSecond,
+          ),
+        ],
+      );
+    });
+
+    group('DayChanged', () {
+      const int newDay = 6;
+
+      blocTest<DatetimeBloc, DatetimeState>(
+        'emits state with updated day',
+        build: buildBloc,
+        act: (bloc) => bloc.add(const DatetimeDayChanged(newDay)),
+        expect: () => [
+          const DatetimeState(
+            year: defaultYear,
+            month: defaultMonth,
+            day: newDay,
+            hour: defaultHour,
+            minute: defaultMinute,
+            second: defaultSecond,
+          ),
+        ],
+      );
+    });
+
+    group('HourChanged', () {
+      const int newHour = 4;
+
+      blocTest<DatetimeBloc, DatetimeState>(
+        'emits state with updated hour',
+        build: buildBloc,
+        act: (bloc) => bloc.add(const DatetimeHourChanged(newHour)),
+        expect: () => [
+          const DatetimeState(
+            year: defaultYear,
+            month: defaultMonth,
+            day: defaultDay,
+            hour: newHour,
+            minute: defaultMinute,
+            second: defaultSecond,
+          ),
+        ],
+      );
+    });
+
+    group('MinuteChanged', () {
+      const int newMinute = 20;
+
+      blocTest<DatetimeBloc, DatetimeState>(
+        'emits state with updated minute',
+        build: buildBloc,
+        act: (bloc) => bloc.add(const DatetimeMinuteChanged(newMinute)),
+        expect: () => [
+          const DatetimeState(
+            year: defaultYear,
+            month: defaultMonth,
+            day: defaultDay,
+            hour: defaultHour,
+            minute: newMinute,
+            second: defaultSecond,
+          ),
+        ],
+      );
+    });
+
+    group('SecondChanged', () {
+      const int newSecond = 59;
+
+      blocTest<DatetimeBloc, DatetimeState>(
+        'emits state with updated second',
+        build: buildBloc,
+        act: (bloc) => bloc.add(const DatetimeSecondChanged(newSecond)),
+        expect: () => [
+          const DatetimeState(
+            year: defaultYear,
+            month: defaultMonth,
+            day: defaultDay,
+            hour: defaultHour,
+            minute: defaultMinute,
+            second: newSecond,
+          ),
+        ],
+      );
     });
   });
 }
