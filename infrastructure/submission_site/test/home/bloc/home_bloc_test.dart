@@ -61,7 +61,7 @@ void main() {
 
     group('ScoreChanged', () {
       blocTest<HomeBloc, HomeState>(
-        'emits state with updated timestamp',
+        'emits state with updated score',
         build: buildBloc,
         act: (bloc) => bloc.add(const HomeScoreChanged(defaultScore)),
         expect: () => [
@@ -72,7 +72,7 @@ void main() {
 
     group('SelectionsChanged', () {
       blocTest<HomeBloc, HomeState>(
-        'emits state with updated timestamp',
+        'emits state with updated selections',
         build: buildBloc,
         act: (bloc) => bloc.add(const HomeSelectionsChanged(defaultSelections)),
         expect: () => [
