@@ -5,7 +5,7 @@
   "httpMethod": "POST",
   "isBase64Encoded": true,
   "queryStringParameters": {
-    "operation": "maximum"
+    
   },
   "multiValueQueryStringParameters": {
     "foo": [

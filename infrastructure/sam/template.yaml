@@ -92,6 +92,7 @@ Resources:
             Path: /admin/submissions
             Method: get
             ApiId: !Ref ApiGatewayApi
+      Timeout: 60
   
   AnalyzeSubmissionsFunction:
     Type: AWS::Serverless::Function
