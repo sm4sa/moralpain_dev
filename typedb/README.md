@@ -1,4 +1,4 @@
-# Configuring Typedb
+ # Configuring Typedb
 
 ## Overview
 
