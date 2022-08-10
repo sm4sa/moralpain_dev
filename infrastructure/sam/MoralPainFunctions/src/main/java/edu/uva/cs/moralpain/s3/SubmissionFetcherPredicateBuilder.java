@@ -43,8 +43,7 @@ public class SubmissionFetcherPredicateBuilder {
             return __ -> true;
         }
 
-        return submission -> submission != null && 
-                submission.getScore().compareTo(Integer.parseInt(maxScore)) < 1;
+        return submission -> submission.getScore().compareTo(Integer.parseInt(maxScore)) < 1;
     }
 
     public Predicate<Submission> greaterThanOrEqualToMinScore() {
@@ -53,17 +52,11 @@ public class SubmissionFetcherPredicateBuilder {
             return __ -> true;
         }
 
-        return submission -> submission != null && 
-                submission.getScore().compareTo(Integer.parseInt(minScore)) > -1;
+        return submission -> submission.getScore().compareTo(Integer.parseInt(minScore)) > -1;
     }
 
     public Predicate<Submission> inScoreRange() {
         return lessThanOrEqualToMaxScore().and(greaterThanOrEqualToMinScore());
-    }
-
-    public Predicate<Submission> hasUuid() {
-        String uuid = this.queryStringParams.get("uuid");
-        return submission -> submission != null && submission.getId().equals(uuid);
     }
 
 }

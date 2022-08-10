@@ -33,8 +33,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/survey'
-      # security:
-      #   - sigv4Reference: []
       x-amazon-apigateway-integration:
         httpMethod: get
         type: aws
@@ -61,6 +59,8 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/submission'
+      security:
+        - UserPool: []
       responses:
         '200':
           description: |-
@@ -79,8 +79,6 @@ paths:
             text/plain:
               schema:
                 type: string
-      # security:
-      #   - sigv4Reference: []
       x-amazon-apigateway-integration:
         httpMethod: post
         type: aws_proxy
@@ -115,8 +113,6 @@ paths:
               schema:
                 type: string
           content: {}
-      # security:
-      #   - sigv4Reference: []
       x-amazon-apigateway-integration:
         type: mock
         requestTemplates:
@@ -160,8 +156,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/resiliencyResources'
-      # security:
-      #   - sigv4Reference: []
       x-amazon-apigateway-integration:
         httpMethod: get
         type: aws
@@ -187,6 +181,8 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/visitedResiliencyResources'
+      security:
+        - UserPool: []
       responses:
         '200':
           description: |-
@@ -239,8 +235,6 @@ paths:
               schema:
                 type: string
           content: {}
-      # security:
-      #   - sigv4Reference: []
       x-amazon-apigateway-integration:
         type: mock
         requestTemplates:
@@ -296,15 +290,6 @@ paths:
             minimum: 0
             maximum: 10
           example: 5
-        - in: query
-          name: uuid
-          description: >
-            If this parameter is specified, all other parameters are ignored
-            and only the submission with the given UUID is fetched.
-            If no such submission exists, an empty list is fetched.
-          schema:
-            type: string
-          example: f2f2011c8d2547849dfce99ae4b75797
       responses:
         '200':
           description: 200 response
@@ -322,8 +307,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/submissions'
-      # security:
-      #   - sigv4Reference: []
       x-amazon-apigateway-integration:
         # NB (nphair): Post request are always used for invoking a lambda.
         # https://docs.aws.amazon.com/lambda/latest/dg/API_Invoke.html
@@ -360,8 +343,6 @@ paths:
               schema:
                 type: string
           content: {}
-      # security:
-      #   - sigv4Reference: []
       x-amazon-apigateway-integration:
         type: mock
         requestTemplates:
@@ -446,8 +427,6 @@ paths:
             application/json:
               schema:
                 type: string
-      # security:
-      #   - sigv4Reference: []
       x-amazon-apigateway-integration:
         # NB (nphair): Post request are always used for invoking a lambda.
         # https://docs.aws.amazon.com/lambda/latest/dg/API_Invoke.html
@@ -490,8 +469,6 @@ paths:
               schema:
                 type: string
           content: {}
-      # security:
-      #   - sigv4Reference: []
       x-amazon-apigateway-integration:
         type: mock
         requestTemplates:
@@ -511,12 +488,17 @@ paths:
                 {}
 
 components:
-  # securitySchemes:
-  #   sigv4Reference:
-  #     type: apiKey
-  #     name: Authorization
-  #     in: header
-  #     x-amazon-apigateway-authtype: awsSigv4
+  securitySchemes:
+    UserPool: 
+      type: apiKey
+      name: Authorization
+      in: header
+      x-amazon-apigateway-authtype: cognito_user_pools
+      x-amazon-apigateway-authorizer: 
+        type: cognito_user_pools
+        # TODO (nphair): Find a better way than hardcoding ids.
+        providerARNs: 
+          - "arn:aws:cognito-idp:${AWS::Region}:${AWS::AccountId}:userpool/${AWS::Region}_pqNwySoyF"
   schemas:
     survey:
       type: object

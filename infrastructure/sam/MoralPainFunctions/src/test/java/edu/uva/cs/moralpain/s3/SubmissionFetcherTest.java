@@ -376,48 +376,4 @@ public class SubmissionFetcherTest {
     assertEquals(200, response.getStatusCode());
     assertEquals(toJson(expectedSubmissions), response.getBody());
   }
-
-  @Test
-  public void givenExistingUUIDAndAllOtherParams_whenHandleRequest_thenOneSubmissionFetched() {
-    SubmissionFetcher submissionFetcher = new SubmissionFetcher();
-
-    APIGatewayV2HTTPEvent event = new APIGatewayV2HTTPEvent();
-    Map<String, String> params = new HashMap<>();
-    params.put("starttime", "" + DEFAULT_TIMESTAMP);
-    params.put("endtime", "" + (DEFAULT_TIMESTAMP + 2));
-    params.put("minscore", "1");
-    params.put("maxscore", "3");
-    params.put("uuid", "4");
-
-    event.setQueryStringParameters(params);
-    APIGatewayV2HTTPResponse response = submissionFetcher.handleRequest(event, new MockContext());
-
-    Submissions expectedSubmissions = new Submissions();
-    expectedSubmissions.addListItem(SUBMISSIONS[4]);
-
-    assertEquals(200, response.getStatusCode());
-    assertEquals(toJson(expectedSubmissions), response.getBody());
-  }
-
-  @Test
-  public void givenNonexistentUUIDAndAllOtherParams_whenHandleRequest_thenNoSubmissionsFetched() {
-    SubmissionFetcher submissionFetcher = new SubmissionFetcher();
-
-    APIGatewayV2HTTPEvent event = new APIGatewayV2HTTPEvent();
-    Map<String, String> params = new HashMap<>();
-    params.put("starttime", "" + DEFAULT_TIMESTAMP);
-    params.put("endtime", "" + (DEFAULT_TIMESTAMP + 2));
-    params.put("minscore", "1");
-    params.put("maxscore", "3");
-    params.put("uuid", "9");
-
-    event.setQueryStringParameters(params);
-    APIGatewayV2HTTPResponse response = submissionFetcher.handleRequest(event, new MockContext());
-
-    Submissions expectedSubmissions = new Submissions();
-    expectedSubmissions.setList(new ArrayList<>());
-
-    assertEquals(200, response.getStatusCode());
-    assertEquals(toJson(expectedSubmissions), response.getBody());
-  }
 }
