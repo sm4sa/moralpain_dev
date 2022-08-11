@@ -12,7 +12,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.openapitools.client.model.Submission;
-import org.openapitools.client.model.Submissions;
 import software.amazon.awssdk.core.exception.SdkException;
 import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.services.s3.S3Client;
@@ -20,13 +19,12 @@ import software.amazon.awssdk.services.s3.model.*;
 import software.amazon.awssdk.utils.builder.SdkBuilder;
 
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class SubmissionFieldFetcherTest {
 
@@ -35,6 +33,8 @@ public class SubmissionFieldFetcherTest {
     private final S3Client s3Client = S3_MOCK.createS3ClientV2();
 
     private static final String BUCKET_NAME = "test-submissions";
+
+    private static final String PREFIX_NAME = "surveys/";
 
     private static final int SUBMISSIONS_COUNT = 5;
 
@@ -48,6 +48,7 @@ public class SubmissionFieldFetcherTest {
         System.setProperty("accessKeyId", "foo");
         System.setProperty("secretAccessKey", "bar");
         System.setProperty("bucket", BUCKET_NAME);
+        System.setProperty("prefix", PREFIX_NAME);
     }
 
     @BeforeEach
@@ -69,7 +70,7 @@ public class SubmissionFieldFetcherTest {
                     .addSelectionsItem(Integer.toString(i))
                     .timestamp((int) starttime);
             SUBMISSIONS[i] = s;
-            String key = S3Helper.createPrefix(Instant.ofEpochSecond(starttime)) + "/submission.json";
+            String key = PREFIX_NAME + S3Helper.createPrefix(Instant.ofEpochSecond(starttime)) + "/submission.json";
             try {
                 PutObjectRequest putOb = PutObjectRequest.builder()
                         .bucket(BUCKET_NAME)
@@ -119,20 +120,20 @@ public class SubmissionFieldFetcherTest {
         assertEquals("Required UUID parameter is missing", response.getBody());
     }
 
-    // @Test
-    // public void givenExistingUuid_whenHandleRequest_thenCorrectTimestampReturned() {
-    //     SubmissionFieldFetcher fetcher = new SubmissionFieldFetcher();
+    @Test
+    public void givenExistingUuid_whenHandleRequest_thenCorrectTimestampReturned() {
+        SubmissionFieldFetcher fetcher = new SubmissionFieldFetcher();
 
-    //     APIGatewayV2HTTPEvent event = new APIGatewayV2HTTPEvent();
-    //     Map<String, String> params = new HashMap<>();
-    //     params.put("uuid", "3");
+        APIGatewayV2HTTPEvent event = new APIGatewayV2HTTPEvent();
+        Map<String, String> params = new HashMap<>();
+        params.put("uuid", "3");
 
-    //     event.setQueryStringParameters(params);
-    //     APIGatewayV2HTTPResponse response = fetcher.handleRequest(event, new MockContext());
+        event.setQueryStringParameters(params);
+        APIGatewayV2HTTPResponse response = fetcher.handleRequest(event, new MockContext());
 
-    //     assertEquals(200, response.getStatusCode());
-    //     assertEquals("" + (DEFAULT_TIMESTAMP + 3), response.getBody());
-    // }
+        assertEquals(200, response.getStatusCode());
+        assertEquals("" + (DEFAULT_TIMESTAMP + 3), response.getBody());
+    }
 
     @Test
     public void givenNonexistentUuid_whenHandleRequest_thenBadRequestReturned() {
