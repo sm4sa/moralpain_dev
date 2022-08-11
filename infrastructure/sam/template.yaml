@@ -116,6 +116,30 @@ Resources:
             Path: /admin/analytics
             Method: get
             ApiId: !Ref ApiGatewayApi
+  
+  FetchSubmissionFieldFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub ${Prefix}FetchSubmissionField
+      CodeUri: MoralPainFunctions
+      Handler: edu.uva.cs.moralpain.s3.SubmissionFieldFetcher::handleRequest
+      Runtime: java8.al2
+      Architectures:
+        - x86_64
+      MemorySize: 512
+      Environment:
+        Variables:
+          bucket: moralpain-submissions
+          prefix: surveys
+      Role: !Sub arn:aws:iam::${AWS::AccountId}:role/lambda_fetch_submission_field_role
+      Events: {}
+        # Get:
+        #   Type: HttpApi
+        #   Properties:
+        #     Path: /submission/timestamp
+        #     Method: get
+        #     ApiId: !Ref ApiGatewayApi
+      Timeout: 60
 
 Outputs:
   APIUri:

@@ -59,4 +59,9 @@ public class SubmissionFetcherPredicateBuilder {
         return lessThanOrEqualToMaxScore().and(greaterThanOrEqualToMinScore());
     }
 
+    public Predicate<Submission> hasUuid() {
+        String uuid = this.queryStringParams.get("uuid");
+        return submission -> submission != null && submission.getId().equals(uuid);
+    }
+
 }

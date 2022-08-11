@@ -99,4 +99,27 @@ public class SubmissionFetcherPredicateBuilderTest {
     assertFalse(actual.contains(6));
   }
 
+  @Test
+  public void testHasUuid() {
+    Map<String, String> params = new HashMap<>();
+    params.put("uuid", "6713c3adffbb41b9890d77fc1673960e");
+
+    List<Submission> scores = new ArrayList<>();
+    scores.add(new Submission().id("bcba8b32bab74e6dbc87bb607cbf54f1"));
+    scores.add(new Submission().id("a6bd6843c35f40f993b4bf64ef876f7a"));
+    scores.add(new Submission().id("6713c3adffbb41b9890d77fc1673960e"));
+    scores.add(new Submission().id("3e78af9f3b8f46b39fa5a5e56051cd78"));
+
+    SubmissionFetcherPredicateBuilder predicateBuilder = new SubmissionFetcherPredicateBuilder(params);
+    List<String> actual = scores.stream()
+            .filter(predicateBuilder.hasUuid())
+            .map(Submission::getId)
+            .collect(Collectors.toList());
+    
+    assertFalse(actual.contains("bcba8b32bab74e6dbc87bb607cbf54f1"));
+    assertFalse(actual.contains("a6bd6843c35f40f993b4bf64ef876f7a"));
+    assertTrue(actual.contains("6713c3adffbb41b9890d77fc1673960e"));
+    assertFalse(actual.contains("3e78af9f3b8f46b39fa5a5e56051cd78"));
+  }
+
 }
