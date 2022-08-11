@@ -1,4 +1,4 @@
-/*package edu.uva.cs.moralpain.s3;
+package edu.uva.cs.moralpain.s3;
 
 import com.adobe.testing.s3mock.junit5.S3MockExtension;
 import com.amazonaws.services.lambda.runtime.events.APIGatewayV2HTTPEvent;
@@ -38,6 +38,8 @@ public class SubmissionAnalyzerTest {
 
     private static final String BUCKET_NAME = "test-submissions";
 
+    private static final String PREFIX_NAME = "";
+
     private static final int SUBMISSIONS_COUNT = 5;
 
     private static final int DEFAULT_TIMESTAMP = 795830400;
@@ -48,6 +50,7 @@ public class SubmissionAnalyzerTest {
         System.setProperty("accessKeyId", "foo");
         System.setProperty("secretAccessKey", "bar");
         System.setProperty("bucket", BUCKET_NAME);
+        System.setProperty("prefix", PREFIX_NAME);
     }
 
     @BeforeEach
@@ -68,7 +71,7 @@ public class SubmissionAnalyzerTest {
                     .score(i)
                     .addSelectionsItem(Integer.toString(i))
                     .timestamp((int) starttime);
-            String key = S3Helper.createPrefix(Instant.ofEpochSecond(starttime)) + "/submission.json";
+            String key = PREFIX_NAME + S3Helper.createPrefix(Instant.ofEpochSecond(starttime)) + "/submission.json";
             try {
                 PutObjectRequest putOb = PutObjectRequest.builder()
                         .bucket(BUCKET_NAME)
@@ -447,4 +450,3 @@ public class SubmissionAnalyzerTest {
         );
     }
 }
-*/
