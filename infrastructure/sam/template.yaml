@@ -132,13 +132,13 @@ Resources:
           bucket: moralpain-submissions
           prefix: surveys
       Role: !Sub arn:aws:iam::${AWS::AccountId}:role/lambda_fetch_submission_field_role
-      Events: {}
-        # Get:
-        #   Type: HttpApi
-        #   Properties:
-        #     Path: /submission/timestamp
-        #     Method: get
-        #     ApiId: !Ref ApiGatewayApi
+      Events:
+        Get:
+          Type: HttpApi
+          Properties:
+            Path: /submission
+            Method: get
+            ApiId: !Ref ApiGatewayApi
       Timeout: 60
 
 Outputs:

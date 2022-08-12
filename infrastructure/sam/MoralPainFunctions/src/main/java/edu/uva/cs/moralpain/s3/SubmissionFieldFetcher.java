@@ -62,9 +62,12 @@ public class SubmissionFieldFetcher implements RequestHandler<APIGatewayV2HTTPEv
         // response.setStatusCode(400);
         // } else {
         // Get the list of submissions with the given UUID
+        System.out.println("before create client");
         S3Client client = createS3Client(variableManager);
+        System.out.println("before getObjectAsSubmisison");
         Submission submission = S3Helper.getObjectAsSubmission(client, "moralpain-submissions",
                 "single/submission.json");
+        System.out.println("after getObjectAsSubmission, submission = " + submission);
 
         // String apiPath = input.getRawPath() != null ? input.getRawPath() : "null";
         // Return timestamp if path is /submission/timestamp
@@ -81,8 +84,8 @@ public class SubmissionFieldFetcher implements RequestHandler<APIGatewayV2HTTPEv
         // }
 
         Map<String, String> headers = new HashMap<>();
-        headers.put("Content-Type", "text/plain");
-        headers.put("X-Custom-Header", "text/plain");
+        headers.put("Content-Type", "application/json");
+        headers.put("X-Custom-Header", "application/json");
         // Cors.
         headers.put("Access-Control-Allow-Headers", "Content-Type,X-Amz-Date,Authorization,X-Api-Key");
         headers.put("Access-Control-Allow-Origin", "*");

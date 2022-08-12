@@ -10,7 +10,7 @@
             "Action": [
                 "s3:Get*"
             ],
-            "Resource": "arn:aws:s3:::moralpain-submissions/surveys/*"
+            "Resource": "arn:aws:s3:::moralpain-submissions/single/*"
         }
     ]
 }
