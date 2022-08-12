@@ -120,10 +120,11 @@ public class SubmissionFieldFetcherTest {
     }
 
     @Test
-    public void givenExistingUuid_whenHandleRequest_thenCorrectTimestampReturned() {
+    public void givenExistingUuidAndSubmissionTimestampPath_whenHandleRequest_thenCorrectTimestampReturned() {
         SubmissionFieldFetcher fetcher = new SubmissionFieldFetcher();
 
         APIGatewayV2HTTPEvent event = new APIGatewayV2HTTPEvent();
+        event.setRawPath("/submission/timestamp");
         Map<String, String> params = new HashMap<>();
         params.put("uuid", "3");
 
@@ -132,6 +133,22 @@ public class SubmissionFieldFetcherTest {
 
         assertEquals(200, response.getStatusCode());
         assertEquals("" + (DEFAULT_TIMESTAMP + 3), response.getBody());
+    }
+
+    @Test
+    public void givenExistingUuidAndInvalidPath_whenHandleRequest_thenInternalServerErrorReturned() {
+        SubmissionFieldFetcher fetcher = new SubmissionFieldFetcher();
+
+        APIGatewayV2HTTPEvent event = new APIGatewayV2HTTPEvent();
+        event.setRawPath("/bad/path");
+        Map<String, String> params = new HashMap<>();
+        params.put("uuid", "3");
+
+        event.setQueryStringParameters(params);
+        APIGatewayV2HTTPResponse response = fetcher.handleRequest(event, new MockContext());
+
+        assertEquals(500, response.getStatusCode());
+        assertEquals("API path /bad/path is not supposed to use this lambda.", response.getBody());
     }
 
     @Test

@@ -79,10 +79,22 @@ public class SubmissionFieldFetcher implements RequestHandler<APIGatewayV2HTTPEv
                 response.setBody("No submission found with UUID " + uuid);
                 response.setStatusCode(400);
             }
-            // If there is a submission with the given UUID, return a 200 response.
+            /*
+             * If there is a submission with the given UUID,
+             * return whatever field of the submission is appropriate for the API path.
+             */
             else {
-                response.setBody("" + submissions.get(0).getTimestamp());
-                response.setStatusCode(200);
+                String apiPath = input.getRawPath() != null ? input.getRawPath() : "null";
+                // Return timestamp if path is /submission/timestamp
+                if (apiPath.equals("/submission/timestamp")) {
+                    response.setBody("" + submissions.get(0).getTimestamp());
+                    response.setStatusCode(200);
+                }
+                // Return 500 response if path is invalid
+                else {
+                    response.setBody("API path " + apiPath + " is not supposed to use this lambda.");
+                    response.setStatusCode(500);
+                }
             }
         }
 
