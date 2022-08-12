@@ -4,6 +4,8 @@ import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.amazonaws.services.lambda.runtime.events.APIGatewayV2HTTPEvent;
 import com.amazonaws.services.lambda.runtime.events.APIGatewayV2HTTPResponse;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import edu.uva.cs.moralpain.utils.S3Helper;
 import edu.uva.cs.moralpain.utils.VariableManager;
@@ -29,8 +31,6 @@ public class SubmissionFieldFetcher implements RequestHandler<APIGatewayV2HTTPEv
 
     @Override
     public APIGatewayV2HTTPResponse handleRequest(APIGatewayV2HTTPEvent input, Context context) {
-        System.out.println("path: " + input.getRawPath());
-
         APIGatewayV2HTTPResponse response = new APIGatewayV2HTTPResponse();
         if (!isValidEvent(input)) {
             context.getLogger().log("invalid event");
@@ -48,55 +48,37 @@ public class SubmissionFieldFetcher implements RequestHandler<APIGatewayV2HTTPEv
         String bucket = variableManager.get("bucket");
         String prefix = variableManager.getOrDefault("prefix", "");
 
-        Map<String, String> qs = input.getQueryStringParameters();
-        if (qs == null) {
-            qs = Collections.EMPTY_MAP;
-        }
-        SubmissionFetcherPredicateBuilder sfpb = new SubmissionFetcherPredicateBuilder(qs);
-        String uuid = qs.get("uuid");
+        // Map<String, String> qs = input.getQueryStringParameters();
+        // if (qs == null) {
+        // qs = Collections.EMPTY_MAP;
+        // }
+        // SubmissionFetcherPredicateBuilder sfpb = new
+        // SubmissionFetcherPredicateBuilder(qs);
+        // String uuid = qs.get("uuid");
 
         // If no UUID is given, return a 400 response.
-        if (uuid == null) {
-            response.setBody("Required UUID parameter is missing");
-            response.setStatusCode(400);
-        } else {
-            // Get the list of submissions with the given UUID
-            S3Client client = createS3Client(variableManager);
-            ListObjectsV2Request.Builder builder = ListObjectsV2Request.builder()
-                    .bucket(bucket)
-                    .prefix(prefix);
-            ListObjectsV2Request listObjectsV2Request = builder.build();
+        // if (uuid == null) {
+        // response.setBody("Required UUID parameter is missing");
+        // response.setStatusCode(400);
+        // } else {
+        // Get the list of submissions with the given UUID
+        S3Client client = createS3Client(variableManager);
+        Submission submission = S3Helper.getObjectAsSubmission(client, "moralpain-submissions",
+                "single/submission.json");
 
-            List<Submission> submissions = client.listObjectsV2(listObjectsV2Request).contents()
-                    .stream()
-                    .map(S3Object::key)
-                    .map(key -> S3Helper.getObjectAsSubmission(client, bucket, key))
-                    .filter(sfpb.hasUuid())
-                    .collect(Collectors.toList());
-
-            // If there is no submission with the given UUID, return a 400 response.
-            if (submissions.isEmpty()) {
-                response.setBody("No submission found with UUID " + uuid);
-                response.setStatusCode(400);
-            }
-            /*
-             * If there is a submission with the given UUID,
-             * return whatever field of the submission is appropriate for the API path.
-             */
-            else {
-                String apiPath = input.getRawPath() != null ? input.getRawPath() : "null";
-                // Return timestamp if path is /submission/timestamp
-                if (apiPath.equals("/submission/timestamp")) {
-                    response.setBody("" + submissions.get(0).getTimestamp());
-                    response.setStatusCode(200);
-                }
-                // Return 500 response if path is invalid
-                else {
-                    response.setBody("API path " + apiPath + " is not supposed to use this lambda.");
-                    response.setStatusCode(500);
-                }
-            }
-        }
+        // String apiPath = input.getRawPath() != null ? input.getRawPath() : "null";
+        // Return timestamp if path is /submission/timestamp
+        // if (apiPath.equals("/submission/timestamp")) {
+        response.setBody(toJson(submission));
+        response.setStatusCode(200);
+        // }
+        // // Return 500 response if path is invalid
+        // else {
+        // response.setBody("API path " + apiPath + " is not supposed to use this
+        // lambda.");
+        // response.setStatusCode(500);
+        // }
+        // }
 
         Map<String, String> headers = new HashMap<>();
         headers.put("Content-Type", "text/plain");
@@ -110,12 +92,25 @@ public class SubmissionFieldFetcher implements RequestHandler<APIGatewayV2HTTPEv
         return response;
     }
 
+    private String toJson(Object value) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            return objectMapper.writeValueAsString(value);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
     private boolean isValidEvent(APIGatewayV2HTTPEvent event) {
-        return event != null;
+        // return event != null;
+        return true;
     }
 
     private boolean isValidEnvironment(VariableManager variableManager) {
-        return variableManager.containsKey("bucket") && !variableManager.getOrDefault("bucket", "").isEmpty();
+        // return variableManager.containsKey("bucket") &&
+        // !variableManager.getOrDefault("bucket", "").isEmpty();
+        return true;
     }
 
 }

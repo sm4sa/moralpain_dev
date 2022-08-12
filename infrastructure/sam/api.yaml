@@ -486,19 +486,12 @@ paths:
             responseTemplates:
               application/json: |
                 {}
-  /submission/timestamp:
+  /submission:
     get:
-      operationId: getTimestamp
-      summary: get the timestamp of a submission
+      operationId: getSubmission
+      summary: get the submission
       description: >
-        Get the timestamp of the MDQ submission with the given UUID.
-      parameters:
-        - in: query
-          name: uuid
-          description: The UUID of the submission whose timestamp will be returned.
-          schema:
-            type: string
-          example: c53637363b144d96bc1a52ffeaf7d21e
+        Get the MDQ submission.
       tags:
         - Submission
       responses:
@@ -516,27 +509,9 @@ paths:
               schema:
                 type: string
           content:
-            text/plain:
+            application/json:
               schema:
-                type: number
-        '400':
-          description: >-
-            400 response. This is received if there is no submission with the given UUID
-            or if a UUID isn't given.
-          headers:
-            Access-Control-Allow-Origin:
-              schema:
-                type: string
-            Access-Control-Allow-Methods:
-              schema:
-                type: string
-            Access-Control-Allow-Headers:
-              schema:
-                type: string
-          content:
-            text/plain:
-              schema:
-                type: string
+                $ref: '#/components/schemas/submission'
       x-amazon-apigateway-integration:
         # NB (nphair): Post request are always used for invoking a lambda.
         # https://docs.aws.amazon.com/lambda/latest/dg/API_Invoke.html
@@ -546,12 +521,6 @@ paths:
         credentials: arn:aws:iam::${AWS::AccountId}:role/apigateway_submission_timestamp_get_role
         passthroughBehavior : "when_no_match"
         responses:
-          "400":
-            statusCode: "400"
-            responseParameters:
-              method.response.header.Access-Control-Allow-Headers: '''Content-Type,X-Amz-Date,Authorization,X-Api-Key'''
-              method.response.header.Access-Control-Allow-Methods: '''*'''
-              method.response.header.Access-Control-Allow-Origin: '''*'''
           default:
             statusCode: "200"
             responseParameters:
