@@ -56,6 +56,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       Submission submission = await repository.fetchSubmission(
         event.submissionId,
       );
+      print(submission);
       emit(state.copyWith(
         id: submission.id!,
         score: submission.score!,
@@ -64,9 +65,13 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         submission: submission,
         submissionStatus: SubmissionStatus.success,
       ));
+      print('success state emitted');
       add(const HomeSurveyRequested());
+      print('SurveyRequested event added');
     } catch (err) {
+      print(err);
       emit(state.copyWith(submissionStatus: SubmissionStatus.failure));
+      print('failure state emitted');
     }
   }
 

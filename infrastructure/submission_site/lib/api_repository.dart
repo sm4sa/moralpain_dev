@@ -31,7 +31,7 @@ class ApiRepository {
   final Logger log = Logger('SingleSubmissionRepository');
   final Moralpainapi mapi = Moralpainapi(
       basePathOverride:
-          'https://umd7orqgt1.execute-api.us-east-1.amazonaws.com/v1');
+          'https://0rl322u1u8.execute-api.us-east-1.amazonaws.com/v1');
 
   ApiRepository() {
     mapi.dio.options.connectTimeout = 30 * 1000;
@@ -41,32 +41,22 @@ class ApiRepository {
 
   /// Fetches the submission with the given ID.
   Future<Submission> fetchSubmission(String id) async {
-    // TODO: have this method call the API client instead of returning a dummy
-    /*final AdminApi aapi = mapi.getAdminApi();
+    final SubmissionApi sapi = mapi.getSubmissionApi();
 
     try {
-      final response = await aapi.getSubmissions(uuid: id);
-      final Submissions submissions = response.data!;
-
-      if (submissions.list == null) {
-        throw const SubmissionFetchFailure(
-          'List of submissions is null.',
-        );
-      } else if (submissions.list!.isEmpty) {
-        throw SubmissionFetchFailure('No submission exists with UUID $id.');
-      }
-
-      return submissions.list!.first;
+      final response = await sapi.getSubmission();
+      return response.data!;
     } catch (err) {
+      print(err);
       throw SubmissionFetchFailure(err.toString());
-    }*/
+    }
 
-    final builder = SubmissionBuilder();
-    builder.id = '119ada26-a0ba-4991-82f4-d6aa7c73c503';
-    builder.score = 4;
-    builder.timestamp = 1658944322;
-    builder.selections = ListBuilder(['001_02', '001_03', '002_02', '004_06']);
-    return builder.build();
+    // final builder = SubmissionBuilder();
+    // builder.id = '119ada26-a0ba-4991-82f4-d6aa7c73c503';
+    // builder.score = 4;
+    // builder.timestamp = 1658944322;
+    // builder.selections = ListBuilder(['001_02', '001_03', '002_02', '004_06']);
+    // return builder.build();
   }
 
   /// Submits the given submission to the database.

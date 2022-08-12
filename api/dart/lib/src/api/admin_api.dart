@@ -112,7 +112,6 @@ class AdminApi {
   /// * [endtime] - Maximum possible timestamp of a record in UTC seconds since Unix epoch.
   /// * [minscore] - Minimum possible score of a record.
   /// * [maxscore] - Maximum possible score of a record.
-  /// * [uuid] - If this parameter is specified, all other parameters are ignored and only the submission with the given UUID is fetched. If no such submission exists, an empty list is fetched. 
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -127,7 +126,6 @@ class AdminApi {
     int? endtime,
     int? minscore,
     int? maxscore,
-    String? uuid,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,
@@ -153,7 +151,6 @@ class AdminApi {
       if (endtime != null) r'endtime': encodeQueryParameter(_serializers, endtime, const FullType(int)),
       if (minscore != null) r'minscore': encodeQueryParameter(_serializers, minscore, const FullType(int)),
       if (maxscore != null) r'maxscore': encodeQueryParameter(_serializers, maxscore, const FullType(int)),
-      if (uuid != null) r'uuid': encodeQueryParameter(_serializers, uuid, const FullType(String)),
     };
 
     final _response = await _dio.request<Object>(

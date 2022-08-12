@@ -72,6 +72,7 @@ Class | Method | HTTP request | Description
 [*CORSApi*](doc/CORSApi.md) | [**optionsAdminSubmissions**](doc/CORSApi.md#optionsadminsubmissions) | **OPTIONS** /admin/submissions | CORS admin submissions support
 [*CORSApi*](doc/CORSApi.md) | [**optionsSurvey**](doc/CORSApi.md#optionssurvey) | **OPTIONS** /survey | CORS survey support
 [*CORSApi*](doc/CORSApi.md) | [**optionsVisitedResiliencyResources**](doc/CORSApi.md#optionsvisitedresiliencyresources) | **OPTIONS** /resiliency | CORS resiliency resources support
+[*SubmissionApi*](doc/SubmissionApi.md) | [**getSubmission**](doc/SubmissionApi.md#getsubmission) | **GET** /submission | get the submission
 [*UserApi*](doc/UserApi.md) | [**getResiliencyResources**](doc/UserApi.md#getresiliencyresources) | **GET** /resiliency | Get resiliency resources
 [*UserApi*](doc/UserApi.md) | [**getSurvey**](doc/UserApi.md#getsurvey) | **GET** /survey | Get the MDQ
 [*UserApi*](doc/UserApi.md) | [**submitSurvey**](doc/UserApi.md#submitsurvey) | **POST** /survey | Submit a completed MDQ
@@ -84,6 +85,7 @@ Class | Method | HTTP request | Description
  - [Icon](doc/Icon.md)
  - [ResiliencyResource](doc/ResiliencyResource.md)
  - [ResiliencyResources](doc/ResiliencyResources.md)
+ - [SetTimestampRequest](doc/SetTimestampRequest.md)
  - [Submission](doc/Submission.md)
  - [Submissions](doc/Submissions.md)
  - [Survey](doc/Survey.md)
