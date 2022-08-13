@@ -73,6 +73,7 @@ Class | Method | HTTP request | Description
 [*CORSApi*](doc/CORSApi.md) | [**optionsSurvey**](doc/CORSApi.md#optionssurvey) | **OPTIONS** /survey | CORS survey support
 [*CORSApi*](doc/CORSApi.md) | [**optionsVisitedResiliencyResources**](doc/CORSApi.md#optionsvisitedresiliencyresources) | **OPTIONS** /resiliency | CORS resiliency resources support
 [*SubmissionApi*](doc/SubmissionApi.md) | [**getSubmission**](doc/SubmissionApi.md#getsubmission) | **GET** /submission | get the submission
+[*SubmissionApi*](doc/SubmissionApi.md) | [**submitSubmission**](doc/SubmissionApi.md#submitsubmission) | **POST** /submission | Submit a submission
 [*UserApi*](doc/UserApi.md) | [**getResiliencyResources**](doc/UserApi.md#getresiliencyresources) | **GET** /resiliency | Get resiliency resources
 [*UserApi*](doc/UserApi.md) | [**getSurvey**](doc/UserApi.md#getsurvey) | **GET** /survey | Get the MDQ
 [*UserApi*](doc/UserApi.md) | [**submitSurvey**](doc/UserApi.md#submitsurvey) | **POST** /survey | Submit a completed MDQ

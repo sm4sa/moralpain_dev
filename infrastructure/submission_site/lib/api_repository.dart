@@ -47,7 +47,6 @@ class ApiRepository {
       final response = await sapi.getSubmission();
       return response.data!;
     } catch (err) {
-      print(err);
       throw SubmissionFetchFailure(err.toString());
     }
 
@@ -63,8 +62,17 @@ class ApiRepository {
   ///
   /// Returns true if submission is successful and false otherwise.
   Future<bool> submitSubmission(Submission submission) async {
-    /// TODO: have this method call the API client instead of returning a dummy
-    return false;
+    final sapi = mapi.getSubmissionApi();
+
+    try {
+      print('submitSubmission() called');
+      final response = await sapi.submitSubmission(submission: submission);
+      print('response = $response');
+      return response.statusCode == 200;
+    } catch (err) {
+      print('error = $err');
+      return false;
+    }
   }
 
   /// Fetch the latest version of the moral distress survey from the API.

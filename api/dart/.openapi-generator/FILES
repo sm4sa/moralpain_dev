@@ -43,5 +43,3 @@ lib/src/model/survey_section.dart
 lib/src/model/visited_resiliency_resources.dart
 lib/src/serializers.dart
 pubspec.yaml
-test/set_timestamp_request_test.dart
-test/submission_api_test.dart
