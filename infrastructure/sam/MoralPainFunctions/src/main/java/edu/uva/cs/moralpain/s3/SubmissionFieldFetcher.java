@@ -45,8 +45,8 @@ public class SubmissionFieldFetcher implements RequestHandler<APIGatewayV2HTTPEv
             return response;
         }
 
-        String bucket = variableManager.get("bucket");
-        String prefix = variableManager.getOrDefault("prefix", "");
+        // String bucket = variableManager.get("bucket");
+        // String prefix = variableManager.getOrDefault("prefix", "");
 
         // Map<String, String> qs = input.getQueryStringParameters();
         // if (qs == null) {
@@ -62,12 +62,14 @@ public class SubmissionFieldFetcher implements RequestHandler<APIGatewayV2HTTPEv
         // response.setStatusCode(400);
         // } else {
         // Get the list of submissions with the given UUID
-        System.out.println("before create client");
+        // System.out.println("before create client");
         S3Client client = createS3Client(variableManager);
-        System.out.println("before getObjectAsSubmisison");
+        // System.out.println("before getObjectAsSubmisison");
+        
+        // TODO: don't deserialize JSON just to serialize it again
         Submission submission = S3Helper.getObjectAsSubmission(client, "moralpain-submissions",
                 "single/submission.json");
-        System.out.println("after getObjectAsSubmission, submission = " + submission);
+        // System.out.println("after getObjectAsSubmission, submission = " + submission);
 
         // String apiPath = input.getRawPath() != null ? input.getRawPath() : "null";
         // Return timestamp if path is /submission/timestamp
@@ -106,11 +108,13 @@ public class SubmissionFieldFetcher implements RequestHandler<APIGatewayV2HTTPEv
     }
 
     private boolean isValidEvent(APIGatewayV2HTTPEvent event) {
+        // TODO: uncomment
         // return event != null;
         return true;
     }
 
     private boolean isValidEnvironment(VariableManager variableManager) {
+        // TODO: uncomment
         // return variableManager.containsKey("bucket") &&
         // !variableManager.getOrDefault("bucket", "").isEmpty();
         return true;

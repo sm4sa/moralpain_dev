@@ -141,6 +141,31 @@ Resources:
             ApiId: !Ref ApiGatewayApi
       Timeout: 60
 
+  SubmitSubmissionFieldFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      FunctionName: !Sub ${Prefix}SubmitSubmissionField
+      CodeUri: MoralPainFunctions
+      Handler: edu.uva.cs.moralpain.s3.SubmissionUpdater::handleRequest
+      Runtime: java8.al2
+      Architectures:
+        - x86_64
+      MemorySize: 512
+      Environment: # More info about Env Vars: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#environment-object
+        Variables:
+          bucket: moralpain-submissions
+          prefix: single
+          uploadFileName: submission.json
+      Role: !Sub arn:aws:iam::${AWS::AccountId}:role/lambda_submit_submission_field_role
+      Events:
+        Get:
+          Type: HttpApi # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /submission
+            Method: post
+            ApiId: !Ref ApiGatewayApi
+
+
 Outputs:
   APIUri:
     Value: !Sub "https://${ApiGatewayApi}.execute-api.${AWS::Region}.amazonaws.com"
