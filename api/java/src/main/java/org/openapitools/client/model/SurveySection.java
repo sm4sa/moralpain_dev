@@ -38,7 +38,7 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
   SurveySection.JSON_PROPERTY_OPTIONS
 })
 @JsonTypeName("surveySection")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-07-10T00:48:17.818184-04:00[America/New_York]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-08-06T18:59:24.183129Z[Etc/UTC]")
 public class SurveySection {
   public static final String JSON_PROPERTY_SECTION_ID = "sectionId";
   private String sectionId;

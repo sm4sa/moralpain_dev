@@ -84,7 +84,7 @@ if(hasProperty('target') && target == 'android') {
     publishing {
         publications {
             maven(MavenPublication) {
-               artifactId = 'openapi-java-client'
+               artifactId = 'moraldistressapi'
 
                from components.java
             }

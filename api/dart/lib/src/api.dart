@@ -11,6 +11,7 @@ import 'package:moralpainapi/src/auth/bearer_auth.dart';
 import 'package:moralpainapi/src/auth/oauth.dart';
 import 'package:moralpainapi/src/api/admin_api.dart';
 import 'package:moralpainapi/src/api/cors_api.dart';
+import 'package:moralpainapi/src/api/submission_api.dart';
 import 'package:moralpainapi/src/api/user_api.dart';
 
 class Moralpainapi {
@@ -77,6 +78,12 @@ class Moralpainapi {
   /// by doing that all interceptors will not be executed
   CORSApi getCORSApi() {
     return CORSApi(dio, serializers);
+  }
+
+  /// Get SubmissionApi instance, base route and serializer can be overridden by a given but be careful,
+  /// by doing that all interceptors will not be executed
+  SubmissionApi getSubmissionApi() {
+    return SubmissionApi(dio, serializers);
   }
 
   /// Get UserApi instance, base route and serializer can be overridden by a given but be careful,

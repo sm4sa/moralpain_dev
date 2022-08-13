@@ -5,6 +5,12 @@ Description: >
 
   SAM Template for moralpain
 
+Parameters:
+  Prefix:
+    Description: unique identifier for resources
+    Type: String
+    Default: ''
+
 # More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
 Globals:
   Function:
@@ -21,7 +27,7 @@ Resources:
   SubmitSurveyFunction:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
-      FunctionName: SubmitSurvey
+      FunctionName: !Sub ${Prefix}SubmitSurvey
       CodeUri: MoralPainFunctions
       Handler: edu.uva.cs.moralpain.s3.UniqueKeyUploader::handleRequest
       Runtime: java8.al2
@@ -44,7 +50,7 @@ Resources:
   SubmitVisitedResiliencyResourcesFunction:
     Type: AWS::Serverless::Function
     Properties:
-      FunctionName: SubmitVisitedResiliencyResources
+      FunctionName: !Sub ${Prefix}SubmitVisitedResiliencyResources
       CodeUri: MoralPainFunctions
       Handler: edu.uva.cs.moralpain.s3.UniqueKeyUploader::handleRequest
       Runtime: java8.al2
@@ -67,7 +73,7 @@ Resources:
   FetchSubmissionsFunction:
     Type: AWS::Serverless::Function
     Properties:
-      FunctionName: FetchSubmissions
+      FunctionName: !Sub ${Prefix}FetchSubmissions
       CodeUri: MoralPainFunctions
       Handler: edu.uva.cs.moralpain.s3.SubmissionFetcher::handleRequest
       Runtime: java8.al2
@@ -86,11 +92,12 @@ Resources:
             Path: /admin/submissions
             Method: get
             ApiId: !Ref ApiGatewayApi
+      Timeout: 60
   
   AnalyzeSubmissionsFunction:
     Type: AWS::Serverless::Function
     Properties:
-      FunctionName: AnalyzeSubmissions
+      FunctionName: !Sub ${Prefix}AnalyzeSubmissions
       CodeUri: MoralPainFunctions
       Handler: edu.uva.cs.moralpain.s3.SubmissionAnalyzer::handleRequest
       Runtime: java8.al2
@@ -109,6 +116,55 @@ Resources:
             Path: /admin/analytics
             Method: get
             ApiId: !Ref ApiGatewayApi
+  
+  FetchSubmissionFieldFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub ${Prefix}FetchSubmissionField
+      CodeUri: MoralPainFunctions
+      Handler: edu.uva.cs.moralpain.s3.SubmissionFieldFetcher::handleRequest
+      Runtime: java8.al2
+      Architectures:
+        - x86_64
+      MemorySize: 512
+      Environment:
+        Variables:
+          bucket: moralpain-submissions
+          prefix: surveys
+      Role: !Sub arn:aws:iam::${AWS::AccountId}:role/lambda_fetch_submission_field_role
+      Events:
+        Get:
+          Type: HttpApi
+          Properties:
+            Path: /submission
+            Method: get
+            ApiId: !Ref ApiGatewayApi
+      Timeout: 60
+
+  SubmitSubmissionFieldFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      FunctionName: !Sub ${Prefix}SubmitSubmissionField
+      CodeUri: MoralPainFunctions
+      Handler: edu.uva.cs.moralpain.s3.SubmissionUpdater::handleRequest
+      Runtime: java8.al2
+      Architectures:
+        - x86_64
+      MemorySize: 512
+      Environment: # More info about Env Vars: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#environment-object
+        Variables:
+          bucket: moralpain-submissions
+          prefix: single
+          uploadFileName: submission.json
+      Role: !Sub arn:aws:iam::${AWS::AccountId}:role/lambda_submit_submission_field_role
+      Events:
+        Get:
+          Type: HttpApi # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /submission
+            Method: post
+            ApiId: !Ref ApiGatewayApi
+
 
 Outputs:
   APIUri:

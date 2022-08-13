@@ -33,8 +33,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/survey'
-      security:
-        - sigv4Reference: []
       x-amazon-apigateway-integration:
         httpMethod: get
         type: aws
@@ -61,6 +59,8 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/submission'
+      security:
+        - UserPool: []
       responses:
         '200':
           description: |-
@@ -79,8 +79,6 @@ paths:
             text/plain:
               schema:
                 type: string
-      security:
-        - sigv4Reference: []
       x-amazon-apigateway-integration:
         httpMethod: post
         type: aws_proxy
@@ -115,8 +113,6 @@ paths:
               schema:
                 type: string
           content: {}
-      security:
-        - sigv4Reference: []
       x-amazon-apigateway-integration:
         type: mock
         requestTemplates:
@@ -160,8 +156,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/resiliencyResources'
-      security:
-        - sigv4Reference: []
       x-amazon-apigateway-integration:
         httpMethod: get
         type: aws
@@ -187,6 +181,8 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/visitedResiliencyResources'
+      security:
+        - UserPool: []
       responses:
         '200':
           description: |-
@@ -239,8 +235,6 @@ paths:
               schema:
                 type: string
           content: {}
-      security:
-        - sigv4Reference: []
       x-amazon-apigateway-integration:
         type: mock
         requestTemplates:
@@ -313,8 +307,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/submissions'
-      security:
-        - sigv4Reference: []
       x-amazon-apigateway-integration:
         # NB (nphair): Post request are always used for invoking a lambda.
         # https://docs.aws.amazon.com/lambda/latest/dg/API_Invoke.html
@@ -351,8 +343,6 @@ paths:
               schema:
                 type: string
           content: {}
-      security:
-        - sigv4Reference: []
       x-amazon-apigateway-integration:
         type: mock
         requestTemplates:
@@ -437,8 +427,6 @@ paths:
             application/json:
               schema:
                 type: string
-      security:
-        - sigv4Reference: []
       x-amazon-apigateway-integration:
         # NB (nphair): Post request are always used for invoking a lambda.
         # https://docs.aws.amazon.com/lambda/latest/dg/API_Invoke.html
@@ -481,8 +469,6 @@ paths:
               schema:
                 type: string
           content: {}
-      security:
-        - sigv4Reference: []
       x-amazon-apigateway-integration:
         type: mock
         requestTemplates:
@@ -500,14 +486,212 @@ paths:
             responseTemplates:
               application/json: |
                 {}
+  /submission:
+    get:
+      operationId: getSubmission
+      summary: get the submission
+      description: >
+        Get the MDQ submission.
+      tags:
+        - Submission
+      responses:
+        '200':
+          description: |-
+            200 response
+          headers:
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+            Access-Control-Allow-Methods:
+              schema:
+                type: string
+            Access-Control-Allow-Headers:
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/submission'
+      x-amazon-apigateway-integration:
+        # NB (nphair): Post request are always used for invoking a lambda.
+        # https://docs.aws.amazon.com/lambda/latest/dg/API_Invoke.html
+        httpMethod: post
+        type: aws_proxy
+        uri : arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:TestFetchSubmissionField/invocations
+        credentials: arn:aws:iam::${AWS::AccountId}:role/apigateway_submission_timestamp_get_role
+        passthroughBehavior : "when_no_match"
+        responses:
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Headers: '''Content-Type,X-Amz-Date,Authorization,X-Api-Key'''
+              method.response.header.Access-Control-Allow-Methods: '''*'''
+    post:
+      operationId: submitSubmission
+      summary: Submit a submission
+      description: >
+        Submit 
+      tags:
+        - Submission
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/submission'
+      responses:
+        '200':
+          description: |-
+            200 response
+          headers:
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+            Access-Control-Allow-Methods:
+              schema:
+                type: string
+            Access-Control-Allow-Headers:
+              schema:
+                type: string
+          content:
+            text/plain:
+              schema:
+                type: string
+      x-amazon-apigateway-integration:
+        httpMethod: post
+        type: aws_proxy
+        uri : arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:TestSubmitSubmissionField/invocations
+        credentials: arn:aws:iam::${AWS::AccountId}:role/apigateway_submission_timestamp_post_role
+        passthroughBehavior : "when_no_match"
+        responses:
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Headers: '''Content-Type,X-Amz-Date,Authorization,X-Api-Key'''
+              method.response.header.Access-Control-Allow-Methods: '''*'''
+              method.response.header.Access-Control-Allow-Origin: '''*'''
+    options:
+      operationId: optionsSubmission
+      summary: CORS submission support
+      description: |
+        Enable CORS by returning correct headers
+      tags:
+      - CORS
+      responses:
+        200:
+          description: Default response for CORS method
+          headers:
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+            Access-Control-Allow-Methods:
+              schema:
+                type: string
+            Access-Control-Allow-Headers:
+              schema:
+                type: string
+          content: {}
+      x-amazon-apigateway-integration:
+        type: mock
+        requestTemplates:
+          application/json: |
+            {
+              "statusCode" : 200
+            }
+        responses:
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Headers: '''Content-Type,X-Amz-Date,Authorization,X-Api-Key'''
+              method.response.header.Access-Control-Allow-Methods: '''*'''
+              method.response.header.Access-Control-Allow-Origin: '''*'''
+            responseTemplates:
+              application/json: |
+                {}
+#   put:
+#     operationId: setTimestamp
+#     summary: set the timestamp of a submission
+#     description: >
+#       Sets the timestamp of the submission with the given UUID to the given timestamp
+#     tags:
+#       - Submission
+#     requestBody:
+#       content:
+#         application/json:
+#           schema:
+#             $ref: '#/components/schemas/setTimestampRequest'
+#     responses:
+#       '200':
+#         description: |-
+#           200 response
+#         headers:
+#           Access-Control-Allow-Origin:
+#             schema:
+#               type: string
+#           Access-Control-Allow-Methods:
+#             schema:
+#               type: string
+#           Access-Control-Allow-Headers:
+#             schema:
+#               type: string
+#         content:
+#           text/plain:
+#             schema:
+#               type: string
+#   options:
+#     operationId: optionsSurvey
+#     summary: CORS survey support
+  #     description: |
+  #       Enable CORS by returning correct headers
+  #     tags:
+  #     - CORS
+  #     responses:
+  #       200:
+  #         description: Default response for CORS method
+  #         headers:
+  #           Access-Control-Allow-Origin:
+  #             schema:
+  #               type: string
+  #           Access-Control-Allow-Methods:
+  #             schema:
+  #               type: string
+  #           Access-Control-Allow-Headers:
+  #             schema:
+  #               type: string
+  #         content: {}
+  #     x-amazon-apigateway-integration:
+  #       type: mock
+  #       requestTemplates:
+  #         application/json: |
+  #           {
+  #             "statusCode" : 200
+  #           }
+  #       responses:
+  #         default:
+  #           statusCode: "200"
+  #           responseParameters:
+  #             method.response.header.Access-Control-Allow-Headers: '''Content-Type,X-Amz-Date,Authorization,X-Api-Key'''
+  #             method.response.header.Access-Control-Allow-Methods: '''*'''
+  #             method.response.header.Access-Control-Allow-Origin: '''*'''
+  #           responseTemplates:
+  #             application/json: |
+  #               {}
+
+
+
+
 
 components:
   securitySchemes:
-    sigv4Reference:
+    UserPool: 
       type: apiKey
       name: Authorization
       in: header
-      x-amazon-apigateway-authtype: awsSigv4
+      x-amazon-apigateway-authtype: cognito_user_pools
+      x-amazon-apigateway-authorizer: 
+        type: cognito_user_pools
+        # TODO (nphair): Find a better way than hardcoding ids.
+        providerARNs: 
+          - "arn:aws:cognito-idp:${AWS::Region}:${AWS::AccountId}:userpool/${AWS::Region}_pqNwySoyF"
   schemas:
     survey:
       type: object
@@ -614,3 +798,10 @@ components:
           type: boolean
         errormsg:
           type: string
+    setTimestampRequest:
+      type: object
+      properties:
+        uuid:
+          type: string
+        timestamp:
+          type: number

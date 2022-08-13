@@ -76,13 +76,13 @@ No authorization required
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **200** | 200 response |  -  |
-| **400** | 400 Bad Request |  -  |
+| **200** | 200 response |  * Access-Control-Allow-Origin -  <br>  * Access-Control-Allow-Methods -  <br>  * Access-Control-Allow-Headers -  <br>  |
+| **400** | 400 Bad Request |  * Access-Control-Allow-Origin -  <br>  * Access-Control-Allow-Methods -  <br>  * Access-Control-Allow-Headers -  <br>  |
 
 
 ## getSubmissions
 
-> Submissions getSubmissions(starttime, endtime, minscore, maxscore)
+> Submissions getSubmissions(starttime, endtime, minscore, maxscore, uuid)
 
 Get survey results
 
@@ -108,8 +108,9 @@ public class Example {
         Integer endtime = 1647907200; // Integer | Maximum possible timestamp of a record in UTC seconds since Unix epoch.
         Integer minscore = 1; // Integer | Minimum possible score of a record.
         Integer maxscore = 5; // Integer | Maximum possible score of a record.
+        String uuid = "f2f2011c8d2547849dfce99ae4b75797"; // String | If this parameter is specified, all other parameters are ignored and only the submission with the given UUID is fetched. If no such submission exists, an empty list is fetched. 
         try {
-            Submissions result = apiInstance.getSubmissions(starttime, endtime, minscore, maxscore);
+            Submissions result = apiInstance.getSubmissions(starttime, endtime, minscore, maxscore, uuid);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling AdminApi#getSubmissions");
@@ -131,6 +132,7 @@ public class Example {
 | **endtime** | **Integer**| Maximum possible timestamp of a record in UTC seconds since Unix epoch. | [optional] |
 | **minscore** | **Integer**| Minimum possible score of a record. | [optional] |
 | **maxscore** | **Integer**| Maximum possible score of a record. | [optional] |
+| **uuid** | **String**| If this parameter is specified, all other parameters are ignored and only the submission with the given UUID is fetched. If no such submission exists, an empty list is fetched.  | [optional] |
 
 ### Return type
 

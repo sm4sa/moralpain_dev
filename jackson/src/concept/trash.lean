@@ -107,15 +107,25 @@ def do_empty
   match pre_state with (available, trashed) := ⟨ available, has_collection.init item_type⟩ 
   end
 
+
+
+/-
+This file presents the specification of the has_trash abstraction
+as a typeclass.
+-/  
+
 /-
 trash
-- is a concept via the "extends" clause
-- polymorphic in collection and element type 
-- requires a collection API for the given collection type
+- polymorphic in collection data structures and element type 
+- requires a collection API for the given collection types
 - trash state type is pair of collections of element type objects
 - concept name is "trash"
 - concept purpose is "to allow undoing of deletions"
 - initial state is the trash_state with both collections empty
+- we provide an implementation of this abstraction polymorphic in 
+"available" and "trash" data structure types and an element type
+- The data structure types need implementations of has_collection
+- The element types must have decidable equality
 -/
 
 class has_trash  
@@ -124,15 +134,13 @@ class has_trash
 (trash_collection_type : Type u → Type u) 
 [collection.has_collection trash_collection_type]
 (item_type : Type u)
-[decidable_eq item_type] 
+[decidable_eq item_type]   :=
 --extends concept (trash_state available_collection_type trash_collection_type item_type)   --item_type
-  :=
-
 (name : string)
 
 (purpose : string)
 
-(init : 
+(init : -- Note: init essential but elided from examples in Jackson book
   trash_state 
     available_collection_type 
     trash_collection_type 

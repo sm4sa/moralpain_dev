@@ -127,6 +127,8 @@ paths:
               schema:
                 type: string
               style: simple
+      security:
+      - UserPool: []
       summary: Submit a completed MDQ
       tags:
       - User
@@ -263,6 +265,8 @@ paths:
               schema:
                 type: string
               style: simple
+      security:
+      - UserPool: []
       summary: Submit visited resiliency resources
       tags:
       - User
@@ -328,6 +332,17 @@ paths:
           maximum: 10
           minimum: 0
           type: integer
+        style: form
+      - description: "If this parameter is specified, all other parameters are ignored\
+          \ and only the submission with the given UUID is fetched. If no such submission\
+          \ exists, an empty list is fetched.\n"
+        example: f2f2011c8d2547849dfce99ae4b75797
+        explode: true
+        in: query
+        name: uuid
+        required: false
+        schema:
+          type: string
         style: form
       responses:
         "200":
@@ -457,15 +472,107 @@ paths:
               schema:
                 $ref: '#/components/schemas/analyticsResult'
           description: 200 response
+          headers:
+            Access-Control-Allow-Origin:
+              explode: false
+              schema:
+                type: string
+              style: simple
+            Access-Control-Allow-Methods:
+              explode: false
+              schema:
+                type: string
+              style: simple
+            Access-Control-Allow-Headers:
+              explode: false
+              schema:
+                type: string
+              style: simple
         "400":
           content:
             application/json:
               schema:
                 type: string
           description: 400 Bad Request
+          headers:
+            Access-Control-Allow-Origin:
+              explode: false
+              schema:
+                type: string
+              style: simple
+            Access-Control-Allow-Methods:
+              explode: false
+              schema:
+                type: string
+              style: simple
+            Access-Control-Allow-Headers:
+              explode: false
+              schema:
+                type: string
+              style: simple
       summary: Get data analysis
       tags:
       - Admin
+      x-amazon-apigateway-integration:
+        httpMethod: post
+        type: aws_proxy
+        uri: "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:AnalyzeSubmissions/invocations"
+        credentials: "arn:aws:iam::${AWS::AccountId}:role/apigateway_admin_analytics_get_role"
+        passthroughBehavior: when_no_match
+        responses:
+          "400":
+            statusCode: "400"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key'"
+              method.response.header.Access-Control-Allow-Methods: '''*'''
+              method.response.header.Access-Control-Allow-Origin: '''*'''
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key'"
+              method.response.header.Access-Control-Allow-Methods: '''*'''
+              method.response.header.Access-Control-Allow-Origin: '''*'''
+      x-accepts: application/json
+    options:
+      description: |
+        Enable CORS by returning correct headers
+      operationId: optionsAdminAnalytics
+      responses:
+        "200":
+          content: {}
+          description: Default response for CORS method
+          headers:
+            Access-Control-Allow-Origin:
+              explode: false
+              schema:
+                type: string
+              style: simple
+            Access-Control-Allow-Methods:
+              explode: false
+              schema:
+                type: string
+              style: simple
+            Access-Control-Allow-Headers:
+              explode: false
+              schema:
+                type: string
+              style: simple
+      summary: CORS admin analytics support
+      tags:
+      - CORS
+      x-amazon-apigateway-integration:
+        type: mock
+        requestTemplates:
+          application/json: "{\n  \"statusCode\" : 200\n}\n"
+        responses:
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key'"
+              method.response.header.Access-Control-Allow-Methods: '''*'''
+              method.response.header.Access-Control-Allow-Origin: '''*'''
+            responseTemplates:
+              application/json: "{}\n"
       x-accepts: application/json
 components:
   schemas:
@@ -663,4 +770,14 @@ components:
         errormsg:
           type: string
       type: object
+  securitySchemes:
+    UserPool:
+      in: header
+      name: Authorization
+      type: apiKey
+      x-amazon-apigateway-authtype: cognito_user_pools
+      x-amazon-apigateway-authorizer:
+        type: cognito_user_pools
+        providerARNs:
+        - "arn:aws:cognito-idp:${AWS::Region}:${AWS::AccountId}:userpool/${AWS::Region}_pqNwySoyF"
 

@@ -4,7 +4,7 @@
     <groupId>edu.uva.cs</groupId>
     <artifactId>moraldistressapi</artifactId>
     <packaging>jar</packaging>
-    <name>openapi-java-client</name>
+    <name>moraldistressapi</name>
     <version>1.0.0</version>
     <url>https://github.com/openapitools/openapi-generator</url>
     <description>OpenAPI Java</description>

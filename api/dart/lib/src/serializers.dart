@@ -16,6 +16,7 @@ import 'package:moralpainapi/src/model/analytics_result.dart';
 import 'package:moralpainapi/src/model/icon.dart';
 import 'package:moralpainapi/src/model/resiliency_resource.dart';
 import 'package:moralpainapi/src/model/resiliency_resources.dart';
+import 'package:moralpainapi/src/model/set_timestamp_request.dart';
 import 'package:moralpainapi/src/model/submission.dart';
 import 'package:moralpainapi/src/model/submissions.dart';
 import 'package:moralpainapi/src/model/survey.dart';
@@ -30,6 +31,7 @@ part 'serializers.g.dart';
   Icon,
   ResiliencyResource,
   ResiliencyResources,
+  SetTimestampRequest,
   Submission,
   Submissions,
   Survey,

@@ -31,7 +31,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-07-10T00:48:17.818184-04:00[America/New_York]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-08-06T18:59:24.183129Z[Etc/UTC]")
 public class UserApi {
   private ApiClient apiClient;
 
@@ -187,7 +187,7 @@ public class UserApi {
     };
     final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
 
-    String[] localVarAuthNames = new String[] {  };
+    String[] localVarAuthNames = new String[] { "UserPool" };
 
     TypeReference<String> localVarReturnType = new TypeReference<String>() {};
     return apiClient.invokeAPI(
@@ -239,7 +239,7 @@ public class UserApi {
     };
     final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
 
-    String[] localVarAuthNames = new String[] {  };
+    String[] localVarAuthNames = new String[] { "UserPool" };
 
     TypeReference<String> localVarReturnType = new TypeReference<String>() {};
     return apiClient.invokeAPI(

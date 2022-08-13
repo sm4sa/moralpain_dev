@@ -74,8 +74,9 @@ import java.net.URI;
 import java.text.DateFormat;
 
 import org.openapitools.client.auth.Authentication;
+import org.openapitools.client.auth.ApiKeyAuth;
 
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-07-10T00:48:17.818184-04:00[America/New_York]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-08-06T18:59:24.183129Z[Etc/UTC]")
 public class ApiClient extends JavaTimeFormatter {
   private Map<String, String> defaultHeaderMap = new HashMap<String, String>();
   private Map<String, String> defaultCookieMap = new HashMap<String, String>();
@@ -124,6 +125,7 @@ public class ApiClient extends JavaTimeFormatter {
 
     // Setup authentications (key: authentication name, value: authentication).
     authentications = new HashMap<String, Authentication>();
+    authentications.put("UserPool", new ApiKeyAuth("header", "Authorization"));
     // Prevent the authentications from being modified.
     authentications = Collections.unmodifiableMap(authentications);
 
@@ -265,6 +267,36 @@ public class ApiClient extends JavaTimeFormatter {
   }
 
 
+
+  /**
+   * Helper method to set API key value for the first API key authentication.
+   * @param apiKey the API key
+   * @return API client
+   */
+  public ApiClient setApiKey(String apiKey) {
+    for (Authentication auth : authentications.values()) {
+      if (auth instanceof ApiKeyAuth) {
+        ((ApiKeyAuth) auth).setApiKey(apiKey);
+        return this;
+      }
+    }
+    throw new RuntimeException("No API key authentication configured!");
+  }
+
+  /**
+   * Helper method to set API key prefix for the first API key authentication.
+   * @param apiKeyPrefix API key prefix
+   * @return API client
+   */
+  public ApiClient setApiKeyPrefix(String apiKeyPrefix) {
+    for (Authentication auth : authentications.values()) {
+      if (auth instanceof ApiKeyAuth) {
+        ((ApiKeyAuth) auth).setApiKeyPrefix(apiKeyPrefix);
+        return this;
+      }
+    }
+    throw new RuntimeException("No API key authentication configured!");
+  }
 
 
 

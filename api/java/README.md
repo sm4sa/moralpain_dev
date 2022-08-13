@@ -1,10 +1,10 @@
-# openapi-java-client
+# moraldistressapi
 
 MoralDistress API
 
 - API version: 1.0.0
 
-- Build date: 2022-07-10T00:48:17.818184-04:00[America/New_York]
+- Build date: 2022-08-06T18:59:24.183129Z[Etc/UTC]
 
 MoralDistress API.
 
@@ -41,7 +41,7 @@ Add this dependency to your project's POM:
 ```xml
 <dependency>
   <groupId>edu.uva.cs</groupId>
-  <artifactId>openapi-java-client</artifactId>
+  <artifactId>moraldistressapi</artifactId>
   <version>1.0.0</version>
   <scope>compile</scope>
 </dependency>
@@ -52,7 +52,7 @@ Add this dependency to your project's POM:
 Add this dependency to your project's build file:
 
 ```groovy
-compile "edu.uva.cs:openapi-java-client:1.0.0"
+compile "edu.uva.cs:moraldistressapi:1.0.0"
 ```
 
 ### Others
@@ -65,7 +65,7 @@ mvn clean package
 
 Then manually install the following JARs:
 
-- `target/openapi-java-client-1.0.0.jar`
+- `target/moraldistressapi-1.0.0.jar`
 - `target/lib/*.jar`
 
 ## Getting Started
@@ -112,6 +112,7 @@ Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
 *AdminApi* | [**getAnalytics**](docs/AdminApi.md#getAnalytics) | **GET** /admin/analytics | Get data analysis
 *AdminApi* | [**getSubmissions**](docs/AdminApi.md#getSubmissions) | **GET** /admin/submissions | Get survey results
+*CorsApi* | [**optionsAdminAnalytics**](docs/CorsApi.md#optionsAdminAnalytics) | **OPTIONS** /admin/analytics | CORS admin analytics support
 *CorsApi* | [**optionsAdminSubmissions**](docs/CorsApi.md#optionsAdminSubmissions) | **OPTIONS** /admin/submissions | CORS admin submissions support
 *CorsApi* | [**optionsSurvey**](docs/CorsApi.md#optionsSurvey) | **OPTIONS** /survey | CORS survey support
 *CorsApi* | [**optionsVisitedResiliencyResources**](docs/CorsApi.md#optionsVisitedResiliencyResources) | **OPTIONS** /resiliency | CORS resiliency resources support
@@ -137,8 +138,14 @@ Class | Method | HTTP request | Description
 
 ## Documentation for Authorization
 
-All endpoints do not require authorization.
 Authentication schemes defined for the API:
+### UserPool
+
+
+- **Type**: API key
+- **API key parameter name**: Authorization
+- **Location**: HTTP header
+
 
 ## Recommendation
 

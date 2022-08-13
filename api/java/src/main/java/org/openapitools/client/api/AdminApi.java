@@ -29,7 +29,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-07-10T00:48:17.818184-04:00[America/New_York]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-08-06T18:59:24.183129Z[Etc/UTC]")
 public class AdminApi {
   private ApiClient apiClient;
 
@@ -118,10 +118,11 @@ public class AdminApi {
    * @param endtime Maximum possible timestamp of a record in UTC seconds since Unix epoch. (optional)
    * @param minscore Minimum possible score of a record. (optional)
    * @param maxscore Maximum possible score of a record. (optional)
+   * @param uuid If this parameter is specified, all other parameters are ignored and only the submission with the given UUID is fetched. If no such submission exists, an empty list is fetched.  (optional)
    * @return Submissions
    * @throws ApiException if fails to make API call
    */
-  public Submissions getSubmissions(Integer starttime, Integer endtime, Integer minscore, Integer maxscore) throws ApiException {
+  public Submissions getSubmissions(Integer starttime, Integer endtime, Integer minscore, Integer maxscore, String uuid) throws ApiException {
     Object localVarPostBody = null;
     
     // create path and map variables
@@ -138,6 +139,7 @@ public class AdminApi {
     localVarQueryParams.addAll(apiClient.parameterToPair("endtime", endtime));
     localVarQueryParams.addAll(apiClient.parameterToPair("minscore", minscore));
     localVarQueryParams.addAll(apiClient.parameterToPair("maxscore", maxscore));
+    localVarQueryParams.addAll(apiClient.parameterToPair("uuid", uuid));
 
     
     

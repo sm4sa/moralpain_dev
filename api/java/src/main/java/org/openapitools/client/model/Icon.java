@@ -34,7 +34,7 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
   Icon.JSON_PROPERTY_FONT_PACKAGE
 })
 @JsonTypeName("icon")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-07-10T00:48:17.818184-04:00[America/New_York]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-08-06T18:59:24.183129Z[Etc/UTC]")
 public class Icon {
   public static final String JSON_PROPERTY_CODE_POINT = "codePoint";
   private String codePoint;

@@ -150,6 +150,7 @@ Submit a completed Moral Distress Questionnaire and Moral Distress Score to the 
 import org.openapitools.client.ApiClient;
 import org.openapitools.client.ApiException;
 import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
 import org.openapitools.client.models.*;
 import org.openapitools.client.api.UserApi;
 
@@ -157,6 +158,12 @@ public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
         defaultClient.setBasePath("http://localhost");
+        
+        // Configure API key authorization: UserPool
+        ApiKeyAuth UserPool = (ApiKeyAuth) defaultClient.getAuthentication("UserPool");
+        UserPool.setApiKey("YOUR API KEY");
+        // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+        //UserPool.setApiKeyPrefix("Token");
 
         UserApi apiInstance = new UserApi(defaultClient);
         Submission submission = new Submission(); // Submission | 
@@ -187,7 +194,7 @@ public class Example {
 
 ### Authorization
 
-No authorization required
+[UserPool](../README.md#UserPool)
 
 ### HTTP request headers
 
@@ -216,6 +223,7 @@ Submit the list of resources visited by this user to the database.
 import org.openapitools.client.ApiClient;
 import org.openapitools.client.ApiException;
 import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
 import org.openapitools.client.models.*;
 import org.openapitools.client.api.UserApi;
 
@@ -223,6 +231,12 @@ public class Example {
     public static void main(String[] args) {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
         defaultClient.setBasePath("http://localhost");
+        
+        // Configure API key authorization: UserPool
+        ApiKeyAuth UserPool = (ApiKeyAuth) defaultClient.getAuthentication("UserPool");
+        UserPool.setApiKey("YOUR API KEY");
+        // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+        //UserPool.setApiKeyPrefix("Token");
 
         UserApi apiInstance = new UserApi(defaultClient);
         VisitedResiliencyResources visitedResiliencyResources = new VisitedResiliencyResources(); // VisitedResiliencyResources | 
@@ -253,7 +267,7 @@ public class Example {
 
 ### Authorization
 
-No authorization required
+[UserPool](../README.md#UserPool)
 
 ### HTTP request headers
 
