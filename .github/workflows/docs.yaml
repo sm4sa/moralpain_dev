@@ -28,8 +28,8 @@ jobs:
         uses: seeebiii/redoc-cli-github-action@v9
         with:
           args: >
-            build infrastructure/sam/api.yaml 
-            --options docs/redoc.json
+            build ${GITHUB_WORKSPACE}/infrastructure/sam/api.yaml 
+            --options ${GITHUB_WORKSPACE}/docs/source/docs/backend/api/redoc.json
             --output ${GITHUB_WORKSPACE}/docs/build/html/docs/backend/api/index.html
       - name: Copy files to the test website with the AWS CLI
         run: |
