@@ -51,3 +51,5 @@ target
 
 # Dart API Client
 *.g.dart
+
+docs/build
