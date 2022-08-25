@@ -11,6 +11,7 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**optionsAdminAnalytics**](CORSApi.md#optionsadminanalytics) | **OPTIONS** /admin/analytics | CORS admin analytics support
 [**optionsAdminSubmissions**](CORSApi.md#optionsadminsubmissions) | **OPTIONS** /admin/submissions | CORS admin submissions support
+[**optionsSubmission**](CORSApi.md#optionssubmission) | **OPTIONS** /submission | CORS submission support
 [**optionsSurvey**](CORSApi.md#optionssurvey) | **OPTIONS** /survey | CORS survey support
 [**optionsVisitedResiliencyResources**](CORSApi.md#optionsvisitedresiliencyresources) | **OPTIONS** /resiliency | CORS resiliency resources support
 
@@ -70,6 +71,44 @@ try {
     api.optionsAdminSubmissions();
 } catch on DioError (e) {
     print('Exception when calling CORSApi->optionsAdminSubmissions: $e\n');
+}
+```
+
+### Parameters
+This endpoint does not need any parameter.
+
+### Return type
+
+void (empty response body)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **optionsSubmission**
+> optionsSubmission()
+
+CORS submission support
+
+Enable CORS by returning correct headers 
+
+### Example
+```dart
+import 'package:moralpainapi/api.dart';
+
+final api = Moralpainapi().getCORSApi();
+
+try {
+    api.optionsSubmission();
+} catch on DioError (e) {
+    print('Exception when calling CORSApi->optionsSubmission: $e\n');
 }
 ```
 

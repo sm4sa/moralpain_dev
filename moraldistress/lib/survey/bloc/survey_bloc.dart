@@ -36,8 +36,10 @@ class SurveyBloc extends Bloc<SurveyEvent, SurveyState> {
   }
 
   void refreshCredentials(AWSCredentials credentials) {
-    var credsSigFlavor = awssig.AWSCredentials(credentials.awsAccessKey!,
-        credentials.awsSecretKey!, credentials.sessionToken);
+    //var credsSigFlavor = awssig.AWSCredentials(credentials.awsAccessKey!,
+    //    credentials.awsSecretKey!, credentials.sessionToken);
+    var credsSigFlavor = awssig.AWSCredentials(
+        credentials.awsAccessKey!, credentials.awsSecretKey!);
     repository.credentialRefresh(credsSigFlavor);
   }
 

@@ -16,5 +16,14 @@ void main() {
       // TODO
     });
 
+    // Submit a submission
+    //
+    // Submit  
+    //
+    //Future<String> submitSubmission({ Submission submission }) async
+    test('test submitSubmission', () async {
+      // TODO
+    });
+
   });
 }

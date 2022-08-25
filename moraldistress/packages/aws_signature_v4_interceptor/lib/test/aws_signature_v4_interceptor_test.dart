@@ -13,6 +13,7 @@ void main() async {
 
     // Register the interceptor.
     const provider = AWSCredentialsProvider.dartEnvironment();
+
     const region = 'us-east-1';
     final scope =
         AWSCredentialScope.raw(region: region, service: 'execute-api');

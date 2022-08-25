@@ -81,7 +81,7 @@ public class UniqueKeyUploaderTest {
     URL url = getClass().getResource("/exampleSurveyResult.json");
     event.setBody(UtilsForTesting.fileToString(url));
     uniqueKeyUploader.handleRequest(event, new MockContext());
-
+    System.clearProperty("prefix");
     assertTrue(s3Client.listObjects((req) -> req.bucket(BUCKET_NAME).build()).contents().get(0).key().contains("foo"));
   }
 
