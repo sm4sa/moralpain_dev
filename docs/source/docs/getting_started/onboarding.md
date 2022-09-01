@@ -83,9 +83,14 @@ click through. You should, "Trust the Authors", "Reopen in Container", and "Inst
 Recommended Extensions". VS Code will initialize your project. When done, in the
 bottom of the window you should see an Android device listed.  
 
-### Andoid tools
+### Android tools
 
 MAC:
+
+
+```bash
+brew install wget
+```
 
 ```bash
 cd to <your_clone_directory>/bin 
