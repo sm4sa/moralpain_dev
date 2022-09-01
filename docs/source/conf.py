@@ -30,9 +30,15 @@ release = '0.0.1'
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
-extensions = [
-    "myst_parser",
-    'sphinx.ext.graphviz',
+extensions = ['myst_parser', 'sphinx.ext.graphviz', 'sphinxcontrib.redoc']
+
+redoc = [
+    {
+        'name': 'Batcomputer API',
+        'page': 'docs/backend/api/spec',
+        'spec': '../../infrastructure/sam/api.yaml',
+        'embed': True,
+    },
 ]
 
 # Add any paths that contain templates here, relative to this directory.

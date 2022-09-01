@@ -70,6 +70,7 @@ Class | Method | HTTP request | Description
 [*AdminApi*](doc/AdminApi.md) | [**getSubmissions**](doc/AdminApi.md#getsubmissions) | **GET** /admin/submissions | Get survey results
 [*CORSApi*](doc/CORSApi.md) | [**optionsAdminAnalytics**](doc/CORSApi.md#optionsadminanalytics) | **OPTIONS** /admin/analytics | CORS admin analytics support
 [*CORSApi*](doc/CORSApi.md) | [**optionsAdminSubmissions**](doc/CORSApi.md#optionsadminsubmissions) | **OPTIONS** /admin/submissions | CORS admin submissions support
+[*CORSApi*](doc/CORSApi.md) | [**optionsSubmission**](doc/CORSApi.md#optionssubmission) | **OPTIONS** /submission | CORS submission support
 [*CORSApi*](doc/CORSApi.md) | [**optionsSurvey**](doc/CORSApi.md#optionssurvey) | **OPTIONS** /survey | CORS survey support
 [*CORSApi*](doc/CORSApi.md) | [**optionsVisitedResiliencyResources**](doc/CORSApi.md#optionsvisitedresiliencyresources) | **OPTIONS** /resiliency | CORS resiliency resources support
 [*SubmissionApi*](doc/SubmissionApi.md) | [**getSubmission**](doc/SubmissionApi.md#getsubmission) | **GET** /submission | get the submission
