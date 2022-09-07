@@ -115,7 +115,7 @@ WINDOWS:
 - Create a subdirectory called tools ("mkdir tools")
 - Move all the contents of the cmdline_tools directory (but for tools) into tools ("mv * tools")
 - Create/update the Windows environment variable, ANDROID_SDK_ROOT="C:\Android"
-  - Right-click on the windows logo at the bottom-left of your screen -> system -> advanced system settings -> System Variables 
+  - Right-click on the windows logo at the bottom-left of your screen -> system -> advanced system settings -> Environment Variables -> System Variables 
 - Add the following paths to the Windows User or System search path
   - "C:\Android\cmdline-tools\tools\bin"
   - "C:\Android\emulator"
