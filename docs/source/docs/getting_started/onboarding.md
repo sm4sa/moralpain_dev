@@ -131,7 +131,7 @@ WINDOWS:
 
 #### Install APIs
 
-Make sure you have all the modules installed. Run *sdkmanager --list* and look at the top of the output for the currently installed packages. You should have: 
+Make sure you have all the modules installed. Run `sdkmanager --list` and look at the top of the output for the currently installed packages. You should have: 
 - build-tools;31.0.0
 - emulator
 - patcher;v4
