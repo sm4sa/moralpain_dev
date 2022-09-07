@@ -116,8 +116,10 @@ WINDOWS:
 - Move all the contents of the cmdline_tools directory (but for tools) into tools ("mv * tools")
 - Create/update the Windows environment variable, ANDROID_SDK_ROOT="C:\Android"
 - Add the following paths to the Windows User or System search path
--- "C:\Android\cmdline_tools\tools\bin"
--- TODO: <add full list of path elements>
+  - "C:\Android\cmdline_tools\tools\bin"
+  - "C:\Android\emulator"
+  - "C:\Android\platform-tools"
+
 - Avoid spurious warning by running this command: echo # > c:\qemu.conf
 - Exit and restart your terminal/shell
 
