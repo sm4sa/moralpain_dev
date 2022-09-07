@@ -127,6 +127,7 @@ WINDOWS:
 #### Android SDK
 
 - Run: sdkmanager "platform-tools" "platforms;android-31" "emulator"
+  - If you added the PATHs correctly, you should be able to run sdkmanager from any directory. If you're in the directory of the original sdkmanager script file, you will need to do .\sdkmanager instead of sdkmanager
 
 #### Install APIs
 
