@@ -117,7 +117,7 @@ WINDOWS:
 - Create/update the Windows environment variable, ANDROID_SDK_ROOT="C:\Android"
   - Right-click on the windows logo at the bottom-left of your screen -> system -> advanced system settings -> System Variables 
 - Add the following paths to the Windows User or System search path
-  - "C:\Android\cmdline_tools\tools\bin"
+  - "C:\Android\cmdline-tools\tools\bin"
   - "C:\Android\emulator"
   - "C:\Android\platform-tools"
 
@@ -127,6 +127,26 @@ WINDOWS:
 #### Android SDK
 
 - Run: sdkmanager "platform-tools" "platforms;android-31" "emulator"
+
+#### Install APIs
+
+Make sure you have all the modules installed. Run sdkmanager --list and look at the top of the output for the currently installed packages. You should have: 
+- build-tools;31.0.0
+- emulator
+- patcher;v4
+- platform-tools
+- platforms;android-31 
+- system-images;android-31;google_apis;x86_64
+
+Any module that is missing should be downloaded with the following commands:
+
+- Run: 
+  - sdkmanager --install "build-tools;31.0.0"
+  - sdkmanager --install "patcher;v4"
+  - sdkmanager --install "emulator"
+  - sdkmanager --install "platform-tools"
+  - sdkmanager --install "platforms;android-31"
+  - sdkmanager --install "system-images;android-31;google_apis;x86_64"
 
 #### Create emulator
 
