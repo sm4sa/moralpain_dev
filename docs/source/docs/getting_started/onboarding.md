@@ -197,7 +197,9 @@ You should now see an Android device emulator starting up and running.
 
 ### Run Moral Distress App on the Android Device
 
+ With the Android emulator running, go to VSCode. In the bottom-right, you should be able to select the "sdk gphone64 x86_64 (android-x64 emulator)" device. 
  
+ Go to api/dart and locate the pubspec.yaml file. In the top right, click on the download icon to download all the packages listed. Next, go to the README.md in the api folder and run `flutter pub run build_runner build`. Finally, open moraldistress/lib/main.dart and press the "Start Debugging" button in the top right to run the app on the emulator. 
 
 
 ## Legal and contact
