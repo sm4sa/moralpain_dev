@@ -115,15 +115,39 @@ WINDOWS:
 - Create a subdirectory called tools ("mkdir tools")
 - Move all the contents of the cmdline_tools directory (but for tools) into tools ("mv * tools")
 - Create/update the Windows environment variable, ANDROID_SDK_ROOT="C:\Android"
+  - Right-click on the windows logo at the bottom-left of your screen -> system -> advanced system settings -> Environment Variables -> System Variables 
 - Add the following paths to the Windows User or System search path
--- "C:\Android\cmdline_tools\tools\bin"
--- TODO: <add full list of path elements>
+  - "C:\Android\cmdline-tools\tools\bin"
+  - "C:\Android\emulator"
+  - "C:\Android\platform-tools"
+
 - Avoid spurious warning by running this command: echo # > c:\qemu.conf
 - Exit and restart your terminal/shell
 
 #### Android SDK
 
 - Run: sdkmanager "platform-tools" "platforms;android-31" "emulator"
+  - If you added the PATHs correctly, you should be able to run sdkmanager from any directory. If you're in the directory of the original sdkmanager script file, you will need to do .\sdkmanager instead of sdkmanager
+
+#### Install APIs
+
+Make sure you have all the modules installed. Run `sdkmanager --list` and look at the top of the output for the currently installed packages. You should have: 
+- build-tools;31.0.0
+- emulator
+- patcher;v4
+- platform-tools
+- platforms;android-31 
+- system-images;android-31;google_apis;x86_64
+
+Any module that is missing should be downloaded with the following commands:
+
+- Run: 
+  - sdkmanager --install "build-tools;31.0.0"
+  - sdkmanager --install "patcher;v4"
+  - sdkmanager --install "emulator"
+  - sdkmanager --install "platform-tools"
+  - sdkmanager --install "platforms;android-31"
+  - sdkmanager --install "system-images;android-31;google_apis;x86_64"
 
 #### Create emulator
 
@@ -168,6 +192,14 @@ adb start-server
 emulator -avd avd_31
 adb wait-for-device shell 'while [[ -z $(getprop sys.boot_completed) ]]; do sleep 1; done;'
 ```
+
+You should now see an Android device emulator starting up and running. 
+
+### Run Moral Distress App on the Android Device
+
+ With the Android emulator running, go to VSCode. In the bottom-right, you should be able to select the "sdk gphone64 x86_64 (android-x64 emulator)" device. 
+ 
+ Go to api/dart and locate the pubspec.yaml file. In the top right, click on the download icon to download all the packages listed. Next, go to the README.md in the api folder and run `flutter pub run build_runner build`. Finally, open moraldistress/lib/main.dart and press the "Start Debugging" button in the top right to run the app on the emulator. 
 
 
 ## Legal and contact
