@@ -193,6 +193,12 @@ emulator -avd avd_31
 adb wait-for-device shell 'while [[ -z $(getprop sys.boot_completed) ]]; do sleep 1; done;'
 ```
 
+You should now see an Android device emulator starting up and running. 
+
+### Run Moral Distress App on the Android Device
+
+ 
+
 
 ## Legal and contact
 
