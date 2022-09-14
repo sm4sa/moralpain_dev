@@ -1,0 +1,23 @@
+define 
+
+temperature sub attribute, value long;
+description sub attribute, value string;
+unique_ID sub attribute, value long;
+timestamp sub attribute, value datetime;
+
+#category entity to tie reasons together with reports
+#attributes for reports: score, set of selections (taken care of with relation object), timestamp (when report was submitted), unique ID (long)
+
+report sub entity,
+    owns temperature,
+    owns unique_ID,
+    owns timestamp,
+    plays report_reasons:report;
+    
+reason sub entity,
+    owns description,
+    plays report_reasons:reason;
+
+report_reasons sub relation,
+    relates report,
+    relates reason;
