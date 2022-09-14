@@ -1,0 +1,73 @@
+insert
+
+
+# insert some users
+
+$user-1 isa user, 
+    has first-name "John", 
+    has last-name "Smith",
+    has gender "male",  
+    has age 47,
+    has userID "jsmith321"
+    has email "john.smith@virginia.edu",
+    has employeeID "jsmith";
+
+$user-2 isa user, 
+    has first-name "Jane", 
+    has last-name "Doe",
+    has gender "female",  
+    has age 29,
+    has userID "jdoe132"
+    has email "jane.doe@virginia.edu",
+    has employeeID "jdoe";
+
+$user-3 isa user, 
+    has first-name "Benjamin", 
+    has last-name "Walker",
+    has gender "male",  
+    has age 63,
+    has userID "benwalk213"
+    has email "benjamin.walker@virginia.edu",
+    has employeeID "benwalk";
+
+# insert some patients
+
+$patient-1 isa patient,
+    has first-name "Billy", 
+    has last-name "Joe",
+    has gender "male",  
+    has age 13,
+    has illness "Meningitis",
+    has current-condition "Critical";
+
+$patient-2 isa patient,
+    has first-name "Victoria", 
+    has last-name "Dasan",
+    has gender "female",  
+    has age 33,
+    has illness "Broken Orbital Bone",
+    has current-condition "Good";
+
+$patient-2 isa patient,
+    has first-name "Thomas", 
+    has last-name "Hill",
+    has gender "male",  
+    has age 21,
+    has illness "COVID-19",
+    has current-condition "Fair";
+
+# insert some hospitals
+
+$hospital-1 isa hospital,
+    has hospital-name "Hospital 1",
+    has hospital-location "Location 1",
+    has hospital-specialization "Cancer Therapy",
+    has hospital-website "hospital1.com",
+    has hospital-phone-number "111-222-3333";
+
+$hospital-2 isa hospital,
+    has hospital-name "Hospital 2",
+    has hospital-location "Location 2",
+    has hospital-specialization "Pediatrics",
+    has hospital-website "hospital2.com",
+    has hospital-phone-number "111-222-4444";
