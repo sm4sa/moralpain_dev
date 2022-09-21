@@ -1,0 +1,74 @@
+define
+
+# entities
+
+user sub entity,
+    owns hashed_password,
+    owns id @key,
+    plays user_role_relation:user,
+    plays institution_employment:employee,
+    plays user_study_relation:subject;
+
+institution sub entity, # originally planned as "hospital"
+    owns name,
+    owns location,
+    owns phone_number,
+    owns specialization,
+    plays institution_employment:employer;
+
+study sub entity,
+    owns id @key,
+    owns name,
+    owns protocol,
+    plays user_study_relation:study;
+
+user_role sub entity,
+    owns name,
+    plays user_role_relation:user_role,
+    plays role_permissions:user_role;
+
+permissions sub entity,
+    owns description,
+    plays role_permissions:permission;
+
+# entity attributes
+
+id sub attribute, value string;
+hashed_password sub attribute, value string;
+name sub attribute, value string;
+location sub attribute, value string;
+phone_number sub attribute, value string;
+specialization sub attribute, value string;
+protocol sub attribute, value string;
+description sub attribute, value string;
+
+# relations
+
+institution_employment sub relation,
+    owns department,
+    relates employee, # nurses
+    relates employer; # hospitals, schools, etc 
+
+user_study_relation sub relation,
+    owns irb,
+    owns consent,
+    owns compliance_requirements,
+    relates subject,
+    relates study;
+
+user_role_relation sub relation,
+    relates user_role,
+    relates user;
+
+role_permissions sub relation,
+    relates permission,
+    relates user_role;
+
+# relation attributes
+
+department sub attribute, value string;
+irb sub attribute, value string;
+consent sub attribute, value boolean;
+compliance_requirements sub attribute, value string; 
+
+
