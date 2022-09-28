@@ -49,7 +49,7 @@ reason_category sub relation,
 #rules
 rule score-description-0:
 when {
-    $r isa report, has score $s, has score 0;
+    $t isa temperature, has score $s, has score 0;
     #$r has score 0;
 } then {
     $s has description 'None';
@@ -57,70 +57,70 @@ when {
 
 rule score-description-1:
 when {
-    $r isa report, has score $s, has score 1;
+    $t isa temperature, has score $s, has score 1;
 } then {
     $s has description 'Mild';
 };
 
 rule score-description-2:
 when {
-    $r isa report, has score $s, has score 2;
+    $t isa temperature, has score $s, has score 2;
 } then {
     $s has description 'Mild';
 };
 
 rule score-description-3:
 when {
-    $r isa report, has score $s, has score 3;
+    $t isa temperature, has score $s, has score 3;
 } then {
     $s has description 'Mild';
 };
 
 rule score-description-4:
 when {
-    $r isa report, has score $s, has score 4;
+    $t isa temperature, has score $s, has score 4;
 } then {
     $s has description 'Distressing';
 };
 
 rule score-description-5:
 when {
-    $r isa report, has score $s, has score 5;
+    $t isa temperature, has score $s, has score 5;
 } then {
     $s has description 'Distressing';
 };
 
 rule score-description-6:
 when {
-    $r isa report, has score $s, has score 6;
+    $t isa temperature, has score $s, has score 6;
 } then {
     $s has description 'Uncomfortable';
 };
 
 rule score-description-7:
 when {
-    $r isa report, has score $s, has score 7;
+    $t isa temperature, has score $s, has score 7;
 } then {
     $s has description 'Uncomfortable';
 };
 
 rule score-description-8:
 when {
-    $r isa report, has score $s, has score 8;
+    $t isa temperature, has score $s, has score 8;
 } then {
     $s has description 'Intense';
 };
 
 rule score-description-9:
 when {
-    $r isa report, has score $s, has score 9;
+    $t isa temperature, has score $s, has score 9;
 } then {
     $s has description 'Intense';
 };
 
 rule score-description-10:
 when {
-    $r isa report, has score $s, has score 10;
+    $t isa temperature, has score $s, has score 10;
 } then {
     $s has description 'Worst Possible';
 };
