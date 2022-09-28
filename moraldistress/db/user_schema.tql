@@ -25,11 +25,23 @@ study sub entity,
 user_role sub entity,
     owns name,
     plays user_role_relation:user_role,
-    plays role_permissions:user_role;
+    plays role_permission:user_role;
 
-permissions sub entity,
+permission sub entity,
     owns description,
-    plays role_permissions:permission;
+    plays role_permission:permission,
+    plays defines:permission,
+    plays resource_permission:permission;
+
+policy sub entity,
+    owns description,
+    plays defines:policy,
+    plays associated_with:policy;
+
+resource sub entity,
+    owns description,
+    plays resource_permission:resource,
+    plays associated_with:resource;
 
 # entity attributes
 
@@ -60,10 +72,23 @@ user_role_relation sub relation,
     relates user_role,
     relates user;
 
-role_permissions sub relation,
+role_permission sub relation,
     relates permission,
     relates user_role;
 
+associated_with sub relation,
+    relates policy,
+    relates resource;
+
+resource_permission sub relation,
+    relates resource,
+    relates permission;
+
+defines sub relation,
+    relates policy,
+    relates permission;
+
+defines 
 # relation attributes
 
 department sub attribute, value string;
