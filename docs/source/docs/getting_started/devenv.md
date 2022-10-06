@@ -1,4 +1,5 @@
 # Development Environment
+
 The development environment for moraldistress is made up of a docker
 container, which hosts all of the required dependencies, and 
 an IDE which interfaces with the container. The IDE runs on 
