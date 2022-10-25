@@ -1,0 +1,35 @@
+End goal:
+
+Long term vision; dockers
+near future: ec2 with typedb deployed via cloudformation
+
+option: write to s3 and typedb backend
+open questions: 
++ typedb cluster?
++ whatabout queries?
+
+high priority tasks:
++ have lambdas hit the internal ip
++ setup vpc with private and public subnets
++ cloudform ec2 instances (not sam)
++ update Lambda SubmitSurvey to use typedb
++ update Lambda SubmitVisitedResiliencyResources to write to typedb
++ create 'get' lambdas to fetch from s3 (e.g., /resiliency, /survey HTTP GET)
++ daily backups of typedb stored in s3
++ spinup up second test api
++ point app to second api for testing
++ strong unit testing/ integrations on lambdas
+
++ explore fargate
+
+
+ec2 requirements
++ typbedb (run through the vaticle commands)
++ ubuntu 
+
+explore typedb docker
++ must persist the db!
++ external volume
+
+
+nphair: aws research credit proposal

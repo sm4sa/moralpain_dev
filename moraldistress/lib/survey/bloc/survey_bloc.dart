@@ -53,7 +53,11 @@ class SurveyBloc extends Bloc<SurveyEvent, SurveyState> {
     }
 
     final data = await repository.fetchSurvey();
-    emit(SurveyLoaded(data));
+    if(data.sections == null) {
+      emit(SurveyLoadFailed());
+    } else {
+      emit(SurveyLoaded(data));
+    }
   }
 
   void _onSubmit(SurveySubmitEvent event, Emitter<SurveyState> emit) async {

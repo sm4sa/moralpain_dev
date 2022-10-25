@@ -5,6 +5,12 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Flutter: Attach to Device",
+            "type": "dart",
+            "request": "attach"
+        },
+    
+        {
             "type": "aws-sam",
             "request": "direct-invoke",
             "name": "sam:FetchSubmissionsFunction",
@@ -18,18 +24,26 @@
                 "environmentVariables": {}
             }
         },
+        //{
+        //    "name": "moralpain",
+        //    "cwd": "moraldistress",
+        //    "request": "launch",
+        //    "type": "dart",
+        //},
         {
-            "name": "moralpain",
-            "cwd": "moraldistress",
-            "request": "launch",
-            "type": "dart"
-        },
-        {
-            "name": "moralpain (profile mode)",
+            "name": "moralpain web",
             "cwd": "moraldistress",
             "request": "launch",
             "type": "dart",
-            "flutterMode": "profile"
-        }
+            "args": ["-d", "web-server","--web-port", "3000"],
+            "flutterMode": "debug"
+        },
+        //{
+        //    "name": "moralpain (profile mode)",
+        //    "cwd": "moraldistress",
+        //    "request": "launch",
+        //    "type": "dart",
+        //    "flutterMode": "profile"
+        //}
     ]
 }

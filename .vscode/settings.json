@@ -1,4 +1,5 @@
 {
     "editor.wordWrapColumn": 120,
-    "java.configuration.updateBuildConfiguration": "automatic"
+    "java.configuration.updateBuildConfiguration": "automatic",
+    "dart.previewSdkDaps": true
 }
