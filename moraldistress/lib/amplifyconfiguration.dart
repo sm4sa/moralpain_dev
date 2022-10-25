@@ -4,6 +4,8 @@ const amplifyconfig = ''' {
     "auth": {
       "plugins": {
         "awsCognitoAuthPlugin": {
+          "UserAgent": "aws-amplify-cli/0.1.0",
+          "Version": "0.1.0",
           "IdentityManager": {
             "Default": {}
           },
@@ -24,13 +26,12 @@ const amplifyconfig = ''' {
           },
           "Auth": {
             "Default": {
-              "authenticationFlowType": "USER_SRP_AUTH",
               "OAuth": {
                 "WebDomain": "moralpain-user-pool-domain.auth.us-east-1.amazoncognito.com",
                 "AppClientId": "7402ua1jc98ho8ach5ejfn53j1",
-                "SignInRedirectURI": "myapp://,https://nicholasphair.github.io/moralpain_dev",
-                "SignOutRedirectURI": "myapp://,https://nicholasphair.github.io/moralpain_dev",
-                "Scopes": [ 
+                "SignInRedirectURI": "myapp://,http://localhost:3000/,https://nicholasphair.github.io/moralpain_dev/",
+                "SignOutRedirectURI": "myapp://,http://localhost:3000/,https://nicholasphair.github.io/moralpain_dev/",
+                "Scopes": [
                   "phone",
                 "email",
                 "openid",
@@ -43,8 +44,7 @@ const amplifyconfig = ''' {
               "usernameAttributes": [],
               "signupAttributes": [
                 "EMAIL",
-              "NAME"
-
+                "NAME"
               ],
               "passwordProtectionSettings": {
                 "passwordPolicyMinLength": 8,

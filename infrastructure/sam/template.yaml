@@ -39,13 +39,6 @@ Resources:
           bucket: moralpain-submissions
           prefix: surveys
       Role: !Sub arn:aws:iam::${AWS::AccountId}:role/lambda_submit_survey_role
-      Events:
-        Get:
-          Type: HttpApi # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
-          Properties:
-            Path: /survey
-            Method: post
-            ApiId: !Ref ApiGatewayApi
 
   SubmitVisitedResiliencyResourcesFunction:
     Type: AWS::Serverless::Function
@@ -62,13 +55,6 @@ Resources:
           bucket: moralpain-submissions
           prefix: resiliency
       Role: !Sub arn:aws:iam::${AWS::AccountId}:role/lambda_submit_visited_resources_role
-      Events:
-        Get:
-          Type: HttpApi
-          Properties:
-            Path: /resiliency
-            Method: post
-            ApiId: !Ref ApiGatewayApi
 
   FetchSubmissionsFunction:
     Type: AWS::Serverless::Function
@@ -85,13 +71,6 @@ Resources:
           bucket: moralpain-submissions
           prefix: surveys
       Role: !Sub arn:aws:iam::${AWS::AccountId}:role/lambda_fetch_submissions_role
-      Events:
-        Get:
-          Type: HttpApi
-          Properties:
-            Path: /admin/submissions
-            Method: get
-            ApiId: !Ref ApiGatewayApi
       Timeout: 60
   
   AnalyzeSubmissionsFunction:
@@ -109,13 +88,6 @@ Resources:
           bucket: moralpain-submissions
           prefix: surveys
       Role: !Sub arn:aws:iam::${AWS::AccountId}:role/lambda_analyze_submissions_role
-      Events:
-        Get:
-          Type: HttpApi
-          Properties:
-            Path: /admin/analytics
-            Method: get
-            ApiId: !Ref ApiGatewayApi
   
   FetchSubmissionFieldFunction:
     Type: AWS::Serverless::Function
@@ -132,13 +104,6 @@ Resources:
           bucket: moralpain-submissions
           prefix: surveys
       Role: !Sub arn:aws:iam::${AWS::AccountId}:role/lambda_fetch_submission_field_role
-      Events:
-        Get:
-          Type: HttpApi
-          Properties:
-            Path: /submission
-            Method: get
-            ApiId: !Ref ApiGatewayApi
       Timeout: 60
 
   SubmitSubmissionFieldFunction:
@@ -157,13 +122,6 @@ Resources:
           prefix: single
           uploadFileName: submission.json
       Role: !Sub arn:aws:iam::${AWS::AccountId}:role/lambda_submit_submission_field_role
-      Events:
-        Get:
-          Type: HttpApi # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
-          Properties:
-            Path: /submission
-            Method: post
-            ApiId: !Ref ApiGatewayApi
 
 
 Outputs:
