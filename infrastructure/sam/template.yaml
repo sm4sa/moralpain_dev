@@ -1,4 +1,4 @@
-AWSTemplateFormatVersion: '2010-09-09'
+AWSTemplateFormatVersion: "2010-09-09"
 Transform: AWS::Serverless-2016-10-31
 Description: >
   moralpain
@@ -9,7 +9,7 @@ Parameters:
   Prefix:
     Description: unique identifier for resources
     Type: String
-    Default: ''
+    Default: ""
 
 # More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
 Globals:
@@ -93,7 +93,7 @@ Resources:
             Method: get
             ApiId: !Ref ApiGatewayApi
       Timeout: 60
-  
+
   AnalyzeSubmissionsFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -116,7 +116,7 @@ Resources:
             Path: /admin/analytics
             Method: get
             ApiId: !Ref ApiGatewayApi
-  
+
   FetchSubmissionFieldFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -165,6 +165,63 @@ Resources:
             Method: post
             ApiId: !Ref ApiGatewayApi
 
+  TypeDBGetFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      FunctionName: GetSubmissions
+      CodeUri: MoralPainFunctions
+      Policies:
+        - AmazonVPCFullAccess
+      Handler: edu.uva.cs.moralpain.TypeDBGet::handleRequest
+      Runtime: java11
+      VpcConfig:
+        SecurityGroupIds:
+          - sg-036f9e660a0fe5b2b
+        SubnetIds:
+          - subnet-0601f3134ab6af43a #pub 2
+          - subnet-05168c49f839429a6 #pub 1
+      Architectures:
+        - x86_64
+      MemorySize: 512
+      Environment: # More info about Env Vars: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#environment-object
+        Variables:
+          PARAM1: VALUE
+          JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1 # More info about tiered compilation https://aws.amazon.com/blogs/compute/optimizing-aws-lambda-function-performance-for-java/
+      Events:
+        HelloWorld:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /submissions
+            Method: get
+
+  TypeDBPostFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      FunctionName: PostSubmissions
+      CodeUri: MoralPainFunctions
+      Policies:
+        - AmazonVPCFullAccess
+      Handler: edu.uva.cs.moralpain.TypeDBPost::handleRequest
+      Runtime: java11
+      VpcConfig:
+        SecurityGroupIds:
+          - sg-036f9e660a0fe5b2b
+        SubnetIds:
+          - subnet-0601f3134ab6af43a #pub 2
+          - subnet-05168c49f839429a6 #pub 1
+      Architectures:
+        - x86_64
+      MemorySize: 512
+      Environment: # More info about Env Vars: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#environment-object
+        Variables:
+          PARAM1: VALUE
+          JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1 # More info about tiered compilation https://aws.amazon.com/blogs/compute/optimizing-aws-lambda-function-performance-for-java/
+      Events:
+        HelloWorld:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /submissions
+            Method: post
 
 Outputs:
   APIUri:
