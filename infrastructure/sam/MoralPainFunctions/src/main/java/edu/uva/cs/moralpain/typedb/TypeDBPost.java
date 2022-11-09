@@ -53,9 +53,10 @@ public class TypeDBPost implements RequestHandler<APIGatewayProxyRequestEvent, A
             // miliseconds, use long.
             Long timestamp = (Long) jsonBodyObject.get("timestamp");
 
-            TypeDBClient client = TypeDB.coreClient("192.168.142.245:1729");
+            String ip = String.format("%s:1729", System.getenv("EC2_IP_ADDRESS"));
+            TypeDBClient client = TypeDB.coreClient(ip);
             // open up a session
-            try (TypeDBSession session = client.session("test", TypeDBSession.Type.DATA)) {
+            try (TypeDBSession session = client.session(System.getenv("DATABASE_NAME"), TypeDBSession.Type.DATA)) {
 
                 try (TypeDBTransaction writeTransaction = session.transaction(TypeDBTransaction.Type.WRITE)) {
 
