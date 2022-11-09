@@ -1,6 +1,6 @@
 package edu.uva.cs.moralpain.typedb;
 
-import org.json.simple.JSONObject;
+import org.json.*;
 
 import static com.vaticle.typeql.lang.TypeQL.var;
 
@@ -15,7 +15,6 @@ import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent;
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent;
 
-import com.google.gson.Gson;
 import com.vaticle.typedb.client.TypeDB;
 import com.vaticle.typedb.client.api.TypeDBClient;
 import com.vaticle.typedb.client.api.TypeDBSession;
@@ -31,7 +30,14 @@ import com.vaticle.typeql.lang.query.*;
 public class TypeDBGet implements RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> {
 
     JSONObject obj = new JSONObject();
-    List<JSONObject> reports = new ArrayList<JSONObject>();
+    JSONArray reports = new JSONArray();
+    List<String> selections = new ArrayList<String>();
+    JSONArray selectionsJSON = new JSONArray();
+
+    String previousIID = "";
+    String previousID = "";
+    Long previousScore = 0L;
+    Long previousTimestamp = 0L;
 
     public APIGatewayProxyResponseEvent handleRequest(final APIGatewayProxyRequestEvent input, final Context context) {
         Map<String, String> headers = new HashMap<>();
@@ -39,7 +45,17 @@ public class TypeDBGet implements RequestHandler<APIGatewayProxyRequestEvent, AP
         headers.put("X-Custom-Header", "application/json");
 
         APIGatewayProxyResponseEvent response = new APIGatewayProxyResponseEvent().withHeaders(headers);
-        reports.clear();
+
+        // for some reason this fixed an extremely strange bug. I think it has to do
+        // with the scope of handleRequest vs the TypeDBGet public class?
+        obj = new JSONObject();
+        selectionsJSON = new JSONArray();
+        reports = new JSONArray();
+        previousIID = "";
+        previousID = "";
+        previousScore = 0L;
+        previousTimestamp = 0L;
+        selections.clear();
 
         String ip = String.format("%s:1729", System.getenv("EC2_IP_ADDRESS"));
         TypeDBClient client = TypeDB.coreClient(ip);
@@ -49,39 +65,78 @@ public class TypeDBGet implements RequestHandler<APIGatewayProxyRequestEvent, AP
             TypeDBOptions options = TypeDBOptions.core().infer(true); // enable reasoning
             try (TypeDBTransaction readTransaction = session.transaction(TypeDBTransaction.Type.READ, options)) {
 
-                // TypeQLMatch.Filtered getQuery = TypeQL
-                // .match(var("r").isa("report").has("selection", var("selections")).has("id",
-                // var("id"))
-                // .has("score", var("s")).has("timestamp",
-                // var("ts")))
-                // .get("r", "s", "ts", "id", "selections");
                 // Read the person using a READ only transaction
                 TypeQLMatch.Filtered getQuery = TypeQL
-                        .match(var("r").isa("report").has("id", var("id")).has("score", var("s")).has("timestamp",
-                                var("ts")))
-                        .get("r", "s", "ts", "id");
+                        .match(var("r").isa("report").has("selection", var("selections")).has("id", var("id"))
+                                .has("score", var("s")).has("timestamp", var("ts")))
+                        .get("r", "s", "ts", "id", "selections");
 
                 Stream<ConceptMap> answers = readTransaction.query().match(getQuery);
 
                 answers.forEach(answer -> {
-                    obj = new JSONObject();
-                    // System.out.println(answer.get("r").asThing().getIID());
-                    System.out.println("id: " + answer.get("id").asAttribute().getValue());
-                    System.out.println("Score: " + answer.get("s").asAttribute().getValue());
-                    System.out.println("Timestamp: " + answer.get("ts").asAttribute().getValue());
+                    System.out.println("previousIID: " + previousIID);
+                    if (previousIID.equals("")) {
+                        previousIID = answer.get("r").asThing().getIID();
+                    }
 
-                    obj.put("timestamp", answer.get("ts").asAttribute().getValue());
-                    obj.put("id", answer.get("id").asAttribute().getValue());
-                    obj.put("score", answer.get("s").asAttribute().getValue());
-                    // obj.put("selections", answer.get("selections").asAttribute().getValue());
+                    if (previousIID.equals(answer.get("r").asThing().getIID())) {
+                        previousID = (String) answer.get("id").asAttribute().getValue();
+                        previousScore = (Long) answer.get("s").asAttribute().getValue();
+                        previousTimestamp = (Long) answer.get("ts").asAttribute().getValue();
+                        selections.add((String) answer.get("selections").asAttribute().getValue());
 
-                    reports.add(obj);
+                    } else {
+                        obj = new JSONObject();
+                        obj.put("timestamp", previousTimestamp);
+                        obj.put("id", previousID);
+                        obj.put("score", previousScore);
 
+                        for (int i = 0; i < selections.size(); i++) {
+                            selectionsJSON.put(selections.get(i));
+                        }
+                        try {
+                            obj.put("selections", selectionsJSON);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        reports.put(obj);
+                        selections.clear();
+                        selectionsJSON = new JSONArray();
+
+                        // recompute for the current iteration, which may only have 1 selection
+                        previousID = (String) answer.get("id").asAttribute().getValue();
+                        previousScore = (Long) answer.get("s").asAttribute().getValue();
+                        previousTimestamp = (Long) answer.get("ts").asAttribute().getValue();
+                        selections.add((String) answer.get("selections").asAttribute().getValue());
+                        previousIID = answer.get("r").asThing().getIID();
+                    }
+
+                    System.out.println(selections);
                 });
+                if (previousIID == "") {
+                    return response.withStatusCode(404).withBody("no reports found");
+                } else {
+                    obj = new JSONObject();
+                    obj.put("timestamp", previousTimestamp);
+                    obj.put("id", previousID);
+                    obj.put("score", previousScore);
+
+                    for (int i = 0; i < selections.size(); i++) {
+                        selectionsJSON.put(selections.get(i));
+                    }
+                    try {
+                        obj.put("selections", selections);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    reports.put(obj);
+                    selections.clear();
+                    selectionsJSON = new JSONArray();
+                }
                 System.out.println("reports: " + reports);
             }
         }
-        String json = new Gson().toJson(reports);
+        String json = reports.toString();
         // session is closed
         client.close();
         // client is closed

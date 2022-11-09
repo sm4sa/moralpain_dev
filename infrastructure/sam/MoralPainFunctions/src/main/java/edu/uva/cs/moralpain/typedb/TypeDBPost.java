@@ -13,7 +13,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import java.util.ArrayList;
 
 import com.vaticle.typedb.client.TypeDB;
@@ -22,10 +21,8 @@ import com.vaticle.typedb.client.api.TypeDBSession;
 import com.vaticle.typedb.client.api.TypeDBTransaction;
 import com.vaticle.typedb.client.api.answer.ConceptMap;
 import com.vaticle.typeql.lang.TypeQL;
-import com.vaticle.typeql.lang.pattern.variable.ThingVariable;
 import com.vaticle.typeql.lang.query.TypeQLInsert;
 import static com.vaticle.typeql.lang.TypeQL.var;
-import java.lang.reflect.TypeVariable;
 
 public class TypeDBPost implements RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> {
 
@@ -78,7 +75,7 @@ public class TypeDBPost implements RequestHandler<APIGatewayProxyRequestEvent, A
                     writeTransaction.commit();
                 }
             }
-
+            body = "";
             return response.withStatusCode(200).withBody(" OK");
         } catch (ParseException e) {
             e.printStackTrace();

@@ -176,10 +176,10 @@ Resources:
       Runtime: java11
       VpcConfig:
         SecurityGroupIds:
-          - sg-036f9e660a0fe5b2b
+          - sg-08f6d413935987e0d
         SubnetIds:
-          - subnet-0601f3134ab6af43a #pub 2
-          - subnet-05168c49f839429a6 #pub 1
+          - subnet-0f1c9c9b985b3f078 #pub 2
+          - subnet-084932c3e00515898 #pub 1
       Architectures:
         - x86_64
       MemorySize: 512
@@ -206,10 +206,10 @@ Resources:
       Runtime: java11
       VpcConfig:
         SecurityGroupIds:
-          - sg-036f9e660a0fe5b2b
+          - sg-08f6d413935987e0d
         SubnetIds:
-          - subnet-0601f3134ab6af43a #pub 2
-          - subnet-05168c49f839429a6 #pub 1
+          - subnet-0f1c9c9b985b3f078 #pub 2
+          - subnet-084932c3e00515898 #pub 1
       Architectures:
         - x86_64
       MemorySize: 512
