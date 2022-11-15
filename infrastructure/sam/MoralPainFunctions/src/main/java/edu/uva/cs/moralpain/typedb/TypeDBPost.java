@@ -4,6 +4,7 @@ import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent;
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent;
+import edu.uva.cs.moralpain.utils.VariableManager;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -32,10 +33,24 @@ public class TypeDBPost implements RequestHandler<APIGatewayProxyRequestEvent, A
 
     public APIGatewayProxyResponseEvent handleRequest(final APIGatewayProxyRequestEvent input, final Context context) {
         Map<String, String> headers = new HashMap<>();
-        headers.put("Content-Type", "application/json");
-        headers.put("X-Custom-Header", "application/json");
+
+        // headers.put("Content-Type", "application/json");
+        // headers.put("X-Custom-Header", "application/json");
 
         APIGatewayProxyResponseEvent response = new APIGatewayProxyResponseEvent().withHeaders(headers);
+
+        if (!isValidEvent(input)) {
+            context.getLogger().log("invalid event");
+            response.setStatusCode(500);
+            return response;
+        }
+
+        VariableManager variableManager = new VariableManager();
+        if (!isValidEnvironment(variableManager)) {
+            context.getLogger().log("invalid environment");
+            response.setStatusCode(500);
+            return response;
+        }
 
         String body = input.getBody();
 
@@ -50,10 +65,11 @@ public class TypeDBPost implements RequestHandler<APIGatewayProxyRequestEvent, A
             // miliseconds, use long.
             Long timestamp = (Long) jsonBodyObject.get("timestamp");
 
-            String ip = String.format("%s:1729", System.getenv("EC2_IP_ADDRESS"));
+            String ip = String.format("%s:1729", variableManager.get("EC2_IP_ADDRESS"));
             TypeDBClient client = TypeDB.coreClient(ip);
             // open up a session
-            try (TypeDBSession session = client.session(System.getenv("DATABASE_NAME"), TypeDBSession.Type.DATA)) {
+            try (TypeDBSession session = client.session(variableManager.get("DATABASE_NAME"),
+                    TypeDBSession.Type.DATA)) {
 
                 try (TypeDBTransaction writeTransaction = session.transaction(TypeDBTransaction.Type.WRITE)) {
 
@@ -82,5 +98,14 @@ public class TypeDBPost implements RequestHandler<APIGatewayProxyRequestEvent, A
             return response.withStatusCode(400).withBody(" error");
         }
 
+    }
+
+    private boolean isValidEvent(APIGatewayProxyRequestEvent event) {
+        return !(event == null || event.getBody() == null || event.getBody().isEmpty());
+    }
+
+    private boolean isValidEnvironment(VariableManager variableManager) {
+        return variableManager.containsKey("EC2_IP_ADDRESS")
+                && !variableManager.getOrDefault("EC2_IP_ADDRESS", "").isEmpty();
     }
 }

@@ -1,7 +1,7 @@
 package edu.uva.cs.moralpain.typedb;
 
 import org.json.*;
-
+import edu.uva.cs.moralpain.utils.VariableManager;
 import static com.vaticle.typeql.lang.TypeQL.var;
 
 import java.util.HashMap;
@@ -46,6 +46,19 @@ public class TypeDBGet implements RequestHandler<APIGatewayProxyRequestEvent, AP
 
         APIGatewayProxyResponseEvent response = new APIGatewayProxyResponseEvent().withHeaders(headers);
 
+        if (!isValidEvent(input)) {
+            context.getLogger().log("invalid event");
+            response.setStatusCode(500);
+            return response;
+        }
+
+        VariableManager variableManager = new VariableManager();
+        if (!isValidEnvironment(variableManager)) {
+            context.getLogger().log("invalid environment");
+            response.setStatusCode(500);
+            return response;
+        }
+
         // for some reason this fixed an extremely strange bug. I think it has to do
         // with the scope of handleRequest vs the TypeDBGet public class?
         obj = new JSONObject();
@@ -57,11 +70,11 @@ public class TypeDBGet implements RequestHandler<APIGatewayProxyRequestEvent, AP
         previousTimestamp = 0L;
         selections.clear();
 
-        String ip = String.format("%s:1729", System.getenv("EC2_IP_ADDRESS"));
+        String ip = String.format("%s:1729", variableManager.get("EC2_IP_ADDRESS"));
         TypeDBClient client = TypeDB.coreClient(ip);
 
         // open up a session
-        try (TypeDBSession session = client.session(System.getenv("DATABASE_NAME"), TypeDBSession.Type.DATA)) {
+        try (TypeDBSession session = client.session(variableManager.get("DATABASE_NAME"), TypeDBSession.Type.DATA)) {
             TypeDBOptions options = TypeDBOptions.core().infer(true); // enable reasoning
             try (TypeDBTransaction readTransaction = session.transaction(TypeDBTransaction.Type.READ, options)) {
 
@@ -141,5 +154,14 @@ public class TypeDBGet implements RequestHandler<APIGatewayProxyRequestEvent, AP
         client.close();
         // client is closed
         return response.withStatusCode(200).withBody(json);
+    }
+
+    private boolean isValidEvent(APIGatewayProxyRequestEvent event) {
+        return (event != null);
+    }
+
+    private boolean isValidEnvironment(VariableManager variableManager) {
+        return variableManager.containsKey("EC2_IP_ADDRESS")
+                && !variableManager.getOrDefault("EC2_IP_ADDRESS", "").isEmpty();
     }
 }
