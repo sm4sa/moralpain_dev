@@ -71,33 +71,64 @@ public class TypeDBGet implements RequestHandler<APIGatewayProxyRequestEvent, AP
         selections.clear();
 
         String ip = String.format("%s:1729", variableManager.get("EC2_IP_ADDRESS"));
-        TypeDBClient client = TypeDB.coreClient(ip);
+        try (TypeDBClient client = TypeDB.coreClient(ip)) {
 
-        // open up a session
-        try (TypeDBSession session = client.session(variableManager.get("DATABASE_NAME"), TypeDBSession.Type.DATA)) {
-            TypeDBOptions options = TypeDBOptions.core().infer(true); // enable reasoning
-            try (TypeDBTransaction readTransaction = session.transaction(TypeDBTransaction.Type.READ, options)) {
+            // open up a session
+            try (TypeDBSession session = client.session(variableManager.get("DATABASE_NAME"),
+                    TypeDBSession.Type.DATA)) {
+                TypeDBOptions options = TypeDBOptions.core().infer(true); // enable reasoning
+                try (TypeDBTransaction readTransaction = session.transaction(TypeDBTransaction.Type.READ, options)) {
 
-                // Read the person using a READ only transaction
-                TypeQLMatch.Filtered getQuery = TypeQL
-                        .match(var("r").isa("report").has("selection", var("selections")).has("id", var("id"))
-                                .has("score", var("s")).has("timestamp", var("ts")))
-                        .get("r", "s", "ts", "id", "selections");
+                    // Read the person using a READ only transaction
+                    TypeQLMatch.Filtered getQuery = TypeQL
+                            .match(var("r").isa("report").has("selection", var("selections")).has("id", var("id"))
+                                    .has("score", var("s")).has("timestamp", var("ts")))
+                            .get("r", "s", "ts", "id", "selections");
 
-                Stream<ConceptMap> answers = readTransaction.query().match(getQuery);
+                    Stream<ConceptMap> answers = readTransaction.query().match(getQuery);
 
-                answers.forEach(answer -> {
-                    System.out.println("previousIID: " + previousIID);
-                    if (previousIID.equals("")) {
-                        previousIID = answer.get("r").asThing().getIID();
-                    }
+                    answers.forEach(answer -> {
+                        System.out.println("previousIID: " + previousIID);
+                        if (previousIID.equals("")) {
+                            previousIID = answer.get("r").asThing().getIID();
+                        }
 
-                    if (previousIID.equals(answer.get("r").asThing().getIID())) {
-                        previousID = (String) answer.get("id").asAttribute().getValue();
-                        previousScore = (Long) answer.get("s").asAttribute().getValue();
-                        previousTimestamp = (Long) answer.get("ts").asAttribute().getValue();
-                        selections.add((String) answer.get("selections").asAttribute().getValue());
+                        if (previousIID.equals(answer.get("r").asThing().getIID())) {
+                            previousID = (String) answer.get("id").asAttribute().getValue();
+                            previousScore = (Long) answer.get("s").asAttribute().getValue();
+                            previousTimestamp = (Long) answer.get("ts").asAttribute().getValue();
+                            selections.add((String) answer.get("selections").asAttribute().getValue());
 
+                        } else {
+                            obj = new JSONObject();
+                            obj.put("timestamp", previousTimestamp);
+                            obj.put("id", previousID);
+                            obj.put("score", previousScore);
+
+                            for (int i = 0; i < selections.size(); i++) {
+                                selectionsJSON.put(selections.get(i));
+                            }
+                            try {
+                                obj.put("selections", selectionsJSON);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            reports.put(obj);
+                            selections.clear();
+                            selectionsJSON = new JSONArray();
+
+                            // recompute for the current iteration, which may only have 1 selection
+                            previousID = (String) answer.get("id").asAttribute().getValue();
+                            previousScore = (Long) answer.get("s").asAttribute().getValue();
+                            previousTimestamp = (Long) answer.get("ts").asAttribute().getValue();
+                            selections.add((String) answer.get("selections").asAttribute().getValue());
+                            previousIID = answer.get("r").asThing().getIID();
+                        }
+
+                        System.out.println(selections);
+                    });
+                    if (previousIID == "") {
+                        return response.withStatusCode(404).withBody("no reports found");
                     } else {
                         obj = new JSONObject();
                         obj.put("timestamp", previousTimestamp);
@@ -108,51 +139,31 @@ public class TypeDBGet implements RequestHandler<APIGatewayProxyRequestEvent, AP
                             selectionsJSON.put(selections.get(i));
                         }
                         try {
-                            obj.put("selections", selectionsJSON);
+                            obj.put("selections", selections);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
                         reports.put(obj);
                         selections.clear();
                         selectionsJSON = new JSONArray();
-
-                        // recompute for the current iteration, which may only have 1 selection
-                        previousID = (String) answer.get("id").asAttribute().getValue();
-                        previousScore = (Long) answer.get("s").asAttribute().getValue();
-                        previousTimestamp = (Long) answer.get("ts").asAttribute().getValue();
-                        selections.add((String) answer.get("selections").asAttribute().getValue());
-                        previousIID = answer.get("r").asThing().getIID();
                     }
-
-                    System.out.println(selections);
-                });
-                if (previousIID == "") {
-                    return response.withStatusCode(404).withBody("no reports found");
-                } else {
-                    obj = new JSONObject();
-                    obj.put("timestamp", previousTimestamp);
-                    obj.put("id", previousID);
-                    obj.put("score", previousScore);
-
-                    for (int i = 0; i < selections.size(); i++) {
-                        selectionsJSON.put(selections.get(i));
-                    }
-                    try {
-                        obj.put("selections", selections);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    reports.put(obj);
-                    selections.clear();
-                    selectionsJSON = new JSONArray();
+                    System.out.println("reports: " + reports);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return response.withStatusCode(400).withBody(e.getMessage());
                 }
-                System.out.println("reports: " + reports);
+            } catch (Exception e) {
+                e.printStackTrace();
+                return response.withStatusCode(400).withBody(e.getMessage());
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return response.withStatusCode(400).withBody(e.getMessage());
         }
         String json = reports.toString();
-        // session is closed
-        client.close();
-        // client is closed
+
+        // client.close();
+
         return response.withStatusCode(200).withBody(json);
     }
 
