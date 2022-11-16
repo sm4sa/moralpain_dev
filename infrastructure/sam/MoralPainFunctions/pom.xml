@@ -37,6 +37,14 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <dependency>
+                <groupId>
+                        com.vaticle.typedb
+                        </groupId>
+                <artifactId>typedb-client</artifactId>
+                <version>${typedb.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
