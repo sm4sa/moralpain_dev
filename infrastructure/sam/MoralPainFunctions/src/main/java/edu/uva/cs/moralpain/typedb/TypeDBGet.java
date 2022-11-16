@@ -139,7 +139,7 @@ public class TypeDBGet implements RequestHandler<APIGatewayProxyRequestEvent, AP
                             selectionsJSON.put(selections.get(i));
                         }
                         try {
-                            obj.put("selections", selections);
+                            obj.put("selections", selectionsJSON);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
