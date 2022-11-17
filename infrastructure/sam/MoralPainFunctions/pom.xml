@@ -146,14 +146,6 @@
             <version>[2.17.1,)</version>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>
-                    com.vaticle.typedb
-                    </groupId>
-            <artifactId>typedb-client</artifactId>
-            <version>${typedb.version}</version>
-        </dependency>
-
 
     </dependencies>
 
