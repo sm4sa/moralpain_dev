@@ -10,27 +10,32 @@ Mappings:
 Parameters:
   SecurityGroup:
     Type: String
-    Default: cfn-vpc::StackSG1
+    Default: moralpain-vpc-sg::StackSG1
   privateSubnet1:
     Type: String
-    Default: cfn-vpc:PrivateSubnet1
+    Default: moralpain-vpc-sg::PrivateSubnet1
 
 Resources:
+  NewKeyPair:
+    Type: "AWS::EC2::KeyPair"
+    Properties:
+      KeyName: moralpain_ec2_keypair
+
   EC2Instance:
     Type: AWS::EC2::Instance
     Properties:
       ImageId: ami-0f66f8dc899e75400
       #  - Fn::FindInMap: [RegionMap, !Ref "AWS::Region", AMI]
       InstanceType: t2.micro
-      KeyName: "private_ec2_key"
+      KeyName: !Ref NewKeyPair
       SubnetId:
-        !ImportValue cfn-vpc-sg-privatesubnet1
+        !ImportValue moralpain-vpc-sg-privatesubnet1
         # - Fn::ImportValue: !Ref privateSubnet1  # expects a string but the type is a string???
       SecurityGroupIds:
-        - !ImportValue cfn-vpc-sg-SGID1
+        - !ImportValue moralpain-vpc-sg-SGID1
       Tags:
         - Key: Name
-          Value: cfn-typedb-server-ctl
+          Value: moralpain-typedb-server
 
 # define outputs for VPC, subnets, and SGs
 Outputs:
