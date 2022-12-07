@@ -45,7 +45,7 @@ paths:
           default:
             statusCode: "200"
             responseParameters:
-              method.response.header.Access-Control-Allow-Headers: '''Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'''
+              method.response.header.Access-Control-Allow-Headers: '''Content-Type,X-Amz-Content-Sha256,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'''
               method.response.header.Access-Control-Allow-Methods: '''*'''
               method.response.header.Access-Control-Allow-Origin: '''*'''
     post:
@@ -91,7 +91,7 @@ paths:
           default:
             statusCode: "200"
             responseParameters:
-              method.response.header.Access-Control-Allow-Headers: '''Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'''
+              method.response.header.Access-Control-Allow-Headers: '''Content-Type,X-Amz-Content-Sha256,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'''
               method.response.header.Access-Control-Allow-Methods: '''*'''
               method.response.header.Access-Control-Allow-Origin: '''*'''
     options:
@@ -128,7 +128,7 @@ paths:
           default:
             statusCode: "200"
             responseParameters:
-              method.response.header.Access-Control-Allow-Headers: '''Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'''
+              method.response.header.Access-Control-Allow-Headers: '''Content-Type,X-Amz-Content-Sha256,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'''
               method.response.header.Access-Control-Allow-Methods: '''*'''
               method.response.header.Access-Control-Allow-Origin: '''*'''
             responseTemplates:
@@ -172,7 +172,7 @@ paths:
           default:
             statusCode: "200"
             responseParameters:
-              method.response.header.Access-Control-Allow-Headers: '''Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'''
+              method.response.header.Access-Control-Allow-Headers: '''Content-Type,X-Amz-Content-Sha256,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'''
               method.response.header.Access-Control-Allow-Methods: '''*'''
               method.response.header.Access-Control-Allow-Origin: '''*'''
     post:
@@ -215,7 +215,7 @@ paths:
           default:
             statusCode: "200"
             responseParameters:
-              method.response.header.Access-Control-Allow-Headers: '''Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'''
+              method.response.header.Access-Control-Allow-Headers: '''Content-Type,X-Amz-Content-Sha256,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'''
               method.response.header.Access-Control-Allow-Methods: '''*'''
               method.response.header.Access-Control-Allow-Origin: '''*'''
     options:
@@ -252,7 +252,7 @@ paths:
           default:
             statusCode: "200"
             responseParameters:
-              method.response.header.Access-Control-Allow-Headers: '''Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'''
+              method.response.header.Access-Control-Allow-Headers: '''Content-Type,X-Amz-Content-Sha256,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'''
               method.response.header.Access-Control-Allow-Methods: '''*'''
               method.response.header.Access-Control-Allow-Origin: '''*'''
             responseTemplates:
@@ -336,7 +336,7 @@ paths:
           default:
             statusCode: "200"
             responseParameters:
-              method.response.header.Access-Control-Allow-Headers: '''Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'''
+              method.response.header.Access-Control-Allow-Headers: '''Content-Type,X-Amz-Content-Sha256,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'''
               method.response.header.Access-Control-Allow-Methods: '''*'''
               method.response.header.Access-Control-Allow-Origin: '''*'''
     options:
@@ -373,7 +373,7 @@ paths:
           default:
             statusCode: "200"
             responseParameters:
-              method.response.header.Access-Control-Allow-Headers: '''Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'''
+              method.response.header.Access-Control-Allow-Headers: '''Content-Type,X-Amz-Content-Sha256,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'''
               method.response.header.Access-Control-Allow-Methods: '''*'''
               method.response.header.Access-Control-Allow-Origin: '''*'''
             responseTemplates:
@@ -460,13 +460,13 @@ paths:
           "400":
             statusCode: "400"
             responseParameters:
-              method.response.header.Access-Control-Allow-Headers: '''Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'''
+              method.response.header.Access-Control-Allow-Headers: '''Content-Type,X-Amz-Content-Sha256,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'''
               method.response.header.Access-Control-Allow-Methods: '''*'''
               method.response.header.Access-Control-Allow-Origin: '''*'''
           default:
             statusCode: "200"
             responseParameters:
-              method.response.header.Access-Control-Allow-Headers: '''Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'''
+              method.response.header.Access-Control-Allow-Headers: '''Content-Type,X-Amz-Content-Sha256,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'''
               method.response.header.Access-Control-Allow-Methods: '''*'''
               method.response.header.Access-Control-Allow-Origin: '''*'''
     options:
@@ -503,7 +503,7 @@ paths:
           default:
             statusCode: "200"
             responseParameters:
-              method.response.header.Access-Control-Allow-Headers: '''Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'''
+              method.response.header.Access-Control-Allow-Headers: '''Content-Type,X-Amz-Content-Sha256,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'''
               method.response.header.Access-Control-Allow-Methods: '''*'''
               method.response.header.Access-Control-Allow-Origin: '''*'''
             responseTemplates:
