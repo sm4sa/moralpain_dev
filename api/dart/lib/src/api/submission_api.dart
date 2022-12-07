@@ -90,7 +90,7 @@ class SubmissionApi {
   }
 
   /// Submit a submission
-  /// Submit  
+  /// Submit 
   ///
   /// Parameters:
   /// * [submission] 

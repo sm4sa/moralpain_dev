@@ -57,7 +57,7 @@ No authorization required
 
 Submit a submission
 
-Submit  
+Submit 
 
 ### Example
 ```dart

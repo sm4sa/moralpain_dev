@@ -10,7 +10,9 @@ All URIs are relative to *http://localhost*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**getResiliencyResources**](UserApi.md#getresiliencyresources) | **GET** /resiliency | Get resiliency resources
+[**getSubmissions**](UserApi.md#getsubmissions) | **GET** /submissions | get the submissions
 [**getSurvey**](UserApi.md#getsurvey) | **GET** /survey | Get the MDQ
+[**submitSubmissionTypeDB**](UserApi.md#submitsubmissiontypedb) | **POST** /submissions | Submit a submission
 [**submitSurvey**](UserApi.md#submitsurvey) | **POST** /survey | Submit a completed MDQ
 [**submitVisitedResiliencyResources**](UserApi.md#submitvisitedresiliencyresources) | **POST** /resiliency | Submit visited resiliency resources
 
@@ -42,6 +44,45 @@ This endpoint does not need any parameter.
 ### Return type
 
 [**ResiliencyResources**](ResiliencyResources.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **getSubmissions**
+> Submissions getSubmissions()
+
+get the submissions
+
+Get the MDQ submissions using TypeDB. 
+
+### Example
+```dart
+import 'package:moralpainapi/api.dart';
+
+final api = Moralpainapi().getUserApi();
+
+try {
+    final response = api.getSubmissions();
+    print(response);
+} catch on DioError (e) {
+    print('Exception when calling UserApi->getSubmissions: $e\n');
+}
+```
+
+### Parameters
+This endpoint does not need any parameter.
+
+### Return type
+
+[**Submissions**](Submissions.md)
 
 ### Authorization
 
@@ -93,6 +134,49 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+# **submitSubmissionTypeDB**
+> String submitSubmissionTypeDB(submission)
+
+Submit a submission
+
+Submit with TypeDB 
+
+### Example
+```dart
+import 'package:moralpainapi/api.dart';
+
+final api = Moralpainapi().getUserApi();
+final Submission submission = ; // Submission | 
+
+try {
+    final response = api.submitSubmissionTypeDB(submission);
+    print(response);
+} catch on DioError (e) {
+    print('Exception when calling UserApi->submitSubmissionTypeDB: $e\n');
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **submission** | [**Submission**](Submission.md)|  | [optional] 
+
+### Return type
+
+**String**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: text/plain
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 # **submitSurvey**
 > String submitSurvey(submission)
 
@@ -103,10 +187,6 @@ Submit a completed Moral Distress Questionnaire and Moral Distress Score to the 
 ### Example
 ```dart
 import 'package:moralpainapi/api.dart';
-// TODO Configure API key authorization: UserPool
-//defaultApiClient.getAuthentication<ApiKeyAuth>('UserPool').apiKey = 'YOUR_API_KEY';
-// uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-//defaultApiClient.getAuthentication<ApiKeyAuth>('UserPool').apiKeyPrefix = 'Bearer';
 
 final api = Moralpainapi().getUserApi();
 final Submission submission = ; // Submission | 
@@ -131,7 +211,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[UserPool](../README.md#UserPool)
+No authorization required
 
 ### HTTP request headers
 
@@ -150,10 +230,6 @@ Submit the list of resources visited by this user to the database.
 ### Example
 ```dart
 import 'package:moralpainapi/api.dart';
-// TODO Configure API key authorization: UserPool
-//defaultApiClient.getAuthentication<ApiKeyAuth>('UserPool').apiKey = 'YOUR_API_KEY';
-// uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-//defaultApiClient.getAuthentication<ApiKeyAuth>('UserPool').apiKeyPrefix = 'Bearer';
 
 final api = Moralpainapi().getUserApi();
 final VisitedResiliencyResources visitedResiliencyResources = ; // VisitedResiliencyResources | 
@@ -178,7 +254,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[UserPool](../README.md#UserPool)
+No authorization required
 
 ### HTTP request headers
 

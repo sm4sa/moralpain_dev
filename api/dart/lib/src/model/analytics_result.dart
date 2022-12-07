@@ -2,6 +2,7 @@
 // AUTO-GENERATED FILE, DO NOT MODIFY!
 //
 
+// ignore_for_file: unused_element
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
@@ -15,105 +16,150 @@ part 'analytics_result.g.dart';
 /// * [result] 
 /// * [error] 
 /// * [errormsg] 
+@BuiltValue()
 abstract class AnalyticsResult implements Built<AnalyticsResult, AnalyticsResultBuilder> {
-    @BuiltValueField(wireName: r'operation')
-    AnalyticsResultOperationEnum? get operation;
-    // enum operationEnum {  average,  count,  maximum,  minimum,  };
+  @BuiltValueField(wireName: r'operation')
+  AnalyticsResultOperationEnum? get operation;
+  // enum operationEnum {  average,  count,  maximum,  minimum,  };
 
-    @BuiltValueField(wireName: r'result')
-    num? get result;
+  @BuiltValueField(wireName: r'result')
+  num? get result;
 
-    @BuiltValueField(wireName: r'error')
-    bool? get error;
+  @BuiltValueField(wireName: r'error')
+  bool? get error;
 
-    @BuiltValueField(wireName: r'errormsg')
-    String? get errormsg;
+  @BuiltValueField(wireName: r'errormsg')
+  String? get errormsg;
 
-    AnalyticsResult._();
+  AnalyticsResult._();
 
-    @BuiltValueHook(initializeBuilder: true)
-    static void _defaults(AnalyticsResultBuilder b) => b;
+  factory AnalyticsResult([void updates(AnalyticsResultBuilder b)]) = _$AnalyticsResult;
 
-    factory AnalyticsResult([void updates(AnalyticsResultBuilder b)]) = _$AnalyticsResult;
+  @BuiltValueHook(initializeBuilder: true)
+  static void _defaults(AnalyticsResultBuilder b) => b;
 
-    @BuiltValueSerializer(custom: true)
-    static Serializer<AnalyticsResult> get serializer => _$AnalyticsResultSerializer();
+  @BuiltValueSerializer(custom: true)
+  static Serializer<AnalyticsResult> get serializer => _$AnalyticsResultSerializer();
 }
 
-class _$AnalyticsResultSerializer implements StructuredSerializer<AnalyticsResult> {
-    @override
-    final Iterable<Type> types = const [AnalyticsResult, _$AnalyticsResult];
+class _$AnalyticsResultSerializer implements PrimitiveSerializer<AnalyticsResult> {
+  @override
+  final Iterable<Type> types = const [AnalyticsResult, _$AnalyticsResult];
 
-    @override
-    final String wireName = r'AnalyticsResult';
+  @override
+  final String wireName = r'AnalyticsResult';
 
-    @override
-    Iterable<Object?> serialize(Serializers serializers, AnalyticsResult object,
-        {FullType specifiedType = FullType.unspecified}) {
-        final result = <Object?>[];
-        if (object.operation != null) {
-            result
-                ..add(r'operation')
-                ..add(serializers.serialize(object.operation,
-                    specifiedType: const FullType(AnalyticsResultOperationEnum)));
-        }
-        if (object.result != null) {
-            result
-                ..add(r'result')
-                ..add(serializers.serialize(object.result,
-                    specifiedType: const FullType(num)));
-        }
-        if (object.error != null) {
-            result
-                ..add(r'error')
-                ..add(serializers.serialize(object.error,
-                    specifiedType: const FullType(bool)));
-        }
-        if (object.errormsg != null) {
-            result
-                ..add(r'errormsg')
-                ..add(serializers.serialize(object.errormsg,
-                    specifiedType: const FullType(String)));
-        }
-        return result;
+  Iterable<Object?> _serializeProperties(
+    Serializers serializers,
+    AnalyticsResult object, {
+    FullType specifiedType = FullType.unspecified,
+  }) sync* {
+    if (object.operation != null) {
+      yield r'operation';
+      yield serializers.serialize(
+        object.operation,
+        specifiedType: const FullType(AnalyticsResultOperationEnum),
+      );
     }
-
-    @override
-    AnalyticsResult deserialize(Serializers serializers, Iterable<Object?> serialized,
-        {FullType specifiedType = FullType.unspecified}) {
-        final result = AnalyticsResultBuilder();
-
-        final iterator = serialized.iterator;
-        while (iterator.moveNext()) {
-            final key = iterator.current as String;
-            iterator.moveNext();
-            final Object? value = iterator.current;
-            
-            switch (key) {
-                case r'operation':
-                    final valueDes = serializers.deserialize(value,
-                        specifiedType: const FullType(AnalyticsResultOperationEnum)) as AnalyticsResultOperationEnum;
-                    result.operation = valueDes;
-                    break;
-                case r'result':
-                    final valueDes = serializers.deserialize(value,
-                        specifiedType: const FullType(num)) as num;
-                    result.result = valueDes;
-                    break;
-                case r'error':
-                    final valueDes = serializers.deserialize(value,
-                        specifiedType: const FullType(bool)) as bool;
-                    result.error = valueDes;
-                    break;
-                case r'errormsg':
-                    final valueDes = serializers.deserialize(value,
-                        specifiedType: const FullType(String)) as String;
-                    result.errormsg = valueDes;
-                    break;
-            }
-        }
-        return result.build();
+    if (object.result != null) {
+      yield r'result';
+      yield serializers.serialize(
+        object.result,
+        specifiedType: const FullType(num),
+      );
     }
+    if (object.error != null) {
+      yield r'error';
+      yield serializers.serialize(
+        object.error,
+        specifiedType: const FullType(bool),
+      );
+    }
+    if (object.errormsg != null) {
+      yield r'errormsg';
+      yield serializers.serialize(
+        object.errormsg,
+        specifiedType: const FullType(String),
+      );
+    }
+  }
+
+  @override
+  Object serialize(
+    Serializers serializers,
+    AnalyticsResult object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
+    return _serializeProperties(serializers, object, specifiedType: specifiedType).toList();
+  }
+
+  void _deserializeProperties(
+    Serializers serializers,
+    Object serialized, {
+    FullType specifiedType = FullType.unspecified,
+    required List<Object?> serializedList,
+    required AnalyticsResultBuilder result,
+    required List<Object?> unhandled,
+  }) {
+    for (var i = 0; i < serializedList.length; i += 2) {
+      final key = serializedList[i] as String;
+      final value = serializedList[i + 1];
+      switch (key) {
+        case r'operation':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(AnalyticsResultOperationEnum),
+          ) as AnalyticsResultOperationEnum;
+          result.operation = valueDes;
+          break;
+        case r'result':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(num),
+          ) as num;
+          result.result = valueDes;
+          break;
+        case r'error':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(bool),
+          ) as bool;
+          result.error = valueDes;
+          break;
+        case r'errormsg':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String;
+          result.errormsg = valueDes;
+          break;
+        default:
+          unhandled.add(key);
+          unhandled.add(value);
+          break;
+      }
+    }
+  }
+
+  @override
+  AnalyticsResult deserialize(
+    Serializers serializers,
+    Object serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
+    final result = AnalyticsResultBuilder();
+    final serializedList = (serialized as Iterable<Object?>).toList();
+    final unhandled = <Object?>[];
+    _deserializeProperties(
+      serializers,
+      serialized,
+      specifiedType: specifiedType,
+      serializedList: serializedList,
+      unhandled: unhandled,
+      result: result,
+    );
+    return result.build();
+  }
 }
 
 class AnalyticsResultOperationEnum extends EnumClass {

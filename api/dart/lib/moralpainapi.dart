@@ -18,7 +18,6 @@ export 'package:moralpainapi/src/model/analytics_result.dart';
 export 'package:moralpainapi/src/model/icon.dart';
 export 'package:moralpainapi/src/model/resiliency_resource.dart';
 export 'package:moralpainapi/src/model/resiliency_resources.dart';
-export 'package:moralpainapi/src/model/set_timestamp_request.dart';
 export 'package:moralpainapi/src/model/submission.dart';
 export 'package:moralpainapi/src/model/submissions.dart';
 export 'package:moralpainapi/src/model/survey.dart';

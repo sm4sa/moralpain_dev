@@ -2,6 +2,7 @@
 // AUTO-GENERATED FILE, DO NOT MODIFY!
 //
 
+// ignore_for_file: unused_element
 import 'package:moralpainapi/src/model/submission.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
@@ -13,61 +14,97 @@ part 'submissions.g.dart';
 ///
 /// Properties:
 /// * [list] 
+@BuiltValue()
 abstract class Submissions implements Built<Submissions, SubmissionsBuilder> {
-    @BuiltValueField(wireName: r'list')
-    BuiltList<Submission>? get list;
+  @BuiltValueField(wireName: r'list')
+  BuiltList<Submission>? get list;
 
-    Submissions._();
+  Submissions._();
 
-    @BuiltValueHook(initializeBuilder: true)
-    static void _defaults(SubmissionsBuilder b) => b;
+  factory Submissions([void updates(SubmissionsBuilder b)]) = _$Submissions;
 
-    factory Submissions([void updates(SubmissionsBuilder b)]) = _$Submissions;
+  @BuiltValueHook(initializeBuilder: true)
+  static void _defaults(SubmissionsBuilder b) => b;
 
-    @BuiltValueSerializer(custom: true)
-    static Serializer<Submissions> get serializer => _$SubmissionsSerializer();
+  @BuiltValueSerializer(custom: true)
+  static Serializer<Submissions> get serializer => _$SubmissionsSerializer();
 }
 
-class _$SubmissionsSerializer implements StructuredSerializer<Submissions> {
-    @override
-    final Iterable<Type> types = const [Submissions, _$Submissions];
+class _$SubmissionsSerializer implements PrimitiveSerializer<Submissions> {
+  @override
+  final Iterable<Type> types = const [Submissions, _$Submissions];
 
-    @override
-    final String wireName = r'Submissions';
+  @override
+  final String wireName = r'Submissions';
 
-    @override
-    Iterable<Object?> serialize(Serializers serializers, Submissions object,
-        {FullType specifiedType = FullType.unspecified}) {
-        final result = <Object?>[];
-        if (object.list != null) {
-            result
-                ..add(r'list')
-                ..add(serializers.serialize(object.list,
-                    specifiedType: const FullType(BuiltList, [FullType(Submission)])));
-        }
-        return result;
+  Iterable<Object?> _serializeProperties(
+    Serializers serializers,
+    Submissions object, {
+    FullType specifiedType = FullType.unspecified,
+  }) sync* {
+    if (object.list != null) {
+      yield r'list';
+      yield serializers.serialize(
+        object.list,
+        specifiedType: const FullType(BuiltList, [FullType(Submission)]),
+      );
     }
+  }
 
-    @override
-    Submissions deserialize(Serializers serializers, Iterable<Object?> serialized,
-        {FullType specifiedType = FullType.unspecified}) {
-        final result = SubmissionsBuilder();
+  @override
+  Object serialize(
+    Serializers serializers,
+    Submissions object, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
+    return _serializeProperties(serializers, object, specifiedType: specifiedType).toList();
+  }
 
-        final iterator = serialized.iterator;
-        while (iterator.moveNext()) {
-            final key = iterator.current as String;
-            iterator.moveNext();
-            final Object? value = iterator.current;
-            
-            switch (key) {
-                case r'list':
-                    final valueDes = serializers.deserialize(value,
-                        specifiedType: const FullType(BuiltList, [FullType(Submission)])) as BuiltList<Submission>;
-                    result.list.replace(valueDes);
-                    break;
-            }
-        }
-        return result.build();
+  void _deserializeProperties(
+    Serializers serializers,
+    Object serialized, {
+    FullType specifiedType = FullType.unspecified,
+    required List<Object?> serializedList,
+    required SubmissionsBuilder result,
+    required List<Object?> unhandled,
+  }) {
+    for (var i = 0; i < serializedList.length; i += 2) {
+      final key = serializedList[i] as String;
+      final value = serializedList[i + 1];
+      switch (key) {
+        case r'list':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(BuiltList, [FullType(Submission)]),
+          ) as BuiltList<Submission>;
+          result.list.replace(valueDes);
+          break;
+        default:
+          unhandled.add(key);
+          unhandled.add(value);
+          break;
+      }
     }
+  }
+
+  @override
+  Submissions deserialize(
+    Serializers serializers,
+    Object serialized, {
+    FullType specifiedType = FullType.unspecified,
+  }) {
+    final result = SubmissionsBuilder();
+    final serializedList = (serialized as Iterable<Object?>).toList();
+    final unhandled = <Object?>[];
+    _deserializeProperties(
+      serializers,
+      serialized,
+      specifiedType: specifiedType,
+      serializedList: serializedList,
+      unhandled: unhandled,
+      result: result,
+    );
+    return result.build();
+  }
 }
 

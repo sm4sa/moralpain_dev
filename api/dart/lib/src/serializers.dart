@@ -4,6 +4,8 @@
 
 // ignore_for_file: unused_import
 
+import 'package:one_of_serializer/any_of_serializer.dart';
+import 'package:one_of_serializer/one_of_serializer.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/json_object.dart';
 import 'package:built_value/serializer.dart';
@@ -16,7 +18,6 @@ import 'package:moralpainapi/src/model/analytics_result.dart';
 import 'package:moralpainapi/src/model/icon.dart';
 import 'package:moralpainapi/src/model/resiliency_resource.dart';
 import 'package:moralpainapi/src/model/resiliency_resources.dart';
-import 'package:moralpainapi/src/model/set_timestamp_request.dart';
 import 'package:moralpainapi/src/model/submission.dart';
 import 'package:moralpainapi/src/model/submissions.dart';
 import 'package:moralpainapi/src/model/survey.dart';
@@ -31,7 +32,6 @@ part 'serializers.g.dart';
   Icon,
   ResiliencyResource,
   ResiliencyResources,
-  SetTimestampRequest,
   Submission,
   Submissions,
   Survey,
@@ -40,6 +40,8 @@ part 'serializers.g.dart';
   VisitedResiliencyResources,
 ])
 Serializers serializers = (_$serializers.toBuilder()
+      ..add(const OneOfSerializer())
+      ..add(const AnyOfSerializer())
       ..add(const DateSerializer())
       ..add(Iso8601DateTimeSerializer()))
     .build();
