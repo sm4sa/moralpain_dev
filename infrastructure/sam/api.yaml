@@ -115,8 +115,8 @@ paths:
               schema:
                 type: string
           content: {}
-      security:
-        - sigv4Reference: []
+          #security:
+          #  - sigv4Reference: []
       x-amazon-apigateway-integration:
         type: mock
         requestTemplates:
@@ -239,8 +239,8 @@ paths:
               schema:
                 type: string
           content: {}
-      security:
-        - sigv4Reference: []
+      # security:
+      #   - sigv4Reference: []
       x-amazon-apigateway-integration:
         type: mock
         requestTemplates:
@@ -360,8 +360,8 @@ paths:
               schema:
                 type: string
           content: {}
-      security:
-        - sigv4Reference: []
+      # security:
+      #   - sigv4Reference: []
       x-amazon-apigateway-integration:
         type: mock
         requestTemplates:
@@ -490,8 +490,8 @@ paths:
               schema:
                 type: string
           content: {}
-      security:
-        - sigv4Reference: []
+      # security:
+      #   - sigv4Reference: []
       x-amazon-apigateway-integration:
         type: mock
         requestTemplates:
