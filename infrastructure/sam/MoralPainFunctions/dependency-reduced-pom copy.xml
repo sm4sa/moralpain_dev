@@ -30,12 +30,6 @@
       </plugin>
     </plugins>
   </build>
-  <repositories>
-    <repository>
-      <id>repo.vaticle.com</id>
-      <url>https://repo.vaticle.com/repository/maven/</url>
-    </repository>
-  </repositories>
   <dependencies>
     <dependency>
       <groupId>org.junit.jupiter</groupId>
@@ -73,36 +67,6 @@
         </exclusion>
       </exclusions>
     </dependency>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.13.2</version>
-      <scope>test</scope>
-      <exclusions>
-        <exclusion>
-          <artifactId>hamcrest-core</artifactId>
-          <groupId>org.hamcrest</groupId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.logging.log4j</groupId>
-      <artifactId>log4j-api</artifactId>
-      <version>[2.17.1,)</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.logging.log4j</groupId>
-      <artifactId>log4j-core</artifactId>
-      <version>[2.17.1,)</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.logging.log4j</groupId>
-      <artifactId>log4j-slf4j18-impl</artifactId>
-      <version>[2.17.1,)</version>
-      <scope>test</scope>
-    </dependency>
   </dependencies>
   <dependencyManagement>
     <dependencies>
@@ -123,16 +87,15 @@
     </dependencies>
   </dependencyManagement>
   <properties>
-    <maven.compiler.target>11</maven.compiler.target>
+    <maven.compiler.target>1.8</maven.compiler.target>
     <maven-surefire-plugin.version>3.0.0-M6</maven-surefire-plugin.version>
     <moraldistressapi.version>1.0.0</moraldistressapi.version>
-    <maven.compiler.source>11</maven.compiler.source>
+    <maven.compiler.source>1.8</maven.compiler.source>
     <aws.sdk.version>2.17.226</aws.sdk.version>
     <s3.mock.version>2.4.10</s3.mock.version>
     <aws.lambda.core.version>1.2.1</aws.lambda.core.version>
     <aws.lambda.events.version>3.10.0</aws.lambda.events.version>
     <jackson.databind.version>2.13.3</jackson.databind.version>
     <junit.version>5.8.2</junit.version>
-    <typedb.version>2.11.0</typedb.version>
   </properties>
 </project>
