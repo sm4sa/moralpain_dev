@@ -260,7 +260,7 @@ paths:
                 {}
   /admin/submissions:
     get:
-      operationId: getSubmissions
+      operationId: getAdminSubmissions
       summary: Get survey results
       description: >
         Fetch from the database all of the records that match the
@@ -639,7 +639,7 @@ paths:
       description: >
         Get the MDQ submissions using TypeDB.
       tags:
-        - Submission
+        - User
       responses:
         "200":
           description: |-
@@ -678,7 +678,7 @@ paths:
       description: >
         Submit with TypeDB
       tags:
-        - Submission
+        - User
       requestBody:
         content:
           application/json:

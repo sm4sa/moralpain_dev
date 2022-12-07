@@ -36,6 +36,15 @@ java -jar ../../openapi-generator-cli.jar generate \
   --generator-name java
 ```
 
+### Validating the Java client
+
+To run OpenAPI Generator for the Java client, switch to the `java` directory and use the following command:
+
+```bash
+java -jar ../../openapi-generator-cli.jar validate \
+  --input-spec ../../infrastructure/sam/api.yaml
+```
+
 ## Documentation for API Endpoints
 
 All URIs are relative to *http://localhost*
