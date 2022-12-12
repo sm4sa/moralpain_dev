@@ -81,9 +81,12 @@ class ApiRepository {
    */
   Future<bool> submitSurvey(Submission submission) async {
     final uapi = mapi.getUserApi();
+    //serializers.serializeWith(Submission.serializer, submission)
+    //serializers.toJson(Submission.serializer, submission)
 
     try {
-      final res = await uapi.submitSurvey(submission: submission);
+      //final res = await uapi.submitSurvey(submission: submission);
+      final res = await uapi.submitSubmissionTypeDB(submission: submission);
       return res.statusCode == 200;
     } catch (err) {
       log.shout('Error submitting survey', err);
