@@ -35,8 +35,46 @@
       <id>repo.vaticle.com</id>
       <url>https://repo.vaticle.com/repository/maven/</url>
     </repository>
+    <repository>
+      <id>vaticle-snapsot</id>
+      <url>https://repo.vaticle.com/repository/maven-snapshot</url>
+    </repository>
+    <repository>
+      <id>nphair-snapsot</id>
+      <url>https://www.cs.virginia.edu/~np4ay/repo</url>
+    </repository>
   </repositories>
   <dependencies>
+    <dependency>
+      <groupId>com.vaticle.typedb</groupId>
+      <artifactId>typedb-runner</artifactId>
+      <version>2.12.0-SNAPSHOT</version>
+      <scope>test</scope>
+      <exclusions>
+        <exclusion>
+          <artifactId>commons-io</artifactId>
+          <groupId>commons-io</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>picocli</artifactId>
+          <groupId>info.picocli</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>hamcrest-core</artifactId>
+          <groupId>org.hamcrest</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>zt-exec</artifactId>
+          <groupId>org.zeroturnaround</groupId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>com.vaticle.typedb</groupId>
+      <artifactId>typedb-common</artifactId>
+      <version>38da477764c788dd293a6159dbf733237a7d354a</version>
+      <scope>test</scope>
+    </dependency>
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter</artifactId>
@@ -58,6 +96,18 @@
       </exclusions>
     </dependency>
     <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.13.2</version>
+      <scope>test</scope>
+      <exclusions>
+        <exclusion>
+          <artifactId>hamcrest-core</artifactId>
+          <groupId>org.hamcrest</groupId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
       <groupId>com.adobe.testing</groupId>
       <artifactId>s3mock-junit5</artifactId>
       <version>2.4.10</version>
@@ -70,18 +120,6 @@
         <exclusion>
           <artifactId>junit-jupiter-api</artifactId>
           <groupId>org.junit.jupiter</groupId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.13.2</version>
-      <scope>test</scope>
-      <exclusions>
-        <exclusion>
-          <artifactId>hamcrest-core</artifactId>
-          <groupId>org.hamcrest</groupId>
         </exclusion>
       </exclusions>
     </dependency>
@@ -131,8 +169,8 @@
     <s3.mock.version>2.4.10</s3.mock.version>
     <aws.lambda.core.version>1.2.1</aws.lambda.core.version>
     <aws.lambda.events.version>3.10.0</aws.lambda.events.version>
-    <jackson.databind.version>2.13.3</jackson.databind.version>
+    <jackson.databind.version>2.14.1</jackson.databind.version>
     <junit.version>5.8.2</junit.version>
-    <typedb.version>2.11.0</typedb.version>
+    <typedb.version>2.12.0</typedb.version>
   </properties>
 </project>

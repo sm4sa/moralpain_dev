@@ -13,12 +13,12 @@
         <aws.lambda.core.version>1.2.1</aws.lambda.core.version>
         <aws.lambda.events.version>3.10.0</aws.lambda.events.version>
         <aws.sdk.version>2.17.226</aws.sdk.version>
-        <jackson.databind.version>2.13.3</jackson.databind.version>
+        <jackson.databind.version>2.14.1</jackson.databind.version>
         <junit.version>5.8.2</junit.version>
         <maven-surefire-plugin.version>3.0.0-M6</maven-surefire-plugin.version>
         <s3.mock.version>2.4.10</s3.mock.version>
         <moraldistressapi.version>1.0.0</moraldistressapi.version>
-        <typedb.version>2.11.0</typedb.version>
+        <typedb.version>2.12.0</typedb.version>
     </properties>
 
     <repositories>
@@ -26,6 +26,14 @@
         <id>repo.vaticle.com</id>
         <url>https://repo.vaticle.com/repository/maven/</url>
       </repository>
+        <repository>
+            <id>vaticle-snapsot</id>
+            <url>https://repo.vaticle.com/repository/maven-snapshot</url>
+        </repository>
+        <repository>
+            <id>nphair-snapsot</id>
+            <url>https://www.cs.virginia.edu/~np4ay/repo</url>
+        </repository>
     </repositories>
 
     <dependencyManagement>
@@ -48,16 +56,44 @@
     </dependencyManagement>
 
     <dependencies>
+        <!-- openapi generated client. -->
         <dependency>
             <groupId>edu.uva.cs</groupId>
             <artifactId>moraldistressapi</artifactId>
             <version>${moraldistressapi.version}</version>
         </dependency>
+
+        <!-- typedb. -->
         <dependency>
           <groupId>com.vaticle.typedb</groupId>
           <artifactId>typedb-client</artifactId>
           <version>${typedb.version}</version>
         </dependency>
+        <!-- Snapshot until next release with test artifacts -->
+        <dependency>
+            <groupId>com.vaticle.typedb</groupId>
+            <artifactId>typedb-runner</artifactId>
+            <version>2.12.0-SNAPSHOT</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.vaticle.typedb</groupId>
+            <artifactId>typedb-common</artifactId>
+            <version>38da477764c788dd293a6159dbf733237a7d354a</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- aws sdks. -->
+        <dependency>
+            <groupId>software.amazon.awssdk</groupId>
+            <artifactId>s3</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>software.amazon.awssdk</groupId>
+            <artifactId>url-connection-client</artifactId>
+        </dependency>
+
+        <!-- aws lambda java libs. -->
         <dependency>
             <groupId>com.amazonaws</groupId>
             <artifactId>aws-lambda-java-core</artifactId>
@@ -68,14 +104,8 @@
             <artifactId>aws-lambda-java-events</artifactId>
             <version>${aws.lambda.events.version}</version>
         </dependency>
-        <dependency>
-            <groupId>software.amazon.awssdk</groupId>
-            <artifactId>s3</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>software.amazon.awssdk</groupId>
-            <artifactId>url-connection-client</artifactId>
-        </dependency>
+
+        <!-- jackson. -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-core</artifactId>
@@ -91,23 +121,7 @@
             <artifactId>jackson-dataformat-xml</artifactId>
             <version>${jackson.databind.version}</version>
         </dependency>
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.adobe.testing</groupId>
-            <artifactId>s3mock-junit5</artifactId>
-            <version>${s3.mock.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.13.2</version>
-            <scope>test</scope>
-        </dependency>
+
         <dependency>
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>
@@ -128,6 +142,27 @@
             <artifactId>gson</artifactId>
             <version>2.9.0</version>
         </dependency>
+
+        <!-- testing. -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <!-- TODO: bump to junit 5 -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.13.2</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.adobe.testing</groupId>
+            <artifactId>s3mock-junit5</artifactId>
+            <version>${s3.mock.version}</version>
+            <scope>test</scope>
+        </dependency>
+
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-api</artifactId>

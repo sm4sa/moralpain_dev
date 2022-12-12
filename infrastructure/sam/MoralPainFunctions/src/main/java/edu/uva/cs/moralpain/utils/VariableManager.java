@@ -1,6 +1,7 @@
 package edu.uva.cs.moralpain.utils;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
@@ -16,7 +17,7 @@ public class VariableManager {
     Map<String, String> preferred;
 
     public VariableManager() {
-        this(Collections.emptyMap());
+        this(new HashMap<>());
     }
 
     public VariableManager(Map<String, String> preferred) {

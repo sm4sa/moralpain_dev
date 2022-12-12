@@ -1,5 +1,10 @@
 package edu.uva.cs.moralpain.typedb;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.openapitools.client.model.Submission;
+
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent;
@@ -14,6 +19,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import com.vaticle.typedb.client.TypeDB;
@@ -23,9 +29,13 @@ import com.vaticle.typedb.client.api.TypeDBTransaction;
 import com.vaticle.typedb.client.api.answer.ConceptMap;
 import com.vaticle.typeql.lang.TypeQL;
 import com.vaticle.typeql.lang.query.TypeQLInsert;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import static com.vaticle.typeql.lang.TypeQL.var;
 
 public class TypeDBPost implements RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> {
+    private static Logger logger = LoggerFactory.getLogger(TypeDBPost.class);
 
     JSONObject obj = new JSONObject();
     List<JSONObject> reports = new ArrayList<JSONObject>();
@@ -33,10 +43,6 @@ public class TypeDBPost implements RequestHandler<APIGatewayProxyRequestEvent, A
 
     public APIGatewayProxyResponseEvent handleRequest(final APIGatewayProxyRequestEvent input, final Context context) {
         Map<String, String> headers = new HashMap<>();
-
-        // headers.put("Content-Type", "application/json");
-        // headers.put("X-Custom-Header", "application/json");
-
         APIGatewayProxyResponseEvent response = new APIGatewayProxyResponseEvent().withHeaders(headers);
 
         if (!isValidEvent(input)) {
@@ -54,62 +60,63 @@ public class TypeDBPost implements RequestHandler<APIGatewayProxyRequestEvent, A
 
         String body = input.getBody();
 
+        Submission submission;
         try {
-            JSONObject jsonBodyObject = (JSONObject) parser.parse(body);
-            String id = (String) jsonBodyObject.get("id");
-            @SuppressWarnings("unchecked")
-            List<String> selections = (List<String>) jsonBodyObject.get("selections");
-            Long score_long = (Long) jsonBodyObject.get("score");
-            int score = score_long.intValue();
-            // date comes in as UNIX time in seconds, so we can use int. If it came in
-            // miliseconds, use long.
-            Long timestamp = (Long) jsonBodyObject.get("timestamp");
-
-            String ip = String.format("%s:1729", variableManager.get("EC2_IP_ADDRESS"));
-            try (TypeDBClient client = TypeDB.coreClient(ip)) {
-
-                // open up a session
-                try (TypeDBSession session = client.session(variableManager.get("DATABASE_NAME"),
-                        TypeDBSession.Type.DATA)) {
-
-                    try (TypeDBTransaction writeTransaction = session.transaction(TypeDBTransaction.Type.WRITE)) {
-
-                        // Insert a report using a WRITE transaction
-                        var report = var("r").isa("report").has("id", id).has("score", score).has("timestamp",
-                                timestamp);
-
-                        for (String selection : selections) {
-                            report = report.has("selection", selection);
-                        }
-                        TypeQLInsert insertQuery = TypeQL.insert(report);
-
-                        List<Object> insertedId = writeTransaction.query().insert(insertQuery)
-                                .collect(Collectors.toList());
-                        System.out.println(
-                                "Inserted a person with ID: "
-                                        + ((ConceptMap) insertedId.get(0)).get("r").asThing().getIID());
-
-                        // to persist changes, a write transaction must always be committed (closed)
-                        writeTransaction.commit();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        return response.withStatusCode(400).withBody(e.getMessage());
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    return response.withStatusCode(400).withBody(e.getMessage());
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-                return response.withStatusCode(400).withBody(e.getMessage());
-            }
-            body = "";
-            return response.withStatusCode(200).withBody(" OK");
-        } catch (ParseException e) {
-            e.printStackTrace();
-            return response.withStatusCode(400).withBody(" error");
+            ObjectMapper objectMapper = new ObjectMapper();
+            submission = objectMapper.readValue(body, Submission.class);
+        } catch (JsonProcessingException e) {
+            logger.error(String.format("failed to parse: %s", body), e);
+            return response.withStatusCode(400);
         }
 
+        String id = submission.getId();
+        List<String> selections = submission.getSelections();
+        Integer score = submission.getScore();
+        Integer timestamp = submission.getTimestamp();
+
+        String dbAddress = variableManager.get("DATABASE_ADDRESS");
+        String dbName = variableManager.get("DATABASE_NAME");
+
+        try (TypeDBClient client = TypeDB.coreClient(dbAddress)) {
+            try (TypeDBSession session = client.session(dbName, TypeDBSession.Type.DATA)) {
+                try (TypeDBTransaction writeTransaction = session.transaction(TypeDBTransaction.Type.WRITE)) {
+
+                    // Insert a report using a WRITE transaction
+                    var report = var("r")
+                            .isa("report")
+                            .has("id", id)
+                            .has("score", score)
+                            .has("timestamp", timestamp);
+
+                    for (String selection : selections) {
+                        report = report.has("selection", selection);
+                    }
+                    TypeQLInsert insertQuery = TypeQL.insert(report);
+
+                    List<Object> insertedId = writeTransaction
+                            .query()
+                            .insert(insertQuery)
+                            .collect(Collectors.toList());
+
+                    logger.info("Inserted a person with ID: "
+                                    + ((ConceptMap) insertedId.get(0)).get("r").asThing().getIID());
+
+                    // to persist changes, a write transaction must always be committed (closed)
+                    writeTransaction.commit();
+                } catch (Exception e) {
+                    logger.error(e.getMessage());
+                    return response.withStatusCode(400);
+                }
+            } catch (Exception e) {
+                logger.error(e.getMessage());
+                return response.withStatusCode(400);
+            }
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            return response.withStatusCode(400);
+        }
+
+        return response.withStatusCode(200).withBody(" OK");
     }
 
     private boolean isValidEvent(APIGatewayProxyRequestEvent event) {
@@ -117,7 +124,7 @@ public class TypeDBPost implements RequestHandler<APIGatewayProxyRequestEvent, A
     }
 
     private boolean isValidEnvironment(VariableManager variableManager) {
-        return variableManager.containsKey("EC2_IP_ADDRESS")
-                && !variableManager.getOrDefault("EC2_IP_ADDRESS", "").isEmpty();
+        return !variableManager.getOrDefault("DATABASE_ADDRESS", "").isEmpty() &&
+                !variableManager.getOrDefault("DATABASE_NAME", "").isEmpty();
     }
 }
