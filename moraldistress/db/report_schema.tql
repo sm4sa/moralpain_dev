@@ -3,17 +3,19 @@ define
 #attribute
 id sub attribute, value string;
 userid sub attribute, value string;
-timestamp sub attribute, value datetime;
-score sub attribute, value long, owns description;
+timestamp sub attribute, value long;
+score sub attribute, value long;
+selection sub attribute, value string;
 description sub attribute, value string;
 
 
 #entitiy
 
 report sub entity,
-    owns id,
-    owns userid,
+    owns id @key,
+    owns selection,
     owns timestamp,
+    owns score,
     plays report_temperature:report,
     plays report_reason:report;
     
@@ -44,83 +46,3 @@ report_reason sub relation,
 reason_category sub relation,
     relates reason,
     relates category;
-
-
-#rules
-rule score-description-0:
-when {
-    $t isa temperature, has score $s, has score 0;
-    #$r has score 0;
-} then {
-    $s has description 'None';
-};
-
-rule score-description-1:
-when {
-    $t isa temperature, has score $s, has score 1;
-} then {
-    $s has description 'Mild';
-};
-
-rule score-description-2:
-when {
-    $t isa temperature, has score $s, has score 2;
-} then {
-    $s has description 'Mild';
-};
-
-rule score-description-3:
-when {
-    $t isa temperature, has score $s, has score 3;
-} then {
-    $s has description 'Mild';
-};
-
-rule score-description-4:
-when {
-    $t isa temperature, has score $s, has score 4;
-} then {
-    $s has description 'Distressing';
-};
-
-rule score-description-5:
-when {
-    $t isa temperature, has score $s, has score 5;
-} then {
-    $s has description 'Distressing';
-};
-
-rule score-description-6:
-when {
-    $t isa temperature, has score $s, has score 6;
-} then {
-    $s has description 'Uncomfortable';
-};
-
-rule score-description-7:
-when {
-    $t isa temperature, has score $s, has score 7;
-} then {
-    $s has description 'Uncomfortable';
-};
-
-rule score-description-8:
-when {
-    $t isa temperature, has score $s, has score 8;
-} then {
-    $s has description 'Intense';
-};
-
-rule score-description-9:
-when {
-    $t isa temperature, has score $s, has score 9;
-} then {
-    $s has description 'Intense';
-};
-
-rule score-description-10:
-when {
-    $t isa temperature, has score $s, has score 10;
-} then {
-    $s has description 'Worst Possible';
-};
