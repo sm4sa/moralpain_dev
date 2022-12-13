@@ -10,8 +10,10 @@ All URIs are relative to *http://localhost*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**getResiliencyResources**](UserApi.md#getresiliencyresources) | **GET** /resiliency | Get resiliency resources
+[**getSubmission**](UserApi.md#getsubmission) | **GET** /submission | get the submission
 [**getSubmissions**](UserApi.md#getsubmissions) | **GET** /submissions | get the submissions
 [**getSurvey**](UserApi.md#getsurvey) | **GET** /survey | Get the MDQ
+[**submitSubmission**](UserApi.md#submitsubmission) | **POST** /submission | Submit a submission
 [**submitSubmissionTypeDB**](UserApi.md#submitsubmissiontypedb) | **POST** /submissions | Submit a submission
 [**submitSurvey**](UserApi.md#submitsurvey) | **POST** /survey | Submit a completed MDQ
 [**submitVisitedResiliencyResources**](UserApi.md#submitvisitedresiliencyresources) | **POST** /resiliency | Submit visited resiliency resources
@@ -44,6 +46,45 @@ This endpoint does not need any parameter.
 ### Return type
 
 [**ResiliencyResources**](ResiliencyResources.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **getSubmission**
+> Submission getSubmission()
+
+get the submission
+
+Get the MDQ submission. 
+
+### Example
+```dart
+import 'package:moralpainapi/api.dart';
+
+final api = Moralpainapi().getUserApi();
+
+try {
+    final response = api.getSubmission();
+    print(response);
+} catch on DioError (e) {
+    print('Exception when calling UserApi->getSubmission: $e\n');
+}
+```
+
+### Parameters
+This endpoint does not need any parameter.
+
+### Return type
+
+[**Submission**](Submission.md)
 
 ### Authorization
 
@@ -131,6 +172,49 @@ No authorization required
 
  - **Content-Type**: Not defined
  - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **submitSubmission**
+> String submitSubmission(submission)
+
+Submit a submission
+
+Submit 
+
+### Example
+```dart
+import 'package:moralpainapi/api.dart';
+
+final api = Moralpainapi().getUserApi();
+final Submission submission = ; // Submission | 
+
+try {
+    final response = api.submitSubmission(submission);
+    print(response);
+} catch on DioError (e) {
+    print('Exception when calling UserApi->submitSubmission: $e\n');
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **submission** | [**Submission**](Submission.md)|  | [optional] 
+
+### Return type
+
+**String**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: text/plain
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

@@ -4,7 +4,9 @@
 
 import 'dart:async';
 
-import 'package:built_value/serializer.dart';
+// ignore: unused_import
+import 'dart:convert';
+import 'package:moralpainapi/src/deserialize.dart';
 import 'package:dio/dio.dart';
 
 import 'package:moralpainapi/src/model/resiliency_resources.dart';
@@ -17,9 +19,7 @@ class UserApi {
 
   final Dio _dio;
 
-  final Serializers _serializers;
-
-  const UserApi(this._dio, this._serializers);
+  const UserApi(this._dio);
 
   /// Get resiliency resources
   /// Fetch the recommended resiliency resources from the database. 
@@ -66,12 +66,7 @@ class UserApi {
     ResiliencyResources _responseData;
 
     try {
-      const _responseType = FullType(ResiliencyResources);
-      _responseData = _serializers.deserialize(
-        _response.data!,
-        specifiedType: _responseType,
-      ) as ResiliencyResources;
-
+_responseData = deserialize<ResiliencyResources, ResiliencyResources>(_response.data!, 'ResiliencyResources', growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
@@ -82,6 +77,73 @@ class UserApi {
     }
 
     return Response<ResiliencyResources>(
+      data: _responseData,
+      headers: _response.headers,
+      isRedirect: _response.isRedirect,
+      requestOptions: _response.requestOptions,
+      redirects: _response.redirects,
+      statusCode: _response.statusCode,
+      statusMessage: _response.statusMessage,
+      extra: _response.extra,
+    );
+  }
+
+  /// get the submission
+  /// Get the MDQ submission. 
+  ///
+  /// Parameters:
+  /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
+  /// * [headers] - Can be used to add additional headers to the request
+  /// * [extras] - Can be used to add flags to the request
+  /// * [validateStatus] - A [ValidateStatus] callback that can be used to determine request success based on the HTTP status of the response
+  /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
+  /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
+  ///
+  /// Returns a [Future] containing a [Response] with a [Submission] as data
+  /// Throws [DioError] if API call or serialization fails
+  Future<Response<Submission>> getSubmission({ 
+    CancelToken? cancelToken,
+    Map<String, dynamic>? headers,
+    Map<String, dynamic>? extra,
+    ValidateStatus? validateStatus,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    final _path = r'/submission';
+    final _options = Options(
+      method: r'GET',
+      headers: <String, dynamic>{
+        ...?headers,
+      },
+      extra: <String, dynamic>{
+        'secure': <Map<String, String>>[],
+        ...?extra,
+      },
+      validateStatus: validateStatus,
+    );
+
+    final _response = await _dio.request<Object>(
+      _path,
+      options: _options,
+      cancelToken: cancelToken,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
+    );
+
+    Submission _responseData;
+
+    try {
+_responseData = deserialize<Submission, Submission>(_response.data!, 'Submission', growable: true);
+    } catch (error, stackTrace) {
+      throw DioError(
+        requestOptions: _response.requestOptions,
+        response: _response,
+        type: DioErrorType.other,
+        error: error,
+      )..stackTrace = stackTrace;
+    }
+
+    return Response<Submission>(
       data: _responseData,
       headers: _response.headers,
       isRedirect: _response.isRedirect,
@@ -138,12 +200,7 @@ class UserApi {
     Submissions _responseData;
 
     try {
-      const _responseType = FullType(Submissions);
-      _responseData = _serializers.deserialize(
-        _response.data!,
-        specifiedType: _responseType,
-      ) as Submissions;
-
+_responseData = deserialize<Submissions, Submissions>(_response.data!, 'Submissions', growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
@@ -210,12 +267,7 @@ class UserApi {
     Survey _responseData;
 
     try {
-      const _responseType = FullType(Survey);
-      _responseData = _serializers.deserialize(
-        _response.data!,
-        specifiedType: _responseType,
-      ) as Survey;
-
+_responseData = deserialize<Survey, Survey>(_response.data!, 'Survey', growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
@@ -226,6 +278,92 @@ class UserApi {
     }
 
     return Response<Survey>(
+      data: _responseData,
+      headers: _response.headers,
+      isRedirect: _response.isRedirect,
+      requestOptions: _response.requestOptions,
+      redirects: _response.redirects,
+      statusCode: _response.statusCode,
+      statusMessage: _response.statusMessage,
+      extra: _response.extra,
+    );
+  }
+
+  /// Submit a submission
+  /// Submit 
+  ///
+  /// Parameters:
+  /// * [submission] 
+  /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
+  /// * [headers] - Can be used to add additional headers to the request
+  /// * [extras] - Can be used to add flags to the request
+  /// * [validateStatus] - A [ValidateStatus] callback that can be used to determine request success based on the HTTP status of the response
+  /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
+  /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
+  ///
+  /// Returns a [Future] containing a [Response] with a [String] as data
+  /// Throws [DioError] if API call or serialization fails
+  Future<Response<String>> submitSubmission({ 
+    Submission? submission,
+    CancelToken? cancelToken,
+    Map<String, dynamic>? headers,
+    Map<String, dynamic>? extra,
+    ValidateStatus? validateStatus,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    final _path = r'/submission';
+    final _options = Options(
+      method: r'POST',
+      headers: <String, dynamic>{
+        ...?headers,
+      },
+      extra: <String, dynamic>{
+        'secure': <Map<String, String>>[],
+        ...?extra,
+      },
+      contentType: 'application/json',
+      validateStatus: validateStatus,
+    );
+
+    dynamic _bodyData;
+
+    try {
+_bodyData=jsonEncode(submission);
+    } catch(error, stackTrace) {
+      throw DioError(
+         requestOptions: _options.compose(
+          _dio.options,
+          _path,
+        ),
+        type: DioErrorType.other,
+        error: error,
+      )..stackTrace = stackTrace;
+    }
+
+    final _response = await _dio.request<Object>(
+      _path,
+      data: _bodyData,
+      options: _options,
+      cancelToken: cancelToken,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
+    );
+
+    String _responseData;
+
+    try {
+_responseData = deserialize<String, String>(_response.data!, 'String', growable: true);
+    } catch (error, stackTrace) {
+      throw DioError(
+        requestOptions: _response.requestOptions,
+        response: _response,
+        type: DioErrorType.other,
+        error: error,
+      )..stackTrace = stackTrace;
+    }
+
+    return Response<String>(
       data: _responseData,
       headers: _response.headers,
       isRedirect: _response.isRedirect,
@@ -277,9 +415,7 @@ class UserApi {
     dynamic _bodyData;
 
     try {
-      const _type = FullType(Submission);
-      _bodyData = submission == null ? null : _serializers.serialize(submission, specifiedType: _type);
-
+_bodyData=jsonEncode(submission);
     } catch(error, stackTrace) {
       throw DioError(
          requestOptions: _options.compose(
@@ -303,8 +439,7 @@ class UserApi {
     String _responseData;
 
     try {
-      _responseData = _response.data as String;
-
+_responseData = deserialize<String, String>(_response.data!, 'String', growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
@@ -366,9 +501,7 @@ class UserApi {
     dynamic _bodyData;
 
     try {
-      const _type = FullType(Submission);
-      _bodyData = submission == null ? null : _serializers.serialize(submission, specifiedType: _type);
-
+_bodyData=jsonEncode(submission);
     } catch(error, stackTrace) {
       throw DioError(
          requestOptions: _options.compose(
@@ -392,8 +525,7 @@ class UserApi {
     String _responseData;
 
     try {
-      _responseData = _response.data as String;
-
+_responseData = deserialize<String, String>(_response.data!, 'String', growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
@@ -455,9 +587,7 @@ class UserApi {
     dynamic _bodyData;
 
     try {
-      const _type = FullType(VisitedResiliencyResources);
-      _bodyData = visitedResiliencyResources == null ? null : _serializers.serialize(visitedResiliencyResources, specifiedType: _type);
-
+_bodyData=jsonEncode(visitedResiliencyResources);
     } catch(error, stackTrace) {
       throw DioError(
          requestOptions: _options.compose(
@@ -481,8 +611,7 @@ class UserApi {
     String _responseData;
 
     try {
-      _responseData = _response.data as String;
-
+_responseData = deserialize<String, String>(_response.data!, 'String', growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,

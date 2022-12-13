@@ -3,8 +3,8 @@ import 'package:moralpainapi/moralpainapi.dart';
 
 // tests for ResiliencyResources
 void main() {
-  final instance = ResiliencyResourcesBuilder();
-  // TODO add properties to the builder and call build()
+  final ResiliencyResources? instance = /* ResiliencyResources(...) */ null;
+  // TODO add properties to the entity
 
   group(ResiliencyResources, () {
     // String version
@@ -12,7 +12,7 @@ void main() {
       // TODO
     });
 
-    // BuiltList<ResiliencyResource> resources
+    // List<ResiliencyResource> resources
     test('to test the property `resources`', () async {
       // TODO
     });

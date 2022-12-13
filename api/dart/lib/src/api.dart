@@ -3,29 +3,23 @@
 //
 
 import 'package:dio/dio.dart';
-import 'package:built_value/serializer.dart';
-import 'package:moralpainapi/src/serializers.dart';
 import 'package:moralpainapi/src/auth/api_key_auth.dart';
 import 'package:moralpainapi/src/auth/basic_auth.dart';
 import 'package:moralpainapi/src/auth/bearer_auth.dart';
 import 'package:moralpainapi/src/auth/oauth.dart';
 import 'package:moralpainapi/src/api/admin_api.dart';
 import 'package:moralpainapi/src/api/cors_api.dart';
-import 'package:moralpainapi/src/api/submission_api.dart';
 import 'package:moralpainapi/src/api/user_api.dart';
 
 class Moralpainapi {
   static const String basePath = r'http://localhost';
 
   final Dio dio;
-  final Serializers serializers;
-
   Moralpainapi({
     Dio? dio,
-    Serializers? serializers,
     String? basePathOverride,
     List<Interceptor>? interceptors,
-  })  : this.serializers = serializers ?? standardSerializers,
+  })  : 
         this.dio = dio ??
             Dio(BaseOptions(
               baseUrl: basePathOverride ?? basePath,
@@ -71,24 +65,18 @@ class Moralpainapi {
   /// Get AdminApi instance, base route and serializer can be overridden by a given but be careful,
   /// by doing that all interceptors will not be executed
   AdminApi getAdminApi() {
-    return AdminApi(dio, serializers);
+    return AdminApi(dio);
   }
 
   /// Get CORSApi instance, base route and serializer can be overridden by a given but be careful,
   /// by doing that all interceptors will not be executed
   CORSApi getCORSApi() {
-    return CORSApi(dio, serializers);
-  }
-
-  /// Get SubmissionApi instance, base route and serializer can be overridden by a given but be careful,
-  /// by doing that all interceptors will not be executed
-  SubmissionApi getSubmissionApi() {
-    return SubmissionApi(dio, serializers);
+    return CORSApi(dio);
   }
 
   /// Get UserApi instance, base route and serializer can be overridden by a given but be careful,
   /// by doing that all interceptors will not be executed
   UserApi getUserApi() {
-    return UserApi(dio, serializers);
+    return UserApi(dio);
   }
 }

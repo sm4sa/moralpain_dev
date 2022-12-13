@@ -62,6 +62,34 @@ public class CorsApiTest {
         // TODO: test validations
     }
     /**
+     * CORS submission support
+     *
+     * Enable CORS by returning correct headers 
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void optionsSubmissionTest() throws ApiException {
+        api.optionsSubmission();
+
+        // TODO: test validations
+    }
+    /**
+     * CORS submission support
+     *
+     * Enable CORS by returning correct headers 
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void optionsSubmissionTypeDBTest() throws ApiException {
+        api.optionsSubmissionTypeDB();
+
+        // TODO: test validations
+    }
+    /**
      * CORS survey support
      *
      * Enable CORS by returning correct headers 

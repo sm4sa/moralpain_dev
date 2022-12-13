@@ -4,7 +4,7 @@ MoralDistress API
 
 - API version: 1.0.0
 
-- Build date: 2022-08-06T18:59:24.183129Z[Etc/UTC]
+- Build date: 2022-12-12T00:57:02.835963-05:00[America/New_York]
 
 MoralDistress API.
 
@@ -86,14 +86,16 @@ public class AdminApiExample {
         defaultClient.setBasePath("http://localhost");
         
         AdminApi apiInstance = new AdminApi(defaultClient);
-        String operation = "average"; // String | The analytic operation to perform on the data.
         Integer starttime = 1640995200; // Integer | Minimum possible timestamp of a record in UTC seconds since Unix epoch.
         Integer endtime = 1647907200; // Integer | Maximum possible timestamp of a record in UTC seconds since Unix epoch.
+        Integer minscore = 1; // Integer | Minimum possible score of a record.
+        Integer maxscore = 5; // Integer | Maximum possible score of a record.
+        String uuid = "f2f2011c8d2547849dfce99ae4b75797"; // String | If this parameter is specified, all other parameters are ignored and only the submission with the given UUID is fetched. If no such submission exists, an empty list is fetched. 
         try {
-            AnalyticsResult result = apiInstance.getAnalytics(operation, starttime, endtime);
+            Submissions result = apiInstance.getAdminSubmissions(starttime, endtime, minscore, maxscore, uuid);
             System.out.println(result);
         } catch (ApiException e) {
-            System.err.println("Exception when calling AdminApi#getAnalytics");
+            System.err.println("Exception when calling AdminApi#getAdminSubmissions");
             System.err.println("Status code: " + e.getCode());
             System.err.println("Reason: " + e.getResponseBody());
             System.err.println("Response headers: " + e.getResponseHeaders());
@@ -110,14 +112,20 @@ All URIs are relative to *http://localhost*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
+*AdminApi* | [**getAdminSubmissions**](docs/AdminApi.md#getAdminSubmissions) | **GET** /admin/submissions | Get survey results
 *AdminApi* | [**getAnalytics**](docs/AdminApi.md#getAnalytics) | **GET** /admin/analytics | Get data analysis
-*AdminApi* | [**getSubmissions**](docs/AdminApi.md#getSubmissions) | **GET** /admin/submissions | Get survey results
 *CorsApi* | [**optionsAdminAnalytics**](docs/CorsApi.md#optionsAdminAnalytics) | **OPTIONS** /admin/analytics | CORS admin analytics support
 *CorsApi* | [**optionsAdminSubmissions**](docs/CorsApi.md#optionsAdminSubmissions) | **OPTIONS** /admin/submissions | CORS admin submissions support
+*CorsApi* | [**optionsSubmission**](docs/CorsApi.md#optionsSubmission) | **OPTIONS** /submission | CORS submission support
+*CorsApi* | [**optionsSubmissionTypeDB**](docs/CorsApi.md#optionsSubmissionTypeDB) | **OPTIONS** /submissions | CORS submission support
 *CorsApi* | [**optionsSurvey**](docs/CorsApi.md#optionsSurvey) | **OPTIONS** /survey | CORS survey support
 *CorsApi* | [**optionsVisitedResiliencyResources**](docs/CorsApi.md#optionsVisitedResiliencyResources) | **OPTIONS** /resiliency | CORS resiliency resources support
 *UserApi* | [**getResiliencyResources**](docs/UserApi.md#getResiliencyResources) | **GET** /resiliency | Get resiliency resources
+*UserApi* | [**getSubmission**](docs/UserApi.md#getSubmission) | **GET** /submission | get the submission
+*UserApi* | [**getSubmissions**](docs/UserApi.md#getSubmissions) | **GET** /submissions | get the submissions
 *UserApi* | [**getSurvey**](docs/UserApi.md#getSurvey) | **GET** /survey | Get the MDQ
+*UserApi* | [**submitSubmission**](docs/UserApi.md#submitSubmission) | **POST** /submission | Submit a submission
+*UserApi* | [**submitSubmissionTypeDB**](docs/UserApi.md#submitSubmissionTypeDB) | **POST** /submissions | Submit a submission
 *UserApi* | [**submitSurvey**](docs/UserApi.md#submitSurvey) | **POST** /survey | Submit a completed MDQ
 *UserApi* | [**submitVisitedResiliencyResources**](docs/UserApi.md#submitVisitedResiliencyResources) | **POST** /resiliency | Submit visited resiliency resources
 

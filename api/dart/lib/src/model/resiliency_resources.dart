@@ -3,126 +3,69 @@
 //
 
 // ignore_for_file: unused_element
-import 'package:built_collection/built_collection.dart';
 import 'package:moralpainapi/src/model/resiliency_resource.dart';
-import 'package:built_value/built_value.dart';
-import 'package:built_value/serializer.dart';
+import 'package:json_annotation/json_annotation.dart';
 
 part 'resiliency_resources.g.dart';
 
-/// ResiliencyResources
-///
-/// Properties:
-/// * [version] 
-/// * [resources] 
-@BuiltValue()
-abstract class ResiliencyResources implements Built<ResiliencyResources, ResiliencyResourcesBuilder> {
-  @BuiltValueField(wireName: r'version')
-  String? get version;
 
-  @BuiltValueField(wireName: r'resources')
-  BuiltList<ResiliencyResource>? get resources;
+@JsonSerializable(
+  checked: true,
+  createToJson: true,
+  disallowUnrecognizedKeys: false,
+  explicitToJson: true,
+)
+class ResiliencyResources {
+  /// Returns a new [ResiliencyResources] instance.
+  ResiliencyResources({
 
-  ResiliencyResources._();
+     this.version,
 
-  factory ResiliencyResources([void updates(ResiliencyResourcesBuilder b)]) = _$ResiliencyResources;
+     this.resources,
+  });
 
-  @BuiltValueHook(initializeBuilder: true)
-  static void _defaults(ResiliencyResourcesBuilder b) => b;
+  @JsonKey(
+    
+    name: r'version',
+    required: false,
+    includeIfNull: false
+  )
 
-  @BuiltValueSerializer(custom: true)
-  static Serializer<ResiliencyResources> get serializer => _$ResiliencyResourcesSerializer();
-}
 
-class _$ResiliencyResourcesSerializer implements PrimitiveSerializer<ResiliencyResources> {
-  @override
-  final Iterable<Type> types = const [ResiliencyResources, _$ResiliencyResources];
+  final String? version;
 
-  @override
-  final String wireName = r'ResiliencyResources';
 
-  Iterable<Object?> _serializeProperties(
-    Serializers serializers,
-    ResiliencyResources object, {
-    FullType specifiedType = FullType.unspecified,
-  }) sync* {
-    if (object.version != null) {
-      yield r'version';
-      yield serializers.serialize(
-        object.version,
-        specifiedType: const FullType(String),
-      );
-    }
-    if (object.resources != null) {
-      yield r'resources';
-      yield serializers.serialize(
-        object.resources,
-        specifiedType: const FullType(BuiltList, [FullType(ResiliencyResource)]),
-      );
-    }
-  }
+
+  @JsonKey(
+    
+    name: r'resources',
+    required: false,
+    includeIfNull: false
+  )
+
+
+  final List<ResiliencyResource>? resources;
+
+
 
   @override
-  Object serialize(
-    Serializers serializers,
-    ResiliencyResources object, {
-    FullType specifiedType = FullType.unspecified,
-  }) {
-    return _serializeProperties(serializers, object, specifiedType: specifiedType).toList();
-  }
-
-  void _deserializeProperties(
-    Serializers serializers,
-    Object serialized, {
-    FullType specifiedType = FullType.unspecified,
-    required List<Object?> serializedList,
-    required ResiliencyResourcesBuilder result,
-    required List<Object?> unhandled,
-  }) {
-    for (var i = 0; i < serializedList.length; i += 2) {
-      final key = serializedList[i] as String;
-      final value = serializedList[i + 1];
-      switch (key) {
-        case r'version':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String;
-          result.version = valueDes;
-          break;
-        case r'resources':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(BuiltList, [FullType(ResiliencyResource)]),
-          ) as BuiltList<ResiliencyResource>;
-          result.resources.replace(valueDes);
-          break;
-        default:
-          unhandled.add(key);
-          unhandled.add(value);
-          break;
-      }
-    }
-  }
+  bool operator ==(Object other) => identical(this, other) || other is ResiliencyResources &&
+     other.version == version &&
+     other.resources == resources;
 
   @override
-  ResiliencyResources deserialize(
-    Serializers serializers,
-    Object serialized, {
-    FullType specifiedType = FullType.unspecified,
-  }) {
-    final result = ResiliencyResourcesBuilder();
-    final serializedList = (serialized as Iterable<Object?>).toList();
-    final unhandled = <Object?>[];
-    _deserializeProperties(
-      serializers,
-      serialized,
-      specifiedType: specifiedType,
-      serializedList: serializedList,
-      unhandled: unhandled,
-      result: result,
-    );
-    return result.build();
+  int get hashCode =>
+    version.hashCode +
+    resources.hashCode;
+
+  factory ResiliencyResources.fromJson(Map<String, dynamic> json) => _$ResiliencyResourcesFromJson(json);
+
+  Map<String, dynamic> toJson() => _$ResiliencyResourcesToJson(this);
+
+  @override
+  String toString() {
+    return toJson().toString();
   }
+
 }
 

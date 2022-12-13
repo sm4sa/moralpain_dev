@@ -16,6 +16,15 @@ void main() {
       // TODO
     });
 
+    // get the submission
+    //
+    // Get the MDQ submission. 
+    //
+    //Future<Submission> getSubmission() async
+    test('test getSubmission', () async {
+      // TODO
+    });
+
     // get the submissions
     //
     // Get the MDQ submissions using TypeDB. 
@@ -31,6 +40,15 @@ void main() {
     //
     //Future<Survey> getSurvey() async
     test('test getSurvey', () async {
+      // TODO
+    });
+
+    // Submit a submission
+    //
+    // Submit 
+    //
+    //Future<String> submitSubmission({ Submission submission }) async
+    test('test submitSubmission', () async {
       // TODO
     });
 

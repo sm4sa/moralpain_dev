@@ -35,7 +35,7 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
   VisitedResiliencyResources.JSON_PROPERTY_TIMESTAMP
 })
 @JsonTypeName("visitedResiliencyResources")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-08-06T18:59:24.183129Z[Etc/UTC]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-12-12T00:57:02.835963-05:00[America/New_York]")
 public class VisitedResiliencyResources {
   public static final String JSON_PROPERTY_SELECTIONS = "selections";
   private List<String> selections = null;
@@ -43,7 +43,7 @@ public class VisitedResiliencyResources {
   public static final String JSON_PROPERTY_TIMESTAMP = "timestamp";
   private Integer timestamp;
 
-  public VisitedResiliencyResources() { 
+  public VisitedResiliencyResources() {
   }
 
   public VisitedResiliencyResources selections(List<String> selections) {

@@ -3,126 +3,69 @@
 //
 
 // ignore_for_file: unused_element
-import 'package:built_collection/built_collection.dart';
 import 'package:moralpainapi/src/model/survey_section.dart';
-import 'package:built_value/built_value.dart';
-import 'package:built_value/serializer.dart';
+import 'package:json_annotation/json_annotation.dart';
 
 part 'survey.g.dart';
 
-/// Survey
-///
-/// Properties:
-/// * [version] 
-/// * [sections] 
-@BuiltValue()
-abstract class Survey implements Built<Survey, SurveyBuilder> {
-  @BuiltValueField(wireName: r'version')
-  String? get version;
 
-  @BuiltValueField(wireName: r'sections')
-  BuiltList<SurveySection>? get sections;
+@JsonSerializable(
+  checked: true,
+  createToJson: true,
+  disallowUnrecognizedKeys: false,
+  explicitToJson: true,
+)
+class Survey {
+  /// Returns a new [Survey] instance.
+  Survey({
 
-  Survey._();
+     this.version,
 
-  factory Survey([void updates(SurveyBuilder b)]) = _$Survey;
+     this.sections,
+  });
 
-  @BuiltValueHook(initializeBuilder: true)
-  static void _defaults(SurveyBuilder b) => b;
+  @JsonKey(
+    
+    name: r'version',
+    required: false,
+    includeIfNull: false
+  )
 
-  @BuiltValueSerializer(custom: true)
-  static Serializer<Survey> get serializer => _$SurveySerializer();
-}
 
-class _$SurveySerializer implements PrimitiveSerializer<Survey> {
-  @override
-  final Iterable<Type> types = const [Survey, _$Survey];
+  final String? version;
 
-  @override
-  final String wireName = r'Survey';
 
-  Iterable<Object?> _serializeProperties(
-    Serializers serializers,
-    Survey object, {
-    FullType specifiedType = FullType.unspecified,
-  }) sync* {
-    if (object.version != null) {
-      yield r'version';
-      yield serializers.serialize(
-        object.version,
-        specifiedType: const FullType(String),
-      );
-    }
-    if (object.sections != null) {
-      yield r'sections';
-      yield serializers.serialize(
-        object.sections,
-        specifiedType: const FullType(BuiltList, [FullType(SurveySection)]),
-      );
-    }
-  }
+
+  @JsonKey(
+    
+    name: r'sections',
+    required: false,
+    includeIfNull: false
+  )
+
+
+  final List<SurveySection>? sections;
+
+
 
   @override
-  Object serialize(
-    Serializers serializers,
-    Survey object, {
-    FullType specifiedType = FullType.unspecified,
-  }) {
-    return _serializeProperties(serializers, object, specifiedType: specifiedType).toList();
-  }
-
-  void _deserializeProperties(
-    Serializers serializers,
-    Object serialized, {
-    FullType specifiedType = FullType.unspecified,
-    required List<Object?> serializedList,
-    required SurveyBuilder result,
-    required List<Object?> unhandled,
-  }) {
-    for (var i = 0; i < serializedList.length; i += 2) {
-      final key = serializedList[i] as String;
-      final value = serializedList[i + 1];
-      switch (key) {
-        case r'version':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String;
-          result.version = valueDes;
-          break;
-        case r'sections':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(BuiltList, [FullType(SurveySection)]),
-          ) as BuiltList<SurveySection>;
-          result.sections.replace(valueDes);
-          break;
-        default:
-          unhandled.add(key);
-          unhandled.add(value);
-          break;
-      }
-    }
-  }
+  bool operator ==(Object other) => identical(this, other) || other is Survey &&
+     other.version == version &&
+     other.sections == sections;
 
   @override
-  Survey deserialize(
-    Serializers serializers,
-    Object serialized, {
-    FullType specifiedType = FullType.unspecified,
-  }) {
-    final result = SurveyBuilder();
-    final serializedList = (serialized as Iterable<Object?>).toList();
-    final unhandled = <Object?>[];
-    _deserializeProperties(
-      serializers,
-      serialized,
-      specifiedType: specifiedType,
-      serializedList: serializedList,
-      unhandled: unhandled,
-      result: result,
-    );
-    return result.build();
+  int get hashCode =>
+    version.hashCode +
+    sections.hashCode;
+
+  factory Survey.fromJson(Map<String, dynamic> json) => _$SurveyFromJson(json);
+
+  Map<String, dynamic> toJson() => _$SurveyToJson(this);
+
+  @override
+  String toString() {
+    return toJson().toString();
   }
+
 }
 

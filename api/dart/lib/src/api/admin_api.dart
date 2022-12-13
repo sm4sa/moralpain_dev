@@ -4,10 +4,11 @@
 
 import 'dart:async';
 
-import 'package:built_value/serializer.dart';
+// ignore: unused_import
+import 'dart:convert';
+import 'package:moralpainapi/src/deserialize.dart';
 import 'package:dio/dio.dart';
 
-import 'package:moralpainapi/src/api_util.dart';
 import 'package:moralpainapi/src/model/analytics_result.dart';
 import 'package:moralpainapi/src/model/submissions.dart';
 
@@ -15,9 +16,7 @@ class AdminApi {
 
   final Dio _dio;
 
-  final Serializers _serializers;
-
-  const AdminApi(this._dio, this._serializers);
+  const AdminApi(this._dio);
 
   /// Get survey results
   /// Fetch from the database all of the records that match the query parameters. 
@@ -64,11 +63,11 @@ class AdminApi {
     );
 
     final _queryParameters = <String, dynamic>{
-      if (starttime != null) r'starttime': encodeQueryParameter(_serializers, starttime, const FullType(int)),
-      if (endtime != null) r'endtime': encodeQueryParameter(_serializers, endtime, const FullType(int)),
-      if (minscore != null) r'minscore': encodeQueryParameter(_serializers, minscore, const FullType(int)),
-      if (maxscore != null) r'maxscore': encodeQueryParameter(_serializers, maxscore, const FullType(int)),
-      if (uuid != null) r'uuid': encodeQueryParameter(_serializers, uuid, const FullType(String)),
+      if (starttime != null) r'starttime': starttime,
+      if (endtime != null) r'endtime': endtime,
+      if (minscore != null) r'minscore': minscore,
+      if (maxscore != null) r'maxscore': maxscore,
+      if (uuid != null) r'uuid': uuid,
     };
 
     final _response = await _dio.request<Object>(
@@ -83,12 +82,7 @@ class AdminApi {
     Submissions _responseData;
 
     try {
-      const _responseType = FullType(Submissions);
-      _responseData = _serializers.deserialize(
-        _response.data!,
-        specifiedType: _responseType,
-      ) as Submissions;
-
+_responseData = deserialize<Submissions, Submissions>(_response.data!, 'Submissions', growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,
@@ -151,9 +145,9 @@ class AdminApi {
     );
 
     final _queryParameters = <String, dynamic>{
-      if (starttime != null) r'starttime': encodeQueryParameter(_serializers, starttime, const FullType(int)),
-      if (endtime != null) r'endtime': encodeQueryParameter(_serializers, endtime, const FullType(int)),
-      r'operation': encodeQueryParameter(_serializers, operation, const FullType(String)),
+      if (starttime != null) r'starttime': starttime,
+      if (endtime != null) r'endtime': endtime,
+      r'operation': operation,
     };
 
     final _response = await _dio.request<Object>(
@@ -168,12 +162,7 @@ class AdminApi {
     AnalyticsResult _responseData;
 
     try {
-      const _responseType = FullType(AnalyticsResult);
-      _responseData = _serializers.deserialize(
-        _response.data!,
-        specifiedType: _responseType,
-      ) as AnalyticsResult;
-
+_responseData = deserialize<AnalyticsResult, AnalyticsResult>(_response.data!, 'AnalyticsResult', growable: true);
     } catch (error, stackTrace) {
       throw DioError(
         requestOptions: _response.requestOptions,

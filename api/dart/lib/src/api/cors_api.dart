@@ -4,7 +4,9 @@
 
 import 'dart:async';
 
-import 'package:built_value/serializer.dart';
+// ignore: unused_import
+import 'dart:convert';
+import 'package:moralpainapi/src/deserialize.dart';
 import 'package:dio/dio.dart';
 
 
@@ -12,9 +14,7 @@ class CORSApi {
 
   final Dio _dio;
 
-  final Serializers _serializers;
-
-  const CORSApi(this._dio, this._serializers);
+  const CORSApi(this._dio);
 
   /// CORS admin analytics support
   /// Enable CORS by returning correct headers 

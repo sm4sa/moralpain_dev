@@ -36,6 +36,25 @@ public class AdminApiTest {
     private final AdminApi api = new AdminApi();
 
     /**
+     * Get survey results
+     *
+     * Fetch from the database all of the records that match the query parameters. 
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void getAdminSubmissionsTest() throws ApiException {
+        Integer starttime = null;
+        Integer endtime = null;
+        Integer minscore = null;
+        Integer maxscore = null;
+        String uuid = null;
+        Submissions response = api.getAdminSubmissions(starttime, endtime, minscore, maxscore, uuid);
+
+        // TODO: test validations
+    }
+    /**
      * Get data analysis
      *
      * Perform an analysis on the records in the database that match the query paramters. 
@@ -49,25 +68,6 @@ public class AdminApiTest {
         Integer starttime = null;
         Integer endtime = null;
         AnalyticsResult response = api.getAnalytics(operation, starttime, endtime);
-
-        // TODO: test validations
-    }
-    /**
-     * Get survey results
-     *
-     * Fetch from the database all of the records that match the query parameters. 
-     *
-     * @throws ApiException
-     *          if the Api call fails
-     */
-    @Test
-    public void getSubmissionsTest() throws ApiException {
-        Integer starttime = null;
-        Integer endtime = null;
-        Integer minscore = null;
-        Integer maxscore = null;
-        String uuid = null;
-        Submissions response = api.getSubmissions(starttime, endtime, minscore, maxscore, uuid);
 
         // TODO: test validations
     }

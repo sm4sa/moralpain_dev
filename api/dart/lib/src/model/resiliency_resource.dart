@@ -4,178 +4,116 @@
 
 // ignore_for_file: unused_element
 import 'package:moralpainapi/src/model/icon.dart';
-import 'package:built_value/built_value.dart';
-import 'package:built_value/serializer.dart';
+import 'package:json_annotation/json_annotation.dart';
 
 part 'resiliency_resource.g.dart';
 
-/// ResiliencyResource
-///
-/// Properties:
-/// * [resourceId] 
-/// * [title] 
-/// * [description] 
-/// * [url] 
-/// * [icon] 
-@BuiltValue()
-abstract class ResiliencyResource implements Built<ResiliencyResource, ResiliencyResourceBuilder> {
-  @BuiltValueField(wireName: r'resourceId')
-  String? get resourceId;
 
-  @BuiltValueField(wireName: r'title')
-  String? get title;
+@JsonSerializable(
+  checked: true,
+  createToJson: true,
+  disallowUnrecognizedKeys: false,
+  explicitToJson: true,
+)
+class ResiliencyResource {
+  /// Returns a new [ResiliencyResource] instance.
+  ResiliencyResource({
 
-  @BuiltValueField(wireName: r'description')
-  String? get description;
+     this.resourceId,
 
-  @BuiltValueField(wireName: r'url')
-  String? get url;
+     this.title,
 
-  @BuiltValueField(wireName: r'icon')
-  Icon? get icon;
+     this.description,
 
-  ResiliencyResource._();
+     this.url,
 
-  factory ResiliencyResource([void updates(ResiliencyResourceBuilder b)]) = _$ResiliencyResource;
+     this.icon,
+  });
 
-  @BuiltValueHook(initializeBuilder: true)
-  static void _defaults(ResiliencyResourceBuilder b) => b;
+  @JsonKey(
+    
+    name: r'resourceId',
+    required: false,
+    includeIfNull: false
+  )
 
-  @BuiltValueSerializer(custom: true)
-  static Serializer<ResiliencyResource> get serializer => _$ResiliencyResourceSerializer();
-}
 
-class _$ResiliencyResourceSerializer implements PrimitiveSerializer<ResiliencyResource> {
-  @override
-  final Iterable<Type> types = const [ResiliencyResource, _$ResiliencyResource];
+  final String? resourceId;
 
-  @override
-  final String wireName = r'ResiliencyResource';
 
-  Iterable<Object?> _serializeProperties(
-    Serializers serializers,
-    ResiliencyResource object, {
-    FullType specifiedType = FullType.unspecified,
-  }) sync* {
-    if (object.resourceId != null) {
-      yield r'resourceId';
-      yield serializers.serialize(
-        object.resourceId,
-        specifiedType: const FullType(String),
-      );
-    }
-    if (object.title != null) {
-      yield r'title';
-      yield serializers.serialize(
-        object.title,
-        specifiedType: const FullType(String),
-      );
-    }
-    if (object.description != null) {
-      yield r'description';
-      yield serializers.serialize(
-        object.description,
-        specifiedType: const FullType(String),
-      );
-    }
-    if (object.url != null) {
-      yield r'url';
-      yield serializers.serialize(
-        object.url,
-        specifiedType: const FullType(String),
-      );
-    }
-    if (object.icon != null) {
-      yield r'icon';
-      yield serializers.serialize(
-        object.icon,
-        specifiedType: const FullType(Icon),
-      );
-    }
-  }
+
+  @JsonKey(
+    
+    name: r'title',
+    required: false,
+    includeIfNull: false
+  )
+
+
+  final String? title;
+
+
+
+  @JsonKey(
+    
+    name: r'description',
+    required: false,
+    includeIfNull: false
+  )
+
+
+  final String? description;
+
+
+
+  @JsonKey(
+    
+    name: r'url',
+    required: false,
+    includeIfNull: false
+  )
+
+
+  final String? url;
+
+
+
+  @JsonKey(
+    
+    name: r'icon',
+    required: false,
+    includeIfNull: false
+  )
+
+
+  final Icon? icon;
+
+
 
   @override
-  Object serialize(
-    Serializers serializers,
-    ResiliencyResource object, {
-    FullType specifiedType = FullType.unspecified,
-  }) {
-    return _serializeProperties(serializers, object, specifiedType: specifiedType).toList();
-  }
-
-  void _deserializeProperties(
-    Serializers serializers,
-    Object serialized, {
-    FullType specifiedType = FullType.unspecified,
-    required List<Object?> serializedList,
-    required ResiliencyResourceBuilder result,
-    required List<Object?> unhandled,
-  }) {
-    for (var i = 0; i < serializedList.length; i += 2) {
-      final key = serializedList[i] as String;
-      final value = serializedList[i + 1];
-      switch (key) {
-        case r'resourceId':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String;
-          result.resourceId = valueDes;
-          break;
-        case r'title':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String;
-          result.title = valueDes;
-          break;
-        case r'description':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String;
-          result.description = valueDes;
-          break;
-        case r'url':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String;
-          result.url = valueDes;
-          break;
-        case r'icon':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(Icon),
-          ) as Icon;
-          result.icon.replace(valueDes);
-          break;
-        default:
-          unhandled.add(key);
-          unhandled.add(value);
-          break;
-      }
-    }
-  }
+  bool operator ==(Object other) => identical(this, other) || other is ResiliencyResource &&
+     other.resourceId == resourceId &&
+     other.title == title &&
+     other.description == description &&
+     other.url == url &&
+     other.icon == icon;
 
   @override
-  ResiliencyResource deserialize(
-    Serializers serializers,
-    Object serialized, {
-    FullType specifiedType = FullType.unspecified,
-  }) {
-    final result = ResiliencyResourceBuilder();
-    final serializedList = (serialized as Iterable<Object?>).toList();
-    final unhandled = <Object?>[];
-    _deserializeProperties(
-      serializers,
-      serialized,
-      specifiedType: specifiedType,
-      serializedList: serializedList,
-      unhandled: unhandled,
-      result: result,
-    );
-    return result.build();
+  int get hashCode =>
+    resourceId.hashCode +
+    title.hashCode +
+    description.hashCode +
+    url.hashCode +
+    icon.hashCode;
+
+  factory ResiliencyResource.fromJson(Map<String, dynamic> json) => _$ResiliencyResourceFromJson(json);
+
+  Map<String, dynamic> toJson() => _$ResiliencyResourceToJson(this);
+
+  @override
+  String toString() {
+    return toJson().toString();
   }
+
 }
 

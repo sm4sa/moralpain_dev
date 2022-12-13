@@ -3,8 +3,8 @@ import 'package:moralpainapi/moralpainapi.dart';
 
 // tests for Submission
 void main() {
-  final instance = SubmissionBuilder();
-  // TODO add properties to the builder and call build()
+  final Submission? instance = /* Submission(...) */ null;
+  // TODO add properties to the entity
 
   group(Submission, () {
     // int score
@@ -12,7 +12,7 @@ void main() {
       // TODO
     });
 
-    // BuiltList<String> selections
+    // List<String> selections
     test('to test the property `selections`', () async {
       // TODO
     });
