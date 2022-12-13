@@ -171,7 +171,12 @@ Resources:
         Variables:
           DATABASE_ADDRESS: !Ref dbAddress
           DATABASE_NAME: test
-          JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1 
+          JAVA_TOOL_OPTIONS: >
+            -XX:+TieredCompilation
+            -XX:TieredStopAtLevel=1
+            -Dio.netty.tryReflectionSetAccessible=false
+
+
 
 Outputs:
   APIUri:

@@ -53,7 +53,6 @@ paths:
               method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Content-Sha256,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'"
               method.response.header.Access-Control-Allow-Methods: '''*'''
               method.response.header.Access-Control-Allow-Origin: '''*'''
-      x-accepts: application/json
     options:
       description: |
         Enable CORS by returning correct headers
@@ -98,7 +97,6 @@ paths:
             responseTemplates:
               application/json: |
                 {}
-      x-accepts: application/json
     post:
       description: |
         Submit a completed Moral Distress Questionnaire and Moral Distress Score to the database.
@@ -147,8 +145,6 @@ paths:
               method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Content-Sha256,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'"
               method.response.header.Access-Control-Allow-Methods: '''*'''
               method.response.header.Access-Control-Allow-Origin: '''*'''
-      x-content-type: application/json
-      x-accepts: text/plain
   /resiliency:
     get:
       description: |
@@ -193,7 +189,6 @@ paths:
               method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Content-Sha256,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'"
               method.response.header.Access-Control-Allow-Methods: '''*'''
               method.response.header.Access-Control-Allow-Origin: '''*'''
-      x-accepts: application/json
     options:
       description: |
         Enable CORS by returning correct headers
@@ -238,7 +233,6 @@ paths:
             responseTemplates:
               application/json: |
                 {}
-      x-accepts: application/json
     post:
       description: |
         Submit the list of resources visited by this user to the database.
@@ -287,8 +281,6 @@ paths:
               method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Content-Sha256,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'"
               method.response.header.Access-Control-Allow-Methods: '''*'''
               method.response.header.Access-Control-Allow-Origin: '''*'''
-      x-content-type: application/json
-      x-accepts: text/plain
   /admin/submissions:
     get:
       description: |
@@ -386,7 +378,6 @@ paths:
               method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Content-Sha256,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'"
               method.response.header.Access-Control-Allow-Methods: '''*'''
               method.response.header.Access-Control-Allow-Origin: '''*'''
-      x-accepts: application/json
     options:
       description: |
         Enable CORS by returning correct headers
@@ -431,7 +422,6 @@ paths:
             responseTemplates:
               application/json: |
                 {}
-      x-accepts: application/json
   /admin/analytics:
     get:
       description: |
@@ -539,7 +529,6 @@ paths:
               method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Content-Sha256,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'"
               method.response.header.Access-Control-Allow-Methods: '''*'''
               method.response.header.Access-Control-Allow-Origin: '''*'''
-      x-accepts: application/json
     options:
       description: |
         Enable CORS by returning correct headers
@@ -584,7 +573,6 @@ paths:
             responseTemplates:
               application/json: |
                 {}
-      x-accepts: application/json
   /submission:
     get:
       description: |
@@ -628,7 +616,6 @@ paths:
             responseParameters:
               method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key'"
               method.response.header.Access-Control-Allow-Methods: '''*'''
-      x-accepts: application/json
     options:
       description: |
         Enable CORS by returning correct headers
@@ -673,7 +660,6 @@ paths:
             responseTemplates:
               application/json: |
                 {}
-      x-accepts: application/json
     post:
       description: |
         Submit
@@ -722,8 +708,6 @@ paths:
               method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key'"
               method.response.header.Access-Control-Allow-Methods: '''*'''
               method.response.header.Access-Control-Allow-Origin: '''*'''
-      x-content-type: application/json
-      x-accepts: text/plain
   /submissions:
     get:
       description: |
@@ -766,7 +750,6 @@ paths:
             responseParameters:
               method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key'"
               method.response.header.Access-Control-Allow-Methods: '''*'''
-      x-accepts: application/json
     options:
       description: |
         Enable CORS by returning correct headers
@@ -811,7 +794,6 @@ paths:
             responseTemplates:
               application/json: |
                 {}
-      x-accepts: application/json
     post:
       description: |
         Submit with TypeDB
@@ -859,8 +841,6 @@ paths:
               method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key'"
               method.response.header.Access-Control-Allow-Methods: '''*'''
               method.response.header.Access-Control-Allow-Origin: '''*'''
-      x-content-type: application/json
-      x-accepts: text/plain
 components:
   schemas:
     survey:

@@ -84,7 +84,6 @@
         <dependency>
             <groupId>com.vaticle.typedb</groupId>
             <artifactId>typedb-common</artifactId>
-<!--            <scope>test</scope>-->
         </dependency>
 
         <!-- aws sdks. -->

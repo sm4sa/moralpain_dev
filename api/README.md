@@ -21,7 +21,10 @@ If you modify the OpenAPI template, you will likely need to update the API clien
 To run OpenAPI Generator for the Dart client, switch to the `dart` directory and use the following commands:
 
 ```bash
-java -jar ../../openapi-generator-cli.jar generate -i ../../infrastructure/sam/api.yaml --generate-alias-as-model --additional-properties pubName=moralpainapi -g dart-dio
+openapi-generator-cli generate \
+  -i ../../infrastructure/sam/api.yaml  \
+  --generate-alias-as-model \
+  --additional-properties pubName=moralpainapi,serializationLibrary=json_serializable -g dart-dio
 flutter pub run build_runner build
 ```
 

@@ -116,7 +116,7 @@ public class TypeDBPost implements RequestHandler<APIGatewayProxyRequestEvent, A
             return response.withStatusCode(400);
         }
 
-        return response.withStatusCode(200).withBody(" OK");
+        return response.withStatusCode(200);
     }
 
     private boolean isValidEvent(APIGatewayProxyRequestEvent event) {
