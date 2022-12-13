@@ -516,7 +516,7 @@ paths:
       description: >
         Get the MDQ submission.
       tags:
-        - Submission
+        - User
       responses:
         "200":
           description: |-
@@ -555,7 +555,7 @@ paths:
       description: >
         Submit
       tags:
-        - Submission
+        - User
       requestBody:
         content:
           application/json:
@@ -706,7 +706,7 @@ paths:
         httpMethod: post
         type: aws_proxy
         uri: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:PostSubmissions/invocations
-        # credentials: arn:aws:iam::${AWS::AccountId}:role/apigateway_submission_timestamp_post_role
+        credentials: arn:aws:iam::${AWS::AccountId}:role/apigateway_typedb_completed_survey_post_role
         passthroughBehavior: "when_no_match"
         responses:
           default:

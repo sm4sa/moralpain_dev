@@ -25,6 +25,4 @@ public class UtilsForTesting {
 
         return stringBuilder.toString();
     }
-
-
 }

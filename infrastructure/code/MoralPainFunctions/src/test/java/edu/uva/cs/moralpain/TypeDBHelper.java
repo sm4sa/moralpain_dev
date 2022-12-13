@@ -4,6 +4,7 @@ import com.vaticle.typedb.client.api.TypeDBClient;
 import com.vaticle.typedb.client.api.TypeDBOptions;
 import com.vaticle.typedb.client.api.TypeDBSession;
 import com.vaticle.typedb.client.api.TypeDBTransaction;
+import org.junit.jupiter.api.condition.OS;
 
 import java.util.function.Consumer;
 
@@ -37,6 +38,17 @@ public class TypeDBHelper {
             try (TypeDBTransaction transaction = session.transaction(WRITE)) {
                 fn.accept(transaction);
             }
+        }
+    }
+    public static String serverArtifactPath() {
+        if (OS.LINUX.isCurrentOs()) {
+            return "/typedb-server-linux.zip";
+        } else if (OS.MAC.isCurrentOs()) {
+            return "/typedb-server-mac.zip";
+        } else if (OS.WINDOWS.isCurrentOs()) {
+            return "/typedb-server-windows.zip";
+        } else {
+            return "";
         }
     }
 }

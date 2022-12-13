@@ -16,6 +16,9 @@ import edu.uva.cs.moralpain.UtilsForTesting;
 import edu.uva.cs.moralpain.s3.MockContext;
 import edu.uva.cs.moralpain.utils.VariableManager;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.DisabledOnOs;
+import org.junit.jupiter.api.condition.EnabledOnOs;
+import org.junit.jupiter.api.condition.OS;
 
 import java.io.IOException;
 import java.net.URL;
@@ -30,6 +33,7 @@ import static com.vaticle.typeql.lang.TypeQL.var;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
+@EnabledOnOs(OS.MAC)
 public class TypeDBPostTest {
   // Constants.
   private static final String DB_NAME = "testdb";
@@ -40,12 +44,11 @@ public class TypeDBPostTest {
   private static TypeDBClient typedbClient;
   private static TypeDBHelper typedbHelper;
 
-
   @BeforeAll
   public static void beforeAll() throws IOException, InterruptedException, TimeoutException {
     // Start typedb instance.
     VariableManager runnerConfig = new VariableManager();
-    runnerConfig.put("typedb.distribution", "/Users/nickphair/Downloads/typedb-server-mac-2.12.0.zip");
+    runnerConfig.put("typedb.distribution", TypeDBHelper.serverArtifactPath());
     typedb = new TypeDBTestRunner(runnerConfig);
     typedb.start();
 

@@ -10,7 +10,10 @@ import org.zeroturnaround.exec.StartedProcess;
 import java.io.File;
 import java.io.IOException;
 import java.net.InetSocketAddress;
+import java.net.URL;
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.concurrent.TimeoutException;
 
@@ -33,7 +36,9 @@ public class TypeDBTestRunner implements TypeDBRunner {
         System.out.println(address() + ": Extracting distribution archive...");
 
         String _serverArchive = variableManager.getOrDefault("typedb.distribution", "");
-        File serverArchive = _serverArchive.isEmpty() ? getServerArchiveFile() : new File(_serverArchive);
+        URL url = getClass().getResource(_serverArchive);
+        //byte[] encoded = Files.readAllBytes(Paths.get(url.getPath()));
+        File serverArchive = _serverArchive.isEmpty() ? getServerArchiveFile() : new File(url.getPath());
         distribution = unarchive(serverArchive);
 
         System.out.println(address() + ": Distribution archive extracted.");

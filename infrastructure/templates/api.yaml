@@ -6,21 +6,14 @@ Description: >
   SAM Template for moralpain
 
 Parameters:
-  Prefix:
+  prefix:
     Description: unique identifier for resources
     Type: String
     Default: ""
   dbAddress:
     Type: String
     Default: moralpain-ec2::EC2InstanceIP
-  privateSubnet1:
-    Type: String
-    Default: moralpain-vpc-sg::PrivateSubnet1
-  privateSubnet2:
-    Type: String
-    Default: moralpain-vpc-sg::PrivateSubnet2
 
-# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
 Globals:
   Function:
     Timeout: 20
@@ -31,19 +24,19 @@ Resources:
     Properties:
       OpenApiVersion: 3.0.1
       StageName: v1
-      DefinitionUri: api.yaml
+      DefinitionUri: openapi.yaml
 
   SubmitSurveyFunction:
-    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Type: AWS::Serverless::Function 
     Properties:
-      FunctionName: !Sub ${Prefix}SubmitSurvey
+      FunctionName: !Sub ${prefix}SubmitSurvey
       CodeUri: MoralPainFunctions
       Handler: edu.uva.cs.moralpain.s3.UniqueKeyUploader::handleRequest
       Runtime: java8.al2
       Architectures:
         - x86_64
       MemorySize: 512
-      Environment: # More info about Env Vars: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#environment-object
+      Environment:
         Variables:
           bucket: moralpain-submissions
           prefix: surveys
@@ -52,7 +45,7 @@ Resources:
   SubmitVisitedResiliencyResourcesFunction:
     Type: AWS::Serverless::Function
     Properties:
-      FunctionName: !Sub ${Prefix}SubmitVisitedResiliencyResources
+      FunctionName: !Sub ${prefix}SubmitVisitedResiliencyResources
       CodeUri: MoralPainFunctions
       Handler: edu.uva.cs.moralpain.s3.UniqueKeyUploader::handleRequest
       Runtime: java8.al2
@@ -68,7 +61,7 @@ Resources:
   FetchSubmissionsFunction:
     Type: AWS::Serverless::Function
     Properties:
-      FunctionName: !Sub ${Prefix}FetchSubmissions
+      FunctionName: !Sub ${prefix}FetchSubmissions
       CodeUri: MoralPainFunctions
       Handler: edu.uva.cs.moralpain.s3.SubmissionFetcher::handleRequest
       Runtime: java8.al2
@@ -85,7 +78,7 @@ Resources:
   AnalyzeSubmissionsFunction:
     Type: AWS::Serverless::Function
     Properties:
-      FunctionName: !Sub ${Prefix}AnalyzeSubmissions
+      FunctionName: !Sub ${prefix}AnalyzeSubmissions
       CodeUri: MoralPainFunctions
       Handler: edu.uva.cs.moralpain.s3.SubmissionAnalyzer::handleRequest
       Runtime: java8.al2
@@ -101,7 +94,7 @@ Resources:
   FetchSubmissionFieldFunction:
     Type: AWS::Serverless::Function
     Properties:
-      FunctionName: !Sub ${Prefix}FetchSubmissionField
+      FunctionName: !Sub ${prefix}FetchSubmissionField
       CodeUri: MoralPainFunctions
       Handler: edu.uva.cs.moralpain.s3.SubmissionFieldFetcher::handleRequest
       Runtime: java8.al2
@@ -116,16 +109,16 @@ Resources:
       Timeout: 60
 
   SubmitSubmissionFieldFunction:
-    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Type: AWS::Serverless::Function 
     Properties:
-      FunctionName: !Sub ${Prefix}SubmitSubmissionField
+      FunctionName: !Sub ${prefix}SubmitSubmissionField
       CodeUri: MoralPainFunctions
       Handler: edu.uva.cs.moralpain.s3.SubmissionUpdater::handleRequest
       Runtime: java8.al2
       Architectures:
         - x86_64
       MemorySize: 512
-      Environment: # More info about Env Vars: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#environment-object
+      Environment:
         Variables:
           bucket: moralpain-submissions
           prefix: single
@@ -133,7 +126,7 @@ Resources:
       Role: !Sub arn:aws:iam::${AWS::AccountId}:role/lambda_submit_submission_field_role
 
   TypeDBGetFunction:
-    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Type: AWS::Serverless::Function 
     Properties:
       FunctionName: GetSubmissions
       CodeUri: MoralPainFunctions
@@ -142,12 +135,6 @@ Resources:
       Handler: edu.uva.cs.moralpain.typedb.TypeDBGet::handleRequest
       Runtime: java11
       VpcConfig:
-        # SecurityGroupIds:
-        #   Fn::ImportValue: !Ref securityGroup
-        # SubnetIds:
-        #   Fn::ImportValue:
-        #     - !Ref privateSubnet1
-        #     - !Ref privateSubnet2
         SecurityGroupIds:
           - !ImportValue moralpain-vpc-sg-SGID1
         SubnetIds:
@@ -156,21 +143,14 @@ Resources:
       Architectures:
         - x86_64
       MemorySize: 512
-      Environment: # More info about Env Vars: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#environment-object
+      Environment: 
         Variables:
           DATABASE_ADDRESS: !Ref dbAddress
           DATABASE_NAME: test
-          JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1 # More info about tiered compilation https://aws.amazon.com/blogs/compute/optimizing-aws-lambda-function-performance-for-java/
-      Events:
-        Get:
-          Type: HttpApi # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
-          Properties:
-            Path: /submissions
-            Method: get
-            ApiId: !Ref ApiGatewayApi
+          JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1 
 
   TypeDBPostFunction:
-    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Type: AWS::Serverless::Function 
     Properties:
       FunctionName: PostSubmissions
       CodeUri: MoralPainFunctions
@@ -179,14 +159,6 @@ Resources:
       Handler: edu.uva.cs.moralpain.typedb.TypeDBPost::handleRequest
       Runtime: java11
       VpcConfig:
-        # SecurityGroupIds:
-        #   - Fn::ImportValue
-        #     - !Ref securityGroup
-        # SubnetIds:
-        #   - Fn::ImportValue
-        #     - !Ref privateSubnet1
-        #   - Fn::ImportValue
-        #     - !Ref privateSubnet2
         SecurityGroupIds:
           - !ImportValue moralpain-vpc-sg-SGID1
         SubnetIds:
@@ -195,18 +167,11 @@ Resources:
       Architectures:
         - x86_64
       MemorySize: 512
-      Environment: # More info about Env Vars: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#environment-object
+      Environment:
         Variables:
           DATABASE_ADDRESS: !Ref dbAddress
           DATABASE_NAME: test
-          JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1 # More info about tiered compilation https://aws.amazon.com/blogs/compute/optimizing-aws-lambda-function-performance-for-java/
-      Events:
-        Post:
-          Type: HttpApi # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
-          Properties:
-            Path: /submissions
-            Method: post
-            ApiId: !Ref ApiGatewayApi
+          JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1 
 
 Outputs:
   APIUri:
