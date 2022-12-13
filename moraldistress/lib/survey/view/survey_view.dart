@@ -251,9 +251,7 @@ class SurveyViewState extends State<SurveyView> {
       children: [
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SurveyOptionsWidget(section.sectionId!, section.options!.asList())
-          ],
+          children: [SurveyOptionsWidget(section.sectionId!, section.options!)],
         )
       ],
     );
