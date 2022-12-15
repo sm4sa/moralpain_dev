@@ -23,6 +23,10 @@ Fetch from the database all of the records that match the query parameters.
 ### Example
 ```dart
 import 'package:moralpainapi/api.dart';
+// TODO Configure API key authorization: sigv4Reference
+//defaultApiClient.getAuthentication<ApiKeyAuth>('sigv4Reference').apiKey = 'YOUR_API_KEY';
+// uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+//defaultApiClient.getAuthentication<ApiKeyAuth>('sigv4Reference').apiKeyPrefix = 'Bearer';
 
 final api = Moralpainapi().getAdminApi();
 final int starttime = 1640995200; // int | Minimum possible timestamp of a record in UTC seconds since Unix epoch.
@@ -55,7 +59,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[sigv4Reference](../README.md#sigv4Reference)
 
 ### HTTP request headers
 
@@ -74,6 +78,10 @@ Perform an analysis on the records in the database that match the query paramter
 ### Example
 ```dart
 import 'package:moralpainapi/api.dart';
+// TODO Configure API key authorization: sigv4Reference
+//defaultApiClient.getAuthentication<ApiKeyAuth>('sigv4Reference').apiKey = 'YOUR_API_KEY';
+// uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+//defaultApiClient.getAuthentication<ApiKeyAuth>('sigv4Reference').apiKeyPrefix = 'Bearer';
 
 final api = Moralpainapi().getAdminApi();
 final String operation = count; // String | The analytic operation to perform on the data.
@@ -102,7 +110,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[sigv4Reference](../README.md#sigv4Reference)
 
 ### HTTP request headers
 

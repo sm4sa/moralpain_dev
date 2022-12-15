@@ -103,7 +103,7 @@ Class | Method | HTTP request | Description
 ## Documentation For Authorization
 
 
-## UserPool
+## sigv4Reference
 
 - **Type**: API key
 - **API key parameter name**: Authorization

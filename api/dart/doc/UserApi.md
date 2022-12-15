@@ -29,6 +29,10 @@ Fetch the recommended resiliency resources from the database.
 ### Example
 ```dart
 import 'package:moralpainapi/api.dart';
+// TODO Configure API key authorization: sigv4Reference
+//defaultApiClient.getAuthentication<ApiKeyAuth>('sigv4Reference').apiKey = 'YOUR_API_KEY';
+// uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+//defaultApiClient.getAuthentication<ApiKeyAuth>('sigv4Reference').apiKeyPrefix = 'Bearer';
 
 final api = Moralpainapi().getUserApi();
 
@@ -49,7 +53,7 @@ This endpoint does not need any parameter.
 
 ### Authorization
 
-No authorization required
+[sigv4Reference](../README.md#sigv4Reference)
 
 ### HTTP request headers
 
@@ -146,6 +150,10 @@ Fetch the latest moral distress questionnaire (MDQ) from the database.
 ### Example
 ```dart
 import 'package:moralpainapi/api.dart';
+// TODO Configure API key authorization: sigv4Reference
+//defaultApiClient.getAuthentication<ApiKeyAuth>('sigv4Reference').apiKey = 'YOUR_API_KEY';
+// uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+//defaultApiClient.getAuthentication<ApiKeyAuth>('sigv4Reference').apiKeyPrefix = 'Bearer';
 
 final api = Moralpainapi().getUserApi();
 
@@ -166,7 +174,7 @@ This endpoint does not need any parameter.
 
 ### Authorization
 
-No authorization required
+[sigv4Reference](../README.md#sigv4Reference)
 
 ### HTTP request headers
 
@@ -271,6 +279,10 @@ Submit a completed Moral Distress Questionnaire and Moral Distress Score to the 
 ### Example
 ```dart
 import 'package:moralpainapi/api.dart';
+// TODO Configure API key authorization: sigv4Reference
+//defaultApiClient.getAuthentication<ApiKeyAuth>('sigv4Reference').apiKey = 'YOUR_API_KEY';
+// uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+//defaultApiClient.getAuthentication<ApiKeyAuth>('sigv4Reference').apiKeyPrefix = 'Bearer';
 
 final api = Moralpainapi().getUserApi();
 final Submission submission = ; // Submission | 
@@ -295,7 +307,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[sigv4Reference](../README.md#sigv4Reference)
 
 ### HTTP request headers
 

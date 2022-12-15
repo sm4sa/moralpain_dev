@@ -116,7 +116,18 @@ public class TypeDBPost implements RequestHandler<APIGatewayProxyRequestEvent, A
             return response.withStatusCode(400);
         }
 
-        return response.withStatusCode(200);
+        return response.withStatusCode(200).withHeaders(standardHeaders());
+    }
+
+    private static Map<String, String> standardHeaders() {
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Content-Type", "application/json");
+        headers.put("X-Custom-Header", "application/json");
+        // Cors.
+        headers.put("Access-Control-Allow-Headers", "Content-Type,X-Amz-Date,Authorization,X-Api-Key");
+        headers.put("Access-Control-Allow-Origin", "*");
+        headers.put("Access-Control-Allow-Methods", "*");
+        return headers;
     }
 
     private boolean isValidEvent(APIGatewayProxyRequestEvent event) {
