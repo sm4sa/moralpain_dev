@@ -34,6 +34,7 @@
         {
             "name": "moralpain web",
             "cwd": "moraldistress",
+            "program": "lib/main.dart",
             "request": "launch",
             "type": "dart",
             "args": ["-d", "web-server","--web-port", "3000"],
