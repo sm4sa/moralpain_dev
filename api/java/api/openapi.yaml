@@ -50,10 +50,9 @@ paths:
           default:
             statusCode: "200"
             responseParameters:
-              method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key'"
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Content-Sha256,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'"
               method.response.header.Access-Control-Allow-Methods: '''*'''
               method.response.header.Access-Control-Allow-Origin: '''*'''
-      x-accepts: application/json
     options:
       description: |
         Enable CORS by returning correct headers
@@ -84,17 +83,20 @@ paths:
       x-amazon-apigateway-integration:
         type: mock
         requestTemplates:
-          application/json: "{\n  \"statusCode\" : 200\n}\n"
+          application/json: |
+            {
+              "statusCode" : 200
+            }
         responses:
           default:
             statusCode: "200"
             responseParameters:
-              method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key'"
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Content-Sha256,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'"
               method.response.header.Access-Control-Allow-Methods: '''*'''
               method.response.header.Access-Control-Allow-Origin: '''*'''
             responseTemplates:
-              application/json: "{}\n"
-      x-accepts: application/json
+              application/json: |
+                {}
     post:
       description: |
         Submit a completed Moral Distress Questionnaire and Moral Distress Score to the database.
@@ -127,8 +129,6 @@ paths:
               schema:
                 type: string
               style: simple
-      security:
-      - UserPool: []
       summary: Submit a completed MDQ
       tags:
       - User
@@ -142,11 +142,9 @@ paths:
           default:
             statusCode: "200"
             responseParameters:
-              method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key'"
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Content-Sha256,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'"
               method.response.header.Access-Control-Allow-Methods: '''*'''
               method.response.header.Access-Control-Allow-Origin: '''*'''
-      x-content-type: application/json
-      x-accepts: text/plain
   /resiliency:
     get:
       description: |
@@ -188,10 +186,9 @@ paths:
           default:
             statusCode: "200"
             responseParameters:
-              method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key'"
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Content-Sha256,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'"
               method.response.header.Access-Control-Allow-Methods: '''*'''
               method.response.header.Access-Control-Allow-Origin: '''*'''
-      x-accepts: application/json
     options:
       description: |
         Enable CORS by returning correct headers
@@ -222,17 +219,20 @@ paths:
       x-amazon-apigateway-integration:
         type: mock
         requestTemplates:
-          application/json: "{\n  \"statusCode\" : 200\n}\n"
+          application/json: |
+            {
+              "statusCode" : 200
+            }
         responses:
           default:
             statusCode: "200"
             responseParameters:
-              method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key'"
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Content-Sha256,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'"
               method.response.header.Access-Control-Allow-Methods: '''*'''
               method.response.header.Access-Control-Allow-Origin: '''*'''
             responseTemplates:
-              application/json: "{}\n"
-      x-accepts: application/json
+              application/json: |
+                {}
     post:
       description: |
         Submit the list of resources visited by this user to the database.
@@ -265,8 +265,6 @@ paths:
               schema:
                 type: string
               style: simple
-      security:
-      - UserPool: []
       summary: Submit visited resiliency resources
       tags:
       - User
@@ -280,16 +278,14 @@ paths:
           default:
             statusCode: "200"
             responseParameters:
-              method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key'"
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Content-Sha256,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'"
               method.response.header.Access-Control-Allow-Methods: '''*'''
               method.response.header.Access-Control-Allow-Origin: '''*'''
-      x-content-type: application/json
-      x-accepts: text/plain
   /admin/submissions:
     get:
       description: |
         Fetch from the database all of the records that match the query parameters.
-      operationId: getSubmissions
+      operationId: getAdminSubmissions
       parameters:
       - description: Minimum possible timestamp of a record in UTC seconds since Unix
           epoch.
@@ -333,9 +329,8 @@ paths:
           minimum: 0
           type: integer
         style: form
-      - description: "If this parameter is specified, all other parameters are ignored\
-          \ and only the submission with the given UUID is fetched. If no such submission\
-          \ exists, an empty list is fetched.\n"
+      - description: |
+          If this parameter is specified, all other parameters are ignored and only the submission with the given UUID is fetched. If no such submission exists, an empty list is fetched.
         example: f2f2011c8d2547849dfce99ae4b75797
         explode: true
         in: query
@@ -380,10 +375,9 @@ paths:
           default:
             statusCode: "200"
             responseParameters:
-              method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key'"
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Content-Sha256,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'"
               method.response.header.Access-Control-Allow-Methods: '''*'''
               method.response.header.Access-Control-Allow-Origin: '''*'''
-      x-accepts: application/json
     options:
       description: |
         Enable CORS by returning correct headers
@@ -414,17 +408,20 @@ paths:
       x-amazon-apigateway-integration:
         type: mock
         requestTemplates:
-          application/json: "{\n  \"statusCode\" : 200\n}\n"
+          application/json: |
+            {
+              "statusCode" : 200
+            }
         responses:
           default:
             statusCode: "200"
             responseParameters:
-              method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key'"
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Content-Sha256,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'"
               method.response.header.Access-Control-Allow-Methods: '''*'''
               method.response.header.Access-Control-Allow-Origin: '''*'''
             responseTemplates:
-              application/json: "{}\n"
-      x-accepts: application/json
+              application/json: |
+                {}
   /admin/analytics:
     get:
       description: |
@@ -523,16 +520,15 @@ paths:
           "400":
             statusCode: "400"
             responseParameters:
-              method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key'"
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Content-Sha256,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'"
               method.response.header.Access-Control-Allow-Methods: '''*'''
               method.response.header.Access-Control-Allow-Origin: '''*'''
           default:
             statusCode: "200"
             responseParameters:
-              method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key'"
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Content-Sha256,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'"
               method.response.header.Access-Control-Allow-Methods: '''*'''
               method.response.header.Access-Control-Allow-Origin: '''*'''
-      x-accepts: application/json
     options:
       description: |
         Enable CORS by returning correct headers
@@ -563,7 +559,97 @@ paths:
       x-amazon-apigateway-integration:
         type: mock
         requestTemplates:
-          application/json: "{\n  \"statusCode\" : 200\n}\n"
+          application/json: |
+            {
+              "statusCode" : 200
+            }
+        responses:
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Content-Sha256,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'"
+              method.response.header.Access-Control-Allow-Methods: '''*'''
+              method.response.header.Access-Control-Allow-Origin: '''*'''
+            responseTemplates:
+              application/json: |
+                {}
+  /submission:
+    get:
+      description: |
+        Get the MDQ submission.
+      operationId: getSubmission
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/submission'
+          description: 200 response
+          headers:
+            Access-Control-Allow-Origin:
+              explode: false
+              schema:
+                type: string
+              style: simple
+            Access-Control-Allow-Methods:
+              explode: false
+              schema:
+                type: string
+              style: simple
+            Access-Control-Allow-Headers:
+              explode: false
+              schema:
+                type: string
+              style: simple
+      summary: get the submission
+      tags:
+      - User
+      x-amazon-apigateway-integration:
+        httpMethod: post
+        type: aws_proxy
+        uri: "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:TestFetchSubmissionField/invocations"
+        credentials: "arn:aws:iam::${AWS::AccountId}:role/apigateway_submission_timestamp_get_role"
+        passthroughBehavior: when_no_match
+        responses:
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key'"
+              method.response.header.Access-Control-Allow-Methods: '''*'''
+    options:
+      description: |
+        Enable CORS by returning correct headers
+      operationId: optionsSubmission
+      responses:
+        "200":
+          content: {}
+          description: Default response for CORS method
+          headers:
+            Access-Control-Allow-Origin:
+              explode: false
+              schema:
+                type: string
+              style: simple
+            Access-Control-Allow-Methods:
+              explode: false
+              schema:
+                type: string
+              style: simple
+            Access-Control-Allow-Headers:
+              explode: false
+              schema:
+                type: string
+              style: simple
+      summary: CORS submission support
+      tags:
+      - CORS
+      x-amazon-apigateway-integration:
+        type: mock
+        requestTemplates:
+          application/json: |
+            {
+              "statusCode" : 200
+            }
         responses:
           default:
             statusCode: "200"
@@ -572,8 +658,189 @@ paths:
               method.response.header.Access-Control-Allow-Methods: '''*'''
               method.response.header.Access-Control-Allow-Origin: '''*'''
             responseTemplates:
-              application/json: "{}\n"
-      x-accepts: application/json
+              application/json: |
+                {}
+    post:
+      description: |
+        Submit
+      operationId: submitSubmission
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/submission'
+      responses:
+        "200":
+          content:
+            text/plain:
+              schema:
+                type: string
+          description: 200 response
+          headers:
+            Access-Control-Allow-Origin:
+              explode: false
+              schema:
+                type: string
+              style: simple
+            Access-Control-Allow-Methods:
+              explode: false
+              schema:
+                type: string
+              style: simple
+            Access-Control-Allow-Headers:
+              explode: false
+              schema:
+                type: string
+              style: simple
+      summary: Submit a submission
+      tags:
+      - User
+      x-amazon-apigateway-integration:
+        httpMethod: post
+        type: aws_proxy
+        uri: "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:TestSubmitSubmissionField/invocations"
+        credentials: "arn:aws:iam::${AWS::AccountId}:role/apigateway_submission_timestamp_post_role"
+        passthroughBehavior: when_no_match
+        responses:
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key'"
+              method.response.header.Access-Control-Allow-Methods: '''*'''
+              method.response.header.Access-Control-Allow-Origin: '''*'''
+  /submissions:
+    get:
+      description: |
+        Get the MDQ submissions using TypeDB.
+      operationId: getSubmissions
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/submissions'
+          description: 200 response
+          headers:
+            Access-Control-Allow-Origin:
+              explode: false
+              schema:
+                type: string
+              style: simple
+            Access-Control-Allow-Methods:
+              explode: false
+              schema:
+                type: string
+              style: simple
+            Access-Control-Allow-Headers:
+              explode: false
+              schema:
+                type: string
+              style: simple
+      summary: get the submissions
+      tags:
+      - User
+      x-amazon-apigateway-integration:
+        httpMethod: post
+        type: aws_proxy
+        uri: "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:GetSubmissions/invocations"
+        passthroughBehavior: when_no_match
+        responses:
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key'"
+              method.response.header.Access-Control-Allow-Methods: '''*'''
+    options:
+      description: |
+        Enable CORS by returning correct headers
+      operationId: optionsSubmissionTypeDB
+      responses:
+        "200":
+          content: {}
+          description: Default response for CORS method
+          headers:
+            Access-Control-Allow-Origin:
+              explode: false
+              schema:
+                type: string
+              style: simple
+            Access-Control-Allow-Methods:
+              explode: false
+              schema:
+                type: string
+              style: simple
+            Access-Control-Allow-Headers:
+              explode: false
+              schema:
+                type: string
+              style: simple
+      summary: CORS submission support
+      tags:
+      - CORS
+      x-amazon-apigateway-integration:
+        type: mock
+        requestTemplates:
+          application/json: |
+            {
+              "statusCode" : 200
+            }
+        responses:
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key'"
+              method.response.header.Access-Control-Allow-Methods: '''*'''
+              method.response.header.Access-Control-Allow-Origin: '''*'''
+            responseTemplates:
+              application/json: |
+                {}
+    post:
+      description: |
+        Submit with TypeDB
+      operationId: submitSubmissionTypeDB
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/submission'
+      responses:
+        "200":
+          content:
+            text/plain:
+              schema:
+                type: string
+          description: 200 response
+          headers:
+            Access-Control-Allow-Origin:
+              explode: false
+              schema:
+                type: string
+              style: simple
+            Access-Control-Allow-Methods:
+              explode: false
+              schema:
+                type: string
+              style: simple
+            Access-Control-Allow-Headers:
+              explode: false
+              schema:
+                type: string
+              style: simple
+      summary: Submit a submission
+      tags:
+      - User
+      x-amazon-apigateway-integration:
+        httpMethod: post
+        type: aws_proxy
+        uri: "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:PostSubmissions/invocations"
+        passthroughBehavior: when_no_match
+        responses:
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key'"
+              method.response.header.Access-Control-Allow-Methods: '''*'''
+              method.response.header.Access-Control-Allow-Origin: '''*'''
 components:
   schemas:
     survey:

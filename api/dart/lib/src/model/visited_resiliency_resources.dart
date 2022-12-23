@@ -2,86 +2,69 @@
 // AUTO-GENERATED FILE, DO NOT MODIFY!
 //
 
-import 'package:built_collection/built_collection.dart';
-import 'package:built_value/built_value.dart';
-import 'package:built_value/serializer.dart';
+// ignore_for_file: unused_element
+import 'package:json_annotation/json_annotation.dart';
 
 part 'visited_resiliency_resources.g.dart';
 
-/// VisitedResiliencyResources
-///
-/// Properties:
-/// * [selections] 
-/// * [timestamp] 
-abstract class VisitedResiliencyResources implements Built<VisitedResiliencyResources, VisitedResiliencyResourcesBuilder> {
-    @BuiltValueField(wireName: r'selections')
-    BuiltList<String>? get selections;
 
-    @BuiltValueField(wireName: r'timestamp')
-    int? get timestamp;
+@JsonSerializable(
+  checked: true,
+  createToJson: true,
+  disallowUnrecognizedKeys: false,
+  explicitToJson: true,
+)
+class VisitedResiliencyResources {
+  /// Returns a new [VisitedResiliencyResources] instance.
+  VisitedResiliencyResources({
 
-    VisitedResiliencyResources._();
+     this.selections,
 
-    @BuiltValueHook(initializeBuilder: true)
-    static void _defaults(VisitedResiliencyResourcesBuilder b) => b;
+     this.timestamp,
+  });
 
-    factory VisitedResiliencyResources([void updates(VisitedResiliencyResourcesBuilder b)]) = _$VisitedResiliencyResources;
+  @JsonKey(
+    
+    name: r'selections',
+    required: false,
+    includeIfNull: false
+  )
 
-    @BuiltValueSerializer(custom: true)
-    static Serializer<VisitedResiliencyResources> get serializer => _$VisitedResiliencyResourcesSerializer();
-}
 
-class _$VisitedResiliencyResourcesSerializer implements StructuredSerializer<VisitedResiliencyResources> {
-    @override
-    final Iterable<Type> types = const [VisitedResiliencyResources, _$VisitedResiliencyResources];
+  final List<String>? selections;
 
-    @override
-    final String wireName = r'VisitedResiliencyResources';
 
-    @override
-    Iterable<Object?> serialize(Serializers serializers, VisitedResiliencyResources object,
-        {FullType specifiedType = FullType.unspecified}) {
-        final result = <Object?>[];
-        if (object.selections != null) {
-            result
-                ..add(r'selections')
-                ..add(serializers.serialize(object.selections,
-                    specifiedType: const FullType(BuiltList, [FullType(String)])));
-        }
-        if (object.timestamp != null) {
-            result
-                ..add(r'timestamp')
-                ..add(serializers.serialize(object.timestamp,
-                    specifiedType: const FullType(int)));
-        }
-        return result;
-    }
 
-    @override
-    VisitedResiliencyResources deserialize(Serializers serializers, Iterable<Object?> serialized,
-        {FullType specifiedType = FullType.unspecified}) {
-        final result = VisitedResiliencyResourcesBuilder();
+  @JsonKey(
+    
+    name: r'timestamp',
+    required: false,
+    includeIfNull: false
+  )
 
-        final iterator = serialized.iterator;
-        while (iterator.moveNext()) {
-            final key = iterator.current as String;
-            iterator.moveNext();
-            final Object? value = iterator.current;
-            
-            switch (key) {
-                case r'selections':
-                    final valueDes = serializers.deserialize(value,
-                        specifiedType: const FullType(BuiltList, [FullType(String)])) as BuiltList<String>;
-                    result.selections.replace(valueDes);
-                    break;
-                case r'timestamp':
-                    final valueDes = serializers.deserialize(value,
-                        specifiedType: const FullType(int)) as int;
-                    result.timestamp = valueDes;
-                    break;
-            }
-        }
-        return result.build();
-    }
+
+  final int? timestamp;
+
+
+
+  @override
+  bool operator ==(Object other) => identical(this, other) || other is VisitedResiliencyResources &&
+     other.selections == selections &&
+     other.timestamp == timestamp;
+
+  @override
+  int get hashCode =>
+    selections.hashCode +
+    timestamp.hashCode;
+
+  factory VisitedResiliencyResources.fromJson(Map<String, dynamic> json) => _$VisitedResiliencyResourcesFromJson(json);
+
+  Map<String, dynamic> toJson() => _$VisitedResiliencyResourcesToJson(this);
+
+  @override
+  String toString() {
+    return toJson().toString();
+  }
+
 }
 

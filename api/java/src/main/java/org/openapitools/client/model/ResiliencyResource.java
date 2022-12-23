@@ -37,7 +37,7 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
   ResiliencyResource.JSON_PROPERTY_ICON
 })
 @JsonTypeName("resiliencyResource")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-08-06T18:59:24.183129Z[Etc/UTC]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-12-12T00:57:02.835963-05:00[America/New_York]")
 public class ResiliencyResource {
   public static final String JSON_PROPERTY_RESOURCE_ID = "resourceId";
   private String resourceId;
@@ -54,7 +54,7 @@ public class ResiliencyResource {
   public static final String JSON_PROPERTY_ICON = "icon";
   private Icon icon;
 
-  public ResiliencyResource() { 
+  public ResiliencyResource() {
   }
 
   public ResiliencyResource resourceId(String resourceId) {

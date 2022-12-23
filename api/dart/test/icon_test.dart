@@ -3,8 +3,8 @@ import 'package:moralpainapi/moralpainapi.dart';
 
 // tests for Icon
 void main() {
-  final instance = IconBuilder();
-  // TODO add properties to the builder and call build()
+  final Icon? instance = /* Icon(...) */ null;
+  // TODO add properties to the entity
 
   group(Icon, () {
     // String codePoint

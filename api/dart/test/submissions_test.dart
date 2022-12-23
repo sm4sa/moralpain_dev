@@ -3,11 +3,11 @@ import 'package:moralpainapi/moralpainapi.dart';
 
 // tests for Submissions
 void main() {
-  final instance = SubmissionsBuilder();
-  // TODO add properties to the builder and call build()
+  final Submissions? instance = /* Submissions(...) */ null;
+  // TODO add properties to the entity
 
   group(Submissions, () {
-    // BuiltList<Submission> list
+    // List<Submission> list
     test('to test the property `list`', () async {
       // TODO
     });

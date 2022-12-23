@@ -3,8 +3,8 @@ import 'package:moralpainapi/moralpainapi.dart';
 
 // tests for SurveySection
 void main() {
-  final instance = SurveySectionBuilder();
-  // TODO add properties to the builder and call build()
+  final SurveySection? instance = /* SurveySection(...) */ null;
+  // TODO add properties to the entity
 
   group(SurveySection, () {
     // String sectionId
@@ -22,7 +22,7 @@ void main() {
       // TODO
     });
 
-    // BuiltList<SurveyOption> options
+    // List<SurveyOption> options
     test('to test the property `options`', () async {
       // TODO
     });

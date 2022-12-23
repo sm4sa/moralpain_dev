@@ -4,6 +4,7 @@ import 'package:logging/logging.dart';
 import 'package:moralpainapi/moralpainapi.dart';
 import 'package:aws_signature_v4_interceptor/aws_signature_v4_interceptor.dart';
 import 'package:dio/dio.dart';
+import 'dart:convert';
 
 import 'package:aws_signature_v4/aws_signature_v4.dart';
 
@@ -12,7 +13,7 @@ class ApiRepository {
 
   Moralpainapi mapi = Moralpainapi(
       basePathOverride:
-          'https://umd7orqgt1.execute-api.us-east-1.amazonaws.com/v1');
+          'https://rorsg5xkqh.execute-api.us-east-1.amazonaws.com/v1');
 
   ApiRepository() {
     mapi.dio.options.connectTimeout = 30 * 1000;
@@ -68,7 +69,7 @@ class ApiRepository {
   Future<Survey> fetchSurveyAt(String path) async {
     try {
       final json = await rootBundle.loadString(path);
-      return standardSerializers.fromJson(Survey.serializer, json)!;
+      return Survey.fromJson(jsonDecode(json));
     } catch (err) {
       log.shout('Error fetching local survey. Loading empty survey.', err);
     }
@@ -81,9 +82,12 @@ class ApiRepository {
    */
   Future<bool> submitSurvey(Submission submission) async {
     final uapi = mapi.getUserApi();
+    //serializers.serializeWith(Submission.serializer, submission)
+    //serializers.toJson(Submission.serializer, submission)
 
     try {
-      final res = await uapi.submitSurvey(submission: submission);
+      //final res = await uapi.submitSurvey(submission: submission);
+      final res = await uapi.submitSubmissionTypeDB(submission: submission);
       return res.statusCode == 200;
     } catch (err) {
       log.shout('Error submitting survey', err);

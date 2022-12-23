@@ -2,136 +2,114 @@
 // AUTO-GENERATED FILE, DO NOT MODIFY!
 //
 
-import 'package:built_collection/built_collection.dart';
-import 'package:built_value/built_value.dart';
-import 'package:built_value/serializer.dart';
+// ignore_for_file: unused_element
+import 'package:json_annotation/json_annotation.dart';
 
 part 'analytics_result.g.dart';
 
-/// AnalyticsResult
-///
-/// Properties:
-/// * [operation] 
-/// * [result] 
-/// * [error] 
-/// * [errormsg] 
-abstract class AnalyticsResult implements Built<AnalyticsResult, AnalyticsResultBuilder> {
-    @BuiltValueField(wireName: r'operation')
-    AnalyticsResultOperationEnum? get operation;
-    // enum operationEnum {  average,  count,  maximum,  minimum,  };
 
-    @BuiltValueField(wireName: r'result')
-    num? get result;
+@JsonSerializable(
+  checked: true,
+  createToJson: true,
+  disallowUnrecognizedKeys: false,
+  explicitToJson: true,
+)
+class AnalyticsResult {
+  /// Returns a new [AnalyticsResult] instance.
+  AnalyticsResult({
 
-    @BuiltValueField(wireName: r'error')
-    bool? get error;
+     this.operation,
 
-    @BuiltValueField(wireName: r'errormsg')
-    String? get errormsg;
+     this.result,
 
-    AnalyticsResult._();
+     this.error,
 
-    @BuiltValueHook(initializeBuilder: true)
-    static void _defaults(AnalyticsResultBuilder b) => b;
+     this.errormsg,
+  });
 
-    factory AnalyticsResult([void updates(AnalyticsResultBuilder b)]) = _$AnalyticsResult;
+  @JsonKey(
+    
+    name: r'operation',
+    required: false,
+    includeIfNull: false
+  )
 
-    @BuiltValueSerializer(custom: true)
-    static Serializer<AnalyticsResult> get serializer => _$AnalyticsResultSerializer();
+
+  final AnalyticsResultOperationEnum? operation;
+
+
+
+  @JsonKey(
+    
+    name: r'result',
+    required: false,
+    includeIfNull: false
+  )
+
+
+  final num? result;
+
+
+
+  @JsonKey(
+    
+    name: r'error',
+    required: false,
+    includeIfNull: false
+  )
+
+
+  final bool? error;
+
+
+
+  @JsonKey(
+    
+    name: r'errormsg',
+    required: false,
+    includeIfNull: false
+  )
+
+
+  final String? errormsg;
+
+
+
+  @override
+  bool operator ==(Object other) => identical(this, other) || other is AnalyticsResult &&
+     other.operation == operation &&
+     other.result == result &&
+     other.error == error &&
+     other.errormsg == errormsg;
+
+  @override
+  int get hashCode =>
+    operation.hashCode +
+    result.hashCode +
+    error.hashCode +
+    errormsg.hashCode;
+
+  factory AnalyticsResult.fromJson(Map<String, dynamic> json) => _$AnalyticsResultFromJson(json);
+
+  Map<String, dynamic> toJson() => _$AnalyticsResultToJson(this);
+
+  @override
+  String toString() {
+    return toJson().toString();
+  }
+
 }
 
-class _$AnalyticsResultSerializer implements StructuredSerializer<AnalyticsResult> {
-    @override
-    final Iterable<Type> types = const [AnalyticsResult, _$AnalyticsResult];
 
-    @override
-    final String wireName = r'AnalyticsResult';
-
-    @override
-    Iterable<Object?> serialize(Serializers serializers, AnalyticsResult object,
-        {FullType specifiedType = FullType.unspecified}) {
-        final result = <Object?>[];
-        if (object.operation != null) {
-            result
-                ..add(r'operation')
-                ..add(serializers.serialize(object.operation,
-                    specifiedType: const FullType(AnalyticsResultOperationEnum)));
-        }
-        if (object.result != null) {
-            result
-                ..add(r'result')
-                ..add(serializers.serialize(object.result,
-                    specifiedType: const FullType(num)));
-        }
-        if (object.error != null) {
-            result
-                ..add(r'error')
-                ..add(serializers.serialize(object.error,
-                    specifiedType: const FullType(bool)));
-        }
-        if (object.errormsg != null) {
-            result
-                ..add(r'errormsg')
-                ..add(serializers.serialize(object.errormsg,
-                    specifiedType: const FullType(String)));
-        }
-        return result;
-    }
-
-    @override
-    AnalyticsResult deserialize(Serializers serializers, Iterable<Object?> serialized,
-        {FullType specifiedType = FullType.unspecified}) {
-        final result = AnalyticsResultBuilder();
-
-        final iterator = serialized.iterator;
-        while (iterator.moveNext()) {
-            final key = iterator.current as String;
-            iterator.moveNext();
-            final Object? value = iterator.current;
-            
-            switch (key) {
-                case r'operation':
-                    final valueDes = serializers.deserialize(value,
-                        specifiedType: const FullType(AnalyticsResultOperationEnum)) as AnalyticsResultOperationEnum;
-                    result.operation = valueDes;
-                    break;
-                case r'result':
-                    final valueDes = serializers.deserialize(value,
-                        specifiedType: const FullType(num)) as num;
-                    result.result = valueDes;
-                    break;
-                case r'error':
-                    final valueDes = serializers.deserialize(value,
-                        specifiedType: const FullType(bool)) as bool;
-                    result.error = valueDes;
-                    break;
-                case r'errormsg':
-                    final valueDes = serializers.deserialize(value,
-                        specifiedType: const FullType(String)) as String;
-                    result.errormsg = valueDes;
-                    break;
-            }
-        }
-        return result.build();
-    }
+enum AnalyticsResultOperationEnum {
+  @JsonValue(r'average')
+  average,
+  @JsonValue(r'count')
+  count,
+  @JsonValue(r'maximum')
+  maximum,
+  @JsonValue(r'minimum')
+  minimum,
 }
 
-class AnalyticsResultOperationEnum extends EnumClass {
-
-  @BuiltValueEnumConst(wireName: r'average')
-  static const AnalyticsResultOperationEnum average = _$analyticsResultOperationEnum_average;
-  @BuiltValueEnumConst(wireName: r'count')
-  static const AnalyticsResultOperationEnum count = _$analyticsResultOperationEnum_count;
-  @BuiltValueEnumConst(wireName: r'maximum')
-  static const AnalyticsResultOperationEnum maximum = _$analyticsResultOperationEnum_maximum;
-  @BuiltValueEnumConst(wireName: r'minimum')
-  static const AnalyticsResultOperationEnum minimum = _$analyticsResultOperationEnum_minimum;
-
-  static Serializer<AnalyticsResultOperationEnum> get serializer => _$analyticsResultOperationEnumSerializer;
-
-  const AnalyticsResultOperationEnum._(String name): super(name);
-
-  static BuiltSet<AnalyticsResultOperationEnum> get values => _$analyticsResultOperationEnumValues;
-  static AnalyticsResultOperationEnum valueOf(String name) => _$analyticsResultOperationEnumValueOf(name);
-}
 

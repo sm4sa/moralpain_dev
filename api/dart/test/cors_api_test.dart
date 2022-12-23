@@ -34,6 +34,15 @@ void main() {
       // TODO
     });
 
+    // CORS submission support
+    //
+    // Enable CORS by returning correct headers 
+    //
+    //Future optionsSubmissionTypeDB() async
+    test('test optionsSubmissionTypeDB', () async {
+      // TODO
+    });
+
     // CORS survey support
     //
     // Enable CORS by returning correct headers 

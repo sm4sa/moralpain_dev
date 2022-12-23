@@ -21,7 +21,10 @@ If you modify the OpenAPI template, you will likely need to update the API clien
 To run OpenAPI Generator for the Dart client, switch to the `dart` directory and use the following commands:
 
 ```bash
-java -jar ../../openapi-generator-cli.jar generate -i ../../infrastructure/sam/api.yaml --generate-alias-as-model --additional-properties pubName=moralpainapi -g dart-dio
+openapi-generator-cli generate \
+  -i ../../infrastructure/sam/api.yaml  \
+  --generate-alias-as-model \
+  --additional-properties pubName=moralpainapi,serializationLibrary=json_serializable -g dart-dio
 flutter pub run build_runner build
 ```
 
@@ -34,6 +37,15 @@ java -jar ../../openapi-generator-cli.jar generate \
   --input-spec ../../infrastructure/sam/api.yaml \
   --additional-properties library=apache-httpclient,groupId=edu.uva.cs,artifactId=moraldistressapi \
   --generator-name java
+```
+
+### Validating the Java client
+
+To run OpenAPI Generator for the Java client, switch to the `java` directory and use the following command:
+
+```bash
+java -jar ../../openapi-generator-cli.jar validate \
+  --input-spec ../../infrastructure/sam/api.yaml
 ```
 
 ## Documentation for API Endpoints
