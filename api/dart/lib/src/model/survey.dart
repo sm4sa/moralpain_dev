@@ -2,87 +2,70 @@
 // AUTO-GENERATED FILE, DO NOT MODIFY!
 //
 
-import 'package:built_collection/built_collection.dart';
+// ignore_for_file: unused_element
 import 'package:moralpainapi/src/model/survey_section.dart';
-import 'package:built_value/built_value.dart';
-import 'package:built_value/serializer.dart';
+import 'package:json_annotation/json_annotation.dart';
 
 part 'survey.g.dart';
 
-/// Survey
-///
-/// Properties:
-/// * [version] 
-/// * [sections] 
-abstract class Survey implements Built<Survey, SurveyBuilder> {
-    @BuiltValueField(wireName: r'version')
-    String? get version;
 
-    @BuiltValueField(wireName: r'sections')
-    BuiltList<SurveySection>? get sections;
+@JsonSerializable(
+  checked: true,
+  createToJson: true,
+  disallowUnrecognizedKeys: false,
+  explicitToJson: true,
+)
+class Survey {
+  /// Returns a new [Survey] instance.
+  Survey({
 
-    Survey._();
+     this.version,
 
-    @BuiltValueHook(initializeBuilder: true)
-    static void _defaults(SurveyBuilder b) => b;
+     this.sections,
+  });
 
-    factory Survey([void updates(SurveyBuilder b)]) = _$Survey;
+  @JsonKey(
+    
+    name: r'version',
+    required: false,
+    includeIfNull: false
+  )
 
-    @BuiltValueSerializer(custom: true)
-    static Serializer<Survey> get serializer => _$SurveySerializer();
-}
 
-class _$SurveySerializer implements StructuredSerializer<Survey> {
-    @override
-    final Iterable<Type> types = const [Survey, _$Survey];
+  final String? version;
 
-    @override
-    final String wireName = r'Survey';
 
-    @override
-    Iterable<Object?> serialize(Serializers serializers, Survey object,
-        {FullType specifiedType = FullType.unspecified}) {
-        final result = <Object?>[];
-        if (object.version != null) {
-            result
-                ..add(r'version')
-                ..add(serializers.serialize(object.version,
-                    specifiedType: const FullType(String)));
-        }
-        if (object.sections != null) {
-            result
-                ..add(r'sections')
-                ..add(serializers.serialize(object.sections,
-                    specifiedType: const FullType(BuiltList, [FullType(SurveySection)])));
-        }
-        return result;
-    }
 
-    @override
-    Survey deserialize(Serializers serializers, Iterable<Object?> serialized,
-        {FullType specifiedType = FullType.unspecified}) {
-        final result = SurveyBuilder();
+  @JsonKey(
+    
+    name: r'sections',
+    required: false,
+    includeIfNull: false
+  )
 
-        final iterator = serialized.iterator;
-        while (iterator.moveNext()) {
-            final key = iterator.current as String;
-            iterator.moveNext();
-            final Object? value = iterator.current;
-            
-            switch (key) {
-                case r'version':
-                    final valueDes = serializers.deserialize(value,
-                        specifiedType: const FullType(String)) as String;
-                    result.version = valueDes;
-                    break;
-                case r'sections':
-                    final valueDes = serializers.deserialize(value,
-                        specifiedType: const FullType(BuiltList, [FullType(SurveySection)])) as BuiltList<SurveySection>;
-                    result.sections.replace(valueDes);
-                    break;
-            }
-        }
-        return result.build();
-    }
+
+  final List<SurveySection>? sections;
+
+
+
+  @override
+  bool operator ==(Object other) => identical(this, other) || other is Survey &&
+     other.version == version &&
+     other.sections == sections;
+
+  @override
+  int get hashCode =>
+    version.hashCode +
+    sections.hashCode;
+
+  factory Survey.fromJson(Map<String, dynamic> json) => _$SurveyFromJson(json);
+
+  Map<String, dynamic> toJson() => _$SurveyToJson(this);
+
+  @override
+  String toString() {
+    return toJson().toString();
+  }
+
 }
 

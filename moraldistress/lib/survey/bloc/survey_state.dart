@@ -14,6 +14,8 @@ class SurveyLoaded extends SurveyState {
   SurveyLoaded(this.survey);
 }
 
+class SurveyLoadFailed extends SurveyState { }
+
 class SurveyComplete extends SurveyState {
   bool success;
   SurveyComplete(this.success);

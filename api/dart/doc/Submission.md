@@ -9,7 +9,7 @@ import 'package:moralpainapi/api.dart';
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **score** | **int** |  | [optional] 
-**selections** | **BuiltList&lt;String&gt;** |  | [optional] 
+**selections** | **List&lt;String&gt;** |  | [optional] 
 **timestamp** | **int** |  | [optional] 
 **id** | **String** |  | [optional] 
 

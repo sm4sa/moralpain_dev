@@ -59,8 +59,13 @@ Resources:
       ClientName: !Sub ${Name}-client
       CallbackURLs:
         - 'myapp://'
+        - 'https://nicholasphair.github.io/moralpain_dev/'
+        - 'http://localhost:3000/'
       LogoutURLs:
         - 'myapp://'
+        - 'https://nicholasphair.github.io/moralpain_dev/'
+        - 'http://localhost:3000/'
+
       AllowedOAuthFlowsUserPoolClient: true
       AllowedOAuthFlows:
         - code

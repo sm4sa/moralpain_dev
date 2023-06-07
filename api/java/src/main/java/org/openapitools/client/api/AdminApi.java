@@ -29,7 +29,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-08-06T18:59:24.183129Z[Etc/UTC]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-12-12T00:57:02.835963-05:00[America/New_York]")
 public class AdminApi {
   private ApiClient apiClient;
 
@@ -49,6 +49,67 @@ public class AdminApi {
     this.apiClient = apiClient;
   }
 
+  /**
+   * Get survey results
+   * Fetch from the database all of the records that match the query parameters. 
+   * @param starttime Minimum possible timestamp of a record in UTC seconds since Unix epoch. (optional)
+   * @param endtime Maximum possible timestamp of a record in UTC seconds since Unix epoch. (optional)
+   * @param minscore Minimum possible score of a record. (optional)
+   * @param maxscore Maximum possible score of a record. (optional)
+   * @param uuid If this parameter is specified, all other parameters are ignored and only the submission with the given UUID is fetched. If no such submission exists, an empty list is fetched.  (optional)
+   * @return Submissions
+   * @throws ApiException if fails to make API call
+   */
+  public Submissions getAdminSubmissions(Integer starttime, Integer endtime, Integer minscore, Integer maxscore, String uuid) throws ApiException {
+    Object localVarPostBody = null;
+    
+    // create path and map variables
+    String localVarPath = "/admin/submissions";
+
+    // query params
+    List<Pair> localVarQueryParams = new ArrayList<Pair>();
+    List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+    Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+    Map<String, String> localVarCookieParams = new HashMap<String, String>();
+    Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+    localVarQueryParams.addAll(apiClient.parameterToPair("starttime", starttime));
+    localVarQueryParams.addAll(apiClient.parameterToPair("endtime", endtime));
+    localVarQueryParams.addAll(apiClient.parameterToPair("minscore", minscore));
+    localVarQueryParams.addAll(apiClient.parameterToPair("maxscore", maxscore));
+    localVarQueryParams.addAll(apiClient.parameterToPair("uuid", uuid));
+
+    
+    
+    
+    final String[] localVarAccepts = {
+      "application/json"
+    };
+    final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
+
+    final String[] localVarContentTypes = {
+      
+    };
+    final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+
+    String[] localVarAuthNames = new String[] {  };
+
+    TypeReference<Submissions> localVarReturnType = new TypeReference<Submissions>() {};
+    return apiClient.invokeAPI(
+        localVarPath,
+        "GET",
+        localVarQueryParams,
+        localVarCollectionQueryParams,
+        localVarPostBody,
+        localVarHeaderParams,
+        localVarCookieParams,
+        localVarFormParams,
+        localVarAccept,
+        localVarContentType,
+        localVarAuthNames,
+        localVarReturnType
+    );
+  }
   /**
    * Get data analysis
    * Perform an analysis on the records in the database that match the query paramters. 
@@ -96,67 +157,6 @@ public class AdminApi {
     String[] localVarAuthNames = new String[] {  };
 
     TypeReference<AnalyticsResult> localVarReturnType = new TypeReference<AnalyticsResult>() {};
-    return apiClient.invokeAPI(
-        localVarPath,
-        "GET",
-        localVarQueryParams,
-        localVarCollectionQueryParams,
-        localVarPostBody,
-        localVarHeaderParams,
-        localVarCookieParams,
-        localVarFormParams,
-        localVarAccept,
-        localVarContentType,
-        localVarAuthNames,
-        localVarReturnType
-    );
-  }
-  /**
-   * Get survey results
-   * Fetch from the database all of the records that match the query parameters. 
-   * @param starttime Minimum possible timestamp of a record in UTC seconds since Unix epoch. (optional)
-   * @param endtime Maximum possible timestamp of a record in UTC seconds since Unix epoch. (optional)
-   * @param minscore Minimum possible score of a record. (optional)
-   * @param maxscore Maximum possible score of a record. (optional)
-   * @param uuid If this parameter is specified, all other parameters are ignored and only the submission with the given UUID is fetched. If no such submission exists, an empty list is fetched.  (optional)
-   * @return Submissions
-   * @throws ApiException if fails to make API call
-   */
-  public Submissions getSubmissions(Integer starttime, Integer endtime, Integer minscore, Integer maxscore, String uuid) throws ApiException {
-    Object localVarPostBody = null;
-    
-    // create path and map variables
-    String localVarPath = "/admin/submissions";
-
-    // query params
-    List<Pair> localVarQueryParams = new ArrayList<Pair>();
-    List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-    Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-    Map<String, String> localVarCookieParams = new HashMap<String, String>();
-    Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
-    localVarQueryParams.addAll(apiClient.parameterToPair("starttime", starttime));
-    localVarQueryParams.addAll(apiClient.parameterToPair("endtime", endtime));
-    localVarQueryParams.addAll(apiClient.parameterToPair("minscore", minscore));
-    localVarQueryParams.addAll(apiClient.parameterToPair("maxscore", maxscore));
-    localVarQueryParams.addAll(apiClient.parameterToPair("uuid", uuid));
-
-    
-    
-    
-    final String[] localVarAccepts = {
-      "application/json"
-    };
-    final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
-
-    final String[] localVarContentTypes = {
-      
-    };
-    final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
-
-    String[] localVarAuthNames = new String[] {  };
-
-    TypeReference<Submissions> localVarReturnType = new TypeReference<Submissions>() {};
     return apiClient.invokeAPI(
         localVarPath,
         "GET",

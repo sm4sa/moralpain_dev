@@ -16,12 +16,48 @@ void main() {
       // TODO
     });
 
+    // get the submission
+    //
+    // Get the MDQ submission. 
+    //
+    //Future<Submission> getSubmission() async
+    test('test getSubmission', () async {
+      // TODO
+    });
+
+    // get the submissions
+    //
+    // Get the MDQ submissions using TypeDB. 
+    //
+    //Future<Submissions> getSubmissions() async
+    test('test getSubmissions', () async {
+      // TODO
+    });
+
     // Get the MDQ
     //
     // Fetch the latest moral distress questionnaire (MDQ) from the database. 
     //
     //Future<Survey> getSurvey() async
     test('test getSurvey', () async {
+      // TODO
+    });
+
+    // Submit a submission
+    //
+    // Submit 
+    //
+    //Future<String> submitSubmission({ Submission submission }) async
+    test('test submitSubmission', () async {
+      // TODO
+    });
+
+    // Submit a submission
+    //
+    // Submit with TypeDB 
+    //
+    //Future<String> submitSubmissionTypeDB({ Submission submission }) async
+    test('test submitSubmissionTypeDB', () async {
       // TODO
     });
 

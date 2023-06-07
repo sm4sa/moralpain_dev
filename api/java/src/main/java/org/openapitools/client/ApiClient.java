@@ -65,6 +65,7 @@ import java.io.File;
 import java.io.InputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.nio.file.Paths;
@@ -76,7 +77,7 @@ import java.text.DateFormat;
 import org.openapitools.client.auth.Authentication;
 import org.openapitools.client.auth.ApiKeyAuth;
 
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-08-06T18:59:24.183129Z[Etc/UTC]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-12-12T00:57:02.835963-05:00[America/New_York]")
 public class ApiClient extends JavaTimeFormatter {
   private Map<String, String> defaultHeaderMap = new HashMap<String, String>();
   private Map<String, String> defaultCookieMap = new HashMap<String, String>();
@@ -657,7 +658,14 @@ public class ApiClient extends JavaTimeFormatter {
         } else if (value instanceof byte[]) {
           multiPartBuilder.addBinaryBody(paramEntry.getKey(), (byte[]) value);
         } else {
-          multiPartBuilder.addTextBody(paramEntry.getKey(), parameterToString(paramEntry.getValue()));
+          Charset charset = contentType.getCharset();
+          if (charset != null) {
+            ContentType customContentType = ContentType.create(ContentType.TEXT_PLAIN.getMimeType(), charset);
+            multiPartBuilder.addTextBody(paramEntry.getKey(), parameterToString(paramEntry.getValue()),
+                    customContentType);
+          } else {
+            multiPartBuilder.addTextBody(paramEntry.getKey(), parameterToString(paramEntry.getValue()));
+          }
         }
       }
       return multiPartBuilder.build();
@@ -666,11 +674,7 @@ public class ApiClient extends JavaTimeFormatter {
       for (Entry<String, Object> paramEntry : formParams.entrySet()) {
         formValues.add(new BasicNameValuePair(paramEntry.getKey(), parameterToString(paramEntry.getValue())));
       }
-      try {
-        return new UrlEncodedFormEntity(formValues);
-      } catch (UnsupportedEncodingException e) {
-        throw new ApiException(e);
-      }
+      return new UrlEncodedFormEntity(formValues, contentType.getCharset());
     } else {
       // Handle files with unknown content type
       if (obj instanceof File) {

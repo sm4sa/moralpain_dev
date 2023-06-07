@@ -53,21 +53,25 @@ class SurveyBloc extends Bloc<SurveyEvent, SurveyState> {
     }
 
     final data = await repository.fetchSurvey();
-    emit(SurveyLoaded(data));
+    if (data.sections == null) {
+      emit(SurveyLoadFailed());
+    } else {
+      emit(SurveyLoaded(data));
+    }
   }
 
   void _onSubmit(SurveySubmitEvent event, Emitter<SurveyState> emit) async {
     final selected =
         options.entries.where((x) => x.value).map((x) => x.key).toList();
 
-    final builder = SubmissionBuilder();
-    builder.id = uuid.v4().replaceAll("-", "");
-    builder.score = score;
-    builder.selections.addAll(selected);
-    builder.timestamp = _secondsSinceEpoch();
+    final survey = Submission(
+        id: uuid.v4().replaceAll("-", ""),
+        score: score,
+        selections: selected,
+        timestamp: _secondsSinceEpoch());
 
     emit(SurveySubmitting());
-    final success = await repository.submitSurvey(builder.build());
+    final success = await repository.submitSurvey(survey);
     emit(SurveyComplete(success));
   }
 

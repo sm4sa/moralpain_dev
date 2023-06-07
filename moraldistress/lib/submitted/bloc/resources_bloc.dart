@@ -51,11 +51,10 @@ class ResourcesBloc extends Bloc<ResourcesEvent, ResourcesState> {
 
   void _onSubmit(
       VisitedResourcesSubmitEvent event, Emitter<ResourcesState> emit) async {
-    final builder = VisitedResiliencyResourcesBuilder();
-    builder.selections.addAll(options);
-    builder.timestamp = _secondsSinceEpoch();
+    final visited = VisitedResiliencyResources(
+        selections: options.toList(), timestamp: _secondsSinceEpoch());
 
-    final success = await repository.submitVisitedResources(builder.build());
+    final success = await repository.submitVisitedResources(visited);
     emit(VisitedResourcesSubmitted(success));
   }
 

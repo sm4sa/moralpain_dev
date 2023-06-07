@@ -2,116 +2,101 @@
 // AUTO-GENERATED FILE, DO NOT MODIFY!
 //
 
-import 'package:built_collection/built_collection.dart';
-import 'package:built_value/built_value.dart';
-import 'package:built_value/serializer.dart';
+// ignore_for_file: unused_element
+import 'package:json_annotation/json_annotation.dart';
 
 part 'submission.g.dart';
 
-/// Submission
-///
-/// Properties:
-/// * [score] 
-/// * [selections] 
-/// * [timestamp] 
-/// * [id] 
-abstract class Submission implements Built<Submission, SubmissionBuilder> {
-    @BuiltValueField(wireName: r'score')
-    int? get score;
 
-    @BuiltValueField(wireName: r'selections')
-    BuiltList<String>? get selections;
+@JsonSerializable(
+  checked: true,
+  createToJson: true,
+  disallowUnrecognizedKeys: false,
+  explicitToJson: true,
+)
+class Submission {
+  /// Returns a new [Submission] instance.
+  Submission({
 
-    @BuiltValueField(wireName: r'timestamp')
-    int? get timestamp;
+     this.score,
 
-    @BuiltValueField(wireName: r'id')
-    String? get id;
+     this.selections,
 
-    Submission._();
+     this.timestamp,
 
-    @BuiltValueHook(initializeBuilder: true)
-    static void _defaults(SubmissionBuilder b) => b;
+     this.id,
+  });
 
-    factory Submission([void updates(SubmissionBuilder b)]) = _$Submission;
+  @JsonKey(
+    
+    name: r'score',
+    required: false,
+    includeIfNull: false
+  )
 
-    @BuiltValueSerializer(custom: true)
-    static Serializer<Submission> get serializer => _$SubmissionSerializer();
-}
 
-class _$SubmissionSerializer implements StructuredSerializer<Submission> {
-    @override
-    final Iterable<Type> types = const [Submission, _$Submission];
+  final int? score;
 
-    @override
-    final String wireName = r'Submission';
 
-    @override
-    Iterable<Object?> serialize(Serializers serializers, Submission object,
-        {FullType specifiedType = FullType.unspecified}) {
-        final result = <Object?>[];
-        if (object.score != null) {
-            result
-                ..add(r'score')
-                ..add(serializers.serialize(object.score,
-                    specifiedType: const FullType(int)));
-        }
-        if (object.selections != null) {
-            result
-                ..add(r'selections')
-                ..add(serializers.serialize(object.selections,
-                    specifiedType: const FullType(BuiltList, [FullType(String)])));
-        }
-        if (object.timestamp != null) {
-            result
-                ..add(r'timestamp')
-                ..add(serializers.serialize(object.timestamp,
-                    specifiedType: const FullType(int)));
-        }
-        if (object.id != null) {
-            result
-                ..add(r'id')
-                ..add(serializers.serialize(object.id,
-                    specifiedType: const FullType(String)));
-        }
-        return result;
-    }
 
-    @override
-    Submission deserialize(Serializers serializers, Iterable<Object?> serialized,
-        {FullType specifiedType = FullType.unspecified}) {
-        final result = SubmissionBuilder();
+  @JsonKey(
+    
+    name: r'selections',
+    required: false,
+    includeIfNull: false
+  )
 
-        final iterator = serialized.iterator;
-        while (iterator.moveNext()) {
-            final key = iterator.current as String;
-            iterator.moveNext();
-            final Object? value = iterator.current;
-            
-            switch (key) {
-                case r'score':
-                    final valueDes = serializers.deserialize(value,
-                        specifiedType: const FullType(int)) as int;
-                    result.score = valueDes;
-                    break;
-                case r'selections':
-                    final valueDes = serializers.deserialize(value,
-                        specifiedType: const FullType(BuiltList, [FullType(String)])) as BuiltList<String>;
-                    result.selections.replace(valueDes);
-                    break;
-                case r'timestamp':
-                    final valueDes = serializers.deserialize(value,
-                        specifiedType: const FullType(int)) as int;
-                    result.timestamp = valueDes;
-                    break;
-                case r'id':
-                    final valueDes = serializers.deserialize(value,
-                        specifiedType: const FullType(String)) as String;
-                    result.id = valueDes;
-                    break;
-            }
-        }
-        return result.build();
-    }
+
+  final List<String>? selections;
+
+
+
+  @JsonKey(
+    
+    name: r'timestamp',
+    required: false,
+    includeIfNull: false
+  )
+
+
+  final int? timestamp;
+
+
+
+  @JsonKey(
+    
+    name: r'id',
+    required: false,
+    includeIfNull: false
+  )
+
+
+  final String? id;
+
+
+
+  @override
+  bool operator ==(Object other) => identical(this, other) || other is Submission &&
+     other.score == score &&
+     other.selections == selections &&
+     other.timestamp == timestamp &&
+     other.id == id;
+
+  @override
+  int get hashCode =>
+    score.hashCode +
+    selections.hashCode +
+    timestamp.hashCode +
+    id.hashCode;
+
+  factory Submission.fromJson(Map<String, dynamic> json) => _$SubmissionFromJson(json);
+
+  Map<String, dynamic> toJson() => _$SubmissionToJson(this);
+
+  @override
+  String toString() {
+    return toJson().toString();
+  }
+
 }
 

@@ -16,6 +16,7 @@ package org.openapitools.client.api;
 import org.openapitools.client.ApiException;
 import org.openapitools.client.model.ResiliencyResources;
 import org.openapitools.client.model.Submission;
+import org.openapitools.client.model.Submissions;
 import org.openapitools.client.model.Survey;
 import org.openapitools.client.model.VisitedResiliencyResources;
 import org.junit.Test;
@@ -52,6 +53,34 @@ public class UserApiTest {
         // TODO: test validations
     }
     /**
+     * get the submission
+     *
+     * Get the MDQ submission. 
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void getSubmissionTest() throws ApiException {
+        Submission response = api.getSubmission();
+
+        // TODO: test validations
+    }
+    /**
+     * get the submissions
+     *
+     * Get the MDQ submissions using TypeDB. 
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void getSubmissionsTest() throws ApiException {
+        Submissions response = api.getSubmissions();
+
+        // TODO: test validations
+    }
+    /**
      * Get the MDQ
      *
      * Fetch the latest moral distress questionnaire (MDQ) from the database. 
@@ -62,6 +91,36 @@ public class UserApiTest {
     @Test
     public void getSurveyTest() throws ApiException {
         Survey response = api.getSurvey();
+
+        // TODO: test validations
+    }
+    /**
+     * Submit a submission
+     *
+     * Submit 
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void submitSubmissionTest() throws ApiException {
+        Submission submission = null;
+        String response = api.submitSubmission(submission);
+
+        // TODO: test validations
+    }
+    /**
+     * Submit a submission
+     *
+     * Submit with TypeDB 
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void submitSubmissionTypeDBTest() throws ApiException {
+        Submission submission = null;
+        String response = api.submitSubmissionTypeDB(submission);
 
         // TODO: test validations
     }

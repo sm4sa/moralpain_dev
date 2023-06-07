@@ -16,7 +16,7 @@ package org.openapitools.client;
 import java.util.Map;
 import java.util.List;
 
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-08-06T18:59:24.183129Z[Etc/UTC]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2022-12-12T00:57:02.835963-05:00[America/New_York]")
 public class ApiException extends Exception {
     private int code = 0;
     private Map<String, List<String>> responseHeaders = null;
@@ -87,5 +87,14 @@ public class ApiException extends Exception {
      */
     public String getResponseBody() {
         return responseBody;
+    }
+
+    @Override
+    public String toString() {
+        return "ApiException{" +
+                "code=" + code +
+                ", responseHeaders=" + responseHeaders +
+                ", responseBody='" + responseBody + '\'' +
+                '}';
     }
 }

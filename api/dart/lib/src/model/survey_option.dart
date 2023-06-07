@@ -2,85 +2,69 @@
 // AUTO-GENERATED FILE, DO NOT MODIFY!
 //
 
-import 'package:built_value/built_value.dart';
-import 'package:built_value/serializer.dart';
+// ignore_for_file: unused_element
+import 'package:json_annotation/json_annotation.dart';
 
 part 'survey_option.g.dart';
 
-/// SurveyOption
-///
-/// Properties:
-/// * [id] 
-/// * [description] 
-abstract class SurveyOption implements Built<SurveyOption, SurveyOptionBuilder> {
-    @BuiltValueField(wireName: r'id')
-    String? get id;
 
-    @BuiltValueField(wireName: r'description')
-    String? get description;
+@JsonSerializable(
+  checked: true,
+  createToJson: true,
+  disallowUnrecognizedKeys: false,
+  explicitToJson: true,
+)
+class SurveyOption {
+  /// Returns a new [SurveyOption] instance.
+  SurveyOption({
 
-    SurveyOption._();
+     this.id,
 
-    @BuiltValueHook(initializeBuilder: true)
-    static void _defaults(SurveyOptionBuilder b) => b;
+     this.description,
+  });
 
-    factory SurveyOption([void updates(SurveyOptionBuilder b)]) = _$SurveyOption;
+  @JsonKey(
+    
+    name: r'id',
+    required: false,
+    includeIfNull: false
+  )
 
-    @BuiltValueSerializer(custom: true)
-    static Serializer<SurveyOption> get serializer => _$SurveyOptionSerializer();
-}
 
-class _$SurveyOptionSerializer implements StructuredSerializer<SurveyOption> {
-    @override
-    final Iterable<Type> types = const [SurveyOption, _$SurveyOption];
+  final String? id;
 
-    @override
-    final String wireName = r'SurveyOption';
 
-    @override
-    Iterable<Object?> serialize(Serializers serializers, SurveyOption object,
-        {FullType specifiedType = FullType.unspecified}) {
-        final result = <Object?>[];
-        if (object.id != null) {
-            result
-                ..add(r'id')
-                ..add(serializers.serialize(object.id,
-                    specifiedType: const FullType(String)));
-        }
-        if (object.description != null) {
-            result
-                ..add(r'description')
-                ..add(serializers.serialize(object.description,
-                    specifiedType: const FullType(String)));
-        }
-        return result;
-    }
 
-    @override
-    SurveyOption deserialize(Serializers serializers, Iterable<Object?> serialized,
-        {FullType specifiedType = FullType.unspecified}) {
-        final result = SurveyOptionBuilder();
+  @JsonKey(
+    
+    name: r'description',
+    required: false,
+    includeIfNull: false
+  )
 
-        final iterator = serialized.iterator;
-        while (iterator.moveNext()) {
-            final key = iterator.current as String;
-            iterator.moveNext();
-            final Object? value = iterator.current;
-            
-            switch (key) {
-                case r'id':
-                    final valueDes = serializers.deserialize(value,
-                        specifiedType: const FullType(String)) as String;
-                    result.id = valueDes;
-                    break;
-                case r'description':
-                    final valueDes = serializers.deserialize(value,
-                        specifiedType: const FullType(String)) as String;
-                    result.description = valueDes;
-                    break;
-            }
-        }
-        return result.build();
-    }
+
+  final String? description;
+
+
+
+  @override
+  bool operator ==(Object other) => identical(this, other) || other is SurveyOption &&
+     other.id == id &&
+     other.description == description;
+
+  @override
+  int get hashCode =>
+    id.hashCode +
+    description.hashCode;
+
+  factory SurveyOption.fromJson(Map<String, dynamic> json) => _$SurveyOptionFromJson(json);
+
+  Map<String, dynamic> toJson() => _$SurveyOptionToJson(this);
+
+  @override
+  String toString() {
+    return toJson().toString();
+  }
+
 }
 

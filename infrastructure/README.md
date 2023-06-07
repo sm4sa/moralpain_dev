@@ -22,7 +22,7 @@ sceptre create <path/to/config.yaml>
 
 Please be aware that the Sceptre CLI usage is a little clumsy. The path to the
 config file is expected to be relative to the `config` direcory. However, the
-command itself needs to be run from the `infrastrucure` directory. Rephrased,
+command itself needs to be run from the `infrastructure` directory. Rephrased,
 the config path is relative, but not relative to the directory you are running
 the command from. Below is an example of creating a resource with Sceptre.
 ```bash

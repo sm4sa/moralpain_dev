@@ -36,7 +36,7 @@ redoc = [
     {
         'name': 'Batcomputer API',
         'page': 'docs/backend/api/spec',
-        'spec': '../../infrastructure/sam/api.yaml',
+        'spec': '../../infrastructure/templates/openapi.yaml',
         'embed': True,
     },
 ]

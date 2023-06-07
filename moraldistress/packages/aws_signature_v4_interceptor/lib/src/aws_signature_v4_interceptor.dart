@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:aws_common/aws_common.dart';
 
 import 'package:aws_signature_v4/aws_signature_v4.dart';
@@ -15,7 +17,7 @@ class AWSSignatureInterceptor extends Interceptor {
 
     // NB (nphair): May have to be smarter about the header mapping.
     final request = AWSHttpRequest(
-        method: AWSHttpMethodHelper.fromString(options.method),
+        method: AWSHttpMethod.fromString(options.method),
         uri: options.uri,
         headers: options.headers
             .map((key, dynamic value) => MapEntry(key, '${value}')),

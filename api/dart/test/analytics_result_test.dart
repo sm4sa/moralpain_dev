@@ -3,8 +3,8 @@ import 'package:moralpainapi/moralpainapi.dart';
 
 // tests for AnalyticsResult
 void main() {
-  final instance = AnalyticsResultBuilder();
-  // TODO add properties to the builder and call build()
+  final AnalyticsResult? instance = /* AnalyticsResult(...) */ null;
+  // TODO add properties to the entity
 
   group(AnalyticsResult, () {
     // String operation

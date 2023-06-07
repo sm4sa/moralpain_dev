@@ -50,7 +50,9 @@ class SurveyViewState extends State<SurveyView> {
   Widget build(BuildContext context) {
     return BlocConsumer<SurveyBloc, SurveyState>(
         listenWhen: (previous, current) =>
-            current is SurveyComplete || current is SurveySubmitting,
+            current is SurveyComplete ||
+            current is SurveySubmitting ||
+            current is SurveyLoadFailed,
         listener: (context, state) => handleSubmitEvents(context, state),
         buildWhen: (previous, current) =>
             current is SurveyLoading || current is SurveyLoaded,
@@ -77,6 +79,9 @@ class SurveyViewState extends State<SurveyView> {
             MaterialPageRoute(builder: (_) => SubmittedRoute()),
             (route) => route.isFirst);
       }
+    } else if (state is SurveyLoadFailed) {
+      Navigator.of(context, rootNavigator: true).pop();
+      showDialog(context: context, builder: failedSubmitScreenBuilder);
     } else {
       assert(false);
     }
@@ -246,9 +251,7 @@ class SurveyViewState extends State<SurveyView> {
       children: [
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SurveyOptionsWidget(section.sectionId!, section.options!.asList())
-          ],
+          children: [SurveyOptionsWidget(section.sectionId!, section.options!)],
         )
       ],
     );

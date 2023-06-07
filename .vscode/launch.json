@@ -21,15 +21,18 @@
         {
             "name": "moralpain",
             "cwd": "moraldistress",
-            "request": "launch",
-            "type": "dart"
-        },
-        {
-            "name": "moralpain (profile mode)",
-            "cwd": "moraldistress",
+            "program": "lib/main.dart",
             "request": "launch",
             "type": "dart",
-            "flutterMode": "profile"
+        },
+        {
+            "name": "moralpain web",
+            "cwd": "moraldistress",
+            "program": "lib/main.dart",
+            "request": "launch",
+            "type": "dart",
+            "args": ["-d", "web-server","--web-port", "3000"],
+            "flutterMode": "debug"
         }
     ]
 }
